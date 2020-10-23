@@ -22,3 +22,5 @@ function createWindow() {
     });
 }
 app.on('ready', createWindow);
+
+// npm run dev
