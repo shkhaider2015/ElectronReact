@@ -1,11 +1,11 @@
 import React from 'react';
 import 'fontsource-roboto';
-import PersistentDrawerLeft from './components/drawer/drawer';
+import MenuAppBar from './components/appbar/appbar';
 
 function App() {
   return (
     <div>
-      <PersistentDrawerLeft />
+      <MenuAppBar />
     </div>
   );
 }
