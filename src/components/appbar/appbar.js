@@ -26,21 +26,33 @@ const useStyles = makeStyles((theme) => ({
 
 export default function MenuAppBar() {
   const classes = useStyles();
-  const [auth, setAuth] = React.useState(true);
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [ auth, setAuth ] = React.useState( true );
+  const [ sideOpen, setSideOpen ] = React.useState( false )
+  const [ anchorEl, setAnchorEl ] = React.useState( null );
   const open = Boolean(anchorEl);
 
   const handleChange = (event) => {
-    setAuth(event.target.checked);
+    setAuth( event.target.checked );
   };
 
+
   const handleMenu = (event) => {
-    setAnchorEl(event.currentTarget);
+    setAnchorEl( event.currentTarget );
   };
+
 
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const handleSideMenu = () => {
+    setSideOpen(true)
+  }
+
+  const sideMenuClose = () => {
+      setSideOpen(false)
+  }
+
 
   return (
     <div className={classes.root}>
@@ -53,7 +65,7 @@ export default function MenuAppBar() {
       <AppBar position="static">
         <Toolbar>
           <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-            <MenuIcon />
+            <MenuIcon onClick={handleSideMenu} onClose={sideMenuClose} />
           </IconButton>
           <Typography variant="h6" className={classes.title}>
             Photos
