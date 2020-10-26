@@ -1,5 +1,8 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+import { Drawer, List, ListItem,
+   ListItemText, ListItemIcon, Divider, useTheme } from "@material-ui/core";
+import { ChevronLeft, ChevronRight  } from "@material-ui/icons";
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
@@ -12,6 +15,8 @@ import FormGroup from '@material-ui/core/FormGroup';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 
+const drawerWidth = 240;
+
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -22,12 +27,20 @@ const useStyles = makeStyles((theme) => ({
   title: {
     flexGrow: 1,
   },
+  drawer : {
+    width : drawerWidth,
+    flexShrink : 0,
+  },
+  drawerPaper : {
+    width : drawerWidth
+  }
 }));
 
 export default function MenuAppBar() {
   const classes = useStyles();
+  const theme = useTheme()
   const [ auth, setAuth ] = React.useState( true );
-  const [ sideOpen, setSideOpen ] = React.useState( false )
+  const [ drawerOpen, setDrawerOpen ] = React.useState( false )
   const [ anchorEl, setAnchorEl ] = React.useState( null );
   const open = Boolean(anchorEl);
   //ksfkjsdk
@@ -46,14 +59,59 @@ export default function MenuAppBar() {
     setAnchorEl(null);
   };
 
-  const handleSideMenu = () => {
-    setSideOpen(true)
+  const handleDrawerOpen = () => {
+    setDrawerOpen(true)
   }
 
-  const sideMenuClose = () => {
-      setSideOpen(false)
+  const handleDrawerClose = () => {
+      setDrawerOpen(false)
   }
 
+
+
+  function renderIcon()
+  {
+
+  }
+
+  const renderDrawer = (
+    <Drawer
+    className={classes.drawer}
+    anchor="left"
+    open={drawerOpen}
+    onClose={handleDrawerClose}
+    classes={{
+      paper: classes.drawerPaper,
+    }}
+  >
+    <div className={classes.drawerHeader}>
+      <IconButton onClick={handleDrawerClose}>
+        {theme.direction === 'ltr' ? <ChevronLeft /> : <ChevronRight />}
+      </IconButton>
+    </div>
+    <Divider />
+    <List>
+      {
+
+        ['Messi', 'Naymar', 'Kroos'].map(
+          (text, index) =>
+            (
+              // <Link key={index} to={"/" + text} className={classes.link} >
+                <ListItem button key={text} onClick={handleDrawerClose} >
+                  <ListItemIcon className={classes.listItemIcon}>
+                    {
+                      renderIcon(text)
+                    }
+                  </ListItemIcon>
+                  <ListItemText> {text} </ListItemText>
+                </ListItem>
+              // </Link>
+            )
+        )
+      }
+    </List>
+  </Drawer>
+  )
 
   return (
     <div className={classes.root}>
@@ -65,11 +123,11 @@ export default function MenuAppBar() {
       </FormGroup>
       <AppBar position="static">
         <Toolbar>
-          <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-            <MenuIcon onClick={handleSideMenu} onClose={sideMenuClose} />
+          <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu" onClick={handleDrawerOpen}>
+            <MenuIcon  />
           </IconButton>
           <Typography variant="h6" className={classes.title}>
-            Photos
+            Haider Builders
           </Typography>
           {auth && (
             <div>
@@ -104,6 +162,12 @@ export default function MenuAppBar() {
           )}
         </Toolbar>
       </AppBar>
+
+      <main>
+        {
+          renderDrawer
+        }
+      </main>
     </div>
   );
 }
