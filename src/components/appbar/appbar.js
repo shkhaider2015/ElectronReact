@@ -1,19 +1,9 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Drawer, List, ListItem,
-   ListItemText, ListItemIcon, Divider, useTheme } from "@material-ui/core";
-import { ChevronLeft, ChevronRight  } from "@material-ui/icons";
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
-import AccountCircle from '@material-ui/icons/AccountCircle';
-import Switch from '@material-ui/core/Switch';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormGroup from '@material-ui/core/FormGroup';
-import MenuItem from '@material-ui/core/MenuItem';
-import Menu from '@material-ui/core/Menu';
+import { Drawer, List, ListItem, ListItemText, ListItemIcon, 
+         Divider, Menu, MenuItem, FormGroup, FormControlLabel,
+        Switch, IconButton, Typography, Toolbar, AppBar } from "@material-ui/core";
+import { ChevronLeft, Menu as MenuIcon, AccountCircle  } from "@material-ui/icons";
 
 const drawerWidth = 240;
 
@@ -23,6 +13,9 @@ const useStyles = makeStyles((theme) => ({
   },
   menuButton: {
     marginRight: theme.spacing(2),
+  },
+  appBar : {
+    position : 'static'
   },
   title: {
     flexGrow: 1,
@@ -36,9 +29,10 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
+
+
 export default function MenuAppBar() {
   const classes = useStyles();
-  const theme = useTheme()
   const [ auth, setAuth ] = React.useState( true );
   const [ drawerOpen, setDrawerOpen ] = React.useState( false )
   const [ anchorEl, setAnchorEl ] = React.useState( null );
@@ -86,7 +80,8 @@ export default function MenuAppBar() {
   >
     <div className={classes.drawerHeader}>
       <IconButton onClick={handleDrawerClose}>
-        {theme.direction === 'ltr' ? <ChevronLeft /> : <ChevronRight />}
+        {/* {theme.direction === 'ltr' ? <ChevronLeft /> : <ChevronRight />} */}
+        <ChevronLeft color="primary" />
       </IconButton>
     </div>
     <Divider />
@@ -117,11 +112,11 @@ export default function MenuAppBar() {
     <div className={classes.root}>
       <FormGroup>
         <FormControlLabel
-          control={<Switch checked={auth} onChange={handleChange} aria-label="login switch" />}
+          control={<Switch color="primary" checked={auth} onChange={handleChange} aria-label="login switch" />}
           label={auth ? 'Logout' : 'Login'}
         />
       </FormGroup>
-      <AppBar position="static">
+      <AppBar className={classes.appBar}>
         <Toolbar>
           <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu" onClick={handleDrawerOpen}>
             <MenuIcon  />
