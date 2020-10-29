@@ -22,10 +22,11 @@ const useStyle = makeStyles(
                 },
                 [theme.breakpoints.down('xs')]: {
                     width: '50%',
+                    marginTop : '10%',
                     textAlign: 'center'
 
                 },
-                marginTop: '10%',
+                marginTop: '5%',
                 margin: '0 auto',
             },
             myText: {
@@ -42,7 +43,7 @@ const useStyle = makeStyles(
     )
 )
 
-export default function Login() {
+export default function SignUp() {
 
     const classes = useStyle();
 
@@ -59,7 +60,17 @@ export default function Login() {
                 <Paper elevation={2} className={classes.myPaper}>
                     <form noValidate>
 
-                        <div >
+                    <div >
+                            <TextField
+                                id="name"
+                                label="Full Name"
+                                variant="outlined"
+                                type="text"
+                                color="primary"
+                                className={classes.myElements}
+                            />
+                        </div>
+                        <div className={classes.myText}>
                             <TextField
                                 id="email"
                                 label="Email"
@@ -87,13 +98,13 @@ export default function Login() {
                             color="primary"
                             className={classes.myElements}
                             >
-                                Login
+                                Sign Up
                             </Button>
                         </div>
 
                         <div style={{ marginTop : '2%'}} >
                             <Typography variant="caption" >
-                                Don't have an account ? <Link href="#">Sign up</Link> here
+                                Already have an account ? <Link href="#">Login</Link> here
                             </Typography>
                         </div>
 

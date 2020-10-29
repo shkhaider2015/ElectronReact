@@ -4,7 +4,7 @@ import { Drawer, List, ListItem, ListItemText, ListItemIcon,
          Divider, Menu, MenuItem, FormGroup, FormControlLabel,
         Switch, IconButton, Typography, Toolbar, AppBar } from "@material-ui/core";
 import { ChevronLeft, Menu as MenuIcon, AccountCircle  } from "@material-ui/icons";
-import Login from '../login/login';
+import SignUp from '../signup/signup';
 
 const drawerWidth = 240;
 
@@ -163,7 +163,7 @@ export default function MenuAppBar() {
         {
           renderDrawer
         }
-        <Login />
+        <SignUp />
       </main>
     </div>
   );
