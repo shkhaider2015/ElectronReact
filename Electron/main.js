@@ -9,7 +9,6 @@ function createWindow() {
         width:1000,
         height:700,
         show: false,
-        transparent: true,
     });
     const startURL = isDev ? 'http://localhost:3000' : `file://${path.join(__dirname, '../build/index.html')}`;
  
