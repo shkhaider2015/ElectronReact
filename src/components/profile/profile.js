@@ -5,7 +5,7 @@ const useStyle = makeStyles(
     (theme) => (
         {
             root : {
-
+                border : '1px solid black'
             },
             paper : {
 
@@ -24,10 +24,10 @@ export default function Profile()
 
                 <Grid container>
 
-                    <Grid item>
-
+                    <Grid item md={4}>
+                    
                     </Grid>
-                    <Grid item>
+                    <Grid item md={8}>
                         
                     </Grid>
 
