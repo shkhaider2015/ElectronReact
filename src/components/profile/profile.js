@@ -17,9 +17,11 @@ const useStyle = makeStyles(
                 padding : '2%'
             },
             profileImage : {
-                width : theme.spacing(30),
-                height : theme.spacing(30),
-                border : '1px solid black'
+                width : '100%',
+                height : '80%',
+                border : '2px solid rgba(177, 36, 224)',
+                boxShadow : '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.2);',
+                alignItems : 'bottom'
             }
         }
     )
@@ -35,12 +37,14 @@ export default function Profile()
 
                 <Grid container>
 
-                    <Grid item md={4}>
+                    <Grid item md={3} lg={3} sm={3} xs={12} style={{ border : '1px solid black', position : 'relative' }}>
                             <Avatar alt="Shakeel Haider" src={MyImage} className={classes.profileImage} />                   
                     </Grid>
-                    <Grid item md={8}>
+                    <Grid item md={9} lg={9} sm={9} xs={12} style={{ border : '1px solid black',position : 'relative' }}>
+                        <div style={{ position : 'absolute', bottom : 0, left : 0 }} >
                         <h1 >Shakeel Haider</h1>
                         <h4 style={{ opacity : 0.5}} >shkhaider2015@gmail.com</h4>
+                        </div>
                     </Grid>
 
                 </Grid>
