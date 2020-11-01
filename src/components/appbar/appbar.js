@@ -4,9 +4,8 @@ import { Drawer, List, ListItem, ListItemText, ListItemIcon,
          Divider, Menu, MenuItem, FormGroup, FormControlLabel,
         Switch, IconButton, Typography, Toolbar, AppBar } from "@material-ui/core";
 import { ChevronLeft, Menu as MenuIcon, AccountCircle  } from "@material-ui/icons";
-import Profile from '../profile/profile';
 
-const drawerWidth = 240;
+const drawerWidth = 280;
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -163,7 +162,6 @@ export default function MenuAppBar() {
         {
           renderDrawer
         }
-        <Profile />
       </main>
     </div>
   );
