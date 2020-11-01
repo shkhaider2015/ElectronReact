@@ -1,6 +1,7 @@
 import React from 'react'
 import { Avatar, Grid, makeStyles, Paper } from "@material-ui/core";
 import MyImage from "../../RawData/default.jpg";
+import ActivityTable from "./activity_table/activityTable";
 
 const useStyle = makeStyles(
     (theme) => (
@@ -16,12 +17,41 @@ const useStyle = makeStyles(
                 margin : '0 auto',
                 padding : '2%'
             },
+            profileImageGrid : {
+                position : 'relative'
+            },
             profileImage : {
                 width : '100%',
                 height : '80%',
                 border : '2px solid rgba(177, 36, 224)',
                 boxShadow : '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.2);',
                 alignItems : 'bottom'
+            },
+            nameEmailGrid : {
+                position : 'relative',
+            },
+            nameEmail : {
+                position : 'absolute', 
+                bottom : 0, 
+                left : 0, 
+                marginBottom : '10%', 
+                marginLeft : '5%',
+            },
+            nameEmailName : {
+                fontSize : '28px',
+                fontWeight : 'bold'
+            },
+            nameEmailEmail : {
+                fontSize : '16px'
+            },
+            activityText : {
+                margin : '0 auto',
+                width : '80%'
+            },
+            activityPaper : {
+                margin : '0 auto',
+                width : '80%',
+                padding : '2%'
             }
         }
     )
@@ -33,22 +63,29 @@ export default function Profile()
 
     return(
         <div className={classes.root}>
-            <Paper className={classes.paper}>
+            <Paper elevation={2} className={classes.paper}>
 
                 <Grid container>
 
-                    <Grid item md={3} lg={3} sm={3} xs={12} style={{ border : '1px solid black', position : 'relative' }}>
+                    <Grid item md={3} lg={3} sm={3} xs={3} className={classes.profileImageGrid} >
                             <Avatar alt="Shakeel Haider" src={MyImage} className={classes.profileImage} />                   
                     </Grid>
-                    <Grid item md={9} lg={9} sm={9} xs={12} style={{ border : '1px solid black',position : 'relative' }}>
-                        <div style={{ position : 'absolute', bottom : 0, left : 0 }} >
-                        <h1 >Shakeel Haider</h1>
-                        <h4 style={{ opacity : 0.5}} >shkhaider2015@gmail.com</h4>
+                    <Grid item md={9} lg={9} sm={9} xs={9} className={classes.nameEmailGrid} >
+                        <div className={classes.nameEmail} >
+                        <span className={classes.nameEmailName} > Shakeel Haider </span> <br />
+                         <span className={classes.nameEmailEmail} > shkhaider2015@gmail.com </span>
                         </div>
                     </Grid>
 
                 </Grid>
 
+            </Paper>
+            <div className={classes.activityText} >
+                 <h1>Activity</h1>
+                </div>
+
+            <Paper elevation={2} className={classes.activityPaper} >
+                <ActivityTable />
             </Paper>
         </div>
     )
