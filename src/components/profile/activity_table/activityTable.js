@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
+import { makeStyles, useTheme, withStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -14,6 +14,22 @@ import FirstPageIcon from '@material-ui/icons/FirstPage';
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import LastPageIcon from '@material-ui/icons/LastPage';
+
+import TableHead from '@material-ui/core/TableHead';
+
+const StyledTableCell = withStyles(
+  (theme) => (
+    {
+      head: {
+        backgroundColor: theme.palette.primary.main,
+        color: theme.palette.common.white,
+      },
+      body: {
+        fontSize: 14,
+      },
+    }
+  )
+)(TableCell)
 
 const useStyles1 = makeStyles((theme) => ({
   root: {
@@ -125,6 +141,13 @@ export default function ActivityTable() {
   return (
     <TableContainer component={Paper}>
       <Table className={classes.table} aria-label="custom pagination table">
+      <TableHead>
+          <TableRow>
+            <StyledTableCell>Dessert (100g serving)</StyledTableCell>
+            <StyledTableCell align="right">Carbs&nbsp;(g)</StyledTableCell>
+            <StyledTableCell align="right">Protein&nbsp;(g)</StyledTableCell>
+          </TableRow>
+        </TableHead>
         <TableBody>
           {(rowsPerPage > 0
             ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)

@@ -48,10 +48,10 @@ const useStyle = makeStyles(
                 margin : '0 auto',
                 width : '80%'
             },
-            activityPaper : {
+            activityDiv : {
                 margin : '0 auto',
-                width : '80%',
-                padding : '2%'
+                width : '85%',
+                marginBottom : '5%'
             }
         }
     )
@@ -84,9 +84,11 @@ export default function Profile()
                  <h1>Activity</h1>
                 </div>
 
-            <Paper elevation={2} className={classes.activityPaper} >
-                <ActivityTable />
-            </Paper>
+        <div className={classes.activityDiv} >
+        <ActivityTable />
+        </div>
+            
+                
         </div>
     )
 }
