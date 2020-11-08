@@ -5,17 +5,20 @@ import firebase from '../config/firebase'
 export const AuthContext = React.createContext();
 
 export const AuthProvider = ({ children }) => {
-    const [user, loading, error] = useAuthState(firebase.auth())
+    
+    const [user, loading, error] = useAuthState(firebase.auth());
 
     if (loading) {
-        <>
-            Loading ....
-        </>
+        return (
+            <>
+                Loading ....
+            </>
+        )
     }
 
     if (error) {
         return <>
-            {error}
+            Error ...
         </>
     }
 

@@ -17,11 +17,13 @@ const theme = createMuiTheme(
 function App() {
   return (
     <div>
-      <AuthProvider>
-        <MuiThemeProvider theme={theme}>
+
+      <MuiThemeProvider theme={theme}>
+        <AuthProvider>
           <MenuAppBar />
-        </MuiThemeProvider>
-      </AuthProvider>
+        </AuthProvider>
+
+      </MuiThemeProvider>
 
 
     </div>
