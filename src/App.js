@@ -2,6 +2,7 @@ import React from 'react';
 import 'fontsource-roboto';
 import MenuAppBar from './components/appbar/appbar';
 import { createMuiTheme, MuiThemeProvider } from '@material-ui/core';
+import { AuthProvider } from './context/authContext'
 
 const theme = createMuiTheme(
   {
@@ -16,9 +17,12 @@ const theme = createMuiTheme(
 function App() {
   return (
     <div>
-      <MuiThemeProvider theme={theme}>
-        <MenuAppBar />
-      </MuiThemeProvider>
+      <AuthProvider>
+        <MuiThemeProvider theme={theme}>
+          <MenuAppBar />
+        </MuiThemeProvider>
+      </AuthProvider>
+
 
     </div>
   );
