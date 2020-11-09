@@ -10,7 +10,7 @@ const useStyle = makeStyles(
             },
             myPaper: {
                 padding: '5%',
-                width: '15%',
+                width: '30%',
                 [theme.breakpoints.down('md')]: {
                     width: '20%',
                     textAlign: 'center'
@@ -31,14 +31,27 @@ const useStyle = makeStyles(
                 margin: '0 auto',
             },
             myText: {
-                marginTop: '10%'
+                marginTop: '5%'
             },
             myButton : {
-                marginTop: '15%',
+                marginTop: '10%',
                 textAlign : 'center'
             },
             myElements : {
                  width : '100%',
+            },
+            phoneCnicDiv : {
+                display : 'flex',
+                width : '100%',
+                marginTop : '5%',
+            },
+            cnicDiv : {
+                width : '45%'
+            },
+            phoneDiv : {
+                width : '45%',
+                marginLeft : 'auto',
+                marginRight : "0"
             },
             loginLink : {
                 textDecoration : 'none',
@@ -75,6 +88,28 @@ export default function SignUp() {
                                 color="primary"
                                 className={classes.myElements}
                             />
+                        </div>
+                        <div className={classes.phoneCnicDiv} >
+                            <div className={classes.cnicDiv} >
+                            <TextField
+                                id="cnic"
+                                label="CNIC"
+                                variant="outlined"
+                                type="text"
+                                color="primary"
+                                
+                            />
+                            </div>
+                            <div className={classes.phoneDiv} >
+                            <TextField
+                                id="phone"
+                                label="Phone No. "
+                                variant="outlined"
+                                type="text"
+                                color="primary"
+                                
+                            />
+                            </div>
                         </div>
                         <div className={classes.myText}>
                             <TextField
