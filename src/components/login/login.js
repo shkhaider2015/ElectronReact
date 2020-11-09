@@ -1,5 +1,6 @@
-import { Button, Grid, Link, makeStyles, Paper, TextField, Typography } from '@material-ui/core'
+import { Button, Grid, makeStyles, Paper, TextField, Typography } from '@material-ui/core'
 import React from 'react'
+import { Link } from "react-router-dom";
 
 const useStyle = makeStyles(
     (theme) => (
@@ -37,7 +38,12 @@ const useStyle = makeStyles(
             },
             myElements : {
                  width : '100%',
-            }
+            },
+            signupLink : {
+                textDecoration : 'none',
+                fontWeight : 'bold',
+                color : theme.palette.primary.main
+            },
         }
     )
 )
@@ -93,7 +99,7 @@ export default function Login() {
 
                         <div style={{ marginTop : '2%'}} >
                             <Typography variant="caption" >
-                                Don't have an account ? <Link href="#">Sign up</Link> here
+                                Don't have an account ? <Link to="/signup" className={classes.signupLink} >Sign up</Link>  here
                             </Typography>
                         </div>
 

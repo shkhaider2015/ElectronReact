@@ -4,6 +4,9 @@ import { Drawer, List, ListItem, ListItemText, ListItemIcon,
          Divider, Menu, MenuItem, FormGroup, FormControlLabel,
         Switch, IconButton, Typography, Toolbar, AppBar } from "@material-ui/core";
 import { ChevronLeft, Menu as MenuIcon, AccountCircle  } from "@material-ui/icons";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Login from "../login/login";
+import Signup from "../signup/signup";
 
 const drawerWidth = 280;
 
@@ -162,6 +165,17 @@ export default function MenuAppBar() {
         {
           renderDrawer
         }
+        <Router>
+
+          <Routes>
+
+              <Route path="/login" element={ <Login /> } />
+              <Route path="/signup" element={ <Signup /> } />
+
+          </Routes>
+
+        </Router>
+      
       </main>
     </div>
   );
