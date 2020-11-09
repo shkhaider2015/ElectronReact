@@ -1,4 +1,5 @@
-import { Avatar, Button, Grid, makeStyles, Paper, TextField, Typography } from '@material-ui/core'
+import { Avatar, Button, Grid, makeStyles, Paper, TextField, Typography, InputAdornment } from '@material-ui/core'
+import { Email, VpnKey as Password, PermIdentity as Name, CreditCard as CNIC, Phone } from "@material-ui/icons";
 import React from 'react'
 import { Link } from "react-router-dom";
 import IMAGE from "../../RawData/default.jpg";
@@ -17,17 +18,17 @@ const useStyle = makeStyles(
                 paddingBottom : '2%',
                 width: '30%',
                 [theme.breakpoints.down('md')]: {
-                    width: '30%',
-                    textAlign: 'center'
-
-                },
-                [theme.breakpoints.down('sm')]: {
                     width: '40%',
                     textAlign: 'center'
 
                 },
-                [theme.breakpoints.down('xs')]: {
+                [theme.breakpoints.down('sm')]: {
                     width: '50%',
+                    textAlign: 'center'
+
+                },
+                [theme.breakpoints.down('xs')]: {
+                    width: '80%',
                     marginTop : '10%',
                     textAlign: 'center'
 
@@ -70,6 +71,9 @@ const useStyle = makeStyles(
                 margin : '0 auto',
                 width : theme.spacing(13),
                 height : theme.spacing(13)
+            },
+            iconColor : {
+                color : theme.palette.primary.light
             }
         }
     )
@@ -104,6 +108,13 @@ export default function SignUp() {
                                 type="text"
                                 color="primary"
                                 className={classes.myElements}
+                                InputProps={{
+                                    endAdornment: (
+                                      <InputAdornment position="end">
+                                        <Name className={classes.iconColor} />
+                                      </InputAdornment>
+                                    ),
+                                  }}
                             />
                         </div>
                         <div className={classes.phoneCnicDiv} >
@@ -114,6 +125,13 @@ export default function SignUp() {
                                 variant="outlined"
                                 type="text"
                                 color="primary"
+                                InputProps={{
+                                    endAdornment: (
+                                      <InputAdornment position="end">
+                                        <CNIC className={classes.iconColor} />
+                                      </InputAdornment>
+                                    ),
+                                  }}
                                 
                             />
                             </div>
@@ -124,7 +142,14 @@ export default function SignUp() {
                                 variant="outlined"
                                 type="text"
                                 color="primary"
-                                
+                                InputProps={{
+                                    endAdornment: (
+                                      <InputAdornment position="end">
+                                        <Phone className={classes.iconColor} />
+                                      </InputAdornment>
+                                    ),
+                                  }}
+
                             />
                             </div>
                         </div>
@@ -136,6 +161,13 @@ export default function SignUp() {
                                 type="email"
                                 color="primary"
                                 className={classes.myElements}
+                                InputProps={{
+                                    endAdornment: (
+                                      <InputAdornment position="end">
+                                        <Email className={classes.iconColor} />
+                                      </InputAdornment>
+                                    ),
+                                  }}
                             />
                         </div>
 
@@ -147,6 +179,13 @@ export default function SignUp() {
                                 type="password"
                                 color="primary"
                                 className={classes.myElements}
+                                InputProps={{
+                                    endAdornment: (
+                                      <InputAdornment position="end">
+                                        <Password className={classes.iconColor} />
+                                      </InputAdornment>
+                                    ),
+                                  }}
                             />
                         </div>
 

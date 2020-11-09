@@ -1,6 +1,8 @@
-import { Button, Grid, makeStyles, Paper, TextField, Typography } from '@material-ui/core'
+import { Avatar, Button, Grid, makeStyles, Paper, TextField, Typography, InputAdornment } from '@material-ui/core'
+import { Email, VpnKey } from "@material-ui/icons";
 import React from 'react'
 import { Link } from "react-router-dom";
+import ICON from "../../RawData/mainassociates_icon.png"
 
 const useStyle = makeStyles(
     (theme) => (
@@ -9,15 +11,18 @@ const useStyle = makeStyles(
                 
             },
             myPaper: {
-                padding: '5%',
-                width: '15%',
+                paddingLeft : '4%',
+                paddingRight : '4%',
+                paddingTop : '2%',
+                paddingBottom : '2%',
+                width: '30%',
                 [theme.breakpoints.down('md')]: {
-                    width: '20%',
+                    width: '40%',
                     textAlign: 'center'
 
                 },
                 [theme.breakpoints.down('sm')]: {
-                    width: '30%',
+                    width: '50%',
                     textAlign: 'center'
 
                 },
@@ -26,11 +31,11 @@ const useStyle = makeStyles(
                     textAlign: 'center'
 
                 },
-                marginTop: '10%',
+                marginTop: '8%',
                 margin: '0 auto',
             },
             myText: {
-                marginTop: '10%'
+                marginTop: '5%'
             },
             myButton : {
                 marginTop: '15%',
@@ -44,13 +49,26 @@ const useStyle = makeStyles(
                 fontWeight : 'bold',
                 color : theme.palette.primary.main
             },
+            avatarDiv : {
+                width : '100%'
+            },
+            avatar : {
+                margin : '0 auto',
+                width : theme.spacing(22),
+                height : theme.spacing(10)
+            },
+            iconColor : {
+                color : theme.palette.primary.light
+            }
         }
     )
 )
 
 export default function Login() {
 
+
     const classes = useStyle();
+
 
     return (
         <div className={classes.root}>  <Grid container>
@@ -65,7 +83,11 @@ export default function Login() {
                 <Paper elevation={2} className={classes.myPaper}>
                     <form noValidate>
 
-                        <div >
+                        <div className={classes.avatarDiv}>
+                            <Avatar alt="icon" src={ICON} variant="square"  className={classes.avatar} />
+                        </div>
+
+                        <div className={classes.myText}>
                             <TextField
                                 id="email"
                                 label="Email"
@@ -73,6 +95,13 @@ export default function Login() {
                                 type="email"
                                 color="primary"
                                 className={classes.myElements}
+                                InputProps={{
+                                    endAdornment: (
+                                      <InputAdornment position="end">
+                                        <Email className={classes.iconColor} />
+                                      </InputAdornment>
+                                    ),
+                                  }}
                             />
                         </div>
 
@@ -84,6 +113,13 @@ export default function Login() {
                                 type="password"
                                 color="primary"
                                 className={classes.myElements}
+                                InputProps={{
+                                    endAdornment: (
+                                      <InputAdornment position="end">
+                                        <VpnKey className={classes.iconColor} />
+                                      </InputAdornment>
+                                    ),
+                                  }}
                             />
                         </div>
 

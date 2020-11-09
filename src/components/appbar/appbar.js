@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function MenuAppBar() {
   const classes = useStyles();
-  const [ auth, setAuth ] = React.useState( true );
+  const [ auth, setAuth ] = React.useState( false );
   const [ drawerOpen, setDrawerOpen ] = React.useState( false )
   const [ anchorEl, setAnchorEl ] = React.useState( null );
   const open = Boolean(anchorEl);
@@ -111,11 +111,13 @@ export default function MenuAppBar() {
   </Drawer>
   )
 
+  
+
   return (
     <div className={classes.root}>
       <FormGroup>
         <FormControlLabel
-          control={<Switch color="primary" checked={auth} onChange={handleChange} aria-label="login switch" />}
+          control={<Switch color="primary" checked={auth} onChange={handleChange}  aria-label="login switch" />}
           label={auth ? 'Logout' : 'Login'}
         />
       </FormGroup>
@@ -168,7 +170,7 @@ export default function MenuAppBar() {
         <Router>
 
           <Routes>
-
+              <Route path="/" element={ <Login /> } />
               <Route path="/login" element={ <Login /> } />
               <Route path="/signup" element={ <Signup /> } />
 
