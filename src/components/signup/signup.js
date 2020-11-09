@@ -1,6 +1,7 @@
-import { Button, Grid, makeStyles, Paper, TextField, Typography } from '@material-ui/core'
+import { Avatar, Button, Grid, makeStyles, Paper, TextField, Typography } from '@material-ui/core'
 import React from 'react'
 import { Link } from "react-router-dom";
+import IMAGE from "../../RawData/default.jpg";
 
 const useStyle = makeStyles(
     (theme) => (
@@ -9,15 +10,19 @@ const useStyle = makeStyles(
                 
             },
             myPaper: {
-                padding: '5%',
+                padding: '0%',
+                paddingTop : '2%',
+                paddingLeft : '4%',
+                paddingRight : '4%',
+                paddingBottom : '2%',
                 width: '30%',
                 [theme.breakpoints.down('md')]: {
-                    width: '20%',
+                    width: '30%',
                     textAlign: 'center'
 
                 },
                 [theme.breakpoints.down('sm')]: {
-                    width: '30%',
+                    width: '40%',
                     textAlign: 'center'
 
                 },
@@ -27,7 +32,7 @@ const useStyle = makeStyles(
                     textAlign: 'center'
 
                 },
-                marginTop: '5%',
+                marginTop: '3%',
                 margin: '0 auto',
             },
             myText: {
@@ -58,6 +63,14 @@ const useStyle = makeStyles(
                 fontWeight : 'bold',
                 color : theme.palette.primary.main
             },
+            imageDiv : {
+                width : '100%'
+            },
+            avatar : {
+                margin : '0 auto',
+                width : theme.spacing(13),
+                height : theme.spacing(13)
+            }
         }
     )
 )
@@ -79,7 +92,11 @@ export default function SignUp() {
                 <Paper elevation={2} className={classes.myPaper}>
                     <form noValidate>
 
-                    <div >
+                        <div className={classes.imageDiv}>
+                            <Avatar alt="shakeel haider" src={IMAGE} variant="circle" className={classes.avatar} />
+                        </div>
+
+                    <div className={classes.myText} >
                             <TextField
                                 id="name"
                                 label="Full Name"
