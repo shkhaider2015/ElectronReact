@@ -3,19 +3,25 @@ import { Email, VpnKey } from "@material-ui/icons";
 import React from 'react'
 import { Link } from "react-router-dom";
 import ICON from "../../RawData/mainassociates_icon.png"
+import BackgroundImage from "../../RawData/Group2.png";
 
 const useStyle = makeStyles(
     (theme) => (
         {
             root: {
-                
+                backgroundImage : `url(${BackgroundImage})`,
+                backgroundRepeat : 'repeat-y',
+                backgroundSize : '100% 100%',
+                backgroundPosition : '0% 0%',
+
             },
             myPaper: {
                 paddingLeft : '4%',
                 paddingRight : '4%',
                 paddingTop : '2%',
                 paddingBottom : '2%',
-                width: '30%',
+                width: '25%',
+                marginBottom : '14%',
                 [theme.breakpoints.down('md')]: {
                     width: '40%',
                     textAlign: 'center'
@@ -71,7 +77,8 @@ export default function Login() {
 
 
     return (
-        <div className={classes.root}>  <Grid container>
+        <div className={classes.root}> 
+         <Grid container>
             <Grid
                 item
                 lg={12}

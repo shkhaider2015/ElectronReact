@@ -3,12 +3,17 @@ import { Email, VpnKey as Password, PermIdentity as Name, CreditCard as CNIC, Ph
 import React from 'react'
 import { Link } from "react-router-dom";
 import IMAGE from "../../RawData/default.jpg";
+import BackgroundImage from "../../RawData/Group2.png";
+
 
 const useStyle = makeStyles(
     (theme) => (
         {
             root: {
-                
+                backgroundImage : `url(${BackgroundImage})`,
+                backgroundRepeat : 'no-repeat',
+                backgroundSize : '100% 100%',
+                backgroundPosition : '0% 0%',
             },
             myPaper: {
                 padding: '0%',
@@ -16,7 +21,10 @@ const useStyle = makeStyles(
                 paddingLeft : '4%',
                 paddingRight : '4%',
                 paddingBottom : '2%',
-                width: '30%',
+                marginTop : '4%',
+                marginBottom : '8.3%',
+                width: '25%',
+                background: 'rgba(255, 255, 255, 0.98)',
                 [theme.breakpoints.down('md')]: {
                     width: '40%',
                     textAlign: 'center'
@@ -33,7 +41,6 @@ const useStyle = makeStyles(
                     textAlign: 'center'
 
                 },
-                marginTop: '3%',
                 margin: '0 auto',
             },
             myText: {
@@ -93,7 +100,7 @@ export default function SignUp() {
                 xs={12}
             >
 
-                <Paper elevation={2} className={classes.myPaper}>
+                <Paper elevation={3} className={classes.myPaper}>
                     <form noValidate>
 
                         <div className={classes.imageDiv}>

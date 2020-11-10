@@ -115,12 +115,12 @@ export default function MenuAppBar() {
 
   return (
     <div className={classes.root}>
-      <FormGroup>
+      {/* <FormGroup>
         <FormControlLabel
           control={<Switch color="primary" checked={auth} onChange={handleChange}  aria-label="login switch" />}
           label={auth ? 'Logout' : 'Login'}
         />
-      </FormGroup>
+      </FormGroup> */}
       <AppBar className={classes.appBar}>
         <Toolbar>
           <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu" onClick={handleDrawerOpen}>
@@ -171,9 +171,6 @@ export default function MenuAppBar() {
 
           <Routes>
               <Route path="/" element={ <Login /> } />
-              <Route path="/login" element={ <Login /> } />
-              <Route path="/signup" element={ <Signup /> } />
-
           </Routes>
 
         </Router>
