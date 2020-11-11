@@ -1,4 +1,4 @@
-import { Avatar, Button, Grid, makeStyles, Paper, TextField, Typography, InputAdornment } from '@material-ui/core'
+import { Avatar, Button, Grid, makeStyles, Paper, TextField, Typography, InputAdornment, FormControl } from '@material-ui/core'
 import { Email, VpnKey } from "@material-ui/icons";
 import React from 'react'
 import { Link } from "react-router-dom";
@@ -75,6 +75,16 @@ export default function Login() {
 
     const classes = useStyle();
 
+    const handleSubmit = React.useCallback(
+        e => {
+            e.preventDefault()
+            console.log(e.target.elements)
+            const {email, password} = e.target.elements
+
+        },
+        []
+    )
+
 
     return (
         <div className={classes.root}> 
@@ -88,9 +98,10 @@ export default function Login() {
             >
 
                 <Paper elevation={2} className={classes.myPaper}>
-                    <form noValidate>
+                    <form noValidate onSubmit={handleSubmit}>
 
-                        <div className={classes.avatarDiv}>
+<FormControl>
+<div className={classes.avatarDiv}>
                             <Avatar alt="icon" src={ICON} variant="square"  className={classes.avatar} />
                         </div>
 
@@ -101,6 +112,7 @@ export default function Login() {
                                 variant="outlined"
                                 type="email"
                                 color="primary"
+                                name="email"
                                 className={classes.myElements}
                                 InputProps={{
                                     endAdornment: (
@@ -119,6 +131,7 @@ export default function Login() {
                                 variant="outlined"
                                 type="password"
                                 color="primary"
+                                name="password"
                                 className={classes.myElements}
                                 InputProps={{
                                     endAdornment: (
@@ -135,10 +148,13 @@ export default function Login() {
                             variant="contained" 
                             color="primary"
                             className={classes.myElements}
+                            type="submit"
                             >
                                 Login
                             </Button>
                         </div>
+</FormControl>
+                        
 
                         <div style={{ marginTop : '2%'}} >
                             <Typography variant="caption" >

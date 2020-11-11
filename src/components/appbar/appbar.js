@@ -1,12 +1,11 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Drawer, List, ListItem, ListItemText, ListItemIcon, 
-         Divider, Menu, MenuItem, FormGroup, FormControlLabel,
-        Switch, IconButton, Typography, Toolbar, AppBar } from "@material-ui/core";
+         Divider, Menu, MenuItem, IconButton, Typography, Toolbar, AppBar } from "@material-ui/core";
 import { ChevronLeft, Menu as MenuIcon, AccountCircle  } from "@material-ui/icons";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Login from "../login/login";
-import Signup from "../signup/signup";
+import { Routes, Route, Outlet } from "react-router-dom";
+// import Login from "../login/login";
+// import CardForm from '../card/cardForm'
 
 const drawerWidth = 280;
 
@@ -129,7 +128,7 @@ export default function MenuAppBar() {
           <Typography variant="h6" className={classes.title}>
             Main Associates
           </Typography>
-          {auth && (
+          
             <div>
               <IconButton
                 aria-label="account of current user"
@@ -159,7 +158,7 @@ export default function MenuAppBar() {
                 <MenuItem onClick={handleClose}>My account</MenuItem>
               </Menu>
             </div>
-          )}
+          
         </Toolbar>
       </AppBar>
 
@@ -167,13 +166,11 @@ export default function MenuAppBar() {
         {
           renderDrawer
         }
-        <Router>
-
-          <Routes>
+        <Outlet />
+          {/* <Routes>
               <Route path="/" element={ <Login /> } />
-          </Routes>
-
-        </Router>
+              <Route path="/jj" element={ <CardForm /> } />
+          </Routes> */}
       
       </main>
     </div>
