@@ -46,18 +46,21 @@ const dummyData = {
     image: FORMICON
 }
 
-function CardForm() {
+function CardForm({ mydata }) {
     const classes = useStyle();
+
+    // console.log("value --> ",mydata)
+
     return (
         <div className={classes.root} >
-            <Paper elevation={2} className={classes.myPaper} style={{ backgroundColor : dummyData.backgroundColor }} >
+            <Paper elevation={2} className={classes.myPaper} style={{ backgroundColor : mydata.backgroundColor }} >
 
                 <div className={classes.divContain} >
                     <div className={classes.h1TagDiv} >
-                        <h2 > {dummyData.title} </h2>
+                        <h2 > {mydata.title} </h2>
                     </div>
                     <div className={classes.imageDiv} >
-                        <img alt="" src={dummyData.image} className={classes.myImage} />
+                        <img alt="" src={mydata.image} className={classes.myImage} />
                     </div>
                 </div>
 

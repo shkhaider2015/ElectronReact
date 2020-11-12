@@ -6,13 +6,13 @@ import Home from "../appbar/appbar";
 import CardForm from '../card/cardForm'
 
 
+
 function MyRoutes() {
     return (
         <div>
             <Router>
                 <Routes>
                     <Route path="/" element={<Home />} >
-                        <Route path="/" element={<Login />} />
                         <Route path="/card" element={<CardForm />} />
                     </Route>
                     

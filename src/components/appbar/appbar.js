@@ -3,7 +3,9 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Drawer, List, ListItem, ListItemText, ListItemIcon, 
          Divider, Menu, MenuItem, IconButton, Typography, Toolbar, AppBar } from "@material-ui/core";
 import { ChevronLeft, Menu as MenuIcon, AccountCircle  } from "@material-ui/icons";
-import { Routes, Route, Outlet } from "react-router-dom";
+import { Outlet } from "react-router-dom";
+import FORMICON from "../../RawData/forms.png";
+import CardForm from "../card/cardForm"
 // import Login from "../login/login";
 // import CardForm from '../card/cardForm'
 
@@ -31,6 +33,38 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
+const cardData = [
+  {
+      title: 'Application Form',
+      backgroundColor: 'rgb(232, 197, 58)',
+      image: FORMICON
+  },
+  {
+      title: 'Application Form',
+      backgroundColor: 'rgb(232, 197, 58)',
+      image: FORMICON
+  },
+  {
+      title: 'Application Form',
+      backgroundColor: 'rgb(232, 197, 58)',
+      image: FORMICON
+  },
+  {
+      title: 'Application Form',
+      backgroundColor: 'rgb(232, 197, 58)',
+      image: FORMICON
+  },
+  {
+      title: 'Application Form',
+      backgroundColor: 'rgb(232, 197, 58)',
+      image: FORMICON
+  },
+  {
+      title: 'Application Form',
+      backgroundColor: 'rgb(232, 197, 58)',
+      image: FORMICON
+  }
+]
 
 
 export default function MenuAppBar() {
@@ -166,7 +200,20 @@ export default function MenuAppBar() {
         {
           renderDrawer
         }
-        <Outlet />
+        <Outlet>
+          <ul>
+          {
+            cardData.map(
+              (obj, index) => 
+              (
+                // console.log("object : ", obj)
+                <li key={index} ><CardForm mydata={obj} /></li>
+              )
+            )
+          }
+          </ul>
+          
+        </Outlet>
           {/* <Routes>
               <Route path="/" element={ <Login /> } />
               <Route path="/jj" element={ <CardForm /> } />
