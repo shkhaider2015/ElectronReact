@@ -13,11 +13,15 @@ const useStyle = makeStyles(
                 height : theme.spacing(20),
                 backgroundColor : 'rgb(232, 197, 58)'
             },
+            divContain : {
+                display : 'flex',
+                width : '100%'
+            },
             myImage : {
                 width : '50%',
                 height : '80%',
-                opacity : 0.3,
-                rotate : '180deg'
+                opacity : 0.2,
+                transform : 'rotate(20deg)'
             }
         }
     )
@@ -30,7 +34,13 @@ function CardForm()
         <div>
             <Paper elevation={2} className={classes.myPaper} >
 
-                <img alt="" src={FORMICON} className={classes.myImage} />
+                <div className={classes.divContain} >
+                    <h2 style={{ position : 'absolute' }} >Application Form</h2>
+                    <div style={{ position : 'relative', textAlign : 'right' }}>
+                    <img  alt="" src={FORMICON} className={classes.myImage} />
+                    </div>
+                    
+                </div>
 
             </Paper>
         </div>
