@@ -5,41 +5,60 @@ import FORMICON from "../../RawData/forms.png";
 const useStyle = makeStyles(
     (theme) => (
         {
-            root : {
+            root: {
+                marginTop: '2%',
+                marginLeft: '2%',
+                width: theme.spacing(40),
+                height: theme.spacing(20),
+                // border: '3px dashed #1c87c9'
 
             },
-            myPaper : {
-                width : theme.spacing(40),
-                height : theme.spacing(20),
-                backgroundColor : 'rgb(232, 197, 58)'
+            myPaper: {
+                width: '98%',
+                height: '100%',
+                paddingLeft: '2%',
             },
-            divContain : {
-                display : 'flex',
-                width : '100%'
+            divContain: {
+                display: 'flex',
+                width: '100%'
             },
-            myImage : {
-                width : '50%',
-                height : '80%',
-                opacity : 0.2,
-                transform : 'rotate(20deg)'
+            h1TagDiv: {
+                position: 'absolute',
+                marginTop: theme.spacing(6),
+            },
+            imageDiv : {
+                position: 'relative', 
+                textAlign: 'right', 
+            },
+            myImage: {
+                width: '50%',
+                height: '80%',
+                opacity: 0.2,
+                transform: 'rotate(20deg)'
             }
         }
     )
 )
 
-function CardForm()
-{
+const dummyData = {
+    title: 'Application Form',
+    backgroundColor: 'rgb(232, 197, 58)',
+    image: FORMICON
+}
+
+function CardForm() {
     const classes = useStyle();
-    return(
-        <div>
-            <Paper elevation={2} className={classes.myPaper} >
+    return (
+        <div className={classes.root} >
+            <Paper elevation={2} className={classes.myPaper} style={{ backgroundColor : dummyData.backgroundColor }} >
 
                 <div className={classes.divContain} >
-                    <h2 style={{ position : 'absolute' }} >Application Form</h2>
-                    <div style={{ position : 'relative', textAlign : 'right' }}>
-                    <img  alt="" src={FORMICON} className={classes.myImage} />
+                    <div className={classes.h1TagDiv} >
+                        <h2 > {dummyData.title} </h2>
                     </div>
-                    
+                    <div className={classes.imageDiv} >
+                        <img alt="" src={dummyData.image} className={classes.myImage} />
+                    </div>
                 </div>
 
             </Paper>
