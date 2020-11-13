@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Login from "../login/login";
 import Signup from "../signup/signup";
 import Home from "../appbar/appbar";
-import CardForm from '../card/cardForm'
+import FormList from "../HomePageForms/formsList";
 
 
 
@@ -13,7 +13,7 @@ function MyRoutes() {
             <Router>
                 <Routes>
                     <Route path="/" element={<Home />} >
-                        <Route path="/card" element={<CardForm />} />
+                        <Route path="/" element={ <FormList /> } />
                     </Route>
                     
                     <Route path="/login" element={<Login />} />

@@ -25,6 +25,8 @@ const useStyle = makeStyles(
             h1TagDiv: {
                 position: 'absolute',
                 marginTop: theme.spacing(6),
+                width : theme.spacing(38),
+                textAlign : 'center',
             },
             imageDiv : {
                 position: 'relative', 
@@ -40,27 +42,21 @@ const useStyle = makeStyles(
     )
 )
 
-const dummyData = {
-    title: 'Application Form',
-    backgroundColor: 'rgb(232, 197, 58)',
-    image: FORMICON
-}
 
-function CardForm({ mydata }) {
+function CardForm({ obj }) {
     const classes = useStyle();
 
-    // console.log("value --> ",mydata)
 
     return (
         <div className={classes.root} >
-            <Paper elevation={2} className={classes.myPaper} style={{ backgroundColor : mydata.backgroundColor }} >
+            <Paper elevation={2} className={classes.myPaper} style={{ backgroundColor : obj.backgroundColor }} >
 
                 <div className={classes.divContain} >
                     <div className={classes.h1TagDiv} >
-                        <h2 > {mydata.title} </h2>
+                        <h2 > {obj.title} </h2>
                     </div>
                     <div className={classes.imageDiv} >
-                        <img alt="" src={mydata.image} className={classes.myImage} />
+                        <img alt="" src={obj.image} className={classes.myImage} />
                     </div>
                 </div>
 
