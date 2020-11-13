@@ -2,6 +2,7 @@ import React from 'react'
 import CardForm from "../card/cardForm";
 import FORMICON from "../../RawData/forms.png";
 import { Grid, makeStyles } from '@material-ui/core';
+import { Link } from "react-router-dom";
 
     const cardData = [
     {
@@ -56,11 +57,16 @@ import { Grid, makeStyles } from '@material-ui/core';
             {
                 container : {
                     paddingLeft : '8%',
-                    paddingTop : '5%'
+                    paddingRight : '8%',
+                    paddingTop : '2%',
                 },
                 item : {
+                    transition: 'transform .3s',
+                    '&:hover' : {
+                        transform : 'scale(1.2)',
 
-                }
+                    }
+                },
             }
         )
     )
@@ -77,8 +83,12 @@ function FormList()
                     (object, index) =>
                     {
                         return(
-                            <Grid item key={index} lg={4} md={4} >
-                                <CardForm obj={object} />
+                            <Grid item key={index} className={classes.item} xl={4} lg={4} md={2} >
+                                <Link to="/login" >
+                                <CardForm
+                                obj={object}
+                                />
+                                </Link>                   
                             </Grid>
                         )
                     }

@@ -80,6 +80,8 @@ export default function Login() {
             e.preventDefault()
             console.log(e.target.elements)
             const {email, password} = e.target.elements
+            console.log("Email : ", email.value)
+            console.log("Password : ", password.value)
 
         },
         []
@@ -100,7 +102,7 @@ export default function Login() {
                 <Paper elevation={2} className={classes.myPaper}>
                     <form noValidate onSubmit={handleSubmit}>
 
-<FormControl>
+
 <div className={classes.avatarDiv}>
                             <Avatar alt="icon" src={ICON} variant="square"  className={classes.avatar} />
                         </div>
@@ -153,7 +155,7 @@ export default function Login() {
                                 Login
                             </Button>
                         </div>
-</FormControl>
+                
                         
 
                         <div style={{ marginTop : '2%'}} >
