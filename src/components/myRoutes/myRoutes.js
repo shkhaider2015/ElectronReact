@@ -4,6 +4,7 @@ import Login from "../login/login";
 import Signup from "../signup/signup";
 import Home from "../appbar/appbar";
 import FormList from "../HomePageForms/formsList";
+import ApplicationForm from "../forms/applicationForm";
 
 
 
@@ -14,6 +15,7 @@ function MyRoutes() {
                 <Routes>
                     <Route path="/" element={<Home />} >
                         <Route path="/" element={ <FormList /> } />
+                        <Route path="/application" element={ <ApplicationForm /> } />
                     </Route>
                     
                     <Route path="/login" element={<Login />} />

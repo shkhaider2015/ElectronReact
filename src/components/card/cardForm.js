@@ -10,7 +10,6 @@ const useStyle = makeStyles(
                 marginLeft: '2%',
                 width: '90%',
                 height: '45%',
-                // border: '3px dashed #1c87c9'
 
             },
             myPaper: {

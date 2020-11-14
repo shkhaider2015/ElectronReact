@@ -1,4 +1,4 @@
-import { makeStyles } from "@material-ui/core";
+import { makeStyles, TextField } from "@material-ui/core";
 import React from "react";
 
 
@@ -19,6 +19,37 @@ function ApplicationForm()
 
     return(
         <div>
+            <form>
+                <div>
+                    <TextField
+                    id="name"
+                    label="Full Name"
+                    type="text"
+                    />
+                </div>
+                <div>
+                    <TextField
+                    id="Parent"
+                    label="Parent"
+                    type="text"
+                    />
+                </div>
+                <div>
+                    <TextField
+                    id="name"
+                    label="Full Name"
+                    type="text"
+                    />
+                </div>
+                <div>
+                    <TextField
+                    id="name"
+                    label="Full Name"
+                    type="text"
+                    />
+                </div>
+
+            </form>
 
         </div>
     )
