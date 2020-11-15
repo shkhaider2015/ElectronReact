@@ -5,6 +5,8 @@ import Signup from "../signup/signup";
 import Home from "../appbar/appbar";
 import FormList from "../HomePageForms/formsList";
 import ApplicationForm from "../forms/applicationForm";
+import NominationForm from '../forms/nominationForm'
+import ConfirmationForm from '../forms/confirmationForm'
 
 
 
@@ -16,6 +18,8 @@ function MyRoutes() {
                     <Route path="/" element={<Home />} >
                         <Route path="/" element={ <FormList /> } />
                         <Route path="/application" element={ <ApplicationForm /> } />
+                        <Route path="/nomination" element={ <NominationForm /> } />
+                        <Route path="/confirmation" element={ <ConfirmationForm /> } />
                     </Route>
                     
                     <Route path="/login" element={<Login />} />
