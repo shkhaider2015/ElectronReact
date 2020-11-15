@@ -1,6 +1,5 @@
 import { makeStyles, Paper } from '@material-ui/core';
 import React from 'react';
-import FORMICON from "../../RawData/forms.png";
 
 const useStyle = makeStyles(
     (theme) => (
@@ -8,8 +7,8 @@ const useStyle = makeStyles(
             root: {
                 marginTop: '2%',
                 marginLeft: '2%',
-                width: '90%',
-                height: '45%',
+                width: '80%',
+                height: '80%',
 
             },
             myPaper: {
