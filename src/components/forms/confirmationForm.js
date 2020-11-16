@@ -1,5 +1,6 @@
 import { makeStyles, TextField, RadioGroup, Paper, Radio, Button, FormControlLabel } from "@material-ui/core";
 import React from "react";
+import RefrenceDate from "./refrenceDate";
 
 
 const useStyle = makeStyles(
@@ -74,6 +75,7 @@ function ConfirmationLetter() {
                     <div style={{ textAlign: 'center' }} >
                         <h3> Confirmation Letter </h3>
                     </div>
+                    <RefrenceDate />
                     <div>
                         <h2>Client Details</h2>
                     </div>
@@ -151,6 +153,11 @@ function ConfirmationLetter() {
                     </div> */}
                     <div>
                         <h2>Plot Details</h2>
+                        <p>
+                         With refrence to your application and ACCEPTANCE
+                         of terms and condition for allotment of a Residential 
+                         Plot no our subject Mian Town. 
+                        </p>
                     </div>
                     <div className={classes.fieldsDiv} >
                         <TextField
