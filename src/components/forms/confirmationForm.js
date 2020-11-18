@@ -1,4 +1,4 @@
-import { makeStyles, TextField, RadioGroup, Paper, Radio, Button, FormControlLabel } from "@material-ui/core";
+import { makeStyles, TextField, RadioGroup, Paper, Radio, Button, FormControlLabel} from "@material-ui/core";
 import React from "react";
 import RefrenceDate from "./refrenceDate";
 
@@ -75,7 +75,6 @@ function ConfirmationLetter() {
                     <div style={{ textAlign: 'center' }} >
                         <h3> Confirmation Letter </h3>
                     </div>
-                    <RefrenceDate />
                     <div>
                         <h2>Client Details</h2>
                     </div>
@@ -154,9 +153,9 @@ function ConfirmationLetter() {
                     <div>
                         <h2>Plot Details</h2>
                         <p>
-                         With refrence to your application and ACCEPTANCE
-                         of terms and condition for allotment of a Residential 
-                         Plot no our subject Mian Town. 
+                            With refrence to your application and ACCEPTANCE
+                            of terms and condition for allotment of a Residential
+                            Plot no our subject Mian Town.
                         </p>
                     </div>
                     <div className={classes.fieldsDiv} >
@@ -178,8 +177,8 @@ function ConfirmationLetter() {
                                 className={classes.fieldElement}
                             />
                         </div>
-                        <div className={classes.smallFieldsDiv} 
-                                style={{ marginLeft : 'auto', marginRight : 0 }} >
+                        <div className={classes.smallFieldsDiv}
+                            style={{ marginLeft: 'auto', marginRight: 0 }} >
                             <TextField
                                 id="cnic"
                                 label="Square yd, block"
@@ -200,8 +199,8 @@ function ConfirmationLetter() {
                                 className={classes.fieldElement}
                             />
                         </div>
-                        <div className={classes.smallFieldsDiv} 
-                                style={{ marginLeft : 'auto', marginRight : 0 }} >
+                        <div className={classes.smallFieldsDiv}
+                            style={{ marginLeft: 'auto', marginRight: 0 }} >
                             <TextField
                                 id="cnic"
                                 label="Nature"
@@ -209,6 +208,40 @@ function ConfirmationLetter() {
                                 required
                                 className={classes.fieldElement}
                             />
+                        </div>
+                    </div>
+                    <div>
+                        <div style={{ marginTop: '2%' }} >
+                            {/* <div>Ordinary</div> */}
+                            <div style={{ marginLeft: '2%', width: '100%' }} >
+                                <RadioGroup row aria-label="gender" name="gender" value={genderValue} onChange={handleChange} >
+                                    <FormControlLabel label="Ordinary" control={ <span></span> } />
+                                    <FormControlLabel value="yes" control={<Radio style={{ color: '#EF3729' }} />} label="Yes" />
+                                    <FormControlLabel value="no" control={<Radio style={{ color: '#EF3729' }} />} label="No" />
+                                </RadioGroup>
+                            </div>
+                            <div style={{ marginLeft: '2%', width: '100%' }} >
+                                <RadioGroup row aria-label="gender" name="gender" value={genderValue} onChange={handleChange} >
+                                    <FormControlLabel label="Ordinary" control={ <span></span> } />
+                                    <FormControlLabel value="yes" control={<Radio style={{ color: '#EF3729' }} />} label="Yes" />
+                                    <FormControlLabel value="no" control={<Radio style={{ color: '#EF3729' }} />} label="No" />
+                                </RadioGroup>
+                            </div>
+                            <div style={{ marginLeft: '2%', width: '100%' }} >
+                                <RadioGroup row aria-label="gender" name="gender" value={genderValue} onChange={handleChange} >
+                                    <FormControlLabel label="Ordinary" control={ <span></span> } />
+                                    <FormControlLabel value="yes" control={<Radio style={{ color: '#EF3729' }} />} label="Yes" />
+                                    <FormControlLabel value="no" control={<Radio style={{ color: '#EF3729' }} />} label="No" />
+                                </RadioGroup>
+                            </div>
+                            <div style={{ marginLeft: '2%', width: '100%' }} >
+                                <RadioGroup row aria-label="gender" name="gender" value={genderValue} onChange={handleChange} >
+                                    <FormControlLabel label="Ordinary" control={ <span></span> } />
+                                    <FormControlLabel value="yes" control={<Radio style={{ color: '#EF3729' }} />} label="Yes" />
+                                    <FormControlLabel value="no" control={<Radio style={{ color: '#EF3729' }} />} label="No" />
+                                </RadioGroup>
+                            </div>
+
                         </div>
                     </div>
 
