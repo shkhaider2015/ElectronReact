@@ -20,7 +20,7 @@ const useStyle = makeStyles(
                 paddingRight : '4%',
                 paddingTop : '2%',
                 paddingBottom : '2%',
-                width: '25%',
+                width: '30%',
                 marginBottom : '14%',
                 [theme.breakpoints.down('md')]: {
                     width: '40%',
