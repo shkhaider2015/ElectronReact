@@ -48,11 +48,23 @@ const useStyle = makeStyles(
 
 function ConfirmationLetter() {
     const classes = useStyle();
-    const [genderValue, setGenderValue] = React.useState("female")
+    const [ordinary, setOrdinary] = React.useState(false)
+    const [corner, setCorner] = React.useState(false)
+    const [westOpen, setWestOpen] = React.useState(false)
+    const [roadFacing, setRoadFacing] = React.useState(false)
 
 
-    const handleChange = (e) => {
-        setGenderValue(e.target.value)
+    const handleOrdinary = () => {
+        setOrdinary(ordinary => !ordinary)
+    }
+    const handleCorner = () => {
+        setCorner(corner => !corner)
+    }
+    const handleWestOpen = () => {
+        setWestOpen(westOpen => !westOpen)
+    }
+    const handleRoadFacing = () => {
+        setRoadFacing(roadFacing => !roadFacing)
     }
 
     const handleCnic = (e) => {
@@ -214,31 +226,31 @@ function ConfirmationLetter() {
                         <div style={{ marginTop: '2%' }} >
                             {/* <div>Ordinary</div> */}
                             <div style={{ marginLeft: '2%', width: '100%' }} >
-                                <RadioGroup row aria-label="gender" name="gender" value={genderValue} onChange={handleChange} >
-                                    <FormControlLabel label="Ordinary" control={ <span></span> } />
-                                    <FormControlLabel value="yes" control={<Radio style={{ color: '#EF3729' }} />} label="Yes" />
-                                    <FormControlLabel value="no" control={<Radio style={{ color: '#EF3729' }} />} label="No" />
+                                <RadioGroup row aria-label="ordinary" name="ordinary" value={ordinary} onChange={handleOrdinary} >
+                                    <FormControlLabel label="Ordinary  " control={ <span></span> } />
+                                    <FormControlLabel value={true} control={<Radio style={{ color: '#EF3729' }} />} label="Yes" />
+                                    <FormControlLabel value={false} control={<Radio style={{ color: '#EF3729' }} />} label="No" />
                                 </RadioGroup>
                             </div>
                             <div style={{ marginLeft: '2%', width: '100%' }} >
-                                <RadioGroup row aria-label="gender" name="gender" value={genderValue} onChange={handleChange} >
-                                    <FormControlLabel label="Ordinary" control={ <span></span> } />
-                                    <FormControlLabel value="yes" control={<Radio style={{ color: '#EF3729' }} />} label="Yes" />
-                                    <FormControlLabel value="no" control={<Radio style={{ color: '#EF3729' }} />} label="No" />
+                                <RadioGroup row aria-label="corner    " name="corner" value={corner} onChange={handleCorner} >
+                                    <FormControlLabel label="Corner" control={ <span></span> } />
+                                    <FormControlLabel value={true} control={<Radio style={{ color: '#EF3729' }} />} label="Yes" />
+                                    <FormControlLabel value={false} control={<Radio style={{ color: '#EF3729' }} />} label="No" />
                                 </RadioGroup>
                             </div>
                             <div style={{ marginLeft: '2%', width: '100%' }} >
-                                <RadioGroup row aria-label="gender" name="gender" value={genderValue} onChange={handleChange} >
-                                    <FormControlLabel label="Ordinary" control={ <span></span> } />
-                                    <FormControlLabel value="yes" control={<Radio style={{ color: '#EF3729' }} />} label="Yes" />
-                                    <FormControlLabel value="no" control={<Radio style={{ color: '#EF3729' }} />} label="No" />
+                                <RadioGroup row aria-label="westOpen  " name="westOpen" value={westOpen} onChange={handleWestOpen} >
+                                    <FormControlLabel label="West Open" control={ <span></span> } />
+                                    <FormControlLabel value={true}  control={<Radio style={{ color: '#EF3729' }} />} label="Yes" />
+                                    <FormControlLabel value={false}  control={<Radio style={{ color: '#EF3729' }} />} label="No" />
                                 </RadioGroup>
                             </div>
                             <div style={{ marginLeft: '2%', width: '100%' }} >
-                                <RadioGroup row aria-label="gender" name="gender" value={genderValue} onChange={handleChange} >
-                                    <FormControlLabel label="Ordinary" control={ <span></span> } />
-                                    <FormControlLabel value="yes" control={<Radio style={{ color: '#EF3729' }} />} label="Yes" />
-                                    <FormControlLabel value="no" control={<Radio style={{ color: '#EF3729' }} />} label="No" />
+                                <RadioGroup row aria-label="roadFacing" name="roadFacing" value={roadFacing} onChange={handleRoadFacing} >
+                                    <FormControlLabel label="Road Facing" control={ <span></span> } />
+                                    <FormControlLabel value={true} control={<Radio style={{ color: '#EF3729' }} />} label="Yes" />
+                                    <FormControlLabel value={false} control={<Radio style={{ color: '#EF3729' }} />} label="No" />
                                 </RadioGroup>
                             </div>
 
