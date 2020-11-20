@@ -4,6 +4,8 @@ import React from 'react'
 import { Link } from "react-router-dom";
 import IMAGE from "../../RawData/default.jpg";
 import BackgroundImage from "../../RawData/Group2.png";
+import { UserModel } from "../../models/userModels";
+import firebase from "../../config/firebase";
 
 
 const useStyle = makeStyles(
@@ -73,7 +75,7 @@ const useStyle = makeStyles(
             },
             imageDiv: {
                 width: '100%',
-                textAlign : 'center'
+                textAlign: 'center'
             },
             avatar: {
                 margin: '0 auto',
@@ -83,9 +85,9 @@ const useStyle = makeStyles(
             iconColor: {
                 color: theme.palette.primary.light
             },
-            input : {
-                display : 'none',
-                
+            input: {
+                display: 'none',
+
             }
         }
     )
@@ -96,16 +98,64 @@ export default function SignUp() {
     const classes = useStyle();
 
     const [selectedImage, setSelectedImage] = React.useState(null)
+    const [imageUri, setImageUri] = React.useState(null)
 
-    const handleUploadImage = (e) =>
-    {
+    function uploadImage(name, file) {
+        var storageRef = firebase.storage().ref();
+        var uploadTask = storageRef.child(name + '/profile.jpg').put(file);
+
+        // Register three observers:
+        // 1. 'state_changed' observer, called any time the state changes
+        // 2. Error observer, called on failure
+        // 3. Completion observer, called on successful completion
+        uploadTask.on('state_changed', function (snapshot) 
+        {
+            // Observe state change events such as progress, pause, and resume
+            // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+            var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            console.log('Upload is ' + progress + '% done');
+            switch (snapshot.state)
+            {
+                case firebase.storage.TaskState.PAUSED: // or 'paused'
+                    console.log('Upload is paused');
+                    break;
+                case firebase.storage.TaskState.RUNNING: // or 'running'
+                    console.log('Upload is running');
+                    break;
+            }
+        }, function (error) 
+        {
+            // Handle unsuccessful uploads
+        }, function ()
+        {
+            // Handle successful uploads on complete
+            // For instance, get the download URL: https://firebasestorage.googleapis.com/...
+            uploadTask.snapshot.ref.getDownloadURL().then(function (downloadURL) {
+                console.log('File available at', downloadURL);
+                setImageUri(downloadURL)
+            });
+        });
+
+
+    }
+    const handleUploadImage = (e) => {
         let file = e.target.files[0]
+        console.log("File : ", file)
+        console.log("url : ", URL.createObjectURL(file))
         setSelectedImage(URL.createObjectURL(file))
     }
 
     const handleSubmit = (e) => {
+        e.preventDefault()
 
+        UserModel.name = e.target.name.value;
+        UserModel.email = e.target.email.value;
+        UserModel.phoneNumber = e.target.phone.value;
+        UserModel.cnic = e.target.cnic.value
+        console.log(UserModel)
     }
+
+
 
     return (
         <div className={classes.root}>  <Grid container>
@@ -118,11 +168,11 @@ export default function SignUp() {
             >
 
                 <Paper elevation={3} className={classes.myPaper}>
-                    <form onSubmit={handleSubmit}  noValidate>
+                    <form onSubmit={handleSubmit} noValidate>
 
                         <div className={classes.imageDiv}>
                             <Avatar alt="shakeel haider" src={selectedImage} variant="circle" className={classes.avatar} >
-                            <input
+                                <input
                                     accept="image/*"
                                     className={classes.input}
                                     id="contained-button-file"
@@ -131,15 +181,15 @@ export default function SignUp() {
                                     onChange={handleUploadImage}
                                 />
                                 <label htmlFor="contained-button-file"  >
-                                    
+
                                     <Fab component="span" >
                                         <AddPhotoAlternateIcon />
                                     </Fab>
                                 </label>
                             </Avatar>
-                            
-                                
-                                {/* <img src={selectedImage} alt="" /> */}
+
+
+                            {/* <img src={selectedImage} alt="" /> */}
                         </div>
 
                         <div className={classes.myText} >
@@ -235,6 +285,7 @@ export default function SignUp() {
                             <Button
                                 variant="contained"
                                 color="primary"
+                                type="submit"
                                 className={classes.myElements}
                             >
                                 Sign Up
