@@ -98,6 +98,7 @@ export default function SignUp() {
     const classes = useStyle();
 
     const [selectedImage, setSelectedImage] = React.useState(null)
+    const [imageFile, setImageFile] = React.useState(null)
     const [imageUri, setImageUri] = React.useState(null)
 
     function uploadImage(name, file) {
@@ -142,6 +143,7 @@ export default function SignUp() {
         let file = e.target.files[0]
         console.log("File : ", file)
         console.log("url : ", URL.createObjectURL(file))
+        setImageFile(file)
         setSelectedImage(URL.createObjectURL(file))
     }
 
@@ -152,7 +154,10 @@ export default function SignUp() {
         UserModel.email = e.target.email.value;
         UserModel.phoneNumber = e.target.phone.value;
         UserModel.cnic = e.target.cnic.value
+        uploadImage(UserModel.name, imageFile)
         console.log(UserModel)
+        console.log("e.files : ", imageFile)
+
     }
 
 
@@ -175,12 +180,12 @@ export default function SignUp() {
                                 <input
                                     accept="image/*"
                                     className={classes.input}
-                                    id="contained-button-file"
+                                    id="myinput"
                                     multiple
                                     type="file"
                                     onChange={handleUploadImage}
                                 />
-                                <label htmlFor="contained-button-file"  >
+                                <label htmlFor="myinput"  >
 
                                     <Fab component="span" >
                                         <AddPhotoAlternateIcon />
