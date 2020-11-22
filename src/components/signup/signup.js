@@ -1,11 +1,11 @@
 import { Avatar, Button, Grid, makeStyles, Paper, TextField, Typography, InputAdornment, Fab } from '@material-ui/core'
 import { Email, VpnKey as Password, PermIdentity as Name, CreditCard as CNIC, Phone, AddPhotoAlternate as AddPhotoAlternateIcon } from "@material-ui/icons";
 import React from 'react'
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import IMAGE from "../../RawData/default.jpg";
 import BackgroundImage from "../../RawData/Group2.png";
 import { UserModel } from "../../models/userModels";
-import firebase from "../../config/firebase";
+import { firebase, storage, auth, db } from "../../config/firebase";
 
 
 const useStyle = makeStyles(
@@ -96,27 +96,43 @@ const useStyle = makeStyles(
 export default function SignUp() {
 
     const classes = useStyle();
+    const navigate = useNavigate()
 
     const [selectedImage, setSelectedImage] = React.useState(null)
     const [imageFile, setImageFile] = React.useState(null)
     const [imageUri, setImageUri] = React.useState(null)
 
+    function createProfile(user)
+    {
+
+    }
+
+    function createUser(user) {
+        auth.createUserWithEmailAndPassword(user.email, user.password)
+            .then((user) => {
+                createProfile(user)
+            })
+            .catch((error) => {
+                var errorCode = error.code;
+                var errorMessage = error.message;
+                // ..
+            });
+    }
+
     function uploadImage(name, file) {
-        var storageRef = firebase.storage().ref();
-        var uploadTask = storageRef.child(name + '/profile.jpg').put(file);
+        var storageRef = storage.ref().child(name);
+        var uploadTask = storageRef.child('profile.jpg').put(file);
 
         // Register three observers:
         // 1. 'state_changed' observer, called any time the state changes
         // 2. Error observer, called on failure
         // 3. Completion observer, called on successful completion
-        uploadTask.on('state_changed', function (snapshot) 
-        {
+        uploadTask.on('state_changed', function (snapshot) {
             // Observe state change events such as progress, pause, and resume
             // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
             var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
             console.log('Upload is ' + progress + '% done');
-            switch (snapshot.state)
-            {
+            switch (snapshot.state) {
                 case firebase.storage.TaskState.PAUSED: // or 'paused'
                     console.log('Upload is paused');
                     break;
@@ -124,11 +140,10 @@ export default function SignUp() {
                     console.log('Upload is running');
                     break;
             }
-        }, function (error) 
-        {
+        }, function (error) {
             // Handle unsuccessful uploads
-        }, function ()
-        {
+            console.log(error)
+        }, function () {
             // Handle successful uploads on complete
             // For instance, get the download URL: https://firebasestorage.googleapis.com/...
             uploadTask.snapshot.ref.getDownloadURL().then(function (downloadURL) {
@@ -150,11 +165,11 @@ export default function SignUp() {
     const handleSubmit = (e) => {
         e.preventDefault()
 
-        UserModel.name = e.target.name.value;
+        UserModel.name = String(e.target.name.value).replace(/\s/g, '');
         UserModel.email = e.target.email.value;
         UserModel.phoneNumber = e.target.phone.value;
         UserModel.cnic = e.target.cnic.value
-        uploadImage(UserModel.name, imageFile)
+        // uploadImage(UserModel.name, imageFile)
         console.log(UserModel)
         console.log("e.files : ", imageFile)
 

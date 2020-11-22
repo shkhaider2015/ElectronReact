@@ -1,12 +1,12 @@
 import React from 'react'
 import { useAuthState } from 'react-firebase-hooks/auth';
-import firebase from '../config/firebase'
+import {auth} from '../config/firebase'
 
 export const AuthContext = React.createContext();
 
 export const AuthProvider = ({ children }) => {
     
-    const [user, loading, error] = useAuthState(firebase.auth());
+    const [user, loading, error] = useAuthState(auth);
 
     if (loading) {
         return (
