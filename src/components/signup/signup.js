@@ -97,6 +97,7 @@ const useStyle = makeStyles(
         }
     )
 )
+var ImageFile = null;
 
 export default function SignUp() {
 
@@ -104,9 +105,7 @@ export default function SignUp() {
     const navigate = useNavigate()
 
     const [selectedImage, setSelectedImage] = React.useState(null)
-    const [imageFile, setImageFile] = React.useState(null)
     const [isLoading, setIsLoading] = React.useState(false)
-    // const [imageUri, setImageUri] = React.useState(null)
 
     function createProfile() {
         db
@@ -114,11 +113,12 @@ export default function SignUp() {
             .add(UserModel)
             .then(function (docRef) {
                 console.log("Docement written with ID : ", docRef)
-                isLoading(false)
+                setIsLoading(false)
                 navigate("/login")
             })
             .catch(function (error) {
                 console.error("erro adding document : ", error)
+                setIsLoading(false)
             })
     }
 
@@ -132,6 +132,7 @@ export default function SignUp() {
                 var errorMessage = error.message;
                 console.error("Error creating user : ERROR_CODE -> ", errorCode)
                 console.error("Error creating user : ERROR_MESSAGE -> ", errorMessage)
+                setIsLoading(false)
                 // ..
             });
     }
@@ -139,7 +140,7 @@ export default function SignUp() {
     function uploadImage() {
 
         var storageRef = storage.ref().child(UserModel.name.replace(/\s/g, ""));
-        var uploadTask = storageRef.child('profile.jpg').put(imageFile);
+        var uploadTask = storageRef.child('profile.jpg').put(ImageFile);
 
         // Register three observers:
         // 1. 'state_changed' observer, called any time the state changes
@@ -164,13 +165,13 @@ export default function SignUp() {
         }, function (error) {
             // Handle unsuccessful uploads
             console.log(error)
+            setIsLoading(false)
         }, function () {
             // Handle successful uploads on complete
             // For instance, get the download URL: https://firebasestorage.googleapis.com/...
             uploadTask.snapshot.ref.getDownloadURL().then(function (downloadURL) {
                 console.log('File available at', downloadURL);
                 UserModel.imageUri = downloadURL;
-                // setImageUri(downloadURL)
                 createProfile();
             });
         });
@@ -179,7 +180,7 @@ export default function SignUp() {
     }
     const handleSelectImage = (e) => {
         let file = e.target.files[0]
-        setImageFile(file)
+        ImageFile = file;
         setSelectedImage(URL.createObjectURL(file))
     }
 

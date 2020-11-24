@@ -21,10 +21,8 @@ function MyRoutes() {
                         <Route path="/application" element={<ApplicationForm />} />
                         <Route path="/nomination" element={<NominationForm />} />
                         <Route path="/confirmation" element={<ConfirmationForm />} />
-                        <Route path="/login" element={<Login />} />
-                        <Route path="/signup" element={<Signup />} />
                     </Route>
-
+                    
                     <Route path="/login" element={<Login />} />
                     <Route path="/signup" element={<Signup />} />
                 </Routes>

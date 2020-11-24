@@ -38,7 +38,7 @@ export default function MenuAppBar() {
   const classes = useStyles();
   // const navigate = useNavigate()
 
-  const [ auth, setAuth ] = React.useState( false );
+  // const [ auth, setAuth ] = React.useState( false );
   const [ drawerOpen, setDrawerOpen ] = React.useState( false )
   const [ anchorEl, setAnchorEl ] = React.useState( null );
   const open = Boolean(anchorEl);
@@ -91,7 +91,7 @@ export default function MenuAppBar() {
     <List>
       {
 
-        [ 'Home', 'Application', 'Nomination', 'Confirmation', 'login', 'signup'].map(
+        [ 'Home', 'Application', 'Nomination', 'Confirmation'].map(
           (text, index) =>
             (
               <Link key={index} to={"/" + text} className={classes.link} >
@@ -111,11 +111,7 @@ export default function MenuAppBar() {
   </Drawer>
   )
 
-if(!auth)
-{
-  setAuth(false)
-  console.log("Auth is null at app bar")
-}
+
   
 
   return (
