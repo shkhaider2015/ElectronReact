@@ -1,8 +1,10 @@
-import { Avatar, Button, Grid, makeStyles, Paper, TextField, Typography, InputAdornment, Fab } from '@material-ui/core'
-import { Email, VpnKey as Password, PermIdentity as Name, CreditCard as CNIC, Phone, AddPhotoAlternate as AddPhotoAlternateIcon } from "@material-ui/icons";
+import { Avatar, Button, Grid, makeStyles, Paper, TextField, Typography, InputAdornment, Fab, LinearProgress } from '@material-ui/core'
+import {
+    Email, VpnKey as Password, PermIdentity as Name,
+    CreditCard as CNIC, Phone, AddPhotoAlternate as AddPhotoAlternateIcon
+} from "@material-ui/icons";
 import React from 'react'
 import { Link, useNavigate } from "react-router-dom";
-import IMAGE from "../../RawData/default.jpg";
 import BackgroundImage from "../../RawData/Group2.png";
 import { UserModel } from "../../models/userModels";
 import { firebase, storage, auth, db } from "../../config/firebase";
@@ -16,6 +18,9 @@ const useStyle = makeStyles(
                 backgroundRepeat: 'no-repeat',
                 backgroundSize: '100% 100%',
                 backgroundPosition: '0% 0%',
+            },
+            linearProgress: {
+                backgroundColor: "#ffffff",
             },
             myPaper: {
                 padding: '0%',
@@ -100,28 +105,41 @@ export default function SignUp() {
 
     const [selectedImage, setSelectedImage] = React.useState(null)
     const [imageFile, setImageFile] = React.useState(null)
-    const [imageUri, setImageUri] = React.useState(null)
+    const [isLoading, setIsLoading] = React.useState(false)
+    // const [imageUri, setImageUri] = React.useState(null)
 
-    function createProfile(user)
-    {
-
+    function createProfile() {
+        db
+            .collection("Users")
+            .add(UserModel)
+            .then(function (docRef) {
+                console.log("Docement written with ID : ", docRef)
+                isLoading(false)
+                navigate("/login")
+            })
+            .catch(function (error) {
+                console.error("erro adding document : ", error)
+            })
     }
 
-    function createUser(user) {
-        auth.createUserWithEmailAndPassword(user.email, user.password)
+    function createUser(pass) {
+        auth.createUserWithEmailAndPassword(UserModel.email, pass)
             .then((user) => {
-                createProfile(user)
+                uploadImage()
             })
             .catch((error) => {
                 var errorCode = error.code;
                 var errorMessage = error.message;
+                console.error("Error creating user : ERROR_CODE -> ", errorCode)
+                console.error("Error creating user : ERROR_MESSAGE -> ", errorMessage)
                 // ..
             });
     }
 
-    function uploadImage(name, file) {
-        var storageRef = storage.ref().child(name);
-        var uploadTask = storageRef.child('profile.jpg').put(file);
+    function uploadImage() {
+
+        var storageRef = storage.ref().child(UserModel.name.replace(/\s/g, ""));
+        var uploadTask = storageRef.child('profile.jpg').put(imageFile);
 
         // Register three observers:
         // 1. 'state_changed' observer, called any time the state changes
@@ -139,6 +157,9 @@ export default function SignUp() {
                 case firebase.storage.TaskState.RUNNING: // or 'running'
                     console.log('Upload is running');
                     break;
+                default:
+                    console.log("Default case")
+                    break;
             }
         }, function (error) {
             // Handle unsuccessful uploads
@@ -148,16 +169,16 @@ export default function SignUp() {
             // For instance, get the download URL: https://firebasestorage.googleapis.com/...
             uploadTask.snapshot.ref.getDownloadURL().then(function (downloadURL) {
                 console.log('File available at', downloadURL);
-                setImageUri(downloadURL)
+                UserModel.imageUri = downloadURL;
+                // setImageUri(downloadURL)
+                createProfile();
             });
         });
 
 
     }
-    const handleUploadImage = (e) => {
+    const handleSelectImage = (e) => {
         let file = e.target.files[0]
-        console.log("File : ", file)
-        console.log("url : ", URL.createObjectURL(file))
         setImageFile(file)
         setSelectedImage(URL.createObjectURL(file))
     }
@@ -165,13 +186,14 @@ export default function SignUp() {
     const handleSubmit = (e) => {
         e.preventDefault()
 
-        UserModel.name = String(e.target.name.value).replace(/\s/g, '');
+        setIsLoading(true)
+        UserModel.name = e.target.name.value
         UserModel.email = e.target.email.value;
         UserModel.phoneNumber = e.target.phone.value;
         UserModel.cnic = e.target.cnic.value
-        // uploadImage(UserModel.name, imageFile)
-        console.log(UserModel)
-        console.log("e.files : ", imageFile)
+
+        createUser(e.target.password.value)
+
 
     }
 
@@ -187,7 +209,9 @@ export default function SignUp() {
                 xs={12}
             >
 
+                {isLoading ? <LinearProgress className={classes.linearProgress} /> : ""}
                 <Paper elevation={3} className={classes.myPaper}>
+
                     <form onSubmit={handleSubmit} noValidate>
 
                         <div className={classes.imageDiv}>
@@ -198,7 +222,7 @@ export default function SignUp() {
                                     id="myinput"
                                     multiple
                                     type="file"
-                                    onChange={handleUploadImage}
+                                    onChange={handleSelectImage}
                                 />
                                 <label htmlFor="myinput"  >
 
@@ -306,6 +330,7 @@ export default function SignUp() {
                                 variant="contained"
                                 color="primary"
                                 type="submit"
+                                disabled={isLoading}
                                 className={classes.myElements}
                             >
                                 Sign Up

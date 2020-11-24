@@ -3,7 +3,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Drawer, List, ListItem, ListItemText, ListItemIcon, 
          Divider, Menu, MenuItem, IconButton, Typography, Toolbar, AppBar } from "@material-ui/core";
 import { ChevronLeft, Menu as MenuIcon, AccountCircle  } from "@material-ui/icons";
-import { Outlet } from "react-router-dom";
+import { Outlet, Link } from "react-router-dom";
+
 
 const drawerWidth = 280;
 
@@ -33,16 +34,17 @@ const useStyles = makeStyles((theme) => ({
 
 
 export default function MenuAppBar() {
+  
   const classes = useStyles();
+  // const navigate = useNavigate()
+
   const [ auth, setAuth ] = React.useState( false );
   const [ drawerOpen, setDrawerOpen ] = React.useState( false )
   const [ anchorEl, setAnchorEl ] = React.useState( null );
   const open = Boolean(anchorEl);
   //ksfkjsdk
 
-  const handleChange = (event) => {
-    setAuth( event.target.checked );
-  };
+  
 
 
   const handleMenu = (event) => {
@@ -89,10 +91,10 @@ export default function MenuAppBar() {
     <List>
       {
 
-        ['Messi', 'Naymar', 'Kroos'].map(
+        [ 'Home', 'Application', 'Nomination', 'Confirmation', 'login', 'signup'].map(
           (text, index) =>
             (
-              // <Link key={index} to={"/" + text} className={classes.link} >
+              <Link key={index} to={"/" + text} className={classes.link} >
                 <ListItem button key={text} onClick={handleDrawerClose} >
                   <ListItemIcon className={classes.listItemIcon}>
                     {
@@ -101,7 +103,7 @@ export default function MenuAppBar() {
                   </ListItemIcon>
                   <ListItemText> {text} </ListItemText>
                 </ListItem>
-              // </Link>
+              </Link>
             )
         )
       }
@@ -109,6 +111,11 @@ export default function MenuAppBar() {
   </Drawer>
   )
 
+if(!auth)
+{
+  setAuth(false)
+  console.log("Auth is null at app bar")
+}
   
 
   return (

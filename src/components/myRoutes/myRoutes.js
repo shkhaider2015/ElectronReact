@@ -16,12 +16,15 @@ function MyRoutes() {
             <Router>
                 <Routes>
                     <Route path="/" element={<Home />} >
-                        <Route path="/" element={ <FormList /> } />
-                        <Route path="/application" element={ <ApplicationForm /> } />
-                        <Route path="/nomination" element={ <NominationForm /> } />
-                        <Route path="/confirmation" element={ <ConfirmationForm /> } />
+                        <Route path="/" element={<FormList />} />
+                        <Route path="/home" element={<FormList />} />
+                        <Route path="/application" element={<ApplicationForm />} />
+                        <Route path="/nomination" element={<NominationForm />} />
+                        <Route path="/confirmation" element={<ConfirmationForm />} />
+                        <Route path="/login" element={<Login />} />
+                        <Route path="/signup" element={<Signup />} />
                     </Route>
-                    
+
                     <Route path="/login" element={<Login />} />
                     <Route path="/signup" element={<Signup />} />
                 </Routes>

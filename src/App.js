@@ -1,6 +1,5 @@
 import React from 'react';
 import 'fontsource-roboto';
-import MenuAppBar from './components/appbar/appbar';
 import { createMuiTheme, MuiThemeProvider } from '@material-ui/core';
 import { AuthProvider } from './context/authContext'
 import MyRoutes from './components/myRoutes/myRoutes'
