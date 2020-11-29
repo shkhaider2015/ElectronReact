@@ -22,7 +22,7 @@ const config = {
   firebase.initializeApp(config);
 
   const auth = firebase.auth();
-  const db = firebase.firestore().enablePersistence();
+  const db = firebase.firestore();
   const storage = firebase.storage();
 
   export  {firebase, auth, db, storage};

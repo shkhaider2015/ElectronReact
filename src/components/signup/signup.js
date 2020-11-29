@@ -8,6 +8,7 @@ import { Link, useNavigate } from "react-router-dom";
 import BackgroundImage from "../../RawData/Group2.png";
 import { UserModel } from "../../models/userModels";
 import { firebase, storage, auth, db } from "../../config/firebase";
+import { AuthContext } from "../../context/authContext";
 
 
 const useStyle = makeStyles(
@@ -99,54 +100,73 @@ const useStyle = makeStyles(
 )
 var ImageFile = null;
 
-export default function SignUp() {
+const SignUp = () => {
 
     const classes = useStyle();
     const navigate = useNavigate()
 
+    const currentUser = React.useContext(AuthContext)
     const [selectedImage, setSelectedImage] = React.useState(null)
     const [isLoading, setIsLoading] = React.useState(false)
 
-    function createProfile() {
+    React.useEffect(
+        () => {
+            if(!currentUser.isAnonymous)
+            {
+                navigate("/")
+            }
+        },
+        [currentUser]
+    )
+
+    const createProfile = () => {
         db
             .collection("Users")
             .add(UserModel)
             .then(function (docRef) {
                 console.log("Docement written with ID : ", docRef)
                 setIsLoading(false)
-                navigate("/login")
             })
             .catch(function (error) {
                 console.error("erro adding document : ", error)
                 setIsLoading(false)
             })
+
+
     }
 
-    function createUser(pass) {
-        auth.createUserWithEmailAndPassword(UserModel.email, pass)
-            .then((user) => {
-                uploadImage()
+    const updateProfile = () => {
+        auth.currentUser.updateProfile(
+            {
+                displayName: UserModel.name,
+                photoURL: UserModel.imageUri,
+                phoneNumber: UserModel.phoneNumber,
+                
+            }
+        )
+            .then(() => {
+                console.log("Profile Updated")
+                createProfile()
             })
-            .catch((error) => {
-                var errorCode = error.code;
-                var errorMessage = error.message;
-                console.error("Error creating user : ERROR_CODE -> ", errorCode)
-                console.error("Error creating user : ERROR_MESSAGE -> ", errorMessage)
+            .catch((err) => {
+                console.log("ERROR : ", err)
                 setIsLoading(false)
-                // ..
-            });
+            })
     }
+    
 
-    function uploadImage() {
+    const uploadImage = () => {
 
         var storageRef = storage.ref().child(UserModel.name.replace(/\s/g, ""));
         var uploadTask = storageRef.child('profile.jpg').put(ImageFile);
+
+        
 
         // Register three observers:
         // 1. 'state_changed' observer, called any time the state changes
         // 2. Error observer, called on failure
         // 3. Completion observer, called on successful completion
-        uploadTask.on('state_changed', function (snapshot) {
+        uploadTask.on('state_changed',  (snapshot) => {
             // Observe state change events such as progress, pause, and resume
             // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
             var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
@@ -162,21 +182,35 @@ export default function SignUp() {
                     console.log("Default case")
                     break;
             }
-        }, function (error) {
+        },(error) => {
             // Handle unsuccessful uploads
             console.log(error)
             setIsLoading(false)
-        }, function () {
+        },() => {
             // Handle successful uploads on complete
             // For instance, get the download URL: https://firebasestorage.googleapis.com/...
-            uploadTask.snapshot.ref.getDownloadURL().then(function (downloadURL) {
+            uploadTask.snapshot.ref.getDownloadURL().then( (downloadURL) => {
                 console.log('File available at', downloadURL);
                 UserModel.imageUri = downloadURL;
-                createProfile();
+                updateProfile()
             });
         });
 
 
+    }
+    const createUser = (pass) => {
+        auth.createUserWithEmailAndPassword(UserModel.email, pass)
+            .then((user) => {
+                uploadImage()
+            })
+            .catch((error) => {
+                var errorCode = error.code;
+                var errorMessage = error.message;
+                console.error("Error creating user : ERROR_CODE -> ", errorCode)
+                console.error("Error creating user : ERROR_MESSAGE -> ", errorMessage)
+                setIsLoading(false)
+                // ..
+            });
     }
     const handleSelectImage = (e) => {
         let file = e.target.files[0]
@@ -201,7 +235,8 @@ export default function SignUp() {
 
 
     return (
-        <div className={classes.root}>  <Grid container>
+        <div className={classes.root}> 
+         <Grid container>
             <Grid
                 item
                 lg={12}
@@ -352,3 +387,5 @@ export default function SignUp() {
         </div>
     )
 }
+
+export default SignUp;

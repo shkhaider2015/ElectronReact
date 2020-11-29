@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import ICON from "../../RawData/mainassociates_icon.png"
 import BackgroundImage from "../../RawData/Group2.png";
 import { auth } from "../../config/firebase";
+import { AuthContext } from "../../context/authContext";
 
 const useStyle = makeStyles(
     (theme) => (
@@ -77,6 +78,7 @@ const useStyle = makeStyles(
 export default function Login() {
 
     const [isLoading, setIsLoading] = React.useState(false)
+    const currentUser = React.useContext(AuthContext)
 
     const classes = useStyle();
     const navigate = useNavigate()
@@ -92,6 +94,17 @@ export default function Login() {
     //     },
     //     []
     // )
+    React.useEffect(
+        () => 
+        {
+            console.log("currentUser : ", currentUser)
+            if(!currentUser.isAnonymous)
+            {
+                navigate("/")
+            }
+        },
+        [currentUser]
+    )
 
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -102,7 +115,6 @@ export default function Login() {
         auth.signInWithEmailAndPassword(email.value, password.value)
         .then((user) => {
              setIsLoading(false)
-             navigate("/")
         })
         .catch((err) => {
             console.error("ERROR CODE : ", err.code)
@@ -111,7 +123,6 @@ export default function Login() {
         })
 
     }
-
 
     return (
         <div className={classes.root}>

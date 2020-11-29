@@ -120,8 +120,8 @@ function ApplicationForm() {
                     </div>
                     <div className={classes.fieldsDiv} >
                         <TextField
-                            id="cnic"
-                            label="CNIC No."
+                            id="name"
+                            label="Name of Allotment"
                             type="text"
                             required
                             className={classes.fieldElement}
@@ -130,8 +130,8 @@ function ApplicationForm() {
                     </div>
                     <div className={classes.fieldsDiv} >
                         <TextField
-                            id="address"
-                            label="Address No."
+                            id="guardian"
+                            label="Guardian Name"
                             type="text"
                             required
                             className={classes.fieldElement}
@@ -140,8 +140,8 @@ function ApplicationForm() {
                     <div className={classes.phoneMobDiv} >
                         <div className={classes.fieldsDiv} style={{ width: '40%' }} >
                             <TextField
-                                id="cellPhone"
-                                label="Cell Phone"
+                                id="east"
+                                label="East"
                                 type="text"
                                 required
                                 className={classes.fieldElement}
@@ -149,8 +149,28 @@ function ApplicationForm() {
                         </div>
                         <div className={classes.fieldsDiv} style={{ width: '40%', marginLeft: 'auto', marginRight: 0 }} >
                             <TextField
-                                id="offcePhone"
-                                label="Phone Office"
+                                id="west"
+                                label="West"
+                                type="text"
+                                required
+                                className={classes.fieldElement}
+                            />
+                        </div>
+                    </div>
+                    <div className={classes.phoneMobDiv} >
+                        <div className={classes.fieldsDiv} style={{ width: '40%' }} >
+                            <TextField
+                                id="north"
+                                label="North"
+                                type="text"
+                                required
+                                className={classes.fieldElement}
+                            />
+                        </div>
+                        <div className={classes.fieldsDiv} style={{ width: '40%', marginLeft: 'auto', marginRight: 0 }} >
+                            <TextField
+                                id="southe"
+                                label="South"
                                 type="text"
                                 required
                                 className={classes.fieldElement}
