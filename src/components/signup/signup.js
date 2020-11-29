@@ -268,7 +268,7 @@ const SignUp = () => {
                                 <label htmlFor="myinput"  >
 
                                     <Fab component="span" className={classes.avatar} >
-                                        {!selectedImage ? <AddPhotoAlternateIcon color="primary" /> :  <Avatar alt="shakeel haider" src={selectedImage} variant="circle" className={classes.myImage}  /> }
+                                        {!selectedImage ? <AddPhotoAlternateIcon style={{ width : '50%', height : '50%' }} color="primary" /> :  <Avatar alt="shakeel haider" src={selectedImage} variant="circle" className={classes.myImage}  /> }
                                         
                                         
                                     </Fab>
