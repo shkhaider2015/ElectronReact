@@ -5,7 +5,7 @@ import {
 } from "@material-ui/icons";
 import React from 'react'
 import { Link, useNavigate } from "react-router-dom";
-import BackgroundImage from "../../RawData/Group2.png";
+import BackgroundImage from "../../RawData/jj2.png";
 import { UserModel } from "../../models/userModels";
 import { firebase, storage, auth, db } from "../../config/firebase";
 import { AuthContext } from "../../context/authContext";
@@ -16,9 +16,11 @@ const useStyle = makeStyles(
         {
             root: {
                 backgroundImage: `url(${BackgroundImage})`,
-                backgroundRepeat: 'no-repeat',
+                backgroundRepeat: 'repeat-y',
                 backgroundSize: '100% 100%',
                 backgroundPosition: '0% 0%',
+                height : '100vh',
+                overflow : 'hidden'
             },
             linearProgress: {
                 backgroundColor: "#ffffff",
@@ -28,7 +30,6 @@ const useStyle = makeStyles(
                 paddingTop: '2%',
                 paddingLeft: '4%',
                 paddingRight: '4%',
-                paddingBottom: '2%',
                 marginTop: '4%',
                 marginBottom: '8.3%',
                 width: '30%',
@@ -87,6 +88,10 @@ const useStyle = makeStyles(
                 margin: '0 auto',
                 width: theme.spacing(13),
                 height: theme.spacing(13)
+            },
+            myImage : {
+                width : theme.spacing(13),
+                height : theme.spacing(13)
             },
             iconColor: {
                 color: theme.palette.primary.light
@@ -251,7 +256,7 @@ const SignUp = () => {
                     <form onSubmit={handleSubmit} noValidate>
 
                         <div className={classes.imageDiv}>
-                            <Avatar alt="shakeel haider" src={selectedImage} variant="circle" className={classes.avatar} >
+                            {/* <Avatar alt="shakeel haider" src={selectedImage} variant="circle" className={classes.avatar} > */}
                                 <input
                                     accept="image/*"
                                     className={classes.input}
@@ -262,11 +267,13 @@ const SignUp = () => {
                                 />
                                 <label htmlFor="myinput"  >
 
-                                    <Fab component="span" >
-                                        <AddPhotoAlternateIcon />
+                                    <Fab component="span" className={classes.avatar} >
+                                        {!selectedImage ? <AddPhotoAlternateIcon color="primary" /> :  <Avatar alt="shakeel haider" src={selectedImage} variant="circle" className={classes.myImage}  /> }
+                                        
+                                        
                                     </Fab>
                                 </label>
-                            </Avatar>
+                            {/* </Avatar> */}
 
 
                             {/* <img src={selectedImage} alt="" /> */}

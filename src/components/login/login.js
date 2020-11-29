@@ -3,7 +3,7 @@ import { Email, VpnKey } from "@material-ui/icons";
 import React from 'react'
 import { Link, useNavigate } from "react-router-dom";
 import ICON from "../../RawData/mainassociates_icon.png"
-import BackgroundImage from "../../RawData/Group2.png";
+import BackgroundImage from "../../RawData/jj2.png";
 import { auth } from "../../config/firebase";
 import { AuthContext } from "../../context/authContext";
 
@@ -15,6 +15,7 @@ const useStyle = makeStyles(
                 backgroundRepeat: 'repeat-y',
                 backgroundSize: '100% 100%',
                 backgroundPosition: '0% 0%',
+                height : '100vh'
 
             },
             linearProgress: {
@@ -26,7 +27,6 @@ const useStyle = makeStyles(
                 paddingTop: '2%',
                 paddingBottom: '2%',
                 width: '30%',
-                marginBottom: '14%',
                 [theme.breakpoints.down('md')]: {
                     width: '40%',
                     textAlign: 'center'
@@ -70,6 +70,8 @@ const useStyle = makeStyles(
             },
             iconColor: {
                 color: theme.palette.primary.light
+            },
+            footer : {
             }
         }
     )
@@ -195,6 +197,7 @@ export default function Login() {
 
                 </Grid>
             </Grid>
+                                    
         </div>
     )
 }
