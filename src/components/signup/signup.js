@@ -116,7 +116,7 @@ const SignUp = () => {
                 navigate("/")
             }
         },
-        [currentUser]
+        [currentUser, navigate]
     )
 
     const createProfile = () => {

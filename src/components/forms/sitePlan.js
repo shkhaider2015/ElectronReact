@@ -44,13 +44,9 @@ const useStyle = makeStyles(
 
 function ApplicationForm() {
     const classes = useStyle();
-    const [genderValue, setGenderValue] = React.useState("female")
-    const [selectedFile, setSelectedFile] = React.useState({ name : "No file choose" })
 
 
-    const handleChange = (e) => {
-        setGenderValue(e.target.value)
-    }
+    
 
     const handleCnic = (e) => {
         var a = e.target.value
@@ -65,11 +61,7 @@ function ApplicationForm() {
         e.target.value = a
     }
 
-    const handleFile = (e) => {
-        console.log("File : ", e.target.files[0])
-        setSelectedFile(e.target.files[0])
-        
-    }
+
 
     return (
         <div className={classes.root} >

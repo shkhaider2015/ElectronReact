@@ -103,7 +103,7 @@ export default function Login() {
                 navigate("/")
             }
         },
-        [currentUser]
+        [currentUser, navigate]
     )
 
     const handleSubmit = (e) => {
