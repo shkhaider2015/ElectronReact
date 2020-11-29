@@ -111,7 +111,7 @@ const SignUp = () => {
 
     React.useEffect(
         () => {
-            if(!currentUser.isAnonymous)
+            if(currentUser.currentUser)
             {
                 navigate("/")
             }

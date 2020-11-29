@@ -83,22 +83,11 @@ export default function Login() {
     const classes = useStyle();
     const navigate = useNavigate()
 
-    // const handleSubmit = React.useCallback(
-    //     e => {
-    //         e.preventDefault()
-    //         console.log(e.target.elements)
-    //         const { email, password } = e.target.elements
-    //         console.log("Email : ", email.value)
-    //         console.log("Password : ", password.value)
-
-    //     },
-    //     []
-    // )
     React.useEffect(
         () => 
         {
-            console.log("currentUser : ", currentUser)
-            if(!currentUser.isAnonymous)
+            
+            if(currentUser.currentUser)
             {
                 navigate("/")
             }

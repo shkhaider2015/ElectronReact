@@ -3,7 +3,9 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Drawer, List, ListItem, ListItemText, ListItemIcon, 
          Divider, Menu, MenuItem, IconButton, Typography, Toolbar, AppBar } from "@material-ui/core";
 import { ChevronLeft, Menu as MenuIcon, AccountCircle  } from "@material-ui/icons";
-import { Outlet, Link } from "react-router-dom";
+import { Outlet, Link, useNavigate } from "react-router-dom";
+import { AuthContext } from "../../context/authContext";
+import { auth } from "../../config/firebase";
 
 
 const drawerWidth = 280;
@@ -36,13 +38,27 @@ const useStyles = makeStyles((theme) => ({
 export default function MenuAppBar() {
   
   const classes = useStyles();
-  // const navigate = useNavigate()
+  const navigate = useNavigate()
+  const currentUser = React.useContext(AuthContext);
 
   // const [ auth, setAuth ] = React.useState( false );
   const [ drawerOpen, setDrawerOpen ] = React.useState( false )
   const [ anchorEl, setAnchorEl ] = React.useState( null );
   const open = Boolean(anchorEl);
   //ksfkjsdk
+
+  React.useEffect(
+    () => 
+    {
+      
+      if(!currentUser.currentUser)
+      {
+        navigate("/login")
+      }
+      
+    },
+    [currentUser, navigate]
+  )
 
   
 
@@ -62,6 +78,17 @@ export default function MenuAppBar() {
 
   const handleDrawerClose = () => {
       setDrawerOpen(false)
+  }
+
+  const handleLogout = () => {
+    setAnchorEl(null);
+    auth.signOut()
+    .then(() => {
+      console.log("Signout succesfully")
+    })
+    .catch((err) => {
+      console.error("Signout Error : ", err)
+    })
   }
 
 
@@ -158,6 +185,7 @@ export default function MenuAppBar() {
               >
                 <MenuItem onClick={handleClose}>Profile</MenuItem>
                 <MenuItem onClick={handleClose}>My account</MenuItem>
+                <MenuItem onClick={handleLogout}>logout</MenuItem>
               </Menu>
             </div>
           
