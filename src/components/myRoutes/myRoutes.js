@@ -26,8 +26,8 @@ function MyRoutes() {
                         <Route path="/siteplane" element={<SitePlan />} />
                     </Route>
                     
-                    <Route path="/login" element={<Login />} />
-                    <Route path="/signup" element={<Signup />} />
+                    <Route path="login" element={<Login />} />
+                    <Route path="signup" element={<Signup />} />
                 </Routes>
             </Router>
         </div>
