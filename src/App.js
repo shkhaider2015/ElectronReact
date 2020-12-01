@@ -9,7 +9,8 @@ const theme = createMuiTheme(
     palette: {
       primary: {
         main: '#EF3729',
-      }
+      },
+      gradient : 'linear-gradient(to top left, #c74081, #ef3729)'
     }
   }
 )

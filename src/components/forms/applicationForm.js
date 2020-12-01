@@ -1,4 +1,4 @@
-import { makeStyles, TextField, RadioGroup, Paper, Radio, Button, FormControlLabel, Fab } from "@material-ui/core";
+import { makeStyles, TextField, RadioGroup, Paper, Radio, FormControlLabel, Fab } from "@material-ui/core";
 import { Add as AddIcon } from "@material-ui/icons";
 import React from "react";
 import RefrenceDate from "./refrenceDate";
@@ -167,17 +167,6 @@ function ApplicationForm() {
                                 className={classes.fieldElement}
                             />
                         </div>
-                    </div>
-                    <div className={classes.fieldsDiv} >
-                        <Button
-                            variant="contained"
-                            color="primary"
-                            type="submit"
-                            className={classes.fieldElement}
-                            style={{ marginTop: '1%' }}
-                        >
-                            Save
-                            </Button>
                     </div>
 
                 </form>

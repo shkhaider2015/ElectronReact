@@ -1,4 +1,4 @@
-import { makeStyles, TextField, RadioGroup, Paper, Radio, Button, FormControlLabel } from "@material-ui/core";
+import { makeStyles, TextField, RadioGroup, Paper, Radio, FormControlLabel } from "@material-ui/core";
 import React from "react";
 
 
@@ -131,17 +131,6 @@ function NominationForm() {
                             required
                             className={classes.fieldElement}
                         />
-                    </div>
-                    <div className={classes.fieldsDiv} >
-                        <Button
-                            variant="contained"
-                            color="primary"
-                            type="submit"
-                            className={classes.fieldElement}
-                            style={{ marginTop : '1%' }}
-                        >
-                            Save
-                            </Button>
                     </div>
 
                 </form>
