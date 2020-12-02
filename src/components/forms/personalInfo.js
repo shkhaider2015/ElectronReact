@@ -1,4 +1,4 @@
-import { Avatar,  Grid, makeStyles, Paper, TextField,  InputAdornment, Fab, LinearProgress } from '@material-ui/core'
+import { Avatar, Grid, makeStyles, Paper, TextField, InputAdornment, Fab, LinearProgress, Button } from '@material-ui/core'
 import {
     Email, PermIdentity as Name,
     CreditCard as CNIC, Phone, AddPhotoAlternate as AddPhotoAlternateIcon, Smartphone, LocationOn
@@ -16,7 +16,7 @@ const useStyle = makeStyles(
                 // backgroundRepeat: 'repeat-y',
                 // backgroundSize: '100% 100%',
                 // backgroundPosition: '0% 0%',
-                marginTop : '0%',
+                marginTop: '0%',
             },
             linearProgress: {
                 backgroundColor: "#ffffff",
@@ -26,7 +26,7 @@ const useStyle = makeStyles(
                 paddingTop: '2%',
                 paddingLeft: '4%',
                 paddingRight: '4%',
-                paddingBottom : '3%',
+                paddingBottom: '3%',
                 width: '40%',
                 background: 'rgba(255, 255, 255, 0.98)',
                 [theme.breakpoints.down('md')]: {
@@ -64,7 +64,7 @@ const useStyle = makeStyles(
             },
             cnicDiv: {
                 width: '40%',
-                marginLeft : '0'
+                marginLeft: '0'
             },
             phoneDiv: {
                 width: '40%',
@@ -84,17 +84,17 @@ const useStyle = makeStyles(
                 margin: '0 auto',
                 width: theme.spacing(13),
                 height: theme.spacing(13),
-                background : 'linear-gradient(to top left, #c74081, #ef3729)',
-                
+                background: 'linear-gradient(to top left, #c74081, #ef3729)',
+
             },
-            myImage : {
-                width : theme.spacing(13),
-                height : theme.spacing(13)
+            myImage: {
+                width: theme.spacing(13),
+                height: theme.spacing(13)
             },
-            imageIcon : {
-                color : 'white',
-                width : '50%',
-                height : '50%'
+            imageIcon: {
+                color: 'white',
+                width: '50%',
+                height: '50%'
             },
             iconColor: {
                 color: theme.palette.primary.main
@@ -146,7 +146,7 @@ const PersonalInformation = () => {
                 displayName: UserModel.name,
                 photoURL: UserModel.imageUri,
                 phoneNumber: UserModel.phoneNumber,
-                
+
             }
         )
             .then(() => {
@@ -158,20 +158,20 @@ const PersonalInformation = () => {
                 setIsLoading(false)
             })
     }
-    
+
 
     const uploadImage = () => {
 
         var storageRef = storage.ref().child(UserModel.name.replace(/\s/g, ""));
         var uploadTask = storageRef.child('profile.jpg').put(ImageFile);
 
-        
+
 
         // Register three observers:
         // 1. 'state_changed' observer, called any time the state changes
         // 2. Error observer, called on failure
         // 3. Completion observer, called on successful completion
-        uploadTask.on('state_changed',  (snapshot) => {
+        uploadTask.on('state_changed', (snapshot) => {
             // Observe state change events such as progress, pause, and resume
             // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
             var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
@@ -187,14 +187,14 @@ const PersonalInformation = () => {
                     console.log("Default case")
                     break;
             }
-        },(error) => {
+        }, (error) => {
             // Handle unsuccessful uploads
             console.log(error)
             setIsLoading(false)
-        },() => {
+        }, () => {
             // Handle successful uploads on complete
             // For instance, get the download URL: https://firebasestorage.googleapis.com/...
-            uploadTask.snapshot.ref.getDownloadURL().then( (downloadURL) => {
+            uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
                 console.log('File available at', downloadURL);
                 UserModel.imageUri = downloadURL;
                 updateProfile()
@@ -232,11 +232,10 @@ const PersonalInformation = () => {
         UserModel.phoneNumber = e.target.phone.value;
         UserModel.cnic = e.target.cnic.value
 
-        if(1 === 0)
-        {
+        if (1 === 0) {
             createUser(e.target.password.value)
         }
-        
+
 
 
     }
@@ -244,38 +243,38 @@ const PersonalInformation = () => {
 
 
     return (
-        <div className={classes.root}> 
-         <Grid container>
-            <Grid
-                item
-                lg={12}
-                md={12}
-                sm={12}
-                xs={12}
-            >
-                {isLoading ? <LinearProgress className={classes.linearProgress} /> : ""}
-                <Paper elevation={3} className={classes.myPaper}>
+        <div className={classes.root}>
+            <Grid container>
+                <Grid
+                    item
+                    lg={12}
+                    md={12}
+                    sm={12}
+                    xs={12}
+                >
+                    {isLoading ? <LinearProgress className={classes.linearProgress} /> : ""}
+                    <Paper elevation={0} className={classes.myPaper}>
 
-                    
+
 
                         <div className={classes.imageDiv}>
                             {/* <Avatar alt="shakeel haider" src={selectedImage} variant="circle" className={classes.avatar} > */}
-                                <input
-                                    accept="image/*"
-                                    className={classes.input}
-                                    id="myinput"
-                                    multiple
-                                    type="file"
-                                    onChange={handleSelectImage}
-                                />
-                                <label htmlFor="myinput"  >
+                            <input
+                                accept="image/*"
+                                className={classes.input}
+                                id="myinput"
+                                multiple
+                                type="file"
+                                onChange={handleSelectImage}
+                            />
+                            <label htmlFor="myinput"  >
 
-                                    <Fab component="span" className={classes.avatar} >
-                                        {!selectedImage ? <AddPhotoAlternateIcon className={classes.imageIcon} color="primary" /> :  <Avatar alt="shakeel haider" src={selectedImage} variant="circle" className={classes.myImage}  /> }
-                                        
-                                        
-                                    </Fab>
-                                </label>
+                                <Fab component="span" className={classes.avatar} >
+                                    {!selectedImage ? <AddPhotoAlternateIcon className={classes.imageIcon} color="primary" /> : <Avatar alt="shakeel haider" src={selectedImage} variant="circle" className={classes.myImage} />}
+
+
+                                </Fab>
+                            </label>
                             {/* </Avatar> */}
 
 
@@ -283,38 +282,38 @@ const PersonalInformation = () => {
                         </div>
 
                         <div className={classes.phoneCnicDiv} >
-                            
+
                             <div className={classes.cnicDiv} >
-                            <TextField
-                                id="name"
-                                label="Name"
-                                variant="outlined"
-                                type="text"
-                                color="primary"
-                                InputProps={{
-                                    endAdornment: (
-                                        <InputAdornment position="end">
-                                            <Name className={classes.iconColor} />
-                                        </InputAdornment>
-                                    ),
-                                }}
-                            />
+                                <TextField
+                                    id="name"
+                                    label="Name"
+                                    variant="outlined"
+                                    type="text"
+                                    color="primary"
+                                    InputProps={{
+                                        endAdornment: (
+                                            <InputAdornment position="end">
+                                                <Name className={classes.iconColor} />
+                                            </InputAdornment>
+                                        ),
+                                    }}
+                                />
                             </div>
                             <div className={classes.phoneDiv} >
-                            <TextField
-                                id="fatherName"
-                                label="Father/Husband name"
-                                variant="outlined"
-                                type="text"
-                                color="primary"
-                                InputProps={{
-                                    endAdornment: (
-                                        <InputAdornment position="end">
-                                            <Name className={classes.iconColor} />
-                                        </InputAdornment>
-                                    ),
-                                }}
-                            />
+                                <TextField
+                                    id="fatherName"
+                                    label="Father/Husband name"
+                                    variant="outlined"
+                                    type="text"
+                                    color="primary"
+                                    InputProps={{
+                                        endAdornment: (
+                                            <InputAdornment position="end">
+                                                <Name className={classes.iconColor} />
+                                            </InputAdornment>
+                                        ),
+                                    }}
+                                />
                             </div>
                         </div>
                         <div className={classes.phoneCnicDiv} >
@@ -410,10 +409,12 @@ const PersonalInformation = () => {
 
                         
 
-                </Paper>
 
+
+                    </Paper>
+
+                </Grid>
             </Grid>
-        </Grid>
         </div>
     )
 }

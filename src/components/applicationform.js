@@ -154,6 +154,7 @@ ColorlibStepIcon.propTypes = {
 const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
+    height : '80mvh'
   },
   stepper : {
     
@@ -164,6 +165,12 @@ const useStyles = makeStyles((theme) => ({
   instructions: {
 
   },
+  buttonLeft : {
+    marginRight : '10%',
+  },
+  buttonRight : {
+    marginLeft : '10%'
+  }
 }));
 
 function getSteps() {
@@ -173,11 +180,11 @@ function getSteps() {
 function getStepContent(step) {
   switch (step) {
     case 0:
-      return 'Select campaign settings...';
+      return 'Personal Information';
     case 1:
-      return 'What is an ad group anyways?';
+      return 'Plot Information';
     case 2:
-      return 'This is the bit I really care about!';
+      return 'Payment Information';
     default:
       return 'Unknown step';
   }
@@ -239,14 +246,14 @@ const Application = () => {
           <div style={{ width : '100%', textAlign : 'center' }} >
               <div> { getForms(activeStep) } </div>
             <div>
-              <Button disabled={activeStep === 0} onClick={handleBack} className={classes.button}>
+              <Button disabled={activeStep === 0} onClick={handleBack} className={classes.buttonLeft}>
                 Back
               </Button>
               <Button
                 variant="contained"
                 color="primary"
                 onClick={handleNext}
-                className={classes.button}
+                className={classes.buttonRight}
               >
                 {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
               </Button>

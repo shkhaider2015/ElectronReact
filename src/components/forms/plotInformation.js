@@ -19,7 +19,7 @@ const useStyle = makeStyles(
                 // backgroundRepeat: 'repeat-y',
                 // backgroundSize: '100% 100%',
                 // backgroundPosition: '0% 0%',
-                marginTop : '0%',
+                marginTop : '6.55%',
             },
             linearProgress: {
                 backgroundColor: "#ffffff",
@@ -240,7 +240,7 @@ const PersonalInformation = () => {
                 xs={12}
             >
                 {isLoading ? <LinearProgress className={classes.linearProgress} /> : ""}
-                <Paper elevation={3} className={classes.myPaper}>
+                <Paper elevation={0} className={classes.myPaper}>
 
                     
                         <div className={classes.phoneCnicDiv} >
