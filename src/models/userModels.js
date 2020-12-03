@@ -8,3 +8,6 @@ const UserModel = {
 }
 
 export {UserModel}
+
+const x = 10
+const x = 20
