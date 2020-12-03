@@ -13,44 +13,25 @@ import Home from "../HomePageForms/HomePage.jsx"
 
 
 function MyRoutes() {
-    return (< div >
-        <
-        Router >
-            <
-        Routes >
-                <
-        Route path="/" >
-                    <
-                        Route path="/"
-                        element={< Home />}
-                    /> <
-                        Route path="/home"
-                        element={< Application />}
-                    /> <
-                        Route path="/application"
-                        element={< ApplicationForm />}
-                    /> <
-                        Route path="/nomination"
-                        element={< NominationForm />}
-                    /> <
-                        Route path="/confirmation"
-                        element={< ConfirmationForm />}
-                    /> <
-                        Route path="/siteplane"
-                        element={< SitePlan />}
-                    /> < /
-        Route >
+    return (
+    < div >
+        <Router >
+            <Routes >
+                <Route path="/" >
+                    <Route path="/" element={< Home />} /> 
+                    <Route path="/home" element={< Application />}/> 
+                    <Route path="/application" element={< ApplicationForm />}/> 
+                    <Route path="/nomination" element={< NominationForm />}/> 
+                    <Route path="/confirmation"element={< ConfirmationForm />}/> 
+                    <Route path="/siteplane"element={< SitePlan />}/> 
+                </Route >
 
-        <
-                        Route path="login"
-                        element={< Login />}
-                    /> <
-                        Route path="signup"
-                        element={< Signup />}
-                    /> < /
-        Routes > <
-        /Router> < /
-        div >
+        <       Route path="login"element={< Login />}/> 
+                <Route path="signup"element={< Signup />}/> 
+            </Routes > 
+        </Router> 
+        
+        </div >
     );
 }
 
