@@ -1,11 +1,14 @@
-import { Avatar, Grid, makeStyles, Paper, TextField, InputAdornment, Fab, LinearProgress, Button } from '@material-ui/core'
+import { Avatar, Button, Grid, makeStyles, Paper, TextField, Typography, InputAdornment, Fab, LinearProgress } from '@material-ui/core'
 import {
-    Email, PermIdentity as Name,
+    Email, VpnKey as Password, PermIdentity as Name,
     CreditCard as CNIC, Phone, AddPhotoAlternate as AddPhotoAlternateIcon, Smartphone, LocationOn
 } from "@material-ui/icons";
 import React from 'react'
+import { Link, useNavigate } from "react-router-dom";
+import BackgroundImage from "../../RawData/jj2.png";
 import { UserModel } from "../../models/userModels";
 import { firebase, storage, auth, db } from "../../config/firebase";
+import { AuthContext } from "../../context/authContext";
 
 
 const useStyle = makeStyles(
@@ -16,7 +19,7 @@ const useStyle = makeStyles(
                 // backgroundRepeat: 'repeat-y',
                 // backgroundSize: '100% 100%',
                 // backgroundPosition: '0% 0%',
-                marginTop: '0%',
+                marginTop : '6.55%',
             },
             linearProgress: {
                 backgroundColor: "#ffffff",
@@ -26,7 +29,7 @@ const useStyle = makeStyles(
                 paddingTop: '2%',
                 paddingLeft: '4%',
                 paddingRight: '4%',
-                paddingBottom: '3%',
+                paddingBottom : '3%',
                 width: '50%',
                 background: 'rgba(255, 255, 255, 0.98)',
                 [theme.breakpoints.down('md')]: {
@@ -64,7 +67,7 @@ const useStyle = makeStyles(
             },
             cnicDiv: {
                 width: '38%',
-                marginLeft: '0'
+                marginLeft : '0'
             },
             phoneDiv: {
                 width: '38%',
@@ -80,22 +83,6 @@ const useStyle = makeStyles(
                 width: '100%',
                 textAlign: 'center'
             },
-            avatar: {
-                margin: '0 auto',
-                width: theme.spacing(13),
-                height: theme.spacing(13),
-                background: 'linear-gradient(to top left, #c74081, #ef3729)',
-
-            },
-            myImage: {
-                width: theme.spacing(13),
-                height: theme.spacing(13)
-            },
-            imageIcon: {
-                color: 'white',
-                width: '50%',
-                height: '50%'
-            },
             iconColor: {
                 color: theme.palette.primary.main
             },
@@ -108,22 +95,24 @@ const useStyle = makeStyles(
 )
 var ImageFile = null;
 
-const PersonalInformation = ({ model }) => {
+const PlotInformation = () => {
 
     const classes = useStyle();
+    const navigate = useNavigate()
+
+    const currentUser = React.useContext(AuthContext)
     const [selectedImage, setSelectedImage] = React.useState(null)
     const [isLoading, setIsLoading] = React.useState(false)
-    const [name, setName] = React.useState(null)
 
-    
-    // const handleChange = (e) =>
-    // {
-    //     console.log(e.target.value)
-    // }
-
-    
-
-    
+    // React.useEffect(
+    //     () => {
+    //         if(currentUser.currentUser)
+    //         {
+    //             navigate("/")
+    //         }
+    //     },
+    //     [currentUser, navigate]
+    // )
 
     const createProfile = () => {
         db
@@ -147,7 +136,7 @@ const PersonalInformation = ({ model }) => {
                 displayName: UserModel.name,
                 photoURL: UserModel.imageUri,
                 phoneNumber: UserModel.phoneNumber,
-
+                
             }
         )
             .then(() => {
@@ -159,20 +148,20 @@ const PersonalInformation = ({ model }) => {
                 setIsLoading(false)
             })
     }
-
+    
 
     const uploadImage = () => {
 
         var storageRef = storage.ref().child(UserModel.name.replace(/\s/g, ""));
         var uploadTask = storageRef.child('profile.jpg').put(ImageFile);
 
-
+        
 
         // Register three observers:
         // 1. 'state_changed' observer, called any time the state changes
         // 2. Error observer, called on failure
         // 3. Completion observer, called on successful completion
-        uploadTask.on('state_changed', (snapshot) => {
+        uploadTask.on('state_changed',  (snapshot) => {
             // Observe state change events such as progress, pause, and resume
             // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
             var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
@@ -188,14 +177,14 @@ const PersonalInformation = ({ model }) => {
                     console.log("Default case")
                     break;
             }
-        }, (error) => {
+        },(error) => {
             // Handle unsuccessful uploads
             console.log(error)
             setIsLoading(false)
-        }, () => {
+        },() => {
             // Handle successful uploads on complete
             // For instance, get the download URL: https://firebasestorage.googleapis.com/...
-            uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+            uploadTask.snapshot.ref.getDownloadURL().then( (downloadURL) => {
                 console.log('File available at', downloadURL);
                 UserModel.imageUri = downloadURL;
                 updateProfile()
@@ -233,10 +222,7 @@ const PersonalInformation = ({ model }) => {
         UserModel.phoneNumber = e.target.phone.value;
         UserModel.cnic = e.target.cnic.value
 
-        if (1 === 0) {
-            createUser(e.target.password.value)
-        }
-
+        // createUser(e.target.password.value)
 
 
     }
@@ -244,91 +230,62 @@ const PersonalInformation = ({ model }) => {
 
 
     return (
-        <div className={classes.root}>
-            <Grid container>
-                <Grid
-                    item
-                    lg={12}
-                    md={12}
-                    sm={12}
-                    xs={12}
-                >
-                    {isLoading ? <LinearProgress className={classes.linearProgress} /> : ""}
-                    <Paper elevation={0} className={classes.myPaper}>
+        <div className={classes.root}> 
+         <Grid container>
+            <Grid
+                item
+                lg={12}
+                md={12}
+                sm={12}
+                xs={12}
+            >
+                {isLoading ? <LinearProgress className={classes.linearProgress} /> : ""}
+                <Paper elevation={0} className={classes.myPaper}>
 
-
-
-                        <div className={classes.imageDiv}>
-                            {/* <Avatar alt="shakeel haider" src={selectedImage} variant="circle" className={classes.avatar} > */}
-                            <input
-                                accept="image/*"
-                                className={classes.input}
-                                id="myinput"
-                                multiple
-                                type="file"
-                                onChange={handleSelectImage}
-                            />
-                            <label htmlFor="myinput"  >
-
-                                <Fab component="span" className={classes.avatar} >
-                                    {!selectedImage ? <AddPhotoAlternateIcon className={classes.imageIcon} color="primary" /> : <Avatar alt="shakeel haider" src={selectedImage} variant="circle" className={classes.myImage} />}
-
-
-                                </Fab>
-                            </label>
-                            {/* </Avatar> */}
-
-
-                            {/* <img src={selectedImage} alt="" /> */}
-                        </div>
-
+                    
                         <div className={classes.phoneCnicDiv} >
-
+                            
                             <div className={classes.cnicDiv} >
-
-                                <TextField
-                                    id="name"
-                                    label="Name"
-                                    variant="outlined"
-                                    type="text"
-                                    color="primary"
-                                    onChange={(e) => model.setName(e.target.value)}
-                                    InputProps={{
-                                        endAdornment: (
-                                            <InputAdornment position="end">
-                                                <Name className={classes.iconColor} />
-                                            </InputAdornment>
-                                        ),
-                                    }}
-                                />
+                            <TextField
+                                id="totalAmount"
+                                label="Total Amount"
+                                variant="outlined"
+                                type="number"
+                                color="primary"
+                                InputProps={{
+                                    endAdornment: (
+                                        <InputAdornment position="end">
+                                            <Name className={classes.iconColor} />
+                                        </InputAdornment>
+                                    ),
+                                }}
+                            />
                             </div>
                             <div className={classes.phoneDiv} >
-                                <TextField
-                                    id="fatherName"
-                                    label="Father/Husband name"
-                                    variant="outlined"
-                                    type="text"
-                                    color="primary"
-                                    onChange={(e) => model.setFatherName(e.target.value)}
-                                    InputProps={{
-                                        endAdornment: (
-                                            <InputAdornment position="end">
-                                                <Name className={classes.iconColor} />
-                                            </InputAdornment>
-                                        ),
-                                    }}
-                                />
+                            <TextField
+                                id="installment"
+                                label="Total Installment"
+                                variant="outlined"
+                                type="number"
+                                color="primary"
+                                InputProps={{
+                                    endAdornment: (
+                                        <InputAdornment position="end">
+                                            <Name className={classes.iconColor} />
+                                        </InputAdornment>
+                                    ),
+                                }}
+                            />
                             </div>
                         </div>
                         <div className={classes.phoneCnicDiv} >
                             <div className={classes.cnicDiv} >
                                 <TextField
-                                    id="cell"
-                                    label="Cell Phone"
+                                    id="installmentDuration"
+                                    label="Total Duration"
                                     variant="outlined"
-                                    type="text"
+                                    type="number"
                                     color="primary"
-                                    onChange={(e) => model.setCellPhone(e.target.value)}
                                     InputProps={{
                                         endAdornment: (
                                             <InputAdornment position="end">
@@ -341,12 +298,11 @@ const PersonalInformation = ({ model }) => {
                             </div>
                             <div className={classes.phoneDiv} >
                                 <TextField
-                                    id="phone"
-                                    label="Phone No. "
+                                    id="category"
+                                    label="Category"
                                     variant="outlined"
                                     type="text"
                                     color="primary"
-                                    onChange={(e) => model.setPhone(e.target.value)}
                                     InputProps={{
                                         endAdornment: (
                                             <InputAdornment position="end">
@@ -362,16 +318,15 @@ const PersonalInformation = ({ model }) => {
                         <div className={classes.phoneCnicDiv} >
                             <div className={classes.cnicDiv} >
                                 <TextField
-                                    id="email"
-                                    label="Email"
+                                    id="nature"
+                                    label="Nature"
                                     variant="outlined"
-                                    type="email"
+                                    type="text"
                                     color="primary"
-                                    onChange={(e) => model.setEmail(e.target.value)}
                                     InputProps={{
                                         endAdornment: (
                                             <InputAdornment position="end">
-                                                <Email className={classes.iconColor} />
+                                                <Smartphone className={classes.iconColor} />
                                             </InputAdornment>
                                         ),
                                     }}
@@ -380,16 +335,15 @@ const PersonalInformation = ({ model }) => {
                             </div>
                             <div className={classes.phoneDiv} >
                                 <TextField
-                                    id="cnic"
-                                    label="CNIC"
+                                    id="type"
+                                    label="Type"
                                     variant="outlined"
                                     type="text"
                                     color="primary"
-                                    onChange={(e) => model.setCNIC(e.target.value)}
                                     InputProps={{
                                         endAdornment: (
                                             <InputAdornment position="end">
-                                                <CNIC className={classes.iconColor} />
+                                                <Phone className={classes.iconColor} />
                                             </InputAdornment>
                                         ),
                                     }}
@@ -397,35 +351,52 @@ const PersonalInformation = ({ model }) => {
                                 />
                             </div>
                         </div>
-                        <div className={classes.myText}>
-                            <TextField
-                                id="address"
-                                label="Address"
-                                variant="outlined"
-                                type="text"
-                                color="primary"
-                                className={classes.myElements}
-                                onChange={(e) => model.setAddress(e.target.value)}
-                                InputProps={{
-                                    endAdornment: (
-                                        <InputAdornment position="end">
-                                            <LocationOn className={classes.iconColor} />
-                                        </InputAdornment>
-                                    ),
-                                }}
-                            />
+
+                        <div className={classes.phoneCnicDiv} >
+                            <div className={classes.cnicDiv} >
+                                <TextField
+                                    id="Site Plan"
+                                    label="Site Plan"
+                                    variant="outlined"
+                                    type="text"
+                                    color="primary"
+                                    InputProps={{
+                                        endAdornment: (
+                                            <InputAdornment position="end">
+                                                <Smartphone className={classes.iconColor} />
+                                            </InputAdornment>
+                                        ),
+                                    }}
+
+                                />
+                            </div>
+                            <div className={classes.phoneDiv} >
+                                <TextField
+                                    id="purpose"
+                                    label="Purpose"
+                                    variant="outlined"
+                                    type="text"
+                                    color="primary"
+                                    InputProps={{
+                                        endAdornment: (
+                                            <InputAdornment position="end">
+                                                <Phone className={classes.iconColor} />
+                                            </InputAdornment>
+                                        ),
+                                    }}
+
+                                />
+                            </div>
                         </div>
 
                         
 
+                </Paper>
 
-
-                    </Paper>
-
-                </Grid>
             </Grid>
+        </Grid>
         </div>
     )
 }
 
-export default PersonalInformation;
+export default PlotInformation;

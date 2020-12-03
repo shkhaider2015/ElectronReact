@@ -7,7 +7,8 @@ import NominationForm from '../forms/nominationForm'
 import ConfirmationForm from '../forms/confirmationForm'
 import SitePlan from "../forms/sitePlan";
 import Application from "../applicationform";
-import Home from "../HomePageForms/HomePage.jsx"
+import Home from "../HomePageForms/HomePageForms/HomePage.jsx"
+import Report from "../report/report";
 
 
 
@@ -18,8 +19,8 @@ function MyRoutes() {
         <Router >
             <Routes >
                 <Route path="/" >
-                    <Route path="/" element={< Home />} /> 
-                    <Route path="/home" element={< Application />}/> 
+                    <Route path="/" element={< Application />} /> 
+                    <Route path="/report" element={< Report />}/> 
                     <Route path="/application" element={< ApplicationForm />}/> 
                     <Route path="/nomination" element={< NominationForm />}/> 
                     <Route path="/confirmation"element={< ConfirmationForm />}/> 

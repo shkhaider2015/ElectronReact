@@ -15,6 +15,7 @@ import Typography from '@material-ui/core/Typography';
 import CML from "./forms/confirmationForm";
 import PersonalInfo from "./forms/personalInfo";
 import PlotInfo from "./forms/plotInformation";
+import PaymentInfo from "./forms/paymentInfo";
 
 
 
@@ -190,15 +191,15 @@ function getStepContent(step) {
   }
 }
 
-const getForms = (step) =>
+const getForms = (step, formOneModel) =>
 {
     switch (step) {
         case 0:
-          return <PersonalInfo />;
+          return <PersonalInfo model={formOneModel} />;
         case 1:
-          return <PlotInfo />;
+          return <PlotInfo  />;
         case 2:
-          return <CML /> ;
+          return <PaymentInfo  /> ;
         default:
           return 'Unknown step';
     }
@@ -209,9 +210,54 @@ const Application = () => {
   const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(0);
   const steps = getSteps();
+  const [stepOne, setStepOne] = React.useState(false)
+  const [stepTwo, setStepTwo] = React.useState(false)
+  const [stepThree, setStepThree] = React.useState(false)
+
+  const [name, setName] = React.useState("")
+    const [fatherName, setFatherName] = React.useState("")
+    const [cellPhone, setCellPhone] = React.useState("")
+    const [phone, setPhone] = React.useState("")
+    const [cNIC, setCNIC] = React.useState("")
+    const [email, setEmail] = React.useState("")
+    const [address, setAddress] = React.useState("")
+
+    const formOneModel =  
+    {
+      setActiveStep,
+      setName,
+      setFatherName,
+      setCellPhone,
+      setPhone,
+      setCNIC,
+      setEmail,
+      setAddress
+    }
+
+    const handleFormOne = () =>
+    {
+      if(name === "" || fatherName === "" || cellPhone === "" || phone === "" ||cNIC  === "" || email === "" || address === "")
+      {
+        console.log(name)
+        console.log("Error")
+        setStepOne(false)
+      }
+      else
+      {
+        setStepOne(true)
+      }
+    }
+
 
   const handleNext = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    handleFormOne()
+    if(stepOne)
+    {
+      console.log("HandleForm is true")
+      setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    }
+    
+    // setStepOne(true)
   };
 
   const handleBack = () => {
@@ -244,7 +290,7 @@ const Application = () => {
           </div>
         ) : (
           <div style={{ width : '100%', textAlign : 'center' }} >
-              <div> { getForms(activeStep) } </div>
+              <div> { getForms(activeStep, formOneModel) } </div>
             <div>
               <Button disabled={activeStep === 0} onClick={handleBack} className={classes.buttonLeft}>
                 Back

@@ -30,7 +30,7 @@ const useStyle = makeStyles(
                 paddingLeft: '4%',
                 paddingRight: '4%',
                 paddingBottom : '3%',
-                width: '40%',
+                width: '50%',
                 background: 'rgba(255, 255, 255, 0.98)',
                 [theme.breakpoints.down('md')]: {
                     width: '40%',
@@ -66,11 +66,11 @@ const useStyle = makeStyles(
                 marginTop: '5%',
             },
             cnicDiv: {
-                width: '40%',
+                width: '38%',
                 marginLeft : '0'
             },
             phoneDiv: {
-                width: '40%',
+                width: '38%',
                 marginLeft: 'auto',
                 marginRight: "0"
             },
