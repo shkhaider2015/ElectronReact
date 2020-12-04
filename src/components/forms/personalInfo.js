@@ -4,8 +4,6 @@ import {
     CreditCard as CNIC, Phone, AddPhotoAlternate as AddPhotoAlternateIcon, Smartphone, LocationOn
 } from "@material-ui/icons";
 import React from 'react'
-import { UserModel } from "../../models/userModels";
-import { firebase, storage, auth, db } from "../../config/firebase";
 
 
 const useStyle = makeStyles(
@@ -27,20 +25,20 @@ const useStyle = makeStyles(
                 paddingLeft: '4%',
                 paddingRight: '4%',
                 paddingBottom: '3%',
-                width: '50%',
+                width: '60%',
                 background: 'rgba(255, 255, 255, 0.98)',
                 [theme.breakpoints.down('md')]: {
-                    width: '40%',
+                    width: '70%',
                     textAlign: 'center'
 
                 },
                 [theme.breakpoints.down('sm')]: {
-                    width: '50%',
+                    width: '80%',
                     textAlign: 'center'
 
                 },
                 [theme.breakpoints.down('xs')]: {
-                    width: '80%',
+                    width: '90%',
                     marginTop: '10%',
                     textAlign: 'center'
 
@@ -48,7 +46,7 @@ const useStyle = makeStyles(
                 margin: '0 auto',
             },
             myText: {
-                marginTop: '5%'
+                marginTop: '2%'
             },
             myButton: {
                 marginTop: '10%',
@@ -60,16 +58,16 @@ const useStyle = makeStyles(
             phoneCnicDiv: {
                 display: 'flex',
                 width: '100%',
-                marginTop: '5%',
+                marginTop: '2%',
             },
             cnicDiv: {
-                width: '38%',
-                marginLeft: '0'
+                width: '45%',
+                marginLeft: '0',
             },
             phoneDiv: {
-                width: '38%',
+                width: '45%',
                 marginLeft: 'auto',
-                marginRight: "0"
+                marginRight: "0",
             },
             loginLink: {
                 textDecoration: 'none',
@@ -86,6 +84,9 @@ const useStyle = makeStyles(
                 height: theme.spacing(13),
                 background: 'linear-gradient(to top left, #c74081, #ef3729)',
 
+            },
+            pairElement: {
+                width: '100%'
             },
             myImage: {
                 width: theme.spacing(13),
@@ -106,139 +107,29 @@ const useStyle = makeStyles(
         }
     )
 )
-var ImageFile = null;
 
 const PersonalInformation = ({ model }) => {
 
     const classes = useStyle();
     const [selectedImage, setSelectedImage] = React.useState(null)
-    const [isLoading, setIsLoading] = React.useState(false)
-    const [name, setName] = React.useState(null)
-
-    
-    // const handleChange = (e) =>
-    // {
-    //     console.log(e.target.value)
-    // }
-
-    
-
-    
-
-    const createProfile = () => {
-        db
-            .collection("Users")
-            .add(UserModel)
-            .then(function (docRef) {
-                console.log("Docement written with ID : ", docRef)
-                setIsLoading(false)
-            })
-            .catch(function (error) {
-                console.error("erro adding document : ", error)
-                setIsLoading(false)
-            })
 
 
-    }
-
-    const updateProfile = () => {
-        auth.currentUser.updateProfile(
-            {
-                displayName: UserModel.name,
-                photoURL: UserModel.imageUri,
-                phoneNumber: UserModel.phoneNumber,
-
-            }
-        )
-            .then(() => {
-                console.log("Profile Updated")
-                createProfile()
-            })
-            .catch((err) => {
-                console.log("ERROR : ", err)
-                setIsLoading(false)
-            })
-    }
-
-
-    const uploadImage = () => {
-
-        var storageRef = storage.ref().child(UserModel.name.replace(/\s/g, ""));
-        var uploadTask = storageRef.child('profile.jpg').put(ImageFile);
-
-
-
-        // Register three observers:
-        // 1. 'state_changed' observer, called any time the state changes
-        // 2. Error observer, called on failure
-        // 3. Completion observer, called on successful completion
-        uploadTask.on('state_changed', (snapshot) => {
-            // Observe state change events such as progress, pause, and resume
-            // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-            var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-            console.log('Upload is ' + progress + '% done');
-            switch (snapshot.state) {
-                case firebase.storage.TaskState.PAUSED: // or 'paused'
-                    console.log('Upload is paused');
-                    break;
-                case firebase.storage.TaskState.RUNNING: // or 'running'
-                    console.log('Upload is running');
-                    break;
-                default:
-                    console.log("Default case")
-                    break;
-            }
-        }, (error) => {
-            // Handle unsuccessful uploads
-            console.log(error)
-            setIsLoading(false)
-        }, () => {
-            // Handle successful uploads on complete
-            // For instance, get the download URL: https://firebasestorage.googleapis.com/...
-            uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
-                console.log('File available at', downloadURL);
-                UserModel.imageUri = downloadURL;
-                updateProfile()
-            });
-        });
-
-
-    }
-    const createUser = (pass) => {
-        auth.createUserWithEmailAndPassword(UserModel.email, pass)
-            .then((user) => {
-                uploadImage()
-            })
-            .catch((error) => {
-                var errorCode = error.code;
-                var errorMessage = error.message;
-                console.error("Error creating user : ERROR_CODE -> ", errorCode)
-                console.error("Error creating user : ERROR_MESSAGE -> ", errorMessage)
-                setIsLoading(false)
-                // ..
-            });
-    }
     const handleSelectImage = (e) => {
         let file = e.target.files[0]
-        ImageFile = file;
         setSelectedImage(URL.createObjectURL(file))
     }
 
-    const handleSubmit = (e) => {
-        e.preventDefault()
-
-        setIsLoading(true)
-        UserModel.name = e.target.name.value
-        UserModel.email = e.target.email.value;
-        UserModel.phoneNumber = e.target.phone.value;
-        UserModel.cnic = e.target.cnic.value
-
-        if (1 === 0) {
-            createUser(e.target.password.value)
+    const validateEmail = (email) => {
+        let val = false;
+        if (/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(email)) {
+            console.log("Email Validation : Cirrect")
+            val = true
+        }
+        else {
+            console.log("Email Validation : Incorrect")
         }
 
-
-
+        return val
     }
 
 
@@ -253,13 +144,8 @@ const PersonalInformation = ({ model }) => {
                     sm={12}
                     xs={12}
                 >
-                    {isLoading ? <LinearProgress className={classes.linearProgress} /> : ""}
                     <Paper elevation={0} className={classes.myPaper}>
-
-
-
                         <div className={classes.imageDiv}>
-                            {/* <Avatar alt="shakeel haider" src={selectedImage} variant="circle" className={classes.avatar} > */}
                             <input
                                 accept="image/*"
                                 className={classes.input}
@@ -276,10 +162,6 @@ const PersonalInformation = ({ model }) => {
 
                                 </Fab>
                             </label>
-                            {/* </Avatar> */}
-
-
-                            {/* <img src={selectedImage} alt="" /> */}
                         </div>
 
                         <div className={classes.phoneCnicDiv} >
@@ -287,12 +169,15 @@ const PersonalInformation = ({ model }) => {
                             <div className={classes.cnicDiv} >
 
                                 <TextField
+                                    className={classes.pairElement}
                                     id="name"
                                     label="Name"
                                     variant="outlined"
                                     type="text"
                                     color="primary"
+                                    value={model.name}
                                     onChange={(e) => model.setName(e.target.value)}
+                                    helperText={model.name === "" ? <span style={{ color: 'red' }} >Required</span> : <span style={{ color: 'lightgreen' }} >Correct</span>}
                                     InputProps={{
                                         endAdornment: (
                                             <InputAdornment position="end">
@@ -304,12 +189,15 @@ const PersonalInformation = ({ model }) => {
                             </div>
                             <div className={classes.phoneDiv} >
                                 <TextField
+                                    className={classes.pairElement}
                                     id="fatherName"
                                     label="Father/Husband name"
                                     variant="outlined"
                                     type="text"
                                     color="primary"
+                                    value={model.fatherName}
                                     onChange={(e) => model.setFatherName(e.target.value)}
+                                    helperText={model.fatherName === "" ? <span style={{ color: 'red' }} >Required</span> : <span style={{ color: 'lightgreen' }} >Correct</span>}
                                     InputProps={{
                                         endAdornment: (
                                             <InputAdornment position="end">
@@ -323,12 +211,15 @@ const PersonalInformation = ({ model }) => {
                         <div className={classes.phoneCnicDiv} >
                             <div className={classes.cnicDiv} >
                                 <TextField
+                                    className={classes.pairElement}
                                     id="cell"
                                     label="Cell Phone"
                                     variant="outlined"
                                     type="text"
                                     color="primary"
+                                    value={model.cellPhone}
                                     onChange={(e) => model.setCellPhone(e.target.value)}
+                                    helperText={model.cellPhone === "" ? <span style={{ color: 'red' }} >Required</span> : model.cellPhone.length < 11 ? <span style={{ color: 'red' }} >Incorrect Phone Number</span> : Number(model.cellPhone) === NaN ? <span style={{ color: 'red' }} >Numbers only</span> : <span style={{ color: 'lightgreen' }} >Correct</span>}
                                     InputProps={{
                                         endAdornment: (
                                             <InputAdornment position="end">
@@ -341,12 +232,15 @@ const PersonalInformation = ({ model }) => {
                             </div>
                             <div className={classes.phoneDiv} >
                                 <TextField
+                                    className={classes.pairElement}
                                     id="phone"
                                     label="Phone No. "
                                     variant="outlined"
                                     type="text"
                                     color="primary"
+                                    value={model.phone}
                                     onChange={(e) => model.setPhone(e.target.value)}
+                                    helperText={"Optional"}
                                     InputProps={{
                                         endAdornment: (
                                             <InputAdornment position="end">
@@ -362,12 +256,15 @@ const PersonalInformation = ({ model }) => {
                         <div className={classes.phoneCnicDiv} >
                             <div className={classes.cnicDiv} >
                                 <TextField
+                                    className={classes.pairElement}
                                     id="email"
                                     label="Email"
                                     variant="outlined"
                                     type="email"
                                     color="primary"
+                                    value={model.email}
                                     onChange={(e) => model.setEmail(e.target.value)}
+                                    helperText={model.email === "" ? <span style={{ color: 'red' }} >Required</span> : !validateEmail(model.email) ? <span style={{ color: 'red' }} >Incorrect email</span> : <span style={{ color: 'lightgreen' }} >Correct</span>}
                                     InputProps={{
                                         endAdornment: (
                                             <InputAdornment position="end">
@@ -380,12 +277,15 @@ const PersonalInformation = ({ model }) => {
                             </div>
                             <div className={classes.phoneDiv} >
                                 <TextField
+                                    className={classes.pairElement}
                                     id="cnic"
                                     label="CNIC"
                                     variant="outlined"
                                     type="text"
                                     color="primary"
+                                    value={model.cNIC}
                                     onChange={(e) => model.setCNIC(e.target.value)}
+                                    helperText={model.cNIC === "" ? <span style={{ color: 'red' }} >Required</span> : model.cNIC.length !== 13 ? <span style={{ color: 'red' }} >Incorrect</span> : <span style={{ color: 'lightgreen' }} >Correct</span>}
                                     InputProps={{
                                         endAdornment: (
                                             <InputAdornment position="end">
@@ -404,8 +304,10 @@ const PersonalInformation = ({ model }) => {
                                 variant="outlined"
                                 type="text"
                                 color="primary"
+                                value={model.address}
                                 className={classes.myElements}
                                 onChange={(e) => model.setAddress(e.target.value)}
+                                helperText={model.address === "" ? <span style={{ color: 'red' }} >Required</span> : <span style={{ color: 'lightgreen' }} >Correct</span>}
                                 InputProps={{
                                     endAdornment: (
                                         <InputAdornment position="end">
@@ -416,7 +318,7 @@ const PersonalInformation = ({ model }) => {
                             />
                         </div>
 
-                        
+
 
 
 

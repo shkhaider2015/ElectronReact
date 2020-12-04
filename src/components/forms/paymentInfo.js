@@ -1,4 +1,7 @@
-import { Avatar, Button, Grid, makeStyles, Paper, TextField, Typography, InputAdornment, Fab, LinearProgress } from '@material-ui/core'
+import {
+    Avatar, Button, Grid, makeStyles, Paper, TextField, Typography,
+    InputAdornment, Fab, LinearProgress, Select, InputLabel, FormControl, MenuItem
+} from '@material-ui/core'
 import {
     Email, VpnKey as Password, PermIdentity as Name,
     CreditCard as CNIC, Phone, AddPhotoAlternate as AddPhotoAlternateIcon, Smartphone, LocationOn
@@ -19,7 +22,7 @@ const useStyle = makeStyles(
                 // backgroundRepeat: 'repeat-y',
                 // backgroundSize: '100% 100%',
                 // backgroundPosition: '0% 0%',
-                marginTop : '6.55%',
+                marginTop: '6.55%',
             },
             linearProgress: {
                 backgroundColor: "#ffffff",
@@ -29,21 +32,21 @@ const useStyle = makeStyles(
                 paddingTop: '2%',
                 paddingLeft: '4%',
                 paddingRight: '4%',
-                paddingBottom : '3%',
-                width: '50%',
+                paddingBottom: '3%',
+                width: '60%',
                 background: 'rgba(255, 255, 255, 0.98)',
                 [theme.breakpoints.down('md')]: {
-                    width: '40%',
+                    width: '70%',
                     textAlign: 'center'
 
                 },
                 [theme.breakpoints.down('sm')]: {
-                    width: '50%',
+                    width: '80%',
                     textAlign: 'center'
 
                 },
                 [theme.breakpoints.down('xs')]: {
-                    width: '80%',
+                    width: '90%',
                     marginTop: '10%',
                     textAlign: 'center'
 
@@ -51,7 +54,7 @@ const useStyle = makeStyles(
                 margin: '0 auto',
             },
             myText: {
-                marginTop: '5%'
+                marginTop: '2%'
             },
             myButton: {
                 marginTop: '10%',
@@ -63,16 +66,19 @@ const useStyle = makeStyles(
             phoneCnicDiv: {
                 display: 'flex',
                 width: '100%',
-                marginTop: '5%',
+                marginTop: '2%',
             },
             cnicDiv: {
-                width: '38%',
-                marginLeft : '0'
+                width: '45%',
+                marginLeft: '0'
             },
             phoneDiv: {
-                width: '38%',
+                width: '45%',
                 marginLeft: 'auto',
                 marginRight: "0"
+            },
+            pairElement: {
+                width: '100%'
             },
             loginLink: {
                 textDecoration: 'none',
@@ -136,7 +142,7 @@ const PlotInformation = () => {
                 displayName: UserModel.name,
                 photoURL: UserModel.imageUri,
                 phoneNumber: UserModel.phoneNumber,
-                
+
             }
         )
             .then(() => {
@@ -148,20 +154,20 @@ const PlotInformation = () => {
                 setIsLoading(false)
             })
     }
-    
+
 
     const uploadImage = () => {
 
         var storageRef = storage.ref().child(UserModel.name.replace(/\s/g, ""));
         var uploadTask = storageRef.child('profile.jpg').put(ImageFile);
 
-        
+
 
         // Register three observers:
         // 1. 'state_changed' observer, called any time the state changes
         // 2. Error observer, called on failure
         // 3. Completion observer, called on successful completion
-        uploadTask.on('state_changed',  (snapshot) => {
+        uploadTask.on('state_changed', (snapshot) => {
             // Observe state change events such as progress, pause, and resume
             // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
             var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
@@ -177,14 +183,14 @@ const PlotInformation = () => {
                     console.log("Default case")
                     break;
             }
-        },(error) => {
+        }, (error) => {
             // Handle unsuccessful uploads
             console.log(error)
             setIsLoading(false)
-        },() => {
+        }, () => {
             // Handle successful uploads on complete
             // For instance, get the download URL: https://firebasestorage.googleapis.com/...
-            uploadTask.snapshot.ref.getDownloadURL().then( (downloadURL) => {
+            uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
                 console.log('File available at', downloadURL);
                 UserModel.imageUri = downloadURL;
                 updateProfile()
@@ -230,59 +236,80 @@ const PlotInformation = () => {
 
 
     return (
-        <div className={classes.root}> 
-         <Grid container>
-            <Grid
-                item
-                lg={12}
-                md={12}
-                sm={12}
-                xs={12}
-            >
-                {isLoading ? <LinearProgress className={classes.linearProgress} /> : ""}
-                <Paper elevation={0} className={classes.myPaper}>
+        <div className={classes.root}>
+            <Grid container>
+                <Grid
+                    item
+                    lg={12}
+                    md={12}
+                    sm={12}
+                    xs={12}
+                >
+                    {isLoading ? <LinearProgress className={classes.linearProgress} /> : ""}
+                    <Paper elevation={0} className={classes.myPaper}>
 
-                    
+
                         <div className={classes.phoneCnicDiv} >
-                            
+
                             <div className={classes.cnicDiv} >
-                            <TextField
-                                id="totalAmount"
-                                label="Total Amount"
-                                variant="outlined"
-                                type="number"
-                                color="primary"
-                                InputProps={{
-                                    endAdornment: (
-                                        <InputAdornment position="end">
-                                            <Name className={classes.iconColor} />
-                                        </InputAdornment>
-                                    ),
-                                }}
-                            />
+                                <TextField
+                                    className={classes.pairElement}
+                                    id="totalAmount"
+                                    label="Total Amount"
+                                    variant="outlined"
+                                    type="number"
+                                    color="primary"
+                                    InputProps={{
+                                        endAdornment: (
+                                            <InputAdornment position="end">
+                                                <Name className={classes.iconColor} />
+                                            </InputAdornment>
+                                        ),
+                                    }}
+                                />
                             </div>
                             <div className={classes.phoneDiv} >
-                            <TextField
-                                id="installment"
-                                label="Total Installment"
-                                variant="outlined"
-                                type="number"
-                                color="primary"
-                                InputProps={{
-                                    endAdornment: (
-                                        <InputAdornment position="end">
-                                            <Name className={classes.iconColor} />
-                                        </InputAdornment>
-                                    ),
-                                }}
-                            />
+                                {/* <TextField
+                                    className={classes.pairElement}
+                                    id="procedure"
+                                    label="Payment Procedure"
+                                    variant="outlined"
+                                    type="text"
+                                    color="primary"
+                                    InputProps={{
+                                        endAdornment: (
+                                            <InputAdornment position="end">
+                                                <Name className={classes.iconColor} />
+                                            </InputAdornment>
+                                        ),
+                                    }}
+                                /> */}
+                                <FormControl variant="outlined" className={classes.pairElement}>
+                                    <InputLabel htmlFor="outlined-age-native-simple">Procedure</InputLabel>
+                                    <Select
+                                        native
+                                        value=""
+                                        label="Procedure"
+                                        inputProps={{
+                                            name: 'procedure',
+                                            id: 'outlined-age-native-simple',
+                                        }}
+                                    >
+                                        <option aria-label="None" value="" />
+                                        <option value={10}>Full Payment</option>
+                                        <option value={20}>Half Payment</option>
+                                        <option value={30}>Short Payment</option>
+                                        <option value={30}>Installment</option>
+                                    </Select>
+                                </FormControl>
                             </div>
                         </div>
                         <div className={classes.phoneCnicDiv} >
                             <div className={classes.cnicDiv} >
                                 <TextField
-                                    id="installmentDuration"
-                                    label="Total Duration"
+                                    className={classes.pairElement}
+                                    id="installment"
+                                    label="Installment"
                                     variant="outlined"
                                     type="number"
                                     color="primary"
@@ -298,8 +325,9 @@ const PlotInformation = () => {
                             </div>
                             <div className={classes.phoneDiv} >
                                 <TextField
-                                    id="category"
-                                    label="Category"
+                                    className={classes.pairElement}
+                                    id="duration"
+                                    label="Installment Duration"
                                     variant="outlined"
                                     type="text"
                                     color="primary"
@@ -318,8 +346,9 @@ const PlotInformation = () => {
                         <div className={classes.phoneCnicDiv} >
                             <div className={classes.cnicDiv} >
                                 <TextField
-                                    id="nature"
-                                    label="Nature"
+                                    className={classes.pairElement}
+                                    id="firstInstallment"
+                                    label="First Installment"
                                     variant="outlined"
                                     type="text"
                                     color="primary"
@@ -335,8 +364,9 @@ const PlotInformation = () => {
                             </div>
                             <div className={classes.phoneDiv} >
                                 <TextField
-                                    id="type"
-                                    label="Type"
+                                    className={classes.pairElement}
+                                    id="balance"
+                                    label="Balance"
                                     variant="outlined"
                                     type="text"
                                     color="primary"
@@ -355,6 +385,7 @@ const PlotInformation = () => {
                         <div className={classes.phoneCnicDiv} >
                             <div className={classes.cnicDiv} >
                                 <TextField
+                                    className={classes.pairElement}
                                     id="Site Plan"
                                     label="Site Plan"
                                     variant="outlined"
@@ -372,6 +403,7 @@ const PlotInformation = () => {
                             </div>
                             <div className={classes.phoneDiv} >
                                 <TextField
+                                    className={classes.pairElement}
                                     id="purpose"
                                     label="Purpose"
                                     variant="outlined"
@@ -389,12 +421,12 @@ const PlotInformation = () => {
                             </div>
                         </div>
 
-                        
 
-                </Paper>
 
+                    </Paper>
+
+                </Grid>
             </Grid>
-        </Grid>
         </div>
     )
 }

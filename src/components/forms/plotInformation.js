@@ -1,4 +1,5 @@
-import { Avatar, Button, Grid, makeStyles, Paper, TextField, Typography, InputAdornment, Fab, LinearProgress } from '@material-ui/core'
+import { Avatar, Button, Grid, makeStyles, Paper, TextField,
+     Typography, InputAdornment, Fab, LinearProgress, InputLabel, FormControl, Select } from '@material-ui/core'
 import {
     Email, VpnKey as Password, PermIdentity as Name,
     CreditCard as CNIC, Phone, AddPhotoAlternate as AddPhotoAlternateIcon, Smartphone, LocationOn
@@ -30,20 +31,20 @@ const useStyle = makeStyles(
                 paddingLeft: '4%',
                 paddingRight: '4%',
                 paddingBottom : '3%',
-                width: '50%',
+                width: '60%',
                 background: 'rgba(255, 255, 255, 0.98)',
                 [theme.breakpoints.down('md')]: {
-                    width: '40%',
+                    width: '70%',
                     textAlign: 'center'
 
                 },
                 [theme.breakpoints.down('sm')]: {
-                    width: '50%',
+                    width: '80%',
                     textAlign: 'center'
 
                 },
                 [theme.breakpoints.down('xs')]: {
-                    width: '80%',
+                    width: '90%',
                     marginTop: '10%',
                     textAlign: 'center'
 
@@ -51,7 +52,7 @@ const useStyle = makeStyles(
                 margin: '0 auto',
             },
             myText: {
-                marginTop: '5%'
+                marginTop: '2%'
             },
             myButton: {
                 marginTop: '10%',
@@ -63,16 +64,19 @@ const useStyle = makeStyles(
             phoneCnicDiv: {
                 display: 'flex',
                 width: '100%',
-                marginTop: '5%',
+                marginTop: '2%',
             },
             cnicDiv: {
-                width: '38%',
+                width: '45%',
                 marginLeft : '0'
             },
             phoneDiv: {
-                width: '38%',
+                width: '45%',
                 marginLeft: 'auto',
                 marginRight: "0"
+            },
+            pairElement : {
+                width : '100%'
             },
             loginLink: {
                 textDecoration: 'none',
@@ -98,136 +102,6 @@ var ImageFile = null;
 const PersonalInformation = ({ model }) => {
 
     const classes = useStyle();
-    const navigate = useNavigate()
-
-    const currentUser = React.useContext(AuthContext)
-    const [selectedImage, setSelectedImage] = React.useState(null)
-    const [isLoading, setIsLoading] = React.useState(false)
-
-    // React.useEffect(
-    //     () => {
-    //         if(currentUser.currentUser)
-    //         {
-    //             navigate("/")
-    //         }
-    //     },
-    //     [currentUser, navigate]
-    // )
-
-    const createProfile = () => {
-        db
-            .collection("Users")
-            .add(UserModel)
-            .then(function (docRef) {
-                console.log("Docement written with ID : ", docRef)
-                setIsLoading(false)
-            })
-            .catch(function (error) {
-                console.error("erro adding document : ", error)
-                setIsLoading(false)
-            })
-
-
-    }
-
-    const updateProfile = () => {
-        auth.currentUser.updateProfile(
-            {
-                displayName: UserModel.name,
-                photoURL: UserModel.imageUri,
-                phoneNumber: UserModel.phoneNumber,
-                
-            }
-        )
-            .then(() => {
-                console.log("Profile Updated")
-                createProfile()
-            })
-            .catch((err) => {
-                console.log("ERROR : ", err)
-                setIsLoading(false)
-            })
-    }
-    
-
-    const uploadImage = () => {
-
-        var storageRef = storage.ref().child(UserModel.name.replace(/\s/g, ""));
-        var uploadTask = storageRef.child('profile.jpg').put(ImageFile);
-
-        
-
-        // Register three observers:
-        // 1. 'state_changed' observer, called any time the state changes
-        // 2. Error observer, called on failure
-        // 3. Completion observer, called on successful completion
-        uploadTask.on('state_changed',  (snapshot) => {
-            // Observe state change events such as progress, pause, and resume
-            // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-            var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-            console.log('Upload is ' + progress + '% done');
-            switch (snapshot.state) {
-                case firebase.storage.TaskState.PAUSED: // or 'paused'
-                    console.log('Upload is paused');
-                    break;
-                case firebase.storage.TaskState.RUNNING: // or 'running'
-                    console.log('Upload is running');
-                    break;
-                default:
-                    console.log("Default case")
-                    break;
-            }
-        },(error) => {
-            // Handle unsuccessful uploads
-            console.log(error)
-            setIsLoading(false)
-        },() => {
-            // Handle successful uploads on complete
-            // For instance, get the download URL: https://firebasestorage.googleapis.com/...
-            uploadTask.snapshot.ref.getDownloadURL().then( (downloadURL) => {
-                console.log('File available at', downloadURL);
-                UserModel.imageUri = downloadURL;
-                updateProfile()
-            });
-        });
-
-
-    }
-    const createUser = (pass) => {
-        auth.createUserWithEmailAndPassword(UserModel.email, pass)
-            .then((user) => {
-                uploadImage()
-            })
-            .catch((error) => {
-                var errorCode = error.code;
-                var errorMessage = error.message;
-                console.error("Error creating user : ERROR_CODE -> ", errorCode)
-                console.error("Error creating user : ERROR_MESSAGE -> ", errorMessage)
-                setIsLoading(false)
-                // ..
-            });
-    }
-    const handleSelectImage = (e) => {
-        let file = e.target.files[0]
-        ImageFile = file;
-        setSelectedImage(URL.createObjectURL(file))
-    }
-
-    const handleSubmit = (e) => {
-        e.preventDefault()
-
-        setIsLoading(true)
-        UserModel.name = e.target.name.value
-        UserModel.email = e.target.email.value;
-        UserModel.phoneNumber = e.target.phone.value;
-        UserModel.cnic = e.target.cnic.value
-
-        // createUser(e.target.password.value)
-
-
-    }
-
-
 
     return (
         <div className={classes.root}> 
@@ -239,20 +113,23 @@ const PersonalInformation = ({ model }) => {
                 sm={12}
                 xs={12}
             >
-                {isLoading ? <LinearProgress className={classes.linearProgress} /> : ""}
+                
                 <Paper elevation={0} className={classes.myPaper}>
 
                     
                         <div className={classes.phoneCnicDiv} >
                             
                             <div className={classes.cnicDiv} >
-                            <TextField
+                            {/* <TextField
+                            className={classes.pairElement}
                                 id="plot"
                                 label="Plot"
                                 variant="outlined"
                                 type="text"
                                 color="primary"
+                                value={model.plot}
                                 onChange={(e) => model.setPlot(e.target.value) }
+                                helperText={ model.plot === ""? <span style={{ color : 'red' }} >Required</span> : <span style={{ color : 'lightgreen' }} >Correct</span> }
                                 InputProps={{
                                     endAdornment: (
                                         <InputAdornment position="end">
@@ -260,16 +137,37 @@ const PersonalInformation = ({ model }) => {
                                         </InputAdornment>
                                     ),
                                 }}
-                            />
+                            /> */}
+                            <FormControl variant="outlined" className={classes.pairElement}>
+                                    <InputLabel htmlFor="outlined-age-native-simple">Area</InputLabel>
+                                    <Select
+                                        native
+                                        value={model.area}
+                                        onChange={(e) => model.setArea(e.target.value)}
+                                        label="Area"
+                                        inputProps={{
+                                            name: 'area',
+                                            id: 'outlined-age-native-simple',
+                                        }}
+                                    >
+                                        <option aria-label="None" value="" />
+                                        <option value={10}>Plot</option>
+                                        <option value={20}>Home</option>
+                                        <option value={30}>Flat</option>
+                                    </Select>
+                                </FormControl>
                             </div>
                             <div className={classes.phoneDiv} >
                             <TextField
+                            className={classes.pairElement}
                                 id="measurment"
                                 label="Measurement"
                                 variant="outlined"
                                 type="text"
                                 color="primary"
+                                value={model.measurement}
                                 onChange={(e) => model.setMeasurement(e.target.value) }
+                                helperText={ model.measurement === ""? <span style={{ color : 'red' }} >Required</span> : <span style={{ color : 'lightgreen' }} >Correct</span> }
                                 InputProps={{
                                     endAdornment: (
                                         <InputAdornment position="end">
@@ -283,12 +181,15 @@ const PersonalInformation = ({ model }) => {
                         <div className={classes.phoneCnicDiv} >
                             <div className={classes.cnicDiv} >
                                 <TextField
+                                    className={classes.pairElement}
                                     id="square"
                                     label="Sq. Yds. Block"
                                     variant="outlined"
                                     type="text"
                                     color="primary"
+                                    value={model.square}
                                     onChange={(e) => model.setSquare(e.target.value) }
+                                    helperText={ model.square === ""? <span style={{ color : 'red' }} >Required</span> : <span style={{ color : 'lightgreen' }} >Correct</span> }
                                     InputProps={{
                                         endAdornment: (
                                             <InputAdornment position="end">
@@ -301,12 +202,15 @@ const PersonalInformation = ({ model }) => {
                             </div>
                             <div className={classes.phoneDiv} >
                                 <TextField
+                            className={classes.pairElement}
                                     id="category"
                                     label="Category"
                                     variant="outlined"
                                     type="text"
                                     color="primary"
+                                    value={model.category}
                                     onChange={(e) => model.setCategory(e.target.value) }
+                                    helperText={ model.category === ""? <span style={{ color : 'red' }} >Required</span> : <span style={{ color : 'lightgreen' }} >Correct</span> }
                                     InputProps={{
                                         endAdornment: (
                                             <InputAdornment position="end">
@@ -322,12 +226,15 @@ const PersonalInformation = ({ model }) => {
                         <div className={classes.phoneCnicDiv} >
                             <div className={classes.cnicDiv} >
                                 <TextField
+                            className={classes.pairElement}
                                     id="nature"
                                     label="Nature"
                                     variant="outlined"
                                     type="text"
                                     color="primary"
+                                    value={model.nature}
                                     onChange={(e) => model.setNature(e.target.value) }
+                                    helperText={ model.nature === ""? <span style={{ color : 'red' }} >Required</span> : <span style={{ color : 'lightgreen' }} >Correct</span> }
                                     InputProps={{
                                         endAdornment: (
                                             <InputAdornment position="end">
@@ -340,12 +247,15 @@ const PersonalInformation = ({ model }) => {
                             </div>
                             <div className={classes.phoneDiv} >
                                 <TextField
+                            className={classes.pairElement}
                                     id="type"
                                     label="Type"
                                     variant="outlined"
                                     type="text"
                                     color="primary"
+                                    value={model.type}
                                     onChange={(e) => model.setType(e.target.value) }
+                                    helperText={ model.type === ""? <span style={{ color : 'red' }} >Required</span> : <span style={{ color : 'lightgreen' }} >Correct</span> }
                                     InputProps={{
                                         endAdornment: (
                                             <InputAdornment position="end">
@@ -361,12 +271,15 @@ const PersonalInformation = ({ model }) => {
                         <div className={classes.phoneCnicDiv} >
                             <div className={classes.cnicDiv} >
                                 <TextField
+                            className={classes.pairElement}
                                     id="Site Plan"
                                     label="Site Plan"
                                     variant="outlined"
                                     type="text"
                                     color="primary"
+                                    value={model.sitePlane}
                                     onChange={(e) => model.setSitePlane(e.target.value) }
+                                    helperText={ model.sitePlane === ""? <span style={{ color : 'red' }} >Required</span> : <span style={{ color : 'lightgreen' }} >Correct</span> }
                                     InputProps={{
                                         endAdornment: (
                                             <InputAdornment position="end">
@@ -379,12 +292,15 @@ const PersonalInformation = ({ model }) => {
                             </div>
                             <div className={classes.phoneDiv} >
                                 <TextField
+                            className={classes.pairElement}
                                     id="purpose"
                                     label="Purpose"
                                     variant="outlined"
                                     type="text"
                                     color="primary"
+                                    value={model.purpose}
                                     onChange={(e) => model.setPurpose(e.target.value) }
+                                    helperText={ model.purpose === ""? <span style={{ color : 'red' }} >Required</span> : <span style={{ color : 'lightgreen' }} >Correct</span> }
                                     InputProps={{
                                         endAdornment: (
                                             <InputAdornment position="end">

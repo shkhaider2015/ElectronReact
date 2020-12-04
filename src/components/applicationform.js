@@ -221,7 +221,7 @@ const Application = () => {
   const [email, setEmail] = React.useState("")
   const [address, setAddress] = React.useState("")
 
-  const [plot, setPlot] = React.useState("")
+  const [area, setArea] = React.useState("")
   const [measurement, setMeasurement] = React.useState("")
   const [square, setSquare] = React.useState("")
   const [category, setCategory] = React.useState("")
@@ -232,23 +232,38 @@ const Application = () => {
 
   const personalModel =
   {
+    name,
     setName,
+    fatherName,
     setFatherName,
+    cellPhone,
     setCellPhone,
+    phone,
     setPhone,
+    cNIC,
     setCNIC,
+    email,
     setEmail,
+    address,
     setAddress
   }
 
   const plotModel = {
-    setPlot,
+    area,
+    setArea,
+    measurement,
     setMeasurement,
+    square,
     setSquare,
+    category,
     setCategory,
+    nature,
     setNature,
+    type,
     setType,
+    sitePlane,
     setSitePlane,
+    purpose,
     setPurpose,
 
   }
@@ -263,11 +278,16 @@ const Application = () => {
   }
   const handlePlotForm = () => {
     let val = false;
-    plot === "" || measurement === "" || square === "" || category === "" || nature === "" || type === "" || sitePlane === "" || purpose === ""
+    area === "" || measurement === "" || square === "" || category === "" || nature === "" || type === "" || sitePlane === "" || purpose === ""
       ? val = false
       : val = true
 
     return val;
+  }
+
+  const showError = () => 
+  {
+
   }
 
 
@@ -277,6 +297,9 @@ const Application = () => {
       case 0:
         if (handlePersonalForm()) {
           setActiveStep((prevActiveStep) => prevActiveStep + 1)
+        }
+        else{
+          showError()
         }
         break;
       case 1:
