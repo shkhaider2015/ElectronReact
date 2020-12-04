@@ -155,22 +155,22 @@ ColorlibStepIcon.propTypes = {
 const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
-    height : '80mvh'
+    height: '80mvh'
   },
-  stepper : {
-    
+  stepper: {
+
   },
   button: {
-    marginTop : '1%'
+    marginTop: '1%'
   },
   instructions: {
 
   },
-  buttonLeft : {
-    marginRight : '10%',
+  buttonLeft: {
+    marginRight: '10%',
   },
-  buttonRight : {
-    marginLeft : '10%'
+  buttonRight: {
+    marginLeft: '10%'
   }
 }));
 
@@ -191,18 +191,17 @@ function getStepContent(step) {
   }
 }
 
-const getForms = (step, formOneModel) =>
-{
-    switch (step) {
-        case 0:
-          return <PersonalInfo model={formOneModel} />;
-        case 1:
-          return <PlotInfo  />;
-        case 2:
-          return <PaymentInfo  /> ;
-        default:
-          return 'Unknown step';
-    }
+const getForms = (step, personalModel, plotModel) => {
+  switch (step) {
+    case 0:
+      return <PersonalInfo model={personalModel} />;
+    case 1:
+      return <PlotInfo model={plotModel} />;
+    case 2:
+      return <PaymentInfo />;
+    default:
+      return 'Unknown step';
+  }
 
 }
 
@@ -215,49 +214,85 @@ const Application = () => {
   const [stepThree, setStepThree] = React.useState(false)
 
   const [name, setName] = React.useState("")
-    const [fatherName, setFatherName] = React.useState("")
-    const [cellPhone, setCellPhone] = React.useState("")
-    const [phone, setPhone] = React.useState("")
-    const [cNIC, setCNIC] = React.useState("")
-    const [email, setEmail] = React.useState("")
-    const [address, setAddress] = React.useState("")
+  const [fatherName, setFatherName] = React.useState("")
+  const [cellPhone, setCellPhone] = React.useState("")
+  const [phone, setPhone] = React.useState("")
+  const [cNIC, setCNIC] = React.useState("")
+  const [email, setEmail] = React.useState("")
+  const [address, setAddress] = React.useState("")
 
-    const formOneModel =  
-    {
-      setActiveStep,
-      setName,
-      setFatherName,
-      setCellPhone,
-      setPhone,
-      setCNIC,
-      setEmail,
-      setAddress
-    }
+  const [plot, setPlot] = React.useState("")
+  const [measurement, setMeasurement] = React.useState("")
+  const [square, setSquare] = React.useState("")
+  const [category, setCategory] = React.useState("")
+  const [nature, setNature] = React.useState("")
+  const [type, setType] = React.useState("")
+  const [sitePlane, setSitePlane] = React.useState("")
+  const [purpose, setPurpose] = React.useState("")
 
-    const handleFormOne = () =>
-    {
-      if(name === "" || fatherName === "" || cellPhone === "" || phone === "" ||cNIC  === "" || email === "" || address === "")
-      {
-        console.log(name)
-        console.log("Error")
-        setStepOne(false)
-      }
-      else
-      {
-        setStepOne(true)
-      }
-    }
+  const personalModel =
+  {
+    setName,
+    setFatherName,
+    setCellPhone,
+    setPhone,
+    setCNIC,
+    setEmail,
+    setAddress
+  }
+
+  const plotModel = {
+    setPlot,
+    setMeasurement,
+    setSquare,
+    setCategory,
+    setNature,
+    setType,
+    setSitePlane,
+    setPurpose,
+
+  }
+
+  const handlePersonalForm = () => {
+    let val = false;
+    name === "" || fatherName === "" || cellPhone === "" || phone === "" || cNIC === "" || email === "" || address === ""
+      ? val = false
+      : val = true
+
+    return val;
+  }
+  const handlePlotForm = () => {
+    let val = false;
+    plot === "" || measurement === "" || square === "" || category === "" || nature === "" || type === "" || sitePlane === "" || purpose === ""
+      ? val = false
+      : val = true
+
+    return val;
+  }
 
 
   const handleNext = () => {
-    handleFormOne()
-    if(stepOne)
-    {
-      console.log("HandleForm is true")
-      setActiveStep((prevActiveStep) => prevActiveStep + 1);
+
+    switch (activeStep) {
+      case 0:
+        if (handlePersonalForm()) {
+          setActiveStep((prevActiveStep) => prevActiveStep + 1)
+        }
+        break;
+      case 1:
+        if (handlePlotForm()) {
+          setActiveStep((prevActiveStep) => prevActiveStep + 1)
+        }
+        break;
+      case 2:
+        //
+        break;
+      case 3:
+        //
+        break;
+      default:
+      //
     }
-    
-    // setStepOne(true)
   };
 
   const handleBack = () => {
@@ -270,7 +305,7 @@ const Application = () => {
 
   return (
     <div className={classes.root}>
-    
+
       <Stepper alternativeLabel activeStep={activeStep} connector={<ColorlibConnector />} className={classes.stepper} >
         {steps.map((label) => (
           <Step key={label}>
@@ -280,7 +315,7 @@ const Application = () => {
       </Stepper>
       <div >
         {activeStep === steps.length ? (
-          <div style={{ width : '100%', textAlign : 'center' }} >
+          <div style={{ width: '100%', textAlign: 'center' }} >
             <Typography className={classes.instructions}>
               All steps completed - you&apos;re finished
             </Typography>
@@ -289,23 +324,23 @@ const Application = () => {
             </Button>
           </div>
         ) : (
-          <div style={{ width : '100%', textAlign : 'center' }} >
-              <div> { getForms(activeStep, formOneModel) } </div>
-            <div>
-              <Button disabled={activeStep === 0} onClick={handleBack} className={classes.buttonLeft}>
-                Back
+            <div style={{ width: '100%', textAlign: 'center' }} >
+              <div> {getForms(activeStep, personalModel, plotModel)} </div>
+              <div>
+                <Button disabled={activeStep === 0} onClick={handleBack} className={classes.buttonLeft}>
+                  Back
               </Button>
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={handleNext}
-                className={classes.buttonRight}
-              >
-                {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
-              </Button>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={handleNext}
+                  className={classes.buttonRight}
+                >
+                  {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
+                </Button>
+              </div>
             </div>
-          </div>
-        )}
+          )}
       </div>
     </div>
   );

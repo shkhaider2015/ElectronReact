@@ -95,7 +95,7 @@ const useStyle = makeStyles(
 )
 var ImageFile = null;
 
-const PersonalInformation = () => {
+const PersonalInformation = ({ model }) => {
 
     const classes = useStyle();
     const navigate = useNavigate()
@@ -252,6 +252,7 @@ const PersonalInformation = () => {
                                 variant="outlined"
                                 type="text"
                                 color="primary"
+                                onChange={(e) => model.setPlot(e.target.value) }
                                 InputProps={{
                                     endAdornment: (
                                         <InputAdornment position="end">
@@ -268,6 +269,7 @@ const PersonalInformation = () => {
                                 variant="outlined"
                                 type="text"
                                 color="primary"
+                                onChange={(e) => model.setMeasurement(e.target.value) }
                                 InputProps={{
                                     endAdornment: (
                                         <InputAdornment position="end">
@@ -286,6 +288,7 @@ const PersonalInformation = () => {
                                     variant="outlined"
                                     type="text"
                                     color="primary"
+                                    onChange={(e) => model.setSquare(e.target.value) }
                                     InputProps={{
                                         endAdornment: (
                                             <InputAdornment position="end">
@@ -303,6 +306,7 @@ const PersonalInformation = () => {
                                     variant="outlined"
                                     type="text"
                                     color="primary"
+                                    onChange={(e) => model.setCategory(e.target.value) }
                                     InputProps={{
                                         endAdornment: (
                                             <InputAdornment position="end">
@@ -323,6 +327,7 @@ const PersonalInformation = () => {
                                     variant="outlined"
                                     type="text"
                                     color="primary"
+                                    onChange={(e) => model.setNature(e.target.value) }
                                     InputProps={{
                                         endAdornment: (
                                             <InputAdornment position="end">
@@ -340,6 +345,7 @@ const PersonalInformation = () => {
                                     variant="outlined"
                                     type="text"
                                     color="primary"
+                                    onChange={(e) => model.setType(e.target.value) }
                                     InputProps={{
                                         endAdornment: (
                                             <InputAdornment position="end">
@@ -360,6 +366,7 @@ const PersonalInformation = () => {
                                     variant="outlined"
                                     type="text"
                                     color="primary"
+                                    onChange={(e) => model.setSitePlane(e.target.value) }
                                     InputProps={{
                                         endAdornment: (
                                             <InputAdornment position="end">
@@ -377,6 +384,7 @@ const PersonalInformation = () => {
                                     variant="outlined"
                                     type="text"
                                     color="primary"
+                                    onChange={(e) => model.setPurpose(e.target.value) }
                                     InputProps={{
                                         endAdornment: (
                                             <InputAdornment position="end">
