@@ -131,6 +131,20 @@ const PersonalInformation = ({ model }) => {
 
         return val
     }
+    const handleCnic = (e) => {
+        var a = e.target.value
+        // a = a.replace(/(\d{5})(\d{7})(\d{1})/, "$1-$2-$3")
+        if (a.length > 15) {
+            a = a.slice(0, -1)
+        }
+        if (a.length === 6 && a.charAt(5) !== "-" || a.length === 14 && a.charAt(13) !== "-" ) {
+            a = a.slice(0, -1) + "-" + a.slice(-1)
+        }
+
+        // e.target.value = a
+        model.setCNIC(a)
+    }
+
 
 
 
@@ -284,7 +298,7 @@ const PersonalInformation = ({ model }) => {
                                     type="text"
                                     color="primary"
                                     value={model.cNIC}
-                                    onChange={(e) => model.setCNIC(e.target.value)}
+                                    onChange={handleCnic}
                                     helperText={model.cNIC === "" ? <span style={{ color: 'red' }} >Required</span> : model.cNIC.length !== 13 ? <span style={{ color: 'red' }} >Incorrect</span> : <span style={{ color: 'lightgreen' }} >Correct</span>}
                                     InputProps={{
                                         endAdornment: (

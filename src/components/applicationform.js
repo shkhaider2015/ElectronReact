@@ -191,14 +191,14 @@ function getStepContent(step) {
   }
 }
 
-const getForms = (step, personalModel, plotModel) => {
+const getForms = (step, personalModel, plotModel, paymentModel) => {
   switch (step) {
     case 0:
       return <PersonalInfo model={personalModel} />;
     case 1:
       return <PlotInfo model={plotModel} />;
     case 2:
-      return <PaymentInfo />;
+      return <PaymentInfo model={paymentModel} />;
     default:
       return 'Unknown step';
   }
@@ -209,9 +209,6 @@ const Application = () => {
   const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(0);
   const steps = getSteps();
-  const [stepOne, setStepOne] = React.useState(false)
-  const [stepTwo, setStepTwo] = React.useState(false)
-  const [stepThree, setStepThree] = React.useState(false)
 
   const [name, setName] = React.useState("")
   const [fatherName, setFatherName] = React.useState("")
@@ -229,6 +226,14 @@ const Application = () => {
   const [type, setType] = React.useState("")
   const [sitePlane, setSitePlane] = React.useState("")
   const [purpose, setPurpose] = React.useState("")
+
+  const [amount, setAmount] = React.useState(0)
+  const [procedure, setProcedure] = React.useState("")
+  const [totalInstallment, setTotalInstallment] = React.useState(0)
+  const [duration, setDuration] = React.useState("")
+  const [installment, setInstallment] = React.useState(0)
+  const [balance, setBalance] = React.useState(0)
+  const [paymentMethod, setPaymentMethod] = React.useState("")
 
   const personalModel =
   {
@@ -265,6 +270,24 @@ const Application = () => {
     setSitePlane,
     purpose,
     setPurpose,
+
+  }
+
+  const paymentModel = {
+    amount,
+    setAmount,
+    procedure,
+    setProcedure,
+    totalInstallment,
+    setTotalInstallment,
+    duration,
+    setDuration,
+    installment,
+    setInstallment,
+    balance,
+    setBalance,
+    paymentMethod,
+    setPaymentMethod,
 
   }
 
@@ -348,7 +371,7 @@ const Application = () => {
           </div>
         ) : (
             <div style={{ width: '100%', textAlign: 'center' }} >
-              <div> {getForms(activeStep, personalModel, plotModel)} </div>
+              <div> {getForms(activeStep, personalModel, plotModel, paymentModel)} </div>
               <div>
                 <Button disabled={activeStep === 0} onClick={handleBack} className={classes.buttonLeft}>
                   Back

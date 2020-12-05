@@ -9,6 +9,7 @@ import SitePlan from "../forms/sitePlan";
 import Application from "../applicationform";
 import Home from "../HomePageForms/HomePageForms/HomePage.jsx"
 import Report from "../report/report";
+import Payment from "../forms/paymentInfo";
 
 
 
