@@ -112,236 +112,253 @@ const PersonalInformation = ({ model }) => {
 
     const classes = useStyle();
     const [selectedImage, setSelectedImage] = React.useState(null)
+    var num = 0;
 
 
     const handleSelectImage = (e) => {
-        let file = e.target.files[0]
-        setSelectedImage(URL.createObjectURL(file))
-    }
+        // let file = e.target.files[0]
+        // model.setImageFile(e.target.files[0])
+        // var file = new File(e.target.files[0], "image.jpg")
+        // model.setSelectedImage(file)
+        // URL.createObjectURL(selectedImage)
+        let reader = new FileReader();
+        let file = e.target.files[0];
 
-    const validateEmail = (email) => {
-        let val = false;
-        if (/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(email)) {
-            console.log("Email Validation : Cirrect")
-            val = true
-        }
-        else {
-            console.log("Email Validation : Incorrect")
-        }
-
-        return val
-    }
-    const handleCnic = (e) => {
-        var a = e.target.value
-        // a = a.replace(/(\d{5})(\d{7})(\d{1})/, "$1-$2-$3")
-        if (a.length > 15) {
-            a = a.slice(0, -1)
-        }
-        if (a.length === 6 && a.charAt(5) !== "-" || a.length === 14 && a.charAt(13) !== "-" ) {
-            a = a.slice(0, -1) + "-" + a.slice(-1)
+        reader.onloadend = () => {
+            model.setImageFile(file)
+            setSelectedImage(reader.result)
         }
 
-        // e.target.value = a
-        model.setCNIC(a)
+        reader.readAsDataURL(file)
+        
     }
 
 
 
+const validateEmail = (email) => {
+    let val = false;
+    if (/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(email)) {
+        console.log("Email Validation : Cirrect")
+        val = true
+    }
+    else {
+        console.log("Email Validation : Incorrect")
+    }
 
-    return (
-        <div className={classes.root}>
-            <Grid container>
-                <Grid
-                    item
-                    lg={12}
-                    md={12}
-                    sm={12}
-                    xs={12}
-                >
-                    <Paper elevation={0} className={classes.myPaper}>
-                        <div className={classes.imageDiv}>
-                            <input
-                                accept="image/*"
-                                className={classes.input}
-                                id="myinput"
-                                multiple
-                                type="file"
-                                onChange={handleSelectImage}
-                            />
-                            <label htmlFor="myinput"  >
+    return val
+}
+const handleCnic = (e) => {
+    var a = e.target.value
+    // a = a.replace(/(\d{5})(\d{7})(\d{1})/, "$1-$2-$3")
+    if (a.length > 15) {
+        a = a.slice(0, -1)
+    }
+    if (a.length === 6 && a.charAt(5) !== "-" || a.length === 14 && a.charAt(13) !== "-") 
+    {
+        a = a.slice(0, -1) + "-" + a.slice(-1)
+    }
 
-                                <Fab component="span" className={classes.avatar} >
-                                    {!selectedImage ? <AddPhotoAlternateIcon className={classes.imageIcon} color="primary" /> : <Avatar alt="shakeel haider" src={selectedImage} variant="circle" className={classes.myImage} />}
+    // e.target.value = a
+    model.setCNIC(a)
+}
 
 
-                                </Fab>
-                            </label>
-                        </div>
 
-                        <div className={classes.phoneCnicDiv} >
 
-                            <div className={classes.cnicDiv} >
+return (
+    <div className={classes.root}>
+        <Grid container>
+            <Grid
+                item
+                lg={12}
+                md={12}
+                sm={12}
+                xs={12}
+            >
+                <Paper elevation={0} className={classes.myPaper}>
+                    <div className={classes.imageDiv}>
+                        <input
+                            accept="image/*"
+                            className={classes.input}
+                            id="myinput"
+                            multiple
+                            type="file"
+                            onChange={handleSelectImage}
+                        />
+                        <label htmlFor="myinput"  >
 
-                                <TextField
-                                    className={classes.pairElement}
-                                    id="name"
-                                    label="Name"
-                                    variant="outlined"
-                                    type="text"
-                                    color="primary"
-                                    value={model.name}
-                                    onChange={(e) => model.setName(e.target.value)}
-                                    helperText={model.name === "" ? <span style={{ color: 'red' }} >Required</span> : <span style={{ color: 'lightgreen' }} >Correct</span>}
-                                    InputProps={{
-                                        endAdornment: (
-                                            <InputAdornment position="end">
-                                                <Name className={classes.iconColor} />
-                                            </InputAdornment>
-                                        ),
-                                    }}
-                                />
-                            </div>
-                            <div className={classes.phoneDiv} >
-                                <TextField
-                                    className={classes.pairElement}
-                                    id="fatherName"
-                                    label="Father/Husband name"
-                                    variant="outlined"
-                                    type="text"
-                                    color="primary"
-                                    value={model.fatherName}
-                                    onChange={(e) => model.setFatherName(e.target.value)}
-                                    helperText={model.fatherName === "" ? <span style={{ color: 'red' }} >Required</span> : <span style={{ color: 'lightgreen' }} >Correct</span>}
-                                    InputProps={{
-                                        endAdornment: (
-                                            <InputAdornment position="end">
-                                                <Name className={classes.iconColor} />
-                                            </InputAdornment>
-                                        ),
-                                    }}
-                                />
-                            </div>
-                        </div>
-                        <div className={classes.phoneCnicDiv} >
-                            <div className={classes.cnicDiv} >
-                                <TextField
-                                    className={classes.pairElement}
-                                    id="cell"
-                                    label="Cell Phone"
-                                    variant="outlined"
-                                    type="text"
-                                    color="primary"
-                                    value={model.cellPhone}
-                                    onChange={(e) => model.setCellPhone(e.target.value)}
-                                    helperText={model.cellPhone === "" ? <span style={{ color: 'red' }} >Required</span> : model.cellPhone.length < 11 ? <span style={{ color: 'red' }} >Incorrect Phone Number</span> : Number(model.cellPhone) === NaN ? <span style={{ color: 'red' }} >Numbers only</span> : <span style={{ color: 'lightgreen' }} >Correct</span>}
-                                    InputProps={{
-                                        endAdornment: (
-                                            <InputAdornment position="end">
-                                                <Smartphone className={classes.iconColor} />
-                                            </InputAdornment>
-                                        ),
-                                    }}
+                            <Fab component="span" className={classes.avatar} >
+                                {!selectedImage ? <AddPhotoAlternateIcon className={classes.imageIcon} color="primary" /> : <Avatar alt="shakeel haider" src={selectedImage} variant="circle" className={classes.myImage} />}
 
-                                />
-                            </div>
-                            <div className={classes.phoneDiv} >
-                                <TextField
-                                    className={classes.pairElement}
-                                    id="phone"
-                                    label="Phone No. "
-                                    variant="outlined"
-                                    type="text"
-                                    color="primary"
-                                    value={model.phone}
-                                    onChange={(e) => model.setPhone(e.target.value)}
-                                    helperText={"Optional"}
-                                    InputProps={{
-                                        endAdornment: (
-                                            <InputAdornment position="end">
-                                                <Phone className={classes.iconColor} />
-                                            </InputAdornment>
-                                        ),
-                                    }}
 
-                                />
-                            </div>
-                        </div>
+                            </Fab>
+                        </label>
+                    </div>
 
-                        <div className={classes.phoneCnicDiv} >
-                            <div className={classes.cnicDiv} >
-                                <TextField
-                                    className={classes.pairElement}
-                                    id="email"
-                                    label="Email"
-                                    variant="outlined"
-                                    type="email"
-                                    color="primary"
-                                    value={model.email}
-                                    onChange={(e) => model.setEmail(e.target.value)}
-                                    helperText={model.email === "" ? <span style={{ color: 'red' }} >Required</span> : !validateEmail(model.email) ? <span style={{ color: 'red' }} >Incorrect email</span> : <span style={{ color: 'lightgreen' }} >Correct</span>}
-                                    InputProps={{
-                                        endAdornment: (
-                                            <InputAdornment position="end">
-                                                <Email className={classes.iconColor} />
-                                            </InputAdornment>
-                                        ),
-                                    }}
+                    <div className={classes.phoneCnicDiv} >
 
-                                />
-                            </div>
-                            <div className={classes.phoneDiv} >
-                                <TextField
-                                    className={classes.pairElement}
-                                    id="cnic"
-                                    label="CNIC"
-                                    variant="outlined"
-                                    type="text"
-                                    color="primary"
-                                    value={model.cNIC}
-                                    onChange={handleCnic}
-                                    helperText={model.cNIC === "" ? <span style={{ color: 'red' }} >Required</span> : model.cNIC.length !== 13 ? <span style={{ color: 'red' }} >Incorrect</span> : <span style={{ color: 'lightgreen' }} >Correct</span>}
-                                    InputProps={{
-                                        endAdornment: (
-                                            <InputAdornment position="end">
-                                                <CNIC className={classes.iconColor} />
-                                            </InputAdornment>
-                                        ),
-                                    }}
+                        <div className={classes.cnicDiv} >
 
-                                />
-                            </div>
-                        </div>
-                        <div className={classes.myText}>
                             <TextField
-                                id="address"
-                                label="Address"
+                                className={classes.pairElement}
+                                id="name"
+                                label="Name"
                                 variant="outlined"
                                 type="text"
                                 color="primary"
-                                value={model.address}
-                                className={classes.myElements}
-                                onChange={(e) => model.setAddress(e.target.value)}
-                                helperText={model.address === "" ? <span style={{ color: 'red' }} >Required</span> : <span style={{ color: 'lightgreen' }} >Correct</span>}
+                                value={model.name}
+                                onChange={(e) => model.setName(e.target.value)}
+                                helperText={model.name === "" ? <span style={{ color: 'red' }} >Required</span> : <span style={{ color: 'lightgreen' }} >Correct</span>}
                                 InputProps={{
                                     endAdornment: (
                                         <InputAdornment position="end">
-                                            <LocationOn className={classes.iconColor} />
+                                            <Name className={classes.iconColor} />
                                         </InputAdornment>
                                     ),
                                 }}
                             />
                         </div>
+                        <div className={classes.phoneDiv} >
+                            <TextField
+                                className={classes.pairElement}
+                                id="fatherName"
+                                label="Father/Husband name"
+                                variant="outlined"
+                                type="text"
+                                color="primary"
+                                value={model.fatherName}
+                                onChange={(e) => model.setFatherName(e.target.value)}
+                                helperText={model.fatherName === "" ? <span style={{ color: 'red' }} >Required</span> : <span style={{ color: 'lightgreen' }} >Correct</span>}
+                                InputProps={{
+                                    endAdornment: (
+                                        <InputAdornment position="end">
+                                            <Name className={classes.iconColor} />
+                                        </InputAdornment>
+                                    ),
+                                }}
+                            />
+                        </div>
+                    </div>
+                    <div className={classes.phoneCnicDiv} >
+                        <div className={classes.cnicDiv} >
+                            <TextField
+                                className={classes.pairElement}
+                                id="cell"
+                                label="Cell Phone"
+                                variant="outlined"
+                                type="text"
+                                color="primary"
+                                value={model.cellPhone}
+                                onChange={(e) => model.setCellPhone(e.target.value)}
+                                helperText={model.cellPhone === "" ? <span style={{}} >e.g: 03465776567</span> : model.cellPhone.length < 11 ? <span style={{ color: 'red' }} >Incorrect Phone Number</span> : Number(model.cellPhone) === NaN ? <span style={{ color: 'red' }} >Numbers only</span> : <span style={{ color: 'lightgreen' }} >Correct</span>}
+                                InputProps={{
+                                    endAdornment: (
+                                        <InputAdornment position="end">
+                                            <Smartphone className={classes.iconColor} />
+                                        </InputAdornment>
+                                    ),
+                                }}
+
+                            />
+                        </div>
+                        <div className={classes.phoneDiv} >
+                            <TextField
+                                className={classes.pairElement}
+                                id="phone"
+                                label="Phone No. "
+                                variant="outlined"
+                                type="text"
+                                color="primary"
+                                value={model.phone}
+                                onChange={(e) => model.setPhone(e.target.value)}
+                                helperText={"Optional"}
+                                InputProps={{
+                                    endAdornment: (
+                                        <InputAdornment position="end">
+                                            <Phone className={classes.iconColor} />
+                                        </InputAdornment>
+                                    ),
+                                }}
+
+                            />
+                        </div>
+                    </div>
+
+                    <div className={classes.phoneCnicDiv} >
+                        <div className={classes.cnicDiv} >
+                            <TextField
+                                className={classes.pairElement}
+                                id="email"
+                                label="Email"
+                                variant="outlined"
+                                type="email"
+                                color="primary"
+                                value={model.email}
+                                onChange={(e) => model.setEmail(e.target.value)}
+                                helperText={model.email === "" ? <span style={{ color: 'red' }} >Required</span> : !validateEmail(model.email) ? <span style={{ color: 'red' }} >Incorrect email</span> : <span style={{ color: 'lightgreen' }} >Correct</span>}
+                                InputProps={{
+                                    endAdornment: (
+                                        <InputAdornment position="end">
+                                            <Email className={classes.iconColor} />
+                                        </InputAdornment>
+                                    ),
+                                }}
+
+                            />
+                        </div>
+                        <div className={classes.phoneDiv} >
+                            <TextField
+                                className={classes.pairElement}
+                                id="cnic"
+                                label="CNIC"
+                                variant="outlined"
+                                type="text"
+                                color="primary"
+                                value={model.cNIC}
+                                onChange={handleCnic}
+                                helperText={model.cNIC === "" ? <span style={{ color: 'red' }} >Required</span> : model.cNIC.length !== 15 ? <span style={{ color: 'red' }} >Incorrect</span> : <span style={{ color: 'lightgreen' }} >Correct</span>}
+                                InputProps={{
+                                    endAdornment: (
+                                        <InputAdornment position="end">
+                                            <CNIC className={classes.iconColor} />
+                                        </InputAdornment>
+                                    ),
+                                }}
+
+                            />
+                        </div>
+                    </div>
+                    <div className={classes.myText}>
+                        <TextField
+                            id="address"
+                            label="Address"
+                            variant="outlined"
+                            type="text"
+                            color="primary"
+                            value={model.address}
+                            className={classes.myElements}
+                            onChange={(e) => model.setAddress(e.target.value)}
+                            helperText={model.address === "" ? <span style={{ color: 'red' }} >Required</span> : <span style={{ color: 'lightgreen' }} >Correct</span>}
+                            InputProps={{
+                                endAdornment: (
+                                    <InputAdornment position="end">
+                                        <LocationOn className={classes.iconColor} />
+                                    </InputAdornment>
+                                ),
+                            }}
+                        />
+                    </div>
 
 
 
 
 
-                    </Paper>
+                </Paper>
 
-                </Grid>
             </Grid>
-        </div>
-    )
+        </Grid>
+    </div>
+)
 }
 
 export default PersonalInformation;

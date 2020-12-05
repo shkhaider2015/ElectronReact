@@ -12,7 +12,6 @@ import VideoLabelIcon from '@material-ui/icons/VideoLabel';
 import StepConnector from '@material-ui/core/StepConnector';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import CML from "./forms/confirmationForm";
 import PersonalInfo from "./forms/personalInfo";
 import PlotInfo from "./forms/plotInformation";
 import PaymentInfo from "./forms/paymentInfo";
@@ -208,8 +207,10 @@ const getForms = (step, personalModel, plotModel, paymentModel) => {
 const Application = () => {
   const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(0);
+  const [proceed, setProceed] = React.useState(false);
   const steps = getSteps();
 
+  const [imageFile, setImageFile] = React.useState(null)
   const [name, setName] = React.useState("")
   const [fatherName, setFatherName] = React.useState("")
   const [cellPhone, setCellPhone] = React.useState("")
@@ -234,9 +235,12 @@ const Application = () => {
   const [installment, setInstallment] = React.useState(0)
   const [balance, setBalance] = React.useState(0)
   const [paymentMethod, setPaymentMethod] = React.useState("")
+  const [open, setOpen] = React.useState(true)
 
   const personalModel =
   {
+    imageFile,
+    setImageFile,
     name,
     setName,
     fatherName,
@@ -288,12 +292,17 @@ const Application = () => {
     setBalance,
     paymentMethod,
     setPaymentMethod,
-
+    open,
+    setOpen,
+    setProceed,
   }
 
   const handlePersonalForm = () => {
     let val = false;
-    name === "" || fatherName === "" || cellPhone === "" || phone === "" || cNIC === "" || email === "" || address === ""
+    // imageFile === null || 
+    name === "" || fatherName === ""
+    || cellPhone === "" || cNIC === "" || email === "" 
+    || address === "" || cellPhone.length < 11 || cNIC.length < 15
       ? val = false
       : val = true
 
@@ -301,16 +310,24 @@ const Application = () => {
   }
   const handlePlotForm = () => {
     let val = false;
-    area === "" || measurement === "" || square === "" || category === "" || nature === "" || type === "" || sitePlane === "" || purpose === ""
+    area === "" || measurement === "" || square === "" 
+    || category === "" || nature === "" || type === "" 
+    || sitePlane === "" || purpose === ""
       ? val = false
       : val = true
 
     return val;
   }
-
-  const showError = () => 
+  const handlePaymentForm = () => 
   {
+    let val = false;
+    procedure === "" || duration === "" || paymentMethod === ""
+    || amount === 0 || totalInstallment === 0 || installment === 0
+    || balance === 0 
+    ? val=false 
+    : val = true
 
+    return val
   }
 
 
@@ -321,9 +338,6 @@ const Application = () => {
         if (handlePersonalForm()) {
           setActiveStep((prevActiveStep) => prevActiveStep + 1)
         }
-        else{
-          showError()
-        }
         break;
       case 1:
         if (handlePlotForm()) {
@@ -332,9 +346,27 @@ const Application = () => {
         break;
       case 2:
         //
+        if (handlePaymentForm()) {
+          console.log("Handle Payment Form")
+          if(proceed)
+          {
+            console.log("Proceed True")
+            setActiveStep((prevActiveStep) => prevActiveStep + 1)
+          }
+          {
+            console.log("Proceed False")
+            setOpen(false)
+          }
+          
+        }
+        else
+        {
+          console.log("")
+        }
         break;
       case 3:
         //
+        console.log("Ste is 3")
         break;
       default:
       //
@@ -351,7 +383,6 @@ const Application = () => {
 
   return (
     <div className={classes.root}>
-
       <Stepper alternativeLabel activeStep={activeStep} connector={<ColorlibConnector />} className={classes.stepper} >
         {steps.map((label) => (
           <Step key={label}>
@@ -369,9 +400,10 @@ const Application = () => {
               Reset
             </Button>
           </div>
-        ) : (
+        ) 
+        : (
             <div style={{ width: '100%', textAlign: 'center' }} >
-              <div> {getForms(activeStep, personalModel, plotModel, paymentModel)} </div>
+              {getForms(activeStep, personalModel, plotModel, paymentModel)}
               <div>
                 <Button disabled={activeStep === 0} onClick={handleBack} className={classes.buttonLeft}>
                   Back

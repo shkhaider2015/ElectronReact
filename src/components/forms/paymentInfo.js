@@ -12,6 +12,7 @@ import BackgroundImage from "../../RawData/jj2.png";
 import { UserModel } from "../../models/userModels";
 import { firebase, storage, auth, db } from "../../config/firebase";
 import { AuthContext } from "../../context/authContext";
+import AlertDialog from "./confirmDialog";
 
 
 const useStyle = makeStyles(
@@ -103,6 +104,7 @@ const PlotInformation = ({ model }) => {
 
     return (
         <div className={classes.root}>
+            { model.open ?  ""  : <AlertDialog setProceed={model.setProceed} open={model.open} setOpen={model.setOpen} /> }
             <Grid container>
                 <Grid
                     item
@@ -113,7 +115,7 @@ const PlotInformation = ({ model }) => {
                 >
                     <Paper elevation={0} className={classes.myPaper}>
 
-
+                    
                         <div className={classes.phoneCnicDiv} >
 
                             <div className={classes.cnicDiv} >
@@ -206,7 +208,7 @@ const PlotInformation = ({ model }) => {
                                 </FormControl>
                             </div>
                         </div>
-
+                                       
                         <div className={classes.phoneCnicDiv} >
                             <div className={classes.cnicDiv} >
                                 <TextField
