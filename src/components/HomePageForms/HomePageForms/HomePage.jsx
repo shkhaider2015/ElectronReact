@@ -13,6 +13,7 @@ import zainlogo from '../../../RawData/mainassociates_icon.png'
 import { Link, useNavigate } from "react-router-dom";
 import { auth } from "../../../config/firebase";
 import { AuthContext } from "../../../context/authContext";
+import { AdminContext } from "../../../context/adminContext";
 
 const useStyle = makeStyles(
     (theme) => ({
@@ -35,6 +36,7 @@ const  Homepage2 = () => {
     const classes = useStyle()
     const [anchorEl, setAnchorEl] = React.useState(null);
     const currentUser = React.useContext(AuthContext);
+    const isAdmin = React.useContext(AdminContext)
 
     const navigate = useNavigate()
     const open = Boolean(anchorEl);
@@ -59,7 +61,7 @@ const  Homepage2 = () => {
 
     React.useEffect(
         () => {
-
+            console.log("Checking Admin : ", isAdmin[0])
             if (!currentUser.currentUser) {
                 navigate("/login")
             }

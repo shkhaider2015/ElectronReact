@@ -6,7 +6,6 @@ import {
 import React from 'react'
 import { Link, useNavigate } from "react-router-dom";
 import BackgroundImage from "../../RawData/jj2.png";
-import { UserModel } from "../../models/userModels";
 import { firebase, storage, auth, db } from "../../config/firebase";
 import { AuthContext } from "../../context/authContext";
 
@@ -27,7 +26,7 @@ const useStyle = makeStyles(
             },
             myPaper: {
                 padding: '0%',
-                paddingTop: '2%',
+                paddingTop: '0%',
                 paddingLeft: '4%',
                 paddingRight: '4%',
                 marginTop: '4%',
@@ -115,6 +114,17 @@ const SignUp = () => {
     const [isLoading, setIsLoading] = React.useState(false)
     const [imageFile, setImageFile] = React.useState(null)
 
+    const [name, setName] = React.useState("")
+    const [cnic, setCNIC] = React.useState("")
+    const [cellPhone, setCellPhone] = React.useState("")
+    const [email, setEmail] = React.useState("")
+    const [password, setPassword] = React.useState("")
+    const [imageURI, setImageURI] = React.useState(null)
+    const [errorMsg, setErrorMsg] = React.useState("")
+
+
+
+
     React.useEffect(
         () => {
             if(currentUser.currentUser)
@@ -125,15 +135,59 @@ const SignUp = () => {
         [currentUser, navigate]
     )
 
+    const validateEmail = () => {
+        let val = false;
+        if (/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(email)) {
+            console.log("Email Validation : Correct")
+            val = true
+        }
+        else {
+            console.log("Email Validation : Incorrect")
+        }
+
+        return val;
+    }
+
+    const checkInfo = () => 
+    {
+        let val = false;
+
+        if(!imageFile || !name || !cnic || !cellPhone || !email || !password || password.length < 6 || !validateEmail())
+        {
+            console.log("Not Correct")
+            val = false;
+            setIsLoading(false)
+        }
+        else
+        {
+            console.log("Correct")
+            setIsLoading(true)
+            val = true
+        }
+
+        return val;
+    }
+
     const createProfile = () => {
+        const userModel = {
+            name,
+            email,
+            cnic,
+            cellPhone,
+            adminRight : false
+
+        }
         db
             .collection("Users")
-            .add(UserModel)
-            .then(function (docRef) {
+            .doc(email)
+            .collection("personal")
+            .doc("personalInformation")
+            .set(userModel)
+            .then( (docRef) => {
                 console.log("Docement written with ID : ", docRef)
                 setIsLoading(false)
             })
-            .catch(function (error) {
+            .catch( (error) => {
                 console.error("erro adding document : ", error)
                 setIsLoading(false)
             })
@@ -144,9 +198,9 @@ const SignUp = () => {
     const updateProfile = () => {
         auth.currentUser.updateProfile(
             {
-                displayName: UserModel.name,
-                photoURL: UserModel.imageUri,
-                phoneNumber: UserModel.phoneNumber,
+                displayName: name,
+                photoURL: imageURI,
+                phoneNumber: cellPhone,
                 
             }
         )
@@ -163,7 +217,7 @@ const SignUp = () => {
 
     const uploadImage = () => {
 
-        var storageRef = storage.ref().child(UserModel.name.replace(/\s/g, ""));
+        var storageRef = storage.ref().child(name.replace(/\s/g, ""));
         var uploadTask = storageRef.child('profile.jpg').put(imageFile);
 
         
@@ -197,32 +251,28 @@ const SignUp = () => {
             // For instance, get the download URL: https://firebasestorage.googleapis.com/...
             uploadTask.snapshot.ref.getDownloadURL().then( (downloadURL) => {
                 console.log('File available at', downloadURL);
-                UserModel.imageUri = downloadURL;
+                setImageURI(downloadURL)
                 updateProfile()
             });
         });
 
 
     }
-    const createUser = (pass) => {
-        auth.createUserWithEmailAndPassword(UserModel.email, pass)
+    const createUser = () => {
+        auth.createUserWithEmailAndPassword(email, password)
             .then((user) => {
                 uploadImage()
             })
             .catch((error) => {
                 var errorCode = error.code;
-                var errorMessage = error.message;
+                setErrorMsg(error.message)
                 console.error("Error creating user : ERROR_CODE -> ", errorCode)
-                console.error("Error creating user : ERROR_MESSAGE -> ", errorMessage)
+                console.error("Error creating user : ERROR_MESSAGE -> ", errorMsg)
                 setIsLoading(false)
                 // ..
             });
     }
     const handleSelectImage = (e) => {
-        // let file = e.target.files[0]
-        // ImageFile = file;
-        // setSelectedImage(URL.createObjectURL(file))
-
         let reader = new FileReader();
         let file = e.target.files[0];
 
@@ -237,13 +287,26 @@ const SignUp = () => {
     const handleSubmit = (e) => {
         e.preventDefault()
 
-        setIsLoading(true)
-        UserModel.name = e.target.name.value
-        UserModel.email = e.target.email.value;
-        UserModel.phoneNumber = e.target.phone.value;
-        UserModel.cnic = e.target.cnic.value
+        // setIsLoading(true)
+        // UserModel.name = e.target.name.value
+        // UserModel.email = e.target.email.value;
+        // UserModel.phoneNumber = e.target.phone.value;
+        // UserModel.cnic = e.target.cnic.value
+        
 
-        createUser(e.target.password.value)
+        if(checkInfo())
+        {
+            console.log("isCorrect : true")
+            createUser()
+        }
+        else
+        {
+            console.log("isCorrect : false")
+            setIsLoading(false)
+        }
+        
+
+       
 
 
     }
@@ -261,10 +324,10 @@ const SignUp = () => {
                 xs={12}
             >
 
-                {isLoading ? <LinearProgress className={classes.linearProgress} /> : ""}
+                {isLoading ? <LinearProgress className={classes.linearProgress} /> :  ""}
                 <Paper elevation={3} className={classes.myPaper}>
-
-                    <form onSubmit={handleSubmit} noValidate>
+                    <span style={{ color : 'red' }} > {errorMsg} </span>
+                    <form onSubmit={handleSubmit} noValidate style={{ paddingTop : '5%' }} >
 
                         <div className={classes.imageDiv}>
                             {/* <Avatar alt="shakeel haider" src={selectedImage} variant="circle" className={classes.avatar} > */}
@@ -297,7 +360,9 @@ const SignUp = () => {
                                 variant="outlined"
                                 type="text"
                                 color="primary"
+                                value={name}
                                 className={classes.myElements}
+                                onChange={(e) => setName(e.target.value)}
                                 InputProps={{
                                     endAdornment: (
                                         <InputAdornment position="end">
@@ -316,6 +381,8 @@ const SignUp = () => {
                                     variant="outlined"
                                     type="text"
                                     color="primary"
+                                    value={cnic}
+                                    onChange={(e) => setCNIC(e.target.value)}
                                     InputProps={{
                                         endAdornment: (
                                             <InputAdornment position="end">
@@ -334,6 +401,8 @@ const SignUp = () => {
                                     variant="outlined"
                                     type="text"
                                     color="primary"
+                                    value={cellPhone}
+                                    onChange={(e) => setCellPhone(e.target.value)}
                                     InputProps={{
                                         endAdornment: (
                                             <InputAdornment position="end">
@@ -352,7 +421,10 @@ const SignUp = () => {
                                 variant="outlined"
                                 type="email"
                                 color="primary"
+                                value={email}
                                 className={classes.myElements}
+                                onChange={(e) => setEmail(e.target.value)}
+                                helperText={validateEmail() ? "" : <span>Enter valid email</span> }
                                 InputProps={{
                                     endAdornment: (
                                         <InputAdornment position="end">
@@ -370,7 +442,10 @@ const SignUp = () => {
                                 variant="outlined"
                                 type="password"
                                 color="primary"
+                                value={password}
                                 className={classes.myElements}
+                                onChange={(e) => setPassword(e.target.value)}
+                                helperText={password === "" ? <span>Password required</span> : password.length < 6 ? <span style={{ color : 'red' }} >At least 6 charechters or numbers </span> : "" }
                                 InputProps={{
                                     endAdornment: (
                                         <InputAdornment position="end">

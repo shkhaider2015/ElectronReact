@@ -25,7 +25,8 @@
     "react-router": "^6.0.0-beta.0",
     "react-router-dom": "^6.0.0-beta.0",
     "react-scripts": "3.4.4",
-    "wait-on": "^5.2.0"
+    "wait-on": "^5.2.0",
+    "write-json-file": "^4.3.0"
   },
   "scripts": {
     "dev": "concurrently \"npm start\" \"wait-on http://localhost:3000 && electron .\"",
