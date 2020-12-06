@@ -26,19 +26,19 @@ const useStyle = makeStyles(
                 paddingRight: '4%',
                 paddingTop: '2%',
                 paddingBottom: '2%',
-                width: '30%',
+                width: '50%',
                 [theme.breakpoints.down('md')]: {
-                    width: '40%',
+                    width: '60%',
                     textAlign: 'center'
 
                 },
                 [theme.breakpoints.down('sm')]: {
-                    width: '50%',
+                    width: '70%',
                     textAlign: 'center'
 
                 },
                 [theme.breakpoints.down('xs')]: {
-                    width: '50%',
+                    width: '80%',
                     textAlign: 'center'
 
                 },
@@ -46,10 +46,10 @@ const useStyle = makeStyles(
                 margin: '0 auto',
             },
             myText: {
-                marginTop: '5%'
+                marginTop: '3%'
             },
             myButton: {
-                marginTop: '15%',
+                marginTop: '7%',
                 textAlign: 'center'
             },
             myElements: {

@@ -20,7 +20,7 @@ function MyRoutes() {
         <Router >
             <Routes >
                 <Route path="/" >
-                    <Route path="/" element={< Application />} /> 
+                    <Route path="/" element={< Home />} /> 
                     <Route path="/report" element={< Report />}/> 
                     <Route path="/application" element={< ApplicationForm />}/> 
                     <Route path="/nomination" element={< NominationForm />}/> 

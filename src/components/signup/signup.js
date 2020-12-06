@@ -32,15 +32,15 @@ const useStyle = makeStyles(
                 paddingRight: '4%',
                 marginTop: '4%',
                 marginBottom: '8.3%',
-                width: '30%',
+                width: '50%',
                 background: 'rgba(255, 255, 255, 0.98)',
                 [theme.breakpoints.down('md')]: {
-                    width: '40%',
+                    width: '60%',
                     textAlign: 'center'
 
                 },
                 [theme.breakpoints.down('sm')]: {
-                    width: '50%',
+                    width: '70%',
                     textAlign: 'center'
 
                 },
@@ -53,10 +53,10 @@ const useStyle = makeStyles(
                 margin: '0 auto',
             },
             myText: {
-                marginTop: '5%'
+                marginTop: '3%'
             },
             myButton: {
-                marginTop: '10%',
+                marginTop: '5%',
                 textAlign: 'center'
             },
             myElements: {
@@ -65,7 +65,7 @@ const useStyle = makeStyles(
             phoneCnicDiv: {
                 display: 'flex',
                 width: '100%',
-                marginTop: '5%',
+                marginTop: '3%',
             },
             cnicDiv: {
                 width: '45%'
@@ -103,7 +103,7 @@ const useStyle = makeStyles(
         }
     )
 )
-var ImageFile = null;
+
 
 const SignUp = () => {
 
@@ -113,6 +113,7 @@ const SignUp = () => {
     const currentUser = React.useContext(AuthContext)
     const [selectedImage, setSelectedImage] = React.useState(null)
     const [isLoading, setIsLoading] = React.useState(false)
+    const [imageFile, setImageFile] = React.useState(null)
 
     React.useEffect(
         () => {
@@ -163,7 +164,7 @@ const SignUp = () => {
     const uploadImage = () => {
 
         var storageRef = storage.ref().child(UserModel.name.replace(/\s/g, ""));
-        var uploadTask = storageRef.child('profile.jpg').put(ImageFile);
+        var uploadTask = storageRef.child('profile.jpg').put(imageFile);
 
         
 
@@ -218,9 +219,19 @@ const SignUp = () => {
             });
     }
     const handleSelectImage = (e) => {
-        let file = e.target.files[0]
-        ImageFile = file;
-        setSelectedImage(URL.createObjectURL(file))
+        // let file = e.target.files[0]
+        // ImageFile = file;
+        // setSelectedImage(URL.createObjectURL(file))
+
+        let reader = new FileReader();
+        let file = e.target.files[0];
+
+        reader.onloadend = () => {
+            setImageFile(file)
+            setSelectedImage(reader.result)
+        }
+
+        reader.readAsDataURL(file)
     }
 
     const handleSubmit = (e) => {
@@ -299,6 +310,7 @@ const SignUp = () => {
                         <div className={classes.phoneCnicDiv} >
                             <div className={classes.cnicDiv} >
                                 <TextField
+                                className={classes.myElements}
                                     id="cnic"
                                     label="CNIC"
                                     variant="outlined"
@@ -316,6 +328,7 @@ const SignUp = () => {
                             </div>
                             <div className={classes.phoneDiv} >
                                 <TextField
+                                className={classes.myElements}
                                     id="phone"
                                     label="Phone No. "
                                     variant="outlined"
