@@ -15,6 +15,10 @@ import Typography from '@material-ui/core/Typography';
 import PersonalInfo from "./forms/personalInfo";
 import PlotInfo from "./forms/plotInformation";
 import PaymentInfo from "./forms/paymentInfo";
+import {MyProgress } from "../components/circulerProgress";
+import { db, storage, firebase } from "../config/firebase";
+import { AuthContext } from "../context/authContext";
+
 
 
 
@@ -174,7 +178,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function getSteps() {
-  return ['Select campaign settings', 'Create an ad group', 'Create an ad'];
+  return ['Client Information', 'Client Assets Information', 'Client Payment Information'];
 }
 
 function getStepContent(step) {
@@ -208,9 +212,13 @@ const Application = () => {
   const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(0);
   const [proceed, setProceed] = React.useState(false);
+  const [isLoading, setIsLoading] = React.useState(true)
+  const [isSucceed, setIsSucceed] = React.useState(false)
   const steps = getSteps();
+  const currentUser = React.useContext(AuthContext);
 
   const [imageFile, setImageFile] = React.useState(null)
+  const [imageURI, setImageURI] = React.useState(null)
   const [name, setName] = React.useState("")
   const [fatherName, setFatherName] = React.useState("")
   const [cellPhone, setCellPhone] = React.useState("")
@@ -236,6 +244,67 @@ const Application = () => {
   const [balance, setBalance] = React.useState(0)
   const [paymentMethod, setPaymentMethod] = React.useState("")
   const [open, setOpen] = React.useState(true)
+
+
+
+  const personal = {
+    id: "",
+    imageURI: imageURI,
+    name: name,
+    email: email,
+    cellPhone: cellPhone,
+    phone: phone,
+    cnic: cNIC,
+    address: address,
+  }
+  const asset = {
+    name: area,
+    measurement: measurement,
+    square: square,
+    category: category,
+    nature: nature,
+    type: type,
+    sitePlane: sitePlane,
+    purpose: purpose
+  }
+  const payment = {
+    totalAmount: amount,
+    procedure: procedure,
+    installment: totalInstallment,
+    installmentDuration: duration,
+    firstInstallment: installment,
+    balance: balance,
+    paymentMethod: paymentMethod
+  }
+
+
+
+  React.useEffect(
+    () => {
+      const uploadData = async () => {
+
+        await db.collection("Clients").doc(currentUser.currentUser.email).collection(personal.cnic.replace(/-/g, "")).add({personal, asset, payment})
+          .then((docRef) => {
+            console.log("Docement written with ID : ", docRef)
+            setIsLoading(false)
+            setIsSucceed(true)
+            
+          })
+          .catch((error) => {
+            console.error("erro adding document : ", error)
+            setIsLoading(false)
+            setIsSucceed(false)
+          })
+      }
+
+      if(imageURI)
+      {
+        console.log("Image Upload Succesfully")
+        uploadData()
+      }
+    },
+    [imageURI]
+  )
 
   const personalModel =
   {
@@ -301,8 +370,8 @@ const Application = () => {
     let val = false;
     // imageFile === null || 
     name === "" || fatherName === ""
-    || cellPhone === "" || cNIC === "" || email === "" 
-    || address === "" || cellPhone.length < 11 || cNIC.length < 15
+      || cellPhone === "" || cNIC === "" || email === ""
+      || address === "" || cellPhone.length < 11 || cNIC.length < 15
       ? val = false
       : val = true
 
@@ -310,26 +379,65 @@ const Application = () => {
   }
   const handlePlotForm = () => {
     let val = false;
-    area === "" || measurement === "" || square === "" 
-    || category === "" || nature === "" || type === "" 
-    || sitePlane === "" || purpose === ""
+    area === "" || measurement === "" || square === ""
+      || category === "" || nature === "" || type === ""
+      || sitePlane === "" || purpose === ""
       ? val = false
       : val = true
 
     return val;
   }
-  const handlePaymentForm = () => 
-  {
+  const handlePaymentForm = () => {
     let val = false;
     procedure === "" || duration === "" || paymentMethod === ""
-    || amount === 0 || totalInstallment === 0 || installment === 0
-    || balance === 0 
-    ? val=false 
-    : val = true
+      || amount === 0 || totalInstallment === 0 || installment === 0
+      || balance === 0
+      ? val = false
+      : val = true
 
     return val
   }
 
+  const uploadImage = () => {
+
+    var storageRef = storage.ref().child(cNIC.replace(/-/g, ""));
+    var uploadTask = storageRef.child('profile.jpg').put(imageFile);
+
+    // Register three observers:
+    // 1. 'state_changed' observer, called any time the state changes
+    // 2. Error observer, called on failure
+    // 3. Completion observer, called on successful completion
+    uploadTask.on('state_changed',  (snapshot) => {
+        // Observe state change events such as progress, pause, and resume
+        // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+        var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        console.log('Upload is ' + progress + '% done');
+        switch (snapshot.state) {
+            case firebase.storage.TaskState.PAUSED: // or 'paused'
+                console.log('Upload is paused');
+                break;
+            case firebase.storage.TaskState.RUNNING: // or 'running'
+                console.log('Upload is running');
+                break;
+            default:
+                console.log("Default case")
+                break;
+        }
+    },(error) => {
+        // Handle unsuccessful uploads
+        console.log(error)
+        setIsLoading(false)
+    },() => {
+        // Handle successful uploads on complete
+        // For instance, get the download URL: https://firebasestorage.googleapis.com/...
+        uploadTask.snapshot.ref.getDownloadURL().then( (downloadURL) => {
+            console.log('File available at', downloadURL);
+            setImageURI(downloadURL)
+        });
+    });
+
+
+}
 
   const handleNext = () => {
 
@@ -348,19 +456,18 @@ const Application = () => {
         //
         if (handlePaymentForm()) {
           console.log("Handle Payment Form")
-          if(proceed)
-          {
+          if (proceed) {
             console.log("Proceed True")
+            uploadImage()
             setActiveStep((prevActiveStep) => prevActiveStep + 1)
           }
           {
             console.log("Proceed False")
             setOpen(false)
           }
-          
+
         }
-        else
-        {
+        else {
           console.log("")
         }
         break;
@@ -381,6 +488,8 @@ const Application = () => {
     setActiveStep(0);
   };
 
+  const Progress = (<MyProgress isLoading={isLoading} reset={handleReset} succeed={isSucceed} />)
+
   return (
     <div className={classes.root}>
       <Stepper alternativeLabel activeStep={activeStep} connector={<ColorlibConnector />} className={classes.stepper} >
@@ -391,17 +500,18 @@ const Application = () => {
         ))}
       </Stepper>
       <div >
-        {activeStep === steps.length ? (
-          <div style={{ width: '100%', textAlign: 'center' }} >
-            <Typography className={classes.instructions}>
-              All steps completed - you&apos;re finished
-            </Typography>
-            <Button onClick={handleReset} className={classes.button}>
-              Reset
-            </Button>
-          </div>
-        ) 
-        : (
+        {activeStep === steps.length ? Progress
+          // (
+          //   <div style={{ width: '100%', textAlign: 'center' }} >
+          //     <Typography className={classes.instructions}>
+          //       All steps completed - you&apos;re finished
+          //     </Typography>
+          //     <Button onClick={handleReset} className={classes.button}>
+          //       Reset
+          //     </Button>
+          //   </div>
+          // ) 
+          : (
             <div style={{ width: '100%', textAlign: 'center' }} >
               {getForms(activeStep, personalModel, plotModel, paymentModel)}
               <div>

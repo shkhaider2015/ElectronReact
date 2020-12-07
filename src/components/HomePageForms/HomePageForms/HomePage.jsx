@@ -14,6 +14,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { auth } from "../../../config/firebase";
 import { AuthContext } from "../../../context/authContext";
 import { AdminContext } from "../../../context/adminContext";
+import { db } from "../../../config/firebase";
 
 const useStyle = makeStyles(
     (theme) => ({
@@ -65,10 +66,27 @@ const  Homepage2 = () => {
             if (!currentUser.currentUser) {
                 navigate("/login")
             }
-
         },
         [currentUser, navigate]
     )
+
+    const chekAdmin = (email) =>
+    {
+            db.collection("Users").doc(email).collection("personal").get()
+            .then((querySnapshot) => {
+                querySnapshot.forEach((doc) => {
+                    isAdmin[1](doc.data().adminRight)
+
+                    // console.log("Login   : ", doc.data().adminRight)
+                } )
+            })
+            .catch((error) => 
+            {
+                console.log("error", error)
+            })
+    }
+
+    chekAdmin(currentUser.currentUser.email)
 
 
     return (
@@ -122,7 +140,7 @@ const  Homepage2 = () => {
                         </div>
                         <div className="row justify-content-center text-center">
                             <div className="col-sm-6 col-md-4 col-lg-4">
-                                <Link to="/home" className="myLink"  >
+                                <Link to="/create" className="myLink"  >
                                     <div className="box">
                                         <div className="our-services settings">
                                             <div className="icon icon-create"> <SVG_Create className="" fill="white" style={{ height: "70%", width: "70%", color: "whitesmoke" }} /> </div>

@@ -68,7 +68,8 @@ const useStyle = makeStyles(
             },
             cnicDiv: {
                 width: '45%',
-                marginLeft : '0'
+                marginLeft : '0',
+                display : 'flex'
             },
             phoneDiv: {
                 width: '45%',
@@ -93,11 +94,20 @@ const useStyle = makeStyles(
             input: {
                 display: 'none',
 
+            },
+            block : {
+                width : '46%',
+                marginRight : 0,
+                marginLeft : 'auto'
+            },
+            square : {
+                width : '46%',
+                marginLeft : 0,
             }
         }
     )
 )
-var ImageFile = null;
+
 
 const PersonalInformation = ({ model }) => {
 
@@ -181,9 +191,28 @@ const PersonalInformation = ({ model }) => {
                         <div className={classes.phoneCnicDiv} >
                             <div className={classes.cnicDiv} >
                                 <TextField
-                                    className={classes.pairElement}
+                                    className={classes.square}
                                     id="square"
-                                    label="Sq. Yds. Block"
+                                    label="Sq. Yds."
+                                    variant="outlined"
+                                    type="text"
+                                    color="primary"
+                                    value={model.square}
+                                    onChange={(e) => model.setSquare(e.target.value) }
+                                    helperText={ model.square === ""? <span style={{ color : 'red' }} >Required</span> : <span style={{ color : 'lightgreen' }} >Correct</span> }
+                                    InputProps={{
+                                        endAdornment: (
+                                            <InputAdornment position="end">
+                                                <Smartphone className={classes.iconColor} />
+                                            </InputAdornment>
+                                        ),
+                                    }}
+
+                                />
+                                <TextField
+                                    className={classes.block}
+                                    id="square"
+                                    label="Block"
                                     variant="outlined"
                                     type="text"
                                     color="primary"

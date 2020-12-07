@@ -6,9 +6,6 @@ import ICON from "../../RawData/mainassociates_icon.png"
 import BackgroundImage from "../../RawData/jj2.png";
 import { auth, db } from "../../config/firebase";
 import { AuthContext } from "../../context/authContext";
-import { AdminContext } from "../../context/adminContext";
-import myAdmin from "../../context/myAdmin.json";
-const writeJson = require('write-json-file');
 
 const useStyle = makeStyles(
     (theme) => (
@@ -84,7 +81,6 @@ export default function Login() {
 
     const [isLoading, setIsLoading] = React.useState(false)
     const currentUser = React.useContext(AuthContext)
-    const isAdmin = React.useContext(AdminContext)
 
     const classes = useStyle();
     const navigate = useNavigate()
@@ -101,21 +97,7 @@ export default function Login() {
         [currentUser, navigate]
     )
 
-    const chekAdmin = (email) =>
-    {
-        db.collection("Users").doc(email).collection("personal").get()
-            .then((querySnapshot) => {
-                querySnapshot.forEach((doc) => {
-                    isAdmin[1](doc.data().adminRight)
-
-                    // console.log("Login   : ", doc.data().adminRight)
-                } )
-            })
-            .catch((error) => 
-            {
-                console.log("error", error)
-            })
-    }
+    
 
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -125,7 +107,7 @@ export default function Login() {
 
         auth.signInWithEmailAndPassword(email.value, password.value)
         .then((user) => {
-            chekAdmin(email.value)
+            console.log("Login Succesfully")
              setIsLoading(false)
         })
         .catch((err) => {

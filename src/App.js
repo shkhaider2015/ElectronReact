@@ -4,7 +4,7 @@ import { createMuiTheme, MuiThemeProvider } from '@material-ui/core';
 import { AuthProvider } from './context/authContext'
 import MyRoutes from './components/myRoutes/myRoutes'
 import { AdminContext } from "./context/adminContext";
-import myAdmin from "./context/myAdmin.json";
+
 
 const theme = createMuiTheme(
   {
@@ -17,8 +17,16 @@ const theme = createMuiTheme(
   }
 )
 
+
+
+
+
 function App() {
-  const isAdimn = React.useState(myAdmin.Admin)
+
+  const isAdimn = React.useState(false)
+  
+
+  
   return (
     <div>
 
