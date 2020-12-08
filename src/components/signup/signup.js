@@ -1,7 +1,7 @@
 import { Avatar, Button, Grid, makeStyles, Paper, TextField, Typography, InputAdornment, Fab, LinearProgress } from '@material-ui/core'
 import {
-    Email, VpnKey as Password, PermIdentity as Name,
-    CreditCard as CNIC, Phone, AddPhotoAlternate as AddPhotoAlternateIcon
+    EmailOutlined as Email, VpnKeyOutlined as Password, PermIdentityOutlined as Name,
+    CreditCardOutlined as CNIC, PhoneOutlined as Phone, PhotoCameraOutlined
 } from "@material-ui/icons";
 import React from 'react'
 import { Link, useNavigate } from "react-router-dom";
@@ -342,7 +342,7 @@ const SignUp = () => {
                                 <label htmlFor="myinput"  >
 
                                     <Fab component="span" className={classes.avatar} >
-                                        {!selectedImage ? <AddPhotoAlternateIcon style={{ width : '50%', height : '50%' }} color="primary" /> :  <Avatar alt="shakeel haider" src={selectedImage} variant="circle" className={classes.myImage}  /> }
+                                        {!selectedImage ? <PhotoCameraOutlined style={{ width : '50%', height : '50%' }} color="primary" /> :  <Avatar alt="shakeel haider" src={selectedImage} variant="circle" className={classes.myImage}  /> }
                                         
                                         
                                     </Fab>

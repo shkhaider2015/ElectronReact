@@ -86,8 +86,12 @@ const  Homepage2 = () => {
             })
     }
 
-    chekAdmin(currentUser.currentUser.email)
+    
 
+    if(currentUser.currentUser)
+    {
+        chekAdmin(currentUser.currentUser.email)
+    }
 
     return (
         <div className="container-fluid " >

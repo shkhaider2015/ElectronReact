@@ -1,6 +1,6 @@
 import { Avatar, Grid, makeStyles, Paper, TextField, InputAdornment, Fab, LinearProgress, Button } from '@material-ui/core'
 import {
-    Email, PermIdentity as Name,
+    Email, PermIdentity as Name, PhotoCamera,
     CreditCard as CNIC, Phone, AddPhotoAlternate as AddPhotoAlternateIcon, Smartphone, LocationOn
 } from "@material-ui/icons";
 import React from 'react'
@@ -188,7 +188,7 @@ return (
                         <label htmlFor="myinput"  >
 
                             <Fab component="span" className={classes.avatar} >
-                                {!selectedImage ? <AddPhotoAlternateIcon className={classes.imageIcon} color="primary" /> : <Avatar alt="shakeel haider" src={selectedImage} variant="circle" className={classes.myImage} />}
+                                {!selectedImage ? <PhotoCamera className={classes.imageIcon} color="primary" /> : <Avatar alt="shakeel haider" src={selectedImage} variant="circle" className={classes.myImage} />}
 
 
                             </Fab>

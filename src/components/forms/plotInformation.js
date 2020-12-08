@@ -1,8 +1,9 @@
 import { Avatar, Button, Grid, makeStyles, Paper, TextField,
      Typography, InputAdornment, Fab, LinearProgress, InputLabel, FormControl, Select } from '@material-ui/core'
 import {
-    Email, VpnKey as Password, PermIdentity as Name,
-    CreditCard as CNIC, Phone, AddPhotoAlternate as AddPhotoAlternateIcon, Smartphone, LocationOn
+    LinearScale, SquareFoot, DashboardOutlined, CategoryOutlined, NaturePeopleOutlined, 
+    MergeType, FiberSmartRecordOutlined, StoreOutlined,
+    
 } from "@material-ui/icons";
 import React from 'react'
 import { Link, useNavigate } from "react-router-dom";
@@ -130,24 +131,6 @@ const PersonalInformation = ({ model }) => {
                         <div className={classes.phoneCnicDiv} >
                             
                             <div className={classes.cnicDiv} >
-                            {/* <TextField
-                            className={classes.pairElement}
-                                id="plot"
-                                label="Plot"
-                                variant="outlined"
-                                type="text"
-                                color="primary"
-                                value={model.plot}
-                                onChange={(e) => model.setPlot(e.target.value) }
-                                helperText={ model.plot === ""? <span style={{ color : 'red' }} >Required</span> : <span style={{ color : 'lightgreen' }} >Correct</span> }
-                                InputProps={{
-                                    endAdornment: (
-                                        <InputAdornment position="end">
-                                            <Name className={classes.iconColor} />
-                                        </InputAdornment>
-                                    ),
-                                }}
-                            /> */}
                             <FormControl variant="outlined" className={classes.pairElement}>
                                     <InputLabel htmlFor="outlined-age-native-simple">Area</InputLabel>
                                     <Select
@@ -181,7 +164,7 @@ const PersonalInformation = ({ model }) => {
                                 InputProps={{
                                     endAdornment: (
                                         <InputAdornment position="end">
-                                            <Name className={classes.iconColor} />
+                                            <LinearScale className={classes.iconColor} />
                                         </InputAdornment>
                                     ),
                                 }}
@@ -203,7 +186,7 @@ const PersonalInformation = ({ model }) => {
                                     InputProps={{
                                         endAdornment: (
                                             <InputAdornment position="end">
-                                                <Smartphone className={classes.iconColor} />
+                                                <SquareFoot className={classes.iconColor} />
                                             </InputAdornment>
                                         ),
                                     }}
@@ -222,7 +205,7 @@ const PersonalInformation = ({ model }) => {
                                     InputProps={{
                                         endAdornment: (
                                             <InputAdornment position="end">
-                                                <Smartphone className={classes.iconColor} />
+                                                <DashboardOutlined className={classes.iconColor} />
                                             </InputAdornment>
                                         ),
                                     }}
@@ -243,7 +226,7 @@ const PersonalInformation = ({ model }) => {
                                     InputProps={{
                                         endAdornment: (
                                             <InputAdornment position="end">
-                                                <Phone className={classes.iconColor} />
+                                                <CategoryOutlined className={classes.iconColor} />
                                             </InputAdornment>
                                         ),
                                     }}
@@ -267,7 +250,7 @@ const PersonalInformation = ({ model }) => {
                                     InputProps={{
                                         endAdornment: (
                                             <InputAdornment position="end">
-                                                <Smartphone className={classes.iconColor} />
+                                                <NaturePeopleOutlined className={classes.iconColor} />
                                             </InputAdornment>
                                         ),
                                     }}
@@ -288,7 +271,7 @@ const PersonalInformation = ({ model }) => {
                                     InputProps={{
                                         endAdornment: (
                                             <InputAdornment position="end">
-                                                <Phone className={classes.iconColor} />
+                                                <MergeType className={classes.iconColor} />
                                             </InputAdornment>
                                         ),
                                     }}
@@ -312,7 +295,7 @@ const PersonalInformation = ({ model }) => {
                                     InputProps={{
                                         endAdornment: (
                                             <InputAdornment position="end">
-                                                <Smartphone className={classes.iconColor} />
+                                                <FiberSmartRecordOutlined className={classes.iconColor} />
                                             </InputAdornment>
                                         ),
                                     }}
@@ -333,7 +316,7 @@ const PersonalInformation = ({ model }) => {
                                     InputProps={{
                                         endAdornment: (
                                             <InputAdornment position="end">
-                                                <Phone className={classes.iconColor} />
+                                                <StoreOutlined className={classes.iconColor} />
                                             </InputAdornment>
                                         ),
                                     }}

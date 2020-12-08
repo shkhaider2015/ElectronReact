@@ -7,6 +7,7 @@ import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 import Check from '@material-ui/icons/Check';
 import SettingsIcon from '@material-ui/icons/Settings';
+import { AccountCircle, HomeWorkOutlined, MonetizationOn, Home } from "@material-ui/icons";
 import GroupAddIcon from '@material-ui/icons/GroupAdd';
 import VideoLabelIcon from '@material-ui/icons/VideoLabel';
 import StepConnector from '@material-ui/core/StepConnector';
@@ -15,9 +16,10 @@ import Typography from '@material-ui/core/Typography';
 import PersonalInfo from "./forms/personalInfo";
 import PlotInfo from "./forms/plotInformation";
 import PaymentInfo from "./forms/paymentInfo";
-import {MyProgress } from "../components/circulerProgress";
+import { MyProgress } from "../components/circulerProgress";
 import { db, storage, firebase } from "../config/firebase";
 import { AuthContext } from "../context/authContext";
+import { Link } from 'react-router-dom';
 
 
 
@@ -123,9 +125,9 @@ function ColorlibStepIcon(props) {
   const { active, completed } = props;
 
   const icons = {
-    1: <SettingsIcon />,
-    2: <GroupAddIcon />,
-    3: <VideoLabelIcon />,
+    1: <AccountCircle />,
+    2: <HomeWorkOutlined />,
+    3: <MonetizationOn />,
   };
 
   return (
@@ -158,7 +160,8 @@ ColorlibStepIcon.propTypes = {
 const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
-    height: '80mvh'
+    height: '80mvh',
+    overflowX : 'hidden'
   },
   stepper: {
 
@@ -174,6 +177,16 @@ const useStyles = makeStyles((theme) => ({
   },
   buttonRight: {
     marginLeft: '10%'
+  },
+  homeIcon : {
+    width : '50px',
+    height : '50px',
+    marginTop : '30%',
+    '&:hover' : {
+      boxShadow: '1px 1px 2px black'
+    },
+    
+
   }
 }));
 
@@ -283,12 +296,12 @@ const Application = () => {
     () => {
       const uploadData = async () => {
 
-        await db.collection("Clients").doc(currentUser.currentUser.email).collection(personal.cnic.replace(/-/g, "")).add({personal, asset, payment})
+        await db.collection("Clients").doc(currentUser.currentUser.email).collection(personal.cnic.replace(/-/g, "")).add({ personal, asset, payment })
           .then((docRef) => {
             console.log("Docement written with ID : ", docRef)
             setIsLoading(false)
             setIsSucceed(true)
-            
+
           })
           .catch((error) => {
             console.error("erro adding document : ", error)
@@ -297,8 +310,7 @@ const Application = () => {
           })
       }
 
-      if(imageURI)
-      {
+      if (imageURI) {
         console.log("Image Upload Succesfully")
         uploadData()
       }
@@ -407,37 +419,37 @@ const Application = () => {
     // 1. 'state_changed' observer, called any time the state changes
     // 2. Error observer, called on failure
     // 3. Completion observer, called on successful completion
-    uploadTask.on('state_changed',  (snapshot) => {
-        // Observe state change events such as progress, pause, and resume
-        // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-        var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        console.log('Upload is ' + progress + '% done');
-        switch (snapshot.state) {
-            case firebase.storage.TaskState.PAUSED: // or 'paused'
-                console.log('Upload is paused');
-                break;
-            case firebase.storage.TaskState.RUNNING: // or 'running'
-                console.log('Upload is running');
-                break;
-            default:
-                console.log("Default case")
-                break;
-        }
-    },(error) => {
-        // Handle unsuccessful uploads
-        console.log(error)
-        setIsLoading(false)
-    },() => {
-        // Handle successful uploads on complete
-        // For instance, get the download URL: https://firebasestorage.googleapis.com/...
-        uploadTask.snapshot.ref.getDownloadURL().then( (downloadURL) => {
-            console.log('File available at', downloadURL);
-            setImageURI(downloadURL)
-        });
+    uploadTask.on('state_changed', (snapshot) => {
+      // Observe state change events such as progress, pause, and resume
+      // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+      var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+      console.log('Upload is ' + progress + '% done');
+      switch (snapshot.state) {
+        case firebase.storage.TaskState.PAUSED: // or 'paused'
+          console.log('Upload is paused');
+          break;
+        case firebase.storage.TaskState.RUNNING: // or 'running'
+          console.log('Upload is running');
+          break;
+        default:
+          console.log("Default case")
+          break;
+      }
+    }, (error) => {
+      // Handle unsuccessful uploads
+      console.log(error)
+      setIsLoading(false)
+    }, () => {
+      // Handle successful uploads on complete
+      // For instance, get the download URL: https://firebasestorage.googleapis.com/...
+      uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+        console.log('File available at', downloadURL);
+        setImageURI(downloadURL)
+      });
     });
 
 
-}
+  }
 
   const handleNext = () => {
 
@@ -492,14 +504,31 @@ const Application = () => {
 
   return (
     <div className={classes.root}>
-      <Stepper alternativeLabel activeStep={activeStep} connector={<ColorlibConnector />} className={classes.stepper} >
-        {steps.map((label) => (
-          <Step key={label}>
-            <StepLabel StepIconComponent={ColorlibStepIcon}>{label}</StepLabel>
-          </Step>
-        ))}
-      </Stepper>
-      <div >
+      <div className="row " >
+        <div className="col-1 justify-content-center text-center" >
+          <Link to="/" style={{ textDecoration : 'none' }} >
+          <Home color="primary" className={classes.homeIcon} />
+          </Link>
+        </div>
+        <div className="col-11" >
+          <Stepper alternativeLabel activeStep={activeStep} connector={<ColorlibConnector />} className={classes.stepper} >
+            {steps.map((label) => (
+              <Step key={label}>
+                <StepLabel StepIconComponent={ColorlibStepIcon}>{label}</StepLabel>
+              </Step>
+            ))}
+          </Stepper>
+        </div>
+      </div>
+      
+
+      <div className="row" >
+
+        <div className="col-1" >
+
+        </div>
+
+        <div className="col-11" >
         {activeStep === steps.length ? Progress
           // (
           //   <div style={{ width: '100%', textAlign: 'center' }} >
@@ -530,6 +559,9 @@ const Application = () => {
             </div>
           )}
       </div>
+
+      </div>
+
     </div>
   );
 }

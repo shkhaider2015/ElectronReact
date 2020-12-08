@@ -1,5 +1,5 @@
 import { Avatar, Button, Grid, makeStyles, Paper, TextField, Typography, InputAdornment, LinearProgress } from '@material-ui/core'
-import { Email, VpnKey } from "@material-ui/icons";
+import { EmailOutlined as Email,VpnKeyOutlined as VpnKey } from "@material-ui/icons";
 import React from 'react'
 import { Link, useNavigate } from "react-router-dom";
 import ICON from "../../RawData/mainassociates_icon.png"
