@@ -9,6 +9,7 @@ import zainlogo from '../../RawData/mainassociates_icon.png'
 import { db } from "../../config/firebase";
 import { AuthContext } from "../../context/authContext";
 import { useCollection } from 'react-firebase-hooks/firestore';
+import Sidecomponent from "./sidecomponent";
 
 
 
@@ -20,6 +21,7 @@ const Reports = () => {
     const currentUser = React.useContext(AuthContext)
     const [users, setUsers] = React.useState([])
     const [selectedItem, setSelectedItem] = React.useState(null);
+    const [clicked, setClicked] = React.useState(null)
 
 
 
@@ -58,11 +60,11 @@ const Reports = () => {
         []
     )
 
-    const handleClick = (e) => {
-
-        console.log(`${e} is clicked`)
-        
+    const muClick = (e) => {
+        setClicked(e)
     }
+
+
 
     return (
 
@@ -125,17 +127,7 @@ const Reports = () => {
                                         object.map(
                                             (obj, ind) => (
                                                 ind === 0
-                                                    ? <div key={index} onClick={e => handleClick(index)} className="mt-2 pb-1 pb-1 row rounded shadow-sm clinet-hover">
-
-                                                        <div className="m-2 col-3 client-pic">
-                                                            <Avatar  alt={obj['name']} src={obj['imageURI']} style={{ height: '40px', width: '40px', margin: '15%' }} />
-
-                                                        </div>
-                                                        <div className="col-8 mt-4 pt-1 client-Name">
-                                                            <h6>{obj['name']}</h6>
-                                                        </div>
-
-                                                    </div>
+                                                    ? <div key={index} onClick={e => muClick(index)} > <Sidecomponent  obj={obj} checked={[index, clicked]} /> </div>
                                                     : console.log("some")
                                             )
                                         )
