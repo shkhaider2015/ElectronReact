@@ -161,7 +161,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
     height: '80mvh',
-    overflowX : 'hidden'
+    overflowX: 'hidden'
   },
   stepper: {
 
@@ -178,14 +178,14 @@ const useStyles = makeStyles((theme) => ({
   buttonRight: {
     marginLeft: '10%'
   },
-  homeIcon : {
-    width : '50px',
-    height : '50px',
-    marginTop : '30%',
-    '&:hover' : {
+  homeIcon: {
+    width: '50px',
+    height: '50px',
+    marginTop: '30%',
+    '&:hover': {
       boxShadow: '1px 1px 2px black'
     },
-    
+
 
   }
 }));
@@ -229,6 +229,7 @@ const Application = () => {
   const [isSucceed, setIsSucceed] = React.useState(false)
   const steps = getSteps();
   const currentUser = React.useContext(AuthContext);
+  const [selectedImage, setSelectedImage] = React.useState(null)
 
   const [imageFile, setImageFile] = React.useState(null)
   const [imageURI, setImageURI] = React.useState(null)
@@ -241,8 +242,9 @@ const Application = () => {
   const [address, setAddress] = React.useState("")
 
   const [area, setArea] = React.useState("")
-  const [measurement, setMeasurement] = React.useState("")
-  const [square, setSquare] = React.useState("")
+  const [measurement, setMeasurement] = React.useState(0)
+  const [square, setSquare] = React.useState(0)
+  const [block, setBlock] = React.useState("")
   const [category, setCategory] = React.useState("")
   const [nature, setNature] = React.useState("")
   const [type, setType] = React.useState("")
@@ -255,9 +257,10 @@ const Application = () => {
   const [duration, setDuration] = React.useState("")
   const [installment, setInstallment] = React.useState(0)
   const [balance, setBalance] = React.useState(0)
+  const [givenAmount, setGivenAmount] = React.useState(0)
   const [paymentMethod, setPaymentMethod] = React.useState("")
   const [open, setOpen] = React.useState(true)
-
+  const [disableInstallment, setDisableInstallment] = React.useState(true)
 
 
   const personal = {
@@ -274,6 +277,7 @@ const Application = () => {
     name: area,
     measurement: measurement,
     square: square,
+    block: block,
     category: category,
     nature: nature,
     type: type,
@@ -282,6 +286,7 @@ const Application = () => {
   }
   const payment = {
     totalAmount: amount,
+    givenAmount: givenAmount,
     procedure: procedure,
     installment: totalInstallment,
     installmentDuration: duration,
@@ -290,13 +295,16 @@ const Application = () => {
     paymentMethod: paymentMethod
   }
 
-
-
   React.useEffect(
     () => {
-      const uploadData = async () => {
+      const uploadData = async (x, y, z ) => {
 
-        await db.collection("Clients").doc(currentUser.currentUser.email).collection(personal.cnic.replace(/-/g, "")).add({ personal, asset, payment })
+        const number = x.cnic.replace(/-/g, "")
+        let data = {}
+        data[number] = [x, y, z] 
+        await db.collection("clients")
+        .doc(currentUser.currentUser.displayName.replace(/\s/g, "") +currentUser.currentUser.email.slice(0,3) )
+        .set(data)
           .then((docRef) => {
             console.log("Docement written with ID : ", docRef)
             setIsLoading(false)
@@ -312,7 +320,7 @@ const Application = () => {
 
       if (imageURI) {
         console.log("Image Upload Succesfully")
-        uploadData()
+        uploadData(personal, asset, payment)
       }
     },
     [imageURI]
@@ -322,6 +330,8 @@ const Application = () => {
   {
     imageFile,
     setImageFile,
+    selectedImage,
+    setSelectedImage,
     name,
     setName,
     fatherName,
@@ -345,6 +355,8 @@ const Application = () => {
     setMeasurement,
     square,
     setSquare,
+    block,
+    setBlock,
     category,
     setCategory,
     nature,
@@ -361,6 +373,8 @@ const Application = () => {
   const paymentModel = {
     amount,
     setAmount,
+    givenAmount,
+    setGivenAmount,
     procedure,
     setProcedure,
     totalInstallment,
@@ -376,6 +390,8 @@ const Application = () => {
     open,
     setOpen,
     setProceed,
+    disableInstallment,
+    setDisableInstallment
   }
 
   const handlePersonalForm = () => {
@@ -401,11 +417,23 @@ const Application = () => {
   }
   const handlePaymentForm = () => {
     let val = false;
-    procedure === "" || duration === "" || paymentMethod === ""
-      || amount === 0 || totalInstallment === 0 || installment === 0
-      || balance === 0
+
+    if (procedure === "") {
+      val = false;
+    }
+    else if (procedure === "Installment") {
+      duration === "" || paymentMethod === ""
+        || amount === 0 || totalInstallment === 0 || installment === 0
+        || balance === 0
+        ? val = false
+        : val = true
+    }
+    else
+    {
+       paymentMethod === "" || amount === 0 || balance === 0
       ? val = false
       : val = true
+    }
 
     return val
   }
@@ -506,8 +534,8 @@ const Application = () => {
     <div className={classes.root}>
       <div className="row " >
         <div className="col-1 justify-content-center text-center" >
-          <Link to="/" style={{ textDecoration : 'none' }} >
-          <Home color="primary" className={classes.homeIcon} />
+          <Link to="/" style={{ textDecoration: 'none' }} >
+            <Home color="primary" className={classes.homeIcon} />
           </Link>
         </div>
         <div className="col-11" >
@@ -520,7 +548,7 @@ const Application = () => {
           </Stepper>
         </div>
       </div>
-      
+
 
       <div className="row" >
 
@@ -529,36 +557,36 @@ const Application = () => {
         </div>
 
         <div className="col-11" >
-        {activeStep === steps.length ? Progress
-          // (
-          //   <div style={{ width: '100%', textAlign: 'center' }} >
-          //     <Typography className={classes.instructions}>
-          //       All steps completed - you&apos;re finished
-          //     </Typography>
-          //     <Button onClick={handleReset} className={classes.button}>
-          //       Reset
-          //     </Button>
-          //   </div>
-          // ) 
-          : (
-            <div style={{ width: '100%', textAlign: 'center' }} >
-              {getForms(activeStep, personalModel, plotModel, paymentModel)}
-              <div>
-                <Button disabled={activeStep === 0} onClick={handleBack} className={classes.buttonLeft}>
-                  Back
+          {activeStep === steps.length ? Progress
+            // (
+            //   <div style={{ width: '100%', textAlign: 'center' }} >
+            //     <Typography className={classes.instructions}>
+            //       All steps completed - you&apos;re finished
+            //     </Typography>
+            //     <Button onClick={handleReset} className={classes.button}>
+            //       Reset
+            //     </Button>
+            //   </div>
+            // ) 
+            : (
+              <div style={{ width: '100%', textAlign: 'center' }} >
+                {getForms(activeStep, personalModel, plotModel, paymentModel)}
+                <div>
+                  <Button disabled={activeStep === 0} onClick={handleBack} className={classes.buttonLeft}>
+                    Back
               </Button>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={handleNext}
-                  className={classes.buttonRight}
-                >
-                  {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
-                </Button>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={handleNext}
+                    className={classes.buttonRight}
+                  >
+                    {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
+                  </Button>
+                </div>
               </div>
-            </div>
-          )}
-      </div>
+            )}
+        </div>
 
       </div>
 

@@ -102,6 +102,8 @@ const PlotInformation = ({ model }) => {
 
     const classes = useStyle();
 
+    
+
     return (
         <div className={classes.root}>
             { model.open ?  ""  : <AlertDialog setProceed={model.setProceed} open={model.open} setOpen={model.setOpen} /> }
@@ -152,10 +154,10 @@ const PlotInformation = ({ model }) => {
                                         }}
                                     >
                                         <option aria-label="None" value="" />
-                                        <option value={10}>Full Payment</option>
-                                        <option value={20}>Half Payment</option>
-                                        <option value={30}>Short Payment</option>
-                                        <option value={30}>Installment</option>
+                                        <option value="Full Payment">Full Payment</option>
+                                        <option value="Half Payment">Half Payment</option>
+                                        <option value="Short Payment">Short Payment</option>
+                                        <option value="Installment">Installment</option>
                                     </Select>
                                     <FormHelperText> { model.procedure === "" ? <span style={{ color : 'red' }} >Please specify procedure</span> : "" } </FormHelperText>
                                 </FormControl>
@@ -170,6 +172,7 @@ const PlotInformation = ({ model }) => {
                                     variant="outlined"
                                     type="number"
                                     color="primary"
+                                    disabled={!(model.procedure === "Installment")}
                                     value={model.totalInstallment}
                                     onChange={(e) => model.setTotalInstallment(e.target.value) }
                                     helperText={ model.totalInstallment === 0 ? <span style={{ color : 'red' }} >Please fill your first installment</span> : "" }
@@ -188,6 +191,7 @@ const PlotInformation = ({ model }) => {
                                     <InputLabel htmlFor="outlined-age-native-simple">Installment Duration</InputLabel>
                                     <Select
                                         native
+                                        disabled={!(model.procedure === "Installment")}
                                         value={model.duration}
                                         label="Installment Duration"
                                         onChange={(e) => model.setDuration(e.target.value) }
@@ -218,8 +222,12 @@ const PlotInformation = ({ model }) => {
                                     variant="outlined"
                                     type="text"
                                     color="primary"
+                                    disabled={model.procedure !== "Installment"}
                                     value={model.installment}
-                                    onChange={(e) => model.setInstallment(e.target.value) }
+                                    onChange={(e) => {
+                                        model.setInstallment(e.target.value)
+                                        model.setGivenAmount(e.target.value)
+                                    } }
                                     helperText={ model.installment === 0 ? <span style={{ color : 'red' }} >Please specify total amount</span> : "" }
                                     InputProps={{
                                         endAdornment: (
@@ -234,13 +242,16 @@ const PlotInformation = ({ model }) => {
                             <div className={classes.phoneDiv} >
                                 <TextField
                                     className={classes.pairElement}
-                                    id="balance"
-                                    label="Balance"
+                                    id="givenAmount"
+                                    label="Given Amount"
                                     variant="outlined"
                                     type="number"
                                     color="primary"
-                                    value={model.balance}
-                                    onChange={(e) => model.setBalance(e.target.value) }
+                                    value={model.givenAmount}
+                                    onChange={(e) => {
+                                        model.setGivenAmount(e.target.value)
+                                        model.setBalance(model.amount - e.target.value)
+                                     } }
                                     InputProps={{
                                         endAdornment: (
                                             <InputAdornment position="end">
@@ -252,9 +263,33 @@ const PlotInformation = ({ model }) => {
                                 />
                             </div>
                         </div>
+                        <div className={classes.phoneCnicDiv} >
 
-                        <div className={classes.myText} >
-                        <FormControl variant="outlined" className={classes.myElements}>
+                            <div className={classes.cnicDiv} >
+                            <TextField
+                                    className={classes.pairElement}
+                                    id="balance"
+                                    label="Balance"
+                                    variant="outlined"
+                                    type="number"
+                                    color="primary"
+                                    value={model.balance}
+                                    disabled={model.procedure === "Full Payment"}
+                                    onChange={(e) => model.setBalance(e.target.value) }
+                                    InputProps={{
+                                        endAdornment: (
+                                            <InputAdornment position="end">
+                                                <Phone className={classes.iconColor} />
+                                            </InputAdornment>
+                                        ),
+                                    }}
+
+                                />
+
+                            </div>
+                            
+                        <div className={classes.phoneDiv} >
+                        <FormControl variant="outlined" className={classes.pairElement}>
                                     <InputLabel htmlFor="outlined-age-native-simple">Payment Method</InputLabel>
                                     <Select
                                         native
@@ -276,6 +311,8 @@ const PlotInformation = ({ model }) => {
 
                         </div>
 
+
+                        </div>
 
 
                     </Paper>

@@ -147,6 +147,20 @@ const SignUp = () => {
 
         return val;
     }
+    const handleCnic = (e) => {
+        var a = e.target.value
+        // a = a.replace(/(\d{5})(\d{7})(\d{1})/, "$1-$2-$3")
+        if (a.length > 15) {
+            a = a.slice(0, -1)
+        }
+        if (a.length === 6 && a.charAt(5) !== "-" || a.length === 14 && a.charAt(13) !== "-") 
+        {
+            a = a.slice(0, -1) + "-" + a.slice(-1)
+        }
+    
+        // e.target.value = a
+        setCNIC(a)
+    }
 
     const checkInfo = () => 
     {
@@ -179,7 +193,7 @@ const SignUp = () => {
         }
         db
             .collection("Users")
-            .doc(email)
+            .doc(userModel.name.replace(/\s/g,"") + cnic.replace(/-/g,""))
             .collection("personal")
             .doc("personalInformation")
             .set(userModel)
@@ -382,7 +396,7 @@ const SignUp = () => {
                                     type="text"
                                     color="primary"
                                     value={cnic}
-                                    onChange={(e) => setCNIC(e.target.value)}
+                                    onChange={handleCnic}
                                     InputProps={{
                                         endAdornment: (
                                             <InputAdornment position="end">

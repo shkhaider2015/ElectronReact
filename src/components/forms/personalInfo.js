@@ -111,22 +111,15 @@ const useStyle = makeStyles(
 const PersonalInformation = ({ model }) => {
 
     const classes = useStyle();
-    const [selectedImage, setSelectedImage] = React.useState(null)
-    var num = 0;
 
 
     const handleSelectImage = (e) => {
-        // let file = e.target.files[0]
-        // model.setImageFile(e.target.files[0])
-        // var file = new File(e.target.files[0], "image.jpg")
-        // model.setSelectedImage(file)
-        // URL.createObjectURL(selectedImage)
         let reader = new FileReader();
         let file = e.target.files[0];
 
         reader.onloadend = () => {
             model.setImageFile(file)
-            setSelectedImage(reader.result)
+            model.setSelectedImage(reader.result)
         }
 
         reader.readAsDataURL(file)
@@ -188,7 +181,7 @@ return (
                         <label htmlFor="myinput"  >
 
                             <Fab component="span" className={classes.avatar} >
-                                {!selectedImage ? <PhotoCamera className={classes.imageIcon} color="primary" /> : <Avatar alt="shakeel haider" src={selectedImage} variant="circle" className={classes.myImage} />}
+                                {!model.selectedImage ? <PhotoCamera className={classes.imageIcon} color="primary" /> : <Avatar alt="shakeel haider" src={model.selectedImage} variant="circle" className={classes.myImage} />}
 
 
                             </Fab>

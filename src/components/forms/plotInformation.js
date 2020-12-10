@@ -156,11 +156,11 @@ const PersonalInformation = ({ model }) => {
                                 id="measurment"
                                 label="Measurement"
                                 variant="outlined"
-                                type="text"
+                                type="number"
                                 color="primary"
                                 value={model.measurement}
                                 onChange={(e) => model.setMeasurement(e.target.value) }
-                                helperText={ model.measurement === ""? <span style={{ color : 'red' }} >Required</span> : <span style={{ color : 'lightgreen' }} >Correct</span> }
+                                helperText={ model.measurement === 0? <span style={{ color : 'red' }} >Required</span> : <span style={{ color : 'lightgreen' }} >Correct</span> }
                                 InputProps={{
                                     endAdornment: (
                                         <InputAdornment position="end">
@@ -178,11 +178,11 @@ const PersonalInformation = ({ model }) => {
                                     id="square"
                                     label="Sq. Yds."
                                     variant="outlined"
-                                    type="text"
+                                    type="number"
                                     color="primary"
                                     value={model.square}
                                     onChange={(e) => model.setSquare(e.target.value) }
-                                    helperText={ model.square === ""? <span style={{ color : 'red' }} >Required</span> : <span style={{ color : 'lightgreen' }} >Correct</span> }
+                                    helperText={ model.square === 0? <span style={{ color : 'red' }} >Required</span> : <span style={{ color : 'lightgreen' }} >Correct</span> }
                                     InputProps={{
                                         endAdornment: (
                                             <InputAdornment position="end">
@@ -194,14 +194,14 @@ const PersonalInformation = ({ model }) => {
                                 />
                                 <TextField
                                     className={classes.block}
-                                    id="square"
+                                    id="block"
                                     label="Block"
                                     variant="outlined"
                                     type="text"
                                     color="primary"
-                                    value={model.square}
-                                    onChange={(e) => model.setSquare(e.target.value) }
-                                    helperText={ model.square === ""? <span style={{ color : 'red' }} >Required</span> : <span style={{ color : 'lightgreen' }} >Correct</span> }
+                                    value={model.block}
+                                    onChange={(e) => model.setBlock(e.target.value) }
+                                    helperText={ model.block === ""? <span style={{ color : '' }} >Required</span> : <span style={{ color : 'lightgreen' }} >Correct</span> }
                                     InputProps={{
                                         endAdornment: (
                                             <InputAdornment position="end">
