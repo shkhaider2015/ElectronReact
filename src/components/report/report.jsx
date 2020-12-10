@@ -2,7 +2,7 @@ import React from "react";
 import './reportCSS.css'
 import SearchBar from '../report/searchBar'
 import { ReactComponent as Client_Tempory_Profile } from '../../RawData/Create.svg';
-import { Avatar } from "@material-ui/core";
+import { Avatar, Paper } from "@material-ui/core";
 
 import zainlogo from '../../RawData/mainassociates_icon.png'
 
@@ -14,43 +14,62 @@ import { useCollection } from 'react-firebase-hooks/firestore';
 
 const Reports = () => {
 
+    // const dataArrays = []
+    // var initialLoad = 0;
+
     const currentUser = React.useContext(AuthContext)
     const [users, setUsers] = React.useState([])
+    const [selectedItem, setSelectedItem] = React.useState(null);
+
+
+
+
+    const getData = async () => {
+        // var dd = db.doc(`Clients/${currentUser.currentUser.email}`);
+        let route = currentUser.currentUser.displayName.replace(/\s/g, "") + currentUser.currentUser.email.slice(0, 3)
+        var docRef = db.collection("clients").doc(route);
+        var dataArrays = []
+
+        await docRef.get().then(function (doc) {
+            if (doc.exists) {
+                // console.log("OutSide", doc.data())
+
+
+                for (let x in doc.data()) {
+                    // console.log("In Function : ", doc.data()[x])
+                    // setUsers([doc.data()[x]])
+                    dataArrays.push(doc.data()[x])
+                }
+                // console.log("CVhecking : ", dataArrays)
+                setUsers(dataArrays)
+            }
+        }).catch(function (error) {
+            console.log("Error getting document:", error);
+        });
+
+        // setUsers(dataArrays)
+    }
 
     React.useEffect(
         () => {
             // console.log("User is : ", currentUser.currentUser.email)
-            const getData = async () => {
-                // var dd = db.doc(`Clients/${currentUser.currentUser.email}`);
-                var docRef = db.collection("clients").doc("ShakeelHaidershk");
-
-                await docRef.get().then(function (doc) {
-                    if (doc.exists) {
-                        console.log(doc.data())
-                        for (let x in doc.data()) {
-                            setUsers([doc.data()[x]])
-                        }
-
-                    }
-                }).catch(function (error) {
-                    console.log("Error getting document:", error);
-                });
-
-            }
             getData()
         },
         []
     )
 
-    console.log("common : ", users)
+    const handleClick = (e) => {
 
-
+        console.log(`${e} is clicked`)
+        
+    }
 
     return (
 
         <div>
             <div className="container-fluid">
                 <div className="row ">
+                    {console.log("Users state : ", users)}
 
                     <div className="col-3 shadow  searchBar  border-right pb-4 ">
                         <div className="col-12 mt-2 ml-5">
@@ -73,45 +92,71 @@ const Reports = () => {
                             </div> */}
 
                             {
-                                users.map((singleUser, index) => (
-                                    singleUser.map(
-                                        (obj, ind) => {
-                                            if(ind === 0)
-                                            {
-                                                return(<div key={index} className="mt-2 pb-1 pb-1 row rounded shadow-sm clinet-hover">
+                                // users.map((singleUser, index) => (
+                                //     singleUser.map(
+                                //         (obj, ind) => {
+                                //             // console.log(`SingleUser is ${singleUser}`)
+                                //             if(ind === 0)
+                                //             {
+                                //                 return(<div key={index} onClick={setSelectedItem()} className="mt-2 pb-1 pb-1 row rounded shadow-sm clinet-hover">
 
-                                                <div className="m-2 col-3 client-pic">
-                                                <Avatar alt={obj['name']} src={obj['imageURI']} style={{ height : '40px', width : '40px', margin : '15%' }} />
-                
-                                                </div>
-                                                <div className="col-8 mt-3 pt-1 client-Name">
-                                                    { obj['name'] }
-                                                 </div>
-                
-                                            </div>)
-                                            }
-                                            else
-                                            {
-                                                return ""
-                                            }
-                                        }
-                                    )
-                                ))
+                                //                 <div className="m-2 col-3 client-pic">
+                                //                 <Avatar alt={obj['name']} src={obj['imageURI']} style={{ height : '40px', width : '40px', margin : '15%' }} />
+
+                                //                 </div>
+                                //                 <div className="col-8 mt-4 pt-1 client-Name">
+                                //                     <h5>{ obj['name'] }</h5>
+                                //                  </div>
+
+                                //             </div>)
+                                //             }
+                                //             else
+                                //             {
+                                //                 return null
+                                //             }
+                                //         }
+                                //     )
+                                // ))
                             }
-                            
 
-                            
-                            
-                            
+                            {
+                                users.map(
+                                    (object, index) => (
+                                        object.map(
+                                            (obj, ind) => (
+                                                ind === 0
+                                                    ? <div key={index} onClick={e => handleClick(index)} className="mt-2 pb-1 pb-1 row rounded shadow-sm clinet-hover">
+
+                                                        <div className="m-2 col-3 client-pic">
+                                                            <Avatar  alt={obj['name']} src={obj['imageURI']} style={{ height: '40px', width: '40px', margin: '15%' }} />
+
+                                                        </div>
+                                                        <div className="col-8 mt-4 pt-1 client-Name">
+                                                            <h6>{obj['name']}</h6>
+                                                        </div>
+
+                                                    </div>
+                                                    : console.log("some")
+                                            )
+                                        )
+                                    )
+                                )
+
+                            }
 
 
-                            
 
 
-                            
 
 
-                           
+
+
+
+
+
+
+
+
                         </div>
                     </div>
                     <div className="col-9  shadow-sm h-100 ">

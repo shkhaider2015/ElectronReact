@@ -304,7 +304,7 @@ const Application = () => {
         data[number] = [x, y, z] 
         await db.collection("clients")
         .doc(currentUser.currentUser.displayName.replace(/\s/g, "") +currentUser.currentUser.email.slice(0,3) )
-        .set(data)
+        .set(data, {merge : true})
           .then((docRef) => {
             console.log("Docement written with ID : ", docRef)
             setIsLoading(false)
