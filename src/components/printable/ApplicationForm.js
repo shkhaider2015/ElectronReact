@@ -1,6 +1,6 @@
 import { makeStyles, TextField, RadioGroup, Paper, Radio, Button, FormControlLabel } from "@material-ui/core";
 import React ,{useState} from "react";
-import { ReactComponent as Client_Tempory_Profile } from '../RawData/Create.svg';
+import { ReactComponent as Client_Tempory_Profile } from '../../RawData/Create.svg';
 
 
 
@@ -23,7 +23,7 @@ function ApplicationForm() {
                 <div className="row">
 
 
-                    <div className="col-12  heading">
+                    <div className="col-12 col-sm-12  heading">
 
                         <h3 className="mt-5 rounded text-center bg-danger text-white p-2"><em>APPLICATION FORM</em></h3>
 

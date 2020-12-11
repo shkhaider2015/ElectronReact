@@ -1,6 +1,5 @@
 import { makeStyles, TextField, RadioGroup, Paper, Radio, Button, FormControlLabel } from "@material-ui/core";
 import React ,{useState} from "react";
-import { ReactComponent as Client_Tempory_Profile } from '../RawData/Create.svg';
 
 
 

@@ -10,6 +10,7 @@ import CreateApp from "../applicationform";
 import Home from "../HomePageForms/HomePageForms/HomePage.jsx"
 import Report from "../report/report";
 import Payment from "../forms/paymentInfo";
+import PrintApplicationForm from "../printable/ApplicationForm";
 
 
 
@@ -23,9 +24,8 @@ function MyRoutes() {
                     <Route path="/" element={< Home />} /> 
                     <Route path="/report" element={< Report />}/> 
                     <Route path="/create" element={< CreateApp />}/> 
-                    <Route path="/nomination" element={< NominationForm />}/> 
-                    <Route path="/confirmation"element={< ConfirmationForm />}/> 
-                    <Route path="/siteplane"element={< SitePlan />}/> 
+                    <Route path="/print/application" element={< PrintApplicationForm />}/> 
+
                 </Route >
 
         <       Route path="login"element={< Login />}/> 

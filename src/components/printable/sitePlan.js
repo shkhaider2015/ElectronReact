@@ -1,8 +1,6 @@
 import { makeStyles, TextField, RadioGroup, Paper, Radio, Button, FormControlLabel } from "@material-ui/core";
 import React ,{useState} from "react";
-import { ReactComponent as Client_Tempory_Profile } from '../RawData/Create.svg';
-import plotimage from '../RawData/plot image.JPG'
-import diagram from '../RawData/diagram.png'
+import diagram from '../../RawData/default.jpg'
 const useStyle = makeStyles(
     (theme) => (
         {

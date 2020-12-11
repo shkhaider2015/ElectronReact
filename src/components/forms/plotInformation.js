@@ -1,16 +1,11 @@
-import { Avatar, Button, Grid, makeStyles, Paper, TextField,
-     Typography, InputAdornment, Fab, LinearProgress, InputLabel, FormControl, Select } from '@material-ui/core'
+import { Grid, makeStyles, Paper, TextField, 
+    InputAdornment, InputLabel, FormControl, Select } from '@material-ui/core'
 import {
     LinearScale, SquareFoot, DashboardOutlined, CategoryOutlined, NaturePeopleOutlined, 
     MergeType, FiberSmartRecordOutlined, StoreOutlined,
     
 } from "@material-ui/icons";
 import React from 'react'
-import { Link, useNavigate } from "react-router-dom";
-import BackgroundImage from "../../RawData/jj2.png";
-import { UserModel } from "../../models/userModels";
-import { firebase, storage, auth, db } from "../../config/firebase";
-import { AuthContext } from "../../context/authContext";
 
 
 const useStyle = makeStyles(

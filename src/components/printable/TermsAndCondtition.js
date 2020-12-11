@@ -1,8 +1,8 @@
 import { makeStyles, TextField, RadioGroup, Paper, Radio, Button, FormControlLabel } from "@material-ui/core";
 import { BorderBottom } from "@material-ui/icons";
 import React ,{useState} from "react";
-import { ReactComponent as Client_Tempory_Profile } from '../RawData/Create.svg';
-import boxTermsAndConditoon from '../RawData/terms_andcondition.JPG'
+import { ReactComponent as Client_Tempory_Profile } from '../../RawData/Create.svg';
+import boxTermsAndConditoon from '../../RawData/default.jpg'
 
 
 
