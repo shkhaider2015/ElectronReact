@@ -1,6 +1,6 @@
 import { makeStyles, TextField, RadioGroup, Paper, Radio, Button, FormControlLabel } from "@material-ui/core";
 import React ,{useState} from "react";
-import diagram from '../../RawData/default.jpg'
+import diagram from '../../RawData/diagram.png'
 const useStyle = makeStyles(
     (theme) => (
         {
@@ -14,7 +14,7 @@ const useStyle = makeStyles(
 )
 
 
-function SitePlan() {
+function SitePlan({ obj }) {
 
     const classes = useStyle();
           
@@ -57,7 +57,7 @@ function SitePlan() {
                     </div>
                     <div style={{ width: "70%", border: "1px solid black", borderRadius: 30, padding: 0 }} className="mt-5 col-4 p-1 text-center">
                         <div className="p-3 row  mt-1  ">
-                            <div className=" col-5   "><h5><em>Block</em></h5></div>
+                            <div className=" col-5   "><h5><em>{obj[1]['block']}</em></h5></div>
 
                         </div>
                         <div className="row p-3 mt-1 mb-1  ">
@@ -68,18 +68,18 @@ function SitePlan() {
                 <div className="mt-4 col-12">
                     <div className="row">
                         <div className="offset-1 col-2 text-left ">Site Plan for Plot No.</div>
-                          <div className="col-3 text-left pl-4  border-bottom">{SitePlanforPlotNo}</div>
+                          <div className="col-3 text-left pl-4  border-bottom">{obj[1]['sitePlane']}</div>
                         <div className="offset-1 col-2  text-center ">Type :</div>
-                     <div className="col-2 text-left pl-4  border-bottom">{Type}</div>
+                     <div className="col-2 text-left pl-4  border-bottom">{obj[1]['type']}</div>
                     </div>
                 </div>
 
                 <div className="mt-4 col-12">
                     <div className="row">
                         <div className="offset-1 col-2 pl-3 text-left ">Purpose only of :</div>
-                      <div className="col-3 text-left pl-4  border-bottom">{PurposeOnlyOf}</div>
+                      <div className="col-3 text-left pl-4  border-bottom">{obj[1]['purpose']}</div>
                         <div className="offset-1 col-2 pl-4 text-center ">Sq. Yds :</div>
-                     <div className="col-2 text-left pl-4  border-bottom">{SqYds}</div>
+                     <div className="col-2 text-left pl-4  border-bottom">{obj[1]['square']}</div>
                     </div>
                 </div>
                 <div className="row mt-5 ">
@@ -93,8 +93,8 @@ function SitePlan() {
                         <div style={{position:"relative",right:"8.2rem", top:"1.77rem"}}><em>{West}</em></div>
                     </div>
                     <div  className="col-2">
-    <div style={{position:"relative",right:"41.5rem", top:"6.5rem"}}>{PlotNo}</div>
-    <div style={{position:"relative",right:"41.5rem", top:"6.65rem"}}>{SqYds}</div>
+    <div style={{position:"relative",right:"41.5rem", top:"6.5rem"}}>{obj[1]['plotName']}</div>
+    <div style={{position:"relative",right:"41.5rem", top:"6.65rem"}}>{obj[1]['square']}</div>
       
                     </div>
                        
@@ -105,14 +105,14 @@ function SitePlan() {
                 <div className="mt-5 col-12">
                     <div className="row">
                         <div className="offset-1  col-3 pl-3 text-left ">Name of Allotted Mr./Mrs./Miss :</div>
-                        <div className="col-4 text-left pl-4  border-bottom">{NameofAllotted_Mr_Mrs_Miss}</div>
+                        <div className="col-4 text-left pl-4  border-bottom">{obj[0]['name']}</div>
                     </div>
                 </div>
 
                 <div className="mt-4 col-12 mb-5 pb-5 ">
                     <div className="row">
                         <div className="offset-1  col-2 pl-3 text-left ">S/o, D/o, W/o. :</div>
-                        <div className="col-3 text-left pl-4  border-bottom">{So_Do_Wo}</div>
+                        <div className="col-3 text-left pl-4  border-bottom">{obj[0]['fatherName']}</div>
                     </div>
                 </div>
 

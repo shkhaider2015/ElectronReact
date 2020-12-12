@@ -139,9 +139,9 @@ const PersonalInformation = ({ model }) => {
                                         }}
                                     >
                                         <option aria-label="None" value="" />
-                                        <option value={10}>Plot</option>
-                                        <option value={20}>Home</option>
-                                        <option value={30}>Flat</option>
+                                        <option value="Plot">Plot</option>
+                                        <option value="Home">Home</option>
+                                        <option value="Flat">Flat</option>
                                     </Select>
                                 </FormControl>
                             </div>

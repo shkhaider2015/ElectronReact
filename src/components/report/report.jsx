@@ -1,7 +1,8 @@
 import React from "react";
 import './reportCSS.css'
 import SearchBar from '../report/searchBar'
-import { Avatar, Dialog } from "@material-ui/core";
+import { Avatar, Button, Dialog } from "@material-ui/core";
+import { Edit } from '@material-ui/icons';
 
 import zainlogo from '../../RawData/mainassociates_icon.png'
 
@@ -9,7 +10,7 @@ import { db } from "../../config/firebase";
 import { AuthContext } from "../../context/authContext";
 import Sidecomponent from "./sidecomponent";
 import { Link } from "react-router-dom";
-import DialogueBox from "../printable/applicationDialog";
+import DialogueBox from "../printable/DialogueBox";
 
 
 const Reports = () => {
@@ -20,12 +21,33 @@ const Reports = () => {
     const currentUser = React.useContext(AuthContext)
     const [users, setUsers] = React.useState([])
     const [Dialogue, setDialogue] = React.useState(false);
-    const [clicked, setClicked] = React.useState(null)
+    const [clicked, setClicked] = React.useState(0)
     const [formNumber, setFormNumber] = React.useState(1)
+    const [selectedUserData, setSelectedUserData] = React.useState(null)
 
 
 
+    const getCollection = async () => {
 
+        const docRef = db.collection("clients");
+        var dataArray = []
+
+        docRef.get().then((querySnapshot) => {
+
+            console.log("GetCollection : ", querySnapshot)
+            querySnapshot.forEach((doc) => {
+                if (doc.exists) {
+                    console.log("getCollection : snapshot : doc.data() ", doc.data())
+                    for (let x in doc.data()) {
+                        dataArray.push(doc.data()[x])
+                    }
+
+                    setUsers(dataArray)
+                }
+            })
+        }).catch((e) => console.error("getCollection", e))
+
+    }
 
     const getData = async () => {
         // var dd = db.doc(`Clients/${currentUser.currentUser.email}`);
@@ -55,8 +77,7 @@ const Reports = () => {
 
     React.useEffect(
         () => {
-            // console.log("User is : ", currentUser.currentUser.email)
-            getData()
+            getCollection()
         },
         []
     )
@@ -70,6 +91,10 @@ const Reports = () => {
         setDialogue(true)
     }
 
+    const handleEdit = () => {
+        
+    }
+
 
 
     return (
@@ -77,7 +102,7 @@ const Reports = () => {
         <div>
             {
                 Dialogue
-                    ? <DialogueBox setDialogue={setDialogue} formNumber={formNumber} />
+                    ? <DialogueBox setDialogue={setDialogue} formNumber={formNumber} clicked={clicked} users={users} />
                     :
                     <div className="container-fluid">
                         <div className="row ">
@@ -156,7 +181,7 @@ const Reports = () => {
                                                 <div className="col-3 pb-1 ">
 
                                                     <div className="row">
-                                                        <div className="col-12">
+                                                        <div className="col-12  ">
 
                                                             {/* <Client_Tempory_Profile height="70%" style={{ margin: "15%" }} /> */}
                                                             {
@@ -166,10 +191,24 @@ const Reports = () => {
                                                                             ? object.map(
                                                                                 (obj, ind) => (
                                                                                     ind === 0
-                                                                                        ? <div key={index} style={{}} >
-                                                                                            <Avatar alt={obj['name']} src={obj['imageURI']} style={{ height: '60px', width: '60px', marginLeft: '15%' }} />
+                                                                                        ? <div key={index} className="row " >
+                                                                                            <div className=" col-8" >
+                                                                                                <Avatar alt={obj['name']} src={obj['imageURI']} style={{ height: '60px', width: '60px', marginLeft: '15%', marginRight: 'auto' }} />
 
-                                                                                            <span style={{ marginLeft: '3%', fontSize: '12' }} > {obj['name']} </span>
+                                                                                                <span style={{ marginLeft: '3%', fontSize: '12' }} > {obj['name']} </span>
+                                                                                            </div>
+                                                                                            <div className="col-4 " >
+                                                                                                <Button
+                                                                                                className="mt-3 ml-0"
+                                                                                                variant="contained"
+                                                                                                color="primary"
+                                                                                                startIcon={<Edit />}
+                                                                                                onClick={handleEdit}
+                                                                                                >
+                                                                                                    Edit
+                                                                                                </Button>
+                                                                                            </div>
+
                                                                                         </div>
                                                                                         : null
                                                                                 )
@@ -178,6 +217,7 @@ const Reports = () => {
                                                                     )
                                                                 )
                                                             }
+
                                                         </div>
 
                                                     </div>
@@ -191,22 +231,22 @@ const Reports = () => {
                                                 <tbody>
                                                     <tr className="table-hover1  mt-5 pt-5 shadow rounded" >
 
-                                                        <td colSpan="4" className="pt-4 pl-5" >Confirmation Letter</td>
+                                                        <td colSpan="4" className="pt-4 pl-5" >Application Form</td>
                                                         <td className="pl-5 pt-3 text-right" colSpan="1"> <button className="btn text-right btn-danger">Print</button></td>
                                                         <td className="text-center  pt-3" colSpan="1"> <button className="btn btn-info" onClick={() => preview(1)} >Preview</button>  </td>
                                                     </tr>
                                                     <tr className="mt-5 pt-5 table-hover1 shadow rounded" >
-                                                        <td colSpan="4" className="pt-4 pl-5 " > Possession Cirtificate</td>
+                                                        <td colSpan="4" className="pt-4 pl-5 " > Nomination Form</td>
                                                         <td className="pl-5 pt-3 text-right" colSpan="1"> <button className="btn btn-danger">Print</button></td>
                                                         <td className="text-center pt-3" colSpan="1"> <button className="btn btn-info" onClick={() => preview(2)} >Preview</button></td>
                                                     </tr>
                                                     <tr className="mt-5 pt-5 table-hover1 shadow rounded" >
-                                                        <td colSpan="4" className="pt-4 pl-5 " >Allotment Order</td>
+                                                        <td colSpan="4" className="pt-4 pl-5 " >Confirmation Letter</td>
                                                         <td className="pl-5 pt-3 text-right" colSpan="1"> <button className="btn btn-danger">Print</button></td>
                                                         <td className="text-center pt-3" colSpan="1"> <button className="btn btn-info" onClick={() => preview(3)} >Preview</button></td>
                                                     </tr>
                                                     <tr className="mt-5 pt-5 table-hover1 shadow rounded" >
-                                                        <td colSpan="4" className="pt-4 pl-5 " >  Nomination Form</td>
+                                                        <td colSpan="4" className="pt-4 pl-5 " >Site Plan</td>
                                                         <td className="pl-5 pt-3 text-right" colSpan="1"> <button className="btn btn-danger">Print</button></td>
                                                         <td className="text-center pt-3" colSpan="1"> <button className="btn btn-info" onClick={() => preview(4)} >Preview</button></td>
                                                     </tr>
@@ -217,17 +257,17 @@ const Reports = () => {
                                                         <td className="text-center pt-3" colSpan="1"> <button className="btn btn-info" onClick={() => preview(5)}  >Preview</button></td>
                                                     </tr>
                                                     <tr className="mt-5 pt-5 table-hover1 shadow rounded" >
-                                                        <td colSpan="4" className="pt-4 pl-5 " >  NOC for Construction</td>
+                                                        <td colSpan="4" className="pt-4 pl-5 " >Possesion Certificate</td>
                                                         <td className="pl-5 pt-3 text-right" colSpan="1"> <button className="btn btn-danger">Print</button></td>
                                                         <td className="text-center pt-3" colSpan="1"> <button className="btn btn-info" onClick={() => preview(6)} >Preview</button></td>
                                                     </tr>
                                                     <tr className="mt-5 pt-5 table-hover1 shadow rounded" >
-                                                        <td colSpan="4" className="pt-4 pl-5 "> Site Plan</td>
+                                                        <td colSpan="4" className="pt-4 pl-5 "> Alotment Order</td>
                                                         <td className="pl-5 pt-3 text-right" colSpan="1"> <button className="btn btn-danger">Print</button></td>
                                                         <td className="text-center pt-3" colSpan="1"> <button className="btn btn-info" onClick={() => preview(7)} >Preview</button></td>
                                                     </tr>
                                                     <tr className="mt-5 pt-5 table-hover1 shadow rounded" >
-                                                        <td colSpan="4" className="pt-4 pl-5 "> Client Card</td>
+                                                        <td colSpan="4" className="pt-4 pl-5 "> Transfer Form</td>
                                                         <td className="pl-5 text-right pt-3" colSpan="1"> <button className="btn btn-danger">Print</button></td>
                                                         <td className="text-center pt-3" colSpan="1"> <button className="btn btn-info" onClick={() => preview(8)} >Preview</button></td>
                                                     </tr>

@@ -13,42 +13,62 @@ import TermsAndCond from "../printable/TermsAndCondtition";
 import SitePlan from "../printable/sitePlan";
 import Allotment from "../printable/AlotmentOrder";
 
-const getForm = (x) => 
+
+
+const ApplicationDialog = ({ setDialogue, formNumber, clicked, users  }) =>
+{
+  const [open, setOpen] = React.useState(true)
+  // const [personal, setPersonal] = React.useState({})
+  // const [plot, setPlot] = React.useState({})
+  // const [payment, setPayment] = React.useState({})
+  const [user, setUser] = React.useState([])
+
+const getUser = () => {
+  // console.log(`getUser : clicked = ${clicked} and users = ${users} `)
+    users.map(
+      (object, index) => (
+        clicked === index
+        ? setUser(object)
+        : null
+      )
+    )
+}
+
+  const getForm = (x) => 
 {
     switch(x)
     {
         case 1:
-            return <Application />
+            return <Application obj={user} formNumber={x} />
         case 2:
-            return <Confirmation />
+            return <Application obj={user} formNumber={x}  />
         case 3:
-            return <Nomination />
+            return <Confirmation obj={user}  />
         case 4:
-            return <Possession />
+            return <SitePlan obj={user}  />
         case 5:
-            return <TermsAndCond />
+            return <TermsAndCond obj={user} />
         case 6:
-            return <SitePlan />
+            return <Possession obj={user}  />
         case 7:
-            return <Allotment />
+            return <Allotment obj={user}  />
         default:
-            return <Application />
+            return <Application obj={user}  />
 
     }
 }
-
-const ApplicationDialog = ({ setDialogue, formNumber }) =>
-{
-  const [open, setOpen] = React.useState(true)
-
-  const handleClickOpen = () => {
-    setOpen(true)
-  };
 
   const handleClose = () => {    
     //   setOpen(false)
       setDialogue(false)
   };
+
+  React.useEffect(
+    () => {
+      getUser()
+    },
+    []
+  )
 
 
 

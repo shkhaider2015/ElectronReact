@@ -3,7 +3,7 @@ import React ,{useState} from "react";
 
 
 
-function PrintPossessionCertificate() {
+function PrintPossessionCertificate({ obj }) {
 
     const [RefNo , func_RefNo] = useState("RefNo")
     const [Date , func_Date ]   = useState("Date")
@@ -49,19 +49,19 @@ function PrintPossessionCertificate() {
                     <div className="mt-4 col-12">
                         <div className="row">
                             <div className="offset-1 col-2 pl-4 text-left ">Plot :</div>
-                            <div className="col-1 text-left pl-4  border-bottom">{PlotNo}</div>
+                            <div className="col-1 text-left pl-4  border-bottom">{obj[1]['plotName']}</div>
                             <div className="col-2 pl-4 text-right ">Measurement :</div>
-                            <div className="col-1 text-left pl-4  border-bottom">{Measurement}</div>
+                            <div className="col-1 text-left pl-4  border-bottom">{obj[1]['measurement']}</div>
                             <div className="offset-1 col-2 pl-5 text-left ">Sq. Yds, Block:</div>
-                          <div className="col-1 text-left pl-4  border-bottom">{SqYds}</div>
+                          <div className="col-1 text-left pl-4  border-bottom">{obj[1]['square']}, {obj[1]['block']} </div>
                         </div>
                     </div>
                     <div className="mt-4 col-12">
                         <div className="row">
                             <div className="offset-1 col-2 pl-4 text-left ">Category:</div>
-                            <div className="col-3 text-left pl-4  border-bottom">{Category}</div>
+                            <div className="col-3 text-left pl-4  border-bottom">{obj[1]['category']}</div>
                             <div className="col-2 pl-5 text-center ">Nature:</div>
-                            <div className="col-2 text-left pl-4  border-bottom">{Nature}</div>
+                            <div className="col-2 text-left pl-4  border-bottom">{obj[1]['nature']}</div>
                         </div>
                     </div>
                    
@@ -73,26 +73,26 @@ function PrintPossessionCertificate() {
                     <div className="mt-2  col-12">
                         <div className="row">
                             <div className="offset-1  col-2 pl-4 text-left ">Mr./Mrs./Miss :</div>
-                            <div className="col-3 text-left pl-4  border-bottom">{Mr_Mrs_Miss}</div>
+                            <div className="col-3 text-left pl-4  border-bottom">{obj[0]['name']}</div>
                         </div>
                     </div>
                     <div className="mt-4 col-12">
                         <div className="row">
                             <div className="offset-1  col-2 pl-4 text-left ">S/o, D/o, W/o :</div>
-                            <div className="col-3 text-left pl-4  border-bottom">{So_Do_Wo}</div>
+                            <div className="col-3 text-left pl-4  border-bottom">{obj[0]['fatherName']}</div>
                         </div>
                     </div>
                     <div className="mt-4 col-12">
                         <div className="row">
                             <div className="offset-1  col-2 pl-4 text-left ">CNIC :</div>
-                            <div className="col-3 text-left pl-4  border-bottom">{CNIC}</div>
+                            <div className="col-3 text-left pl-4  border-bottom">{obj[0]['cnic']}</div>
                         </div>
                     </div>
                   
                     <div className="mt-4 col-12">
                         <div className="row">
                             <div className="offset-1  col-2 pl-4 text-left ">Adress :</div>
-                            <div className="col-3 text-left pl-4  border-bottom">{Adress}</div>
+                            <div className="col-3 text-left pl-4  border-bottom">{obj[0]['address']}</div>
                         </div>
                     </div>
                   

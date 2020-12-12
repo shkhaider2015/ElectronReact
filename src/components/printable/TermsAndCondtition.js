@@ -1,12 +1,12 @@
-import { makeStyles, TextField, RadioGroup, Paper, Radio, Button, FormControlLabel } from "@material-ui/core";
+import { makeStyles, TextField, RadioGroup, Paper, Radio, Button, FormControlLabel, Avatar } from "@material-ui/core";
 import { BorderBottom } from "@material-ui/icons";
 import React ,{useState} from "react";
 import { ReactComponent as Client_Tempory_Profile } from '../../RawData/Create.svg';
-import boxTermsAndConditoon from '../../RawData/default.jpg'
+import boxTermsAndConditoon from '../../RawData/terms_andcondition.JPG'
 
 
 
-function PrintTermsandCondition() {
+function PrintTermsandCondition({ obj }) {
 
     const [CNIC  , func_CNIC] = useState("CNIC")
     return (
@@ -80,14 +80,14 @@ function PrintTermsandCondition() {
                         <div className=" row ">
                         <div style={{border:"3px solid black" ,height:"5rem"}} className="offset-2 col-2 col-2 mb-2 text-left pl-4"></div>
                         <div  className="offset-1 col-2  text-left pl-4 border-bottom"></div>
-                         <div className="offset-2 col-1 border-pic border rounded shadow-sm">
-                             <Client_Tempory_Profile height="70%" className="pt-1" style={{ margin: "10%" ,padding:0  }} />
+                         <div className="offset-2 col-1 border-pic shadow-sm">
+                             <Avatar variant="rounded" alt="pic" src={obj[0]['imageURI']} />
                             </div>
                        
                         </div>
                         <div className="row ">
                         <div className="offset-2 col-2 text-left "> Read & Understood </div>
-                        <div className="offset-1  col-2 text-center  ">CNIC</div> 
+                        <div className="offset-1  col-2 text-center  ">CNIC : {obj[0]['cnic']} </div> 
                      
                        
                         </div>

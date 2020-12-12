@@ -263,6 +263,7 @@ const Application = () => {
     id: "",
     imageURI: imageURI,
     name: name,
+    fatherName : fatherName,
     email: email,
     cellPhone: cellPhone,
     phone: phone,
@@ -270,7 +271,7 @@ const Application = () => {
     address: address,
   }
   const asset = {
-    name: area,
+    plotName: area,
     measurement: measurement,
     square: square,
     block: block,

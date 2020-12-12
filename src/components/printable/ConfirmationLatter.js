@@ -3,23 +3,10 @@ import React ,{useState} from "react";
 
 
 
-function Printconfirmation() {
+function Printconfirmation({ obj }) {
 
     const [RefNo , func_RefNo] = useState("RefNo")
     const [Date , func_Date ]   = useState("Date")
-    const [Mr_Mrs_Miss  , func_Mr_Mrs_Miss] = useState("Mr_Mrs_Miss")
-    const [So_Do_Wo  , func_So_Do_Wo] = useState("So_Do_Wo")
-    const [CNIC  , func_CNIC] = useState("CNIC")
-    const [Phone_Office  , func_Phone_Office] = useState("Phone_Office")
-    const [PlotNo  , func_PlotNo] = useState("PlotNo")
-    const [Measurement  , func_Measurement] = useState("Measurement")
-    const [SqYds  , func_SqYds] = useState("SqYds")
-    const [Category  , func_Category] = useState("Category")
-    const [Nature  , func_Nature] = useState("Nature")
-    const [Ordinary  , func_Ordinary] = useState("Ordinary")
-    const [Corner  , func_Corner] = useState("Corner")
-    const [West_Open  , func_West_Open] = useState("West_Open")
-    const [Road_Facing  , func_Road_Facing] = useState("Road_Facing")
 
 
     return (
@@ -49,19 +36,19 @@ function Printconfirmation() {
                     <div className="mt-4 col-12">
                         <div className="row">
                             <div className="offset-1  col-2 pl-4 text-left ">Mr./Mrs./Miss :</div>
-                            <div className="col-3 text-left pl-4  border-bottom">{Mr_Mrs_Miss}</div>
+                            <div className="col-3 text-left pl-4  border-bottom"><span> {obj[0]['name']} </span></div>
                         </div>
                     </div>
                     <div className="mt-4 col-12">
                         <div className="row">
                             <div className="offset-1  col-2 pl-4 text-left ">S/o, D/o, W/o :</div>
-                            <div className="col-3 text-left pl-4  border-bottom">{So_Do_Wo}</div>
+                            <div className="col-3 text-left pl-4  border-bottom"><span> {obj[0]['fathername']} </span></div>
                         </div>
                     </div>
                     <div className="mt-4 col-12">
                         <div className="row">
                             <div className="offset-1  col-2 pl-4 text-left ">CNIC :</div>
-                            <div className="col-3 text-left pl-4  border-bottom">{CNIC}</div>
+                            <div className="col-3 text-left pl-4  border-bottom"><span> {obj[0]['cnic']} </span></div>
                         </div>
                     </div>
                     <div className="mt-4  ml-5  col-12">
@@ -77,26 +64,26 @@ function Printconfirmation() {
                     <div className="mt-2 col-12">
                         <div className="row">
                             <div className="offset-1 col-2 pl-4 text-left ">Phone Office :</div>
-                            <div className="col-3 text-left pl-4  border-bottom">{Phone_Office}</div>
+                            <div className="col-3 text-left pl-4  border-bottom"><span> {obj[0]['phone']} </span></div>
                             <div className="offset-1 col-2 pl-5 text-center ">Plot:</div>
-                            <div className="col-2 text-left pl-4  border-bottom">{PlotNo}</div>
+                            <div className="col-2 text-left pl-4  border-bottom"><span> {obj[1]['plotName']} </span></div>
                         </div>
                     </div>
                     <div className="mt-4 col-12">
                         <div className="row">
                             <div className="offset-1 col-2 pl-4 text-left ">Measurement :</div>
-                            <div className="col-3 text-left pl-4  border-bottom">{Measurement}</div>
+                            <div className="col-3 text-left pl-4  border-bottom"><span> {obj[1]['measurement']} </span></div>
                             <div className="offset-1 col-2 pl-5 text-center ">Sq. Yds, Block:</div>
-                          <div className="col-2 text-left pl-4  border-bottom">{SqYds}</div>
+                          <div className="col-2 text-left pl-4  border-bottom"><span> {obj[1]['square']}, {obj[1]['block']} </span></div>
                         </div>
                     </div>
 
                     <div className="mt-3 col-12">
                         <div className="row">
                             <div className="offset-1 col-2 pl-4 text-left ">Category:</div>
-                            <div className="col-3 text-left pl-4  border-bottom">{Category}</div>
+                            <div className="col-3 text-left pl-4  border-bottom"><span> {obj[1]['category']} </span></div>
                             <div className="offset-1 col-2 pl-5 text-center ">Nature:</div>
-                            <div className="col-2 text-left pl-4  border-bottom">{Nature}</div>
+                            <div className="col-2 text-left pl-4  border-bottom"><span> {obj[1]['nature']} </span></div>
                         </div>
                     </div>
                    
@@ -109,10 +96,10 @@ function Printconfirmation() {
                         <div className=" offset-1 col-2  text-center mt-2   p-1 ">Road Facing</div>
                         </div>
                         <div className="row">
-                        <div style={{height:"30px"}} className="ml-5 border rounded shadow-sm col-2 text-center mt-2 p-1 ">{Ordinary}</div>
-                        <div className="offset-1 col-2 border rounded shadow-sm  text-center mt-2 p-1 ">{Corner}</div>
-                        <div className=" offset-1 col-2 border rounded shadow-smp text-center mt-2 p-1 ">{West_Open}</div>
-                        <div className=" offset-1 col-2 border rounded shadow-smp text-center mt-2 p-1 ">{Road_Facing}</div>
+                        <div style={{height:"30px"}} className="ml-5 border rounded shadow-sm col-2 text-center mt-2 p-1 "><span>  </span></div>
+                        <div className="offset-1 col-2 border rounded shadow-sm  text-center mt-2 p-1 "><span>  </span></div>
+                        <div className=" offset-1 col-2 border rounded shadow-smp text-center mt-2 p-1 "><span>  </span></div>
+                        <div className=" offset-1 col-2 border rounded shadow-smp text-center mt-2 p-1 "><span>  </span></div>
                             
                         </div>
                         </div>
