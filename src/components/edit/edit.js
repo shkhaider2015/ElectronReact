@@ -316,7 +316,7 @@ console.log(`Object is ${obj} and index is ${index} and key is ${key} and name $
         data[number] = [x, y, z] 
         await db.collection("clients")
         .doc(currentUser.currentUser.displayName.replace(/\s/g, "") +currentUser.currentUser.email.slice(0,3) )
-        .set(data, {merge : true})
+        .update(data, {merge : true})
           .then((docRef) => {
             console.log("Docement written with ID : ", docRef)
             setIsLoading(false)

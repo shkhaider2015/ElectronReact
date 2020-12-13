@@ -19,6 +19,7 @@ const Reports = () => {
     const currentUser = React.useContext(AuthContext)
     const [users, setUsers] = React.useState([]);
     const [userKeys, setUserKeys] = React.useState([]);
+    const [docName, setDocName] = React.useState()
     const [Dialogue, setDialogue] = React.useState(false);
     const [clicked, setClicked] = React.useState(0);
     const [formNumber, setFormNumber] = React.useState(1);
