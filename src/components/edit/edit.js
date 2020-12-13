@@ -9,13 +9,13 @@ import Check from '@material-ui/icons/Check';
 import { AccountCircle, HomeWorkOutlined, MonetizationOn, Home } from "@material-ui/icons";
 import StepConnector from '@material-ui/core/StepConnector';
 import Button from '@material-ui/core/Button';
-import PersonalInfo from "./forms/personalInfo";
-import PlotInfo from "./forms/plotInformation";
-import PaymentInfo from "./forms/paymentInfo";
-import { MyProgress } from "../components/circulerProgress";
-import { db, storage, firebase } from "../config/firebase";
-import { AuthContext } from "../context/authContext";
-import { Link } from 'react-router-dom';
+import PersonalInfo from "../forms/personalInfo";
+import PlotInfo from "../forms/plotInformation";
+import PaymentInfo from "../forms/paymentInfo";
+import { MyProgress } from "../../components/circulerProgress";
+import { db, storage, firebase } from "../../config/firebase";
+import { AuthContext } from "../../context/authContext";
+import { Link, useLocation } from 'react-router-dom';
 
 
 
@@ -75,8 +75,10 @@ const ColorlibConnector = withStyles({
   },
   active: {
     '& $line': {
-      backgroundImage:
-        'linear-gradient( 95deg,rgb(242,113,33) 0%,rgb(233,64,87) 50%,rgb(138,35,135) 100%)',
+    //   backgroundImage:
+    //     'linear-gradient( 95deg,rgb(242,113,33) 0%,rgb(233,64,87) 50%,rgb(138,35,135) 100%)',
+        backgroundImage:
+    'linear-gradient( 136deg, rgb(255, 0, 0) 0%, rgb(255, 0, 0) 50%, rgb(33, 12, 89) 100%)'
     },
   },
   completed: {
@@ -106,13 +108,17 @@ const useColorlibStepIconStyles = makeStyles({
     alignItems: 'center',
   },
   active: {
-    backgroundImage:
-      'linear-gradient( 136deg, rgb(242,113,33) 0%, rgb(233,64,87) 50%, rgb(138,35,135) 100%)',
+    // backgroundImage:
+    //   'linear-gradient( 136deg, rgb(242,113,33) 0%, rgb(233,64,87) 50%, rgb(138,35,135) 100%)',
     boxShadow: '0 4px 10px 0 rgba(0,0,0,.25)',
+    backgroundImage:
+    'linear-gradient( 136deg, rgb(255, 0, 0) 0%, rgb(255, 0, 0) 50%, rgb(33, 12, 89) 100%)'
   },
   completed: {
+    // backgroundImage:
+    //   'linear-gradient( 136deg, rgb(242,113,33) 0%, rgb(233,64,87) 50%, rgb(138,35,135) 100%)',
     backgroundImage:
-      'linear-gradient( 136deg, rgb(242,113,33) 0%, rgb(233,64,87) 50%, rgb(138,35,135) 100%)',
+    'linear-gradient( 136deg, rgb(255, 0, 0) 0%, rgb(255, 0, 0) 50%, rgb(33, 12, 89) 100%)'
   },
 });
 
@@ -181,6 +187,10 @@ const useStyles = makeStyles((theme) => ({
     '&:hover': {
       boxShadow: '1px 1px 2px black'
     },
+    picBackground : {
+        backgroundImage:
+    'linear-gradient( 136deg, rgb(255, 0, 0) 0%, rgb(255, 0, 0) 50%, rgb(33, 12, 89) 100%)'
+    }
 
 
   }
@@ -217,45 +227,49 @@ const getForms = (step, personalModel, plotModel, paymentModel) => {
 
 }
 
-const Application = () => {
+const EditComp = () => {
+
   const classes = useStyles();
+  const steps = getSteps();
+  const {state} = useLocation()
+  const {obj, index, key} = state
+console.log(`Object is ${obj} and index is ${index} and key is ${key} and name ${obj[index][0]['name']}`)
   const [activeStep, setActiveStep] = React.useState(0);
   const [proceed, setProceed] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(true)
   const [isSucceed, setIsSucceed] = React.useState(false)
-  const steps = getSteps();
   const currentUser = React.useContext(AuthContext);
   const [selectedImage, setSelectedImage] = React.useState(null)
 
   const [imageFile, setImageFile] = React.useState(null)
   const [imageURI, setImageURI] = React.useState(null)
-  const [name, setName] = React.useState("")
-  const [fatherName, setFatherName] = React.useState("")
-  const [cellPhone, setCellPhone] = React.useState("")
-  const [phone, setPhone] = React.useState("")
-  const [cNIC, setCNIC] = React.useState("")
-  const [email, setEmail] = React.useState("")
-  const [address, setAddress] = React.useState("")
-  const [transfor, setTransfor] = React.useState(false)
+  const [name, setName] = React.useState(obj[index][0]['name'])
+  const [fatherName, setFatherName] = React.useState(obj[index][0]['fatherName'])
+  const [cellPhone, setCellPhone] = React.useState(obj[index][0]['cellPhone'])
+  const [phone, setPhone] = React.useState(obj[index][0]['phone'])
+  const [cNIC, setCNIC] = React.useState(obj[index][0]['cnic'])
+  const [email, setEmail] = React.useState(obj[index][0]['email'])
+  const [address, setAddress] = React.useState(obj[index][0]['address'])
+  const [transfor, setTransfor] = React.useState(true)
 
-  const [area, setArea] = React.useState("")
-  const [measurement, setMeasurement] = React.useState(0)
-  const [square, setSquare] = React.useState(0)
-  const [block, setBlock] = React.useState("")
-  const [category, setCategory] = React.useState("")
-  const [nature, setNature] = React.useState("")
-  const [type, setType] = React.useState("")
-  const [sitePlane, setSitePlane] = React.useState("")
-  const [purpose, setPurpose] = React.useState("")
+  const [area, setArea] = React.useState(obj[index][1]['plotName'])
+  const [measurement, setMeasurement] = React.useState(obj[index][1]['measurement'])
+  const [square, setSquare] = React.useState(obj[index][1]['square'])
+  const [block, setBlock] = React.useState(obj[index][1]['block'])
+  const [category, setCategory] = React.useState(obj[index][1]['category'])
+  const [nature, setNature] = React.useState(obj[index][1]['nature'])
+  const [type, setType] = React.useState(obj[index][1]['type'])
+  const [sitePlane, setSitePlane] = React.useState(obj[index][1]['sitePlane'])
+  const [purpose, setPurpose] = React.useState(obj[index][1]['purpose'])
 
-  const [amount, setAmount] = React.useState(0)
-  const [procedure, setProcedure] = React.useState("")
-  const [totalInstallment, setTotalInstallment] = React.useState(0)
-  const [duration, setDuration] = React.useState("")
-  const [installment, setInstallment] = React.useState(0)
-  const [balance, setBalance] = React.useState(0)
-  const [givenAmount, setGivenAmount] = React.useState(0)
-  const [paymentMethod, setPaymentMethod] = React.useState("")
+  const [amount, setAmount] = React.useState(parseInt(obj[index][2]['totalAmount']))
+  const [procedure, setProcedure] = React.useState(obj[index][2]['procedure'])
+  const [totalInstallment, setTotalInstallment] = React.useState(parseInt(obj[index][2]['installment']))
+  const [duration, setDuration] = React.useState(obj[index][2]['installmentDuration'])
+  const [installment, setInstallment] = React.useState(parseInt(obj[index][2]['firstInstallment']))
+  const [balance, setBalance] = React.useState(parseInt(obj[index][2]['balance']))
+  const [givenAmount, setGivenAmount] = React.useState(parseInt(obj[index][2]['givenAmount']))
+  const [paymentMethod, setPaymentMethod] = React.useState(obj[index][2]['paymentMethod'])
   const [open, setOpen] = React.useState(true)
   const [disableInstallment, setDisableInstallment] = React.useState(true)
 
@@ -270,7 +284,6 @@ const Application = () => {
     phone: phone,
     cnic: cNIC,
     address: address,
-    transfor: transfor
   }
   const asset = {
     plotName: area,
@@ -593,4 +606,4 @@ const Application = () => {
   );
 }
 
-export default Application;
+export default EditComp;

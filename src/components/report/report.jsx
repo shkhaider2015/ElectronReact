@@ -3,13 +3,11 @@ import './reportCSS.css'
 import SearchBar from '../report/searchBar'
 import { Avatar, Button, Dialog } from "@material-ui/core";
 import { Edit } from '@material-ui/icons';
-
 import zainlogo from '../../RawData/mainassociates_icon.png'
-
 import { db } from "../../config/firebase";
 import { AuthContext } from "../../context/authContext";
 import Sidecomponent from "./sidecomponent";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import DialogueBox from "../printable/DialogueBox";
 
 
@@ -17,13 +15,14 @@ const Reports = () => {
 
     // const dataArrays = []
     // var initialLoad = 0;
-
+ const navigate = useNavigate();
     const currentUser = React.useContext(AuthContext)
-    const [users, setUsers] = React.useState([])
+    const [users, setUsers] = React.useState([]);
+    const [userKeys, setUserKeys] = React.useState([]);
     const [Dialogue, setDialogue] = React.useState(false);
-    const [clicked, setClicked] = React.useState(0)
-    const [formNumber, setFormNumber] = React.useState(1)
-    const [selectedUserData, setSelectedUserData] = React.useState(null)
+    const [clicked, setClicked] = React.useState(0);
+    const [formNumber, setFormNumber] = React.useState(1);
+    const [selectedUserData, setSelectedUserData] = React.useState(null);
 
 
 
@@ -42,7 +41,8 @@ const Reports = () => {
                         dataArray.push(doc.data()[x])
                     }
 
-                    setUsers(dataArray)
+                    setUsers(dataArray);
+                    setUserKeys(Object.keys(doc.data()))
                 }
             })
         }).catch((e) => console.error("getCollection", e))
@@ -92,7 +92,7 @@ const Reports = () => {
     }
 
     const handleEdit = () => {
-        
+        navigate('/edit', { state : { obj : users, index : clicked, key : userKeys[clicked] } } )
     }
 
 
