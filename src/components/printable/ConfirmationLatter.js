@@ -51,14 +51,18 @@ function Printconfirmation({ obj }) {
                             <div className="col-3 text-left pl-4  border-bottom"><span> {obj[0]['cnic']} </span></div>
                         </div>
                     </div>
-                    <div className="mt-4  ml-5  col-12">
+                    <div className="mt-4 col-12">
+                        <div className="row" >
+                        <div className="offset-1  pl-4" >
                         <p>
-                           With refrence to your application and ACCEPTANCE of terms and condition for 
+                           With refrence to your application and ACCEPTANCE of terms and condition for <br />
                         allotment of a Residential Plot no our subject <span className="text-danger">Mian Town</span>. 
                         </p>
-                        <p className="">
+                        <p>
                         Hereby confirm that: 
                         </p>
+                        </div>
+                        </div>
                     
                     </div>
                     <div className="mt-2 col-12">
@@ -88,18 +92,18 @@ function Printconfirmation({ obj }) {
                     </div>
                    
                    
-                    <div className="mt-4 col-12">
+                    <div className="pl-4 col-12">
                         <div className="row">
-                        <div className="ml-5 col-2 text-center mt-2  p-1 ">Ordinary</div>
+                        <div className="offset-1 col-2 text-center mt-2  p-1 ">Ordinary</div>
                         <div className="offset-1 col-2  text-center mt-2   p-1 ">Corner</div>
                         <div className=" offset-1 col-2  text-center mt-2   p-1 ">West Open</div>
-                        <div className=" offset-1 col-2  text-center mt-2   p-1 ">Road Facing</div>
+                        <div className=" col-2  text-center mt-2   p-1 ">Road Facing</div>
                         </div>
                         <div className="row">
-                        <div style={{height:"30px"}} className="ml-5 border rounded shadow-sm col-2 text-center mt-2 p-1 "><span>  </span></div>
+                        <div style={{height:"30px"}} className=" offset-1 border rounded shadow-sm col-2 text-center mt-2 p-1 "><span>  </span></div>
                         <div className="offset-1 col-2 border rounded shadow-sm  text-center mt-2 p-1 "><span>  </span></div>
                         <div className=" offset-1 col-2 border rounded shadow-smp text-center mt-2 p-1 "><span>  </span></div>
-                        <div className=" offset-1 col-2 border rounded shadow-smp text-center mt-2 p-1 "><span>  </span></div>
+                        <div className=" col-2 border rounded shadow-smp text-center mt-2 p-1 "><span>  </span></div>
                             
                         </div>
                         </div>
@@ -112,7 +116,7 @@ function Printconfirmation({ obj }) {
                     
                     </div>
 
-                    <div className="mt-5 col-12">
+                    <div className="pl-4 offset-1 col-12">
                         <div className="mt-4 row">
                         <div style={{borderBottom:"1px solid black"}} className="offset-9 col-2 mb-2 text-left pl-4"></div>
                        

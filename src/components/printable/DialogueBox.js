@@ -1,17 +1,12 @@
-import React from 'react';
-import Button from '@material-ui/core/Button';
+import React, { useRef } from 'react';
 import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import Application from "../printable/ApplicationForm";
-import Confirmation from "../printable/ConfirmationLatter";
-import Nomination from "../printable/Nomine";
-import Possession from "../printable/PossessionCertificate";
-import TermsAndCond from "../printable/TermsAndCondtition";
-import SitePlan from "../printable/sitePlan";
-import Allotment from "../printable/AlotmentOrder";
+import Application from "../printableForm/ApplicationForm"
+import Confirmation from "../printableForm/CONFIRMATION LETTER ";
+import Possession from "../printableForm/PossessionCertificate";
+import TermsAndCond from "../printableForm/TermsAndCondtition";
+import SitePlan from "../printableForm/sitePlan";
+import Allotment from "../printableForm/AlotmentOrder";
+import ReactToPrint from "react-to-print";
 
 
 
@@ -22,6 +17,7 @@ const ApplicationDialog = ({ setDialogue, formNumber, clicked, users  }) =>
   // const [plot, setPlot] = React.useState({})
   // const [payment, setPayment] = React.useState({})
   const [user, setUser] = React.useState([])
+  const componentRef = useRef();
 
 const getUser = () => {
   // console.log(`getUser : clicked = ${clicked} and users = ${users} `)
@@ -95,7 +91,17 @@ const getUser = () => {
             Agree
           </Button>
         </DialogActions> */}
+        <div ref={componentRef}>
         { getForm(formNumber) }
+        </div>
+        
+
+        <ReactToPrint
+        trigger={() => <button className="btn btn-danger" >Print</button> }
+        content={() => componentRef.current }
+        >
+
+        </ReactToPrint>
       </Dialog>
     </div>
   );

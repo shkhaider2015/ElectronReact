@@ -10,6 +10,10 @@ import Sidecomponent from "./sidecomponent";
 import { Link, useNavigate } from "react-router-dom";
 import DialogueBox from "../printable/DialogueBox";
 
+import { useReactToPrint } from "react-to-print";
+import PrintBox from "../printableForm/printBox";
+
+var printPage = 0;
 
 const Reports = () => {
 
@@ -24,6 +28,15 @@ const Reports = () => {
     const [clicked, setClicked] = React.useState(0);
     const [formNumber, setFormNumber] = React.useState(1);
     const [selectedUserData, setSelectedUserData] = React.useState(null);
+
+    const [printNo, setPrintNo] = React.useState(0);
+    const [print , setPrint] = React.useState(false);
+
+    const componentRef =  React.useRef()
+    const handlePrinttt = useReactToPrint({
+        content: () => componentRef.current,
+        onAfterPrint: () => setPrint(false)
+      });
 
 
 
@@ -83,6 +96,17 @@ const Reports = () => {
         []
     )
 
+    React.useEffect(
+        () => {
+            if(printNo !== 0)
+            {
+                setPrint(true)
+            }
+            
+        },
+        [printNo]
+    )
+
     const muClick = (e) => {
         setClicked(e)
     }
@@ -96,14 +120,23 @@ const Reports = () => {
         navigate('/edit', { state : { obj : users, index : clicked, key : userKeys[clicked] } } )
     }
 
+    const handlePrint = (x) => {
+        // setPrint(true)
+        setPrintNo(x)
+    }
 
+    
 
     return (
 
         <div>
+            <div style={{ display : "none" }} >
+            {print ? handlePrinttt() : null}
+                  <PrintBox ref={componentRef} formNumber={printNo} clicked={clicked} users={users} /> 
+            </div>
             {
                 Dialogue
-                    ? <DialogueBox setDialogue={setDialogue} formNumber={formNumber} clicked={clicked} users={users} />
+                    ? <DialogueBox  setDialogue={setDialogue} formNumber={formNumber} clicked={clicked} users={users} />
                     :
                     <div className="container-fluid">
                         <div className="row ">
@@ -233,7 +266,7 @@ const Reports = () => {
                                                     <tr className="table-hover1  mt-5 pt-5 shadow rounded" >
 
                                                         <td colSpan="4" className="pt-4 pl-5" >Application Form</td>
-                                                        <td className="pl-5 pt-3 text-right" colSpan="1"> <button className="btn text-right btn-danger">Print</button></td>
+                                                        <td className="pl-5 pt-3 text-right" colSpan="1"> <button className="btn text-right btn-danger" onClick={() => handlePrint(1)} >Print</button> </td>
                                                         <td className="text-center  pt-3" colSpan="1"> <button className="btn btn-info" onClick={() => preview(1)} >Preview</button>  </td>
                                                     </tr>
                                                     <tr className="mt-5 pt-5 table-hover1 shadow rounded" >
@@ -243,7 +276,7 @@ const Reports = () => {
                                                     </tr>
                                                     <tr className="mt-5 pt-5 table-hover1 shadow rounded" >
                                                         <td colSpan="4" className="pt-4 pl-5 " >Confirmation Letter</td>
-                                                        <td className="pl-5 pt-3 text-right" colSpan="1"> <button className="btn btn-danger">Print</button></td>
+                                                        <td className="pl-5 pt-3 text-right" colSpan="1"> <button className="btn btn-danger" onClick={ () => handlePrint(3) } >Print</button></td>
                                                         <td className="text-center pt-3" colSpan="1"> <button className="btn btn-info" onClick={() => preview(3)} >Preview</button></td>
                                                     </tr>
                                                     <tr className="mt-5 pt-5 table-hover1 shadow rounded" >
@@ -287,6 +320,8 @@ const Reports = () => {
 
                         </div>
                     </div>
+
+             
 
             }
 
