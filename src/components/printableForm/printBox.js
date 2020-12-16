@@ -8,14 +8,13 @@ import Allotment from "../printableForm/AlotmentOrder";
 
 class PrintBox extends Component {
 
-    constructor({ formNumber, users, clicked }) {
+    constructor(props) {
         super()
         this.state = {
             user : []
         }
     }
     getUser = () => {
-        // console.log(`getUser : clicked = ${clicked} and users = ${users} `)
           this.props.users.map(
             (object, index) => (
               this.props.clicked === index
@@ -45,23 +44,33 @@ class PrintBox extends Component {
 
         }
     }
-
-    
-    componentWillMount() {
-        this.getUser()
-    }
     
     componentDidMount() {
+        this.getUser()
+        console.log("cdm")
     }
 
     
+    componentDidUpdate(prevProps, prevState) {
+        if(this.props.print)
+        {
+            this.props.handlePrinttt()
+        }
+
+        console.log(prevProps)
+
+        if(prevProps.clicked !== this.props.clicked)
+        {
+            this.getUser()
+        }
+    }
     
 
     render() {
         return (
             <div>
-                { this.props.formNumber }
-                {this.state.user}
+               {this.getForm(this.props.printNo)}
+               {console.log("Name : ", this.state.user)}
             </div>
         );
     }

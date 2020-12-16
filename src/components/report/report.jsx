@@ -6,6 +6,7 @@ import { Edit } from '@material-ui/icons';
 import zainlogo from '../../RawData/mainassociates_icon.png'
 import { db } from "../../config/firebase";
 import { AuthContext } from "../../context/authContext";
+import { AdminContext } from "../../context/adminContext";
 import Sidecomponent from "./sidecomponent";
 import { Link, useNavigate } from "react-router-dom";
 import DialogueBox from "../printable/DialogueBox";
@@ -13,17 +14,14 @@ import DialogueBox from "../printable/DialogueBox";
 import { useReactToPrint } from "react-to-print";
 import PrintBox from "../printableForm/printBox";
 
-var printPage = 0;
-
 const Reports = () => {
 
-    // const dataArrays = []
-    // var initialLoad = 0;
  const navigate = useNavigate();
     const currentUser = React.useContext(AuthContext)
+    const isAdmin = React.useContext(AdminContext)
+
     const [users, setUsers] = React.useState([]);
     const [userKeys, setUserKeys] = React.useState([]);
-    const [docName, setDocName] = React.useState()
     const [Dialogue, setDialogue] = React.useState(false);
     const [clicked, setClicked] = React.useState(0);
     const [formNumber, setFormNumber] = React.useState(1);
@@ -96,17 +94,6 @@ const Reports = () => {
         []
     )
 
-    React.useEffect(
-        () => {
-            if(printNo !== 0)
-            {
-                setPrint(true)
-            }
-            
-        },
-        [printNo]
-    )
-
     const muClick = (e) => {
         setClicked(e)
     }
@@ -121,7 +108,7 @@ const Reports = () => {
     }
 
     const handlePrint = (x) => {
-        // setPrint(true)
+        setPrint(true)
         setPrintNo(x)
     }
 
@@ -131,8 +118,11 @@ const Reports = () => {
 
         <div>
             <div style={{ display : "none" }} >
-            {print ? handlePrinttt() : null}
-                  <PrintBox ref={componentRef} formNumber={printNo} clicked={clicked} users={users} /> 
+                  {
+                      users.length 
+                      ? <PrintBox ref={componentRef} print={print} handlePrinttt={handlePrinttt} printNo={printNo} clicked={clicked} users={users} />
+                      : null
+                  } 
             </div>
             {
                 Dialogue
@@ -140,7 +130,6 @@ const Reports = () => {
                     :
                     <div className="container-fluid">
                         <div className="row ">
-                            {console.log("Users state : ", users)}
 
                             <div className="col-3 shadow  searchBar  border-right pb-4 ">
                                 <div className="col-12 mt-2 ml-5">
@@ -197,7 +186,7 @@ const Reports = () => {
                                                     (obj, ind) => (
                                                         ind === 0
                                                             ? <div key={index} onClick={e => muClick(index)} > <Sidecomponent obj={obj} checked={[index, clicked]} /> </div>
-                                                            : console.log("some")
+                                                            : null
                                                     )
                                                 )
                                             )
@@ -231,7 +220,9 @@ const Reports = () => {
 
                                                                                                 <span style={{ marginLeft: '3%', fontSize: '12' }} > {obj['name']} </span>
                                                                                             </div>
-                                                                                            <div className="col-4 " >
+                                                                                            {
+                                                                                                isAdmin[0] 
+                                                                                                ? <div className="col-4 " >
                                                                                                 <Button
                                                                                                 className="mt-3 ml-0"
                                                                                                 variant="contained"
@@ -242,6 +233,8 @@ const Reports = () => {
                                                                                                     Edit
                                                                                                 </Button>
                                                                                             </div>
+                                                                                            : null
+                                                                                            }
 
                                                                                         </div>
                                                                                         : null

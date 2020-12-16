@@ -91,17 +91,12 @@ const getUser = () => {
             Agree
           </Button>
         </DialogActions> */}
-        <div ref={componentRef}>
+        <div>
         { getForm(formNumber) }
         </div>
         
 
-        <ReactToPrint
-        trigger={() => <button className="btn btn-danger" >Print</button> }
-        content={() => componentRef.current }
-        >
-
-        </ReactToPrint>
+       
       </Dialog>
     </div>
   );

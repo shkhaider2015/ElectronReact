@@ -1,0 +1,46 @@
+@import url('https://fonts.googleapis.com/css?family=Poppins|Ubuntu&display=swap');
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0
+}
+
+body {
+    font-family: 'Ubuntu', sans-serif
+}
+
+.clinet-hover{
+    transition: all !important;
+    transition-duration: .50s !important;
+    color: black;
+
+}
+.clinet-back{
+    background-image: linear-gradient(-45deg, #fb0054d2 0%, #f5592aad 100%) !important;
+    color: white;
+}
+.clinet-hover:hover{
+    background-image: linear-gradient(-45deg, #fb0054d2 0%, #f5592aad 100%) !important;
+    transform : scale(1.04);
+    color: white;
+}
+.table-hover1{
+    transition: all !important;
+    transition-duration: .30s !important;
+   
+}
+.table-hover1:hover{
+    transform : scale(1.02);
+    /* background-image: linear-gradient(-45deg, #fb0054ce 0%, #f5592a83 100%) !important; */
+    border-radius:2% !important;
+
+}
+.logo-hover{
+    transition: all !important;
+    transition-duration: .30s !important;
+}
+.logo-hover:hover {
+    /* transform : scale(1.02);
+    margin-left: 2%; */
+}

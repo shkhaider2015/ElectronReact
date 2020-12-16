@@ -12,6 +12,7 @@ import Report from "../report/report";
 import Payment from "../forms/paymentInfo";
 import PrintApplicationForm from "../printable/ApplicationForm";
 import EditComp from '../edit/edit';
+import UserList from "../userlist/userList";
 
 
 
@@ -27,11 +28,14 @@ function MyRoutes() {
                     <Route path="/edit" element={<EditComp />} />
                     <Route path="/create" element={< CreateApp />}/> 
                     <Route path="/print/application" element={< PrintApplicationForm />}/> 
+                    <Route path="/userlist" element={< UserList />}/> 
+                    
 
                 </Route >
 
         <       Route path="login"element={< Login />}/> 
                 <Route path="signup"element={< Signup />}/> 
+               
             </Routes > 
         </Router> 
         

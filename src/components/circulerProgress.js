@@ -27,7 +27,8 @@ const MyProgress = ({ isLoading, reset, succeed }) => {
     return (
         <div className={classes.root}>
 
-            { isLoading ? <CircularProgress color="primary" />
+            { isLoading ? <div style={{ width: '100%', textAlign: 'center' }} > <CircularProgress color="primary" />
+                 </div>
                 :
                 succeed ?
                 (

@@ -1,4 +1,4 @@
-import { makeStyles, IconButton, MenuItem, Menu } from "@material-ui/core";
+import { makeStyles, IconButton, MenuItem, Menu, Avatar } from "@material-ui/core";
 import { AccountCircle } from "@material-ui/icons";
 import React from "react";
 import './style.css'
@@ -32,7 +32,7 @@ const useStyle = makeStyles(
 
 
 
-const  Homepage2 = () => {
+const Homepage2 = () => {
 
     const classes = useStyle()
     const [anchorEl, setAnchorEl] = React.useState(null);
@@ -59,6 +59,36 @@ const  Homepage2 = () => {
                 console.error("Signout Error : ", err)
             })
     }
+    const userList = () => {
+        navigate("/userlist")
+    }
+
+    // const chekAdmin = (email) =>
+    // {
+    //         db.collection("users").doc(currentUser.currentUser.uid).get()
+    //         .then((querySnapshot) => {
+    //             querySnapshot.forEach((doc) => {
+    //                 isAdmin[1](doc.data().adminRight)
+    //                 console.log("Admin Checked")
+    //             } )
+    //         })
+    //         .catch((error) => 
+    //         {
+    //             console.log("error", error)
+    //         })
+    // }
+    const checkAdmin = () => {
+        db.collection("users").doc(currentUser.currentUser.uid).get().then((doc) => {
+            if (doc.exists) {
+                var tr = doc.data()['personal']['adminRight']
+                isAdmin[1](tr)
+                console.log("Admin Right : ", tr)
+
+            } else {
+                console.log("doc not exists")
+            }
+        }).catch(e => console.error(e))
+    }
 
     React.useEffect(
         () => {
@@ -66,36 +96,27 @@ const  Homepage2 = () => {
             if (!currentUser.currentUser) {
                 navigate("/login")
             }
+            else {
+                checkAdmin()
+            }
         },
         [currentUser, navigate]
     )
 
-    const chekAdmin = (email) =>
-    {
-            db.collection("Users").doc(email).collection("personal").get()
-            .then((querySnapshot) => {
-                querySnapshot.forEach((doc) => {
-                    isAdmin[1](doc.data().adminRight)
-
-                    // console.log("Login   : ", doc.data().adminRight)
-                } )
-            })
-            .catch((error) => 
-            {
-                console.log("error", error)
-            })
+    const getProfilePicture = () => {
+        if (currentUser.currentUser.photoURL) {
+            console.log("Photo avaliable")
+        }
+        console.log(currentUser.currentUser)
     }
 
-    
 
-    if(currentUser.currentUser)
-    {
-        chekAdmin(currentUser.currentUser.email)
-    }
+
 
     return (
         <div className="container-fluid " >
 
+            {getProfilePicture()}
 
             <div className="row">
 
@@ -114,7 +135,11 @@ const  Homepage2 = () => {
                                     color="inherit"
                                     onClick={handleMenu}
                                 >
-                                    <AccountCircle className={classes.icon} />
+                                    {currentUser.currentUser.photoURL
+                                        ? <Avatar alt="name" src={currentUser.currentUser.photoURL} />
+                                        : <AccountCircle className={classes.icon} />
+                                    }
+
                                 </IconButton>
                                 <Menu
                                     id="menu-appbar"
@@ -132,7 +157,7 @@ const  Homepage2 = () => {
                                     onClose={handleClose}
                                 >
                                     <MenuItem onClick={handleClose}>Profile</MenuItem>
-                                    <MenuItem onClick={handleClose}>My account</MenuItem>
+                                    {isAdmin[0] ? <MenuItem onClick={userList}>User List</MenuItem> : null}
                                     <MenuItem onClick={handleLogout}>logout</MenuItem>
                                 </Menu>
 
@@ -154,54 +179,54 @@ const  Homepage2 = () => {
                                     </div>
                                 </Link>
                             </div>
-                            <div className="col-sm-6 col-md-4 col-lg-4">
-                                <Link to="/report" className="myLink" >
-                                    <div className="box">
-                                        <div className="our-services speedup">
-                                            <div className="icon icon-report"> <SVG_Report className="" fill="white" style={{ height: "70%", width: "70%", color: "whitesmoke" }} /> </div>
-                                            <h4>REPORTS</h4>
-                                            <p>Client Report (Admin Only) </p>
-                                        </div>
-                                    </div>
-                                </Link>
+
+                            {
+                                isAdmin[0]
+                                    ?
+                                    <div className="col-sm-6 col-md-4 col-lg-4">
+                                        <Link to="/report" className="myLink" >
+                                        <div className="box">
+                                            <div className="our-services privacy">
+                                                <div className="icon icon-query"> <SVG_Query className="" fill="white" style={{ height: "70%", width: "70%", color: "whitesmoke" }} /></div>
+                                                <h4>QUERY</h4>
+                                                <p>Client Report (Admin Only)</p>
+                                            </div>
+                                        </div> </Link>
                             </div>
-                            <div className="col-sm-6 col-md-4 col-lg-4">
-                                <div className="box">
-                                    <div className="our-services privacy">
-                                        <div className="icon icon-query"> <SVG_Query className="" fill="white" style={{ height: "70%", width: "70%", color: "whitesmoke" }} /></div>
-                                        <h4>QUERY</h4>
-                                        <p>Client Report (Admin Only)</p>
-                                    </div>
+                                    : <div className="col-sm-6 col-md-4 col-lg-4">
+                                    <Link to="/report" className="myLink" >
+                                        <div className="box">
+                                        <div className="our-services speedup">
+                                        <div className="icon icon-report"> <SVG_Report className="" fill="white" style={{ height: "70%", width: "70%", color: "whitesmoke" }} /> </div>
+                                        <h4>REPORTS</h4>
+                                        <p>Client Report (Admin Only) </p>
+                                        </div>
+                                        </div>
+                                    </Link>
+                        </div>
+                            }
+                        </div>
+                    <div className="row  mb-3 justify-content-center">
+                        <div className="col-sm-6 col-md-4 col-lg-4">
+                            <div className="box">
+                                <div className="our-services ssl">
+                                    <div className="icon icon-payment " > <AttachMoneyOutlinedIcon className="" style={{ height: "70%", width: "70%", color: "whitesmoke" }} /> </div>
+                                    <h4>Payment</h4>
+                                    <p>Payment Information</p>
                                 </div>
                             </div>
                         </div>
-                        <div className="row  mb-3 justify-content-center">
-                            <div className="col-sm-6 col-md-4 col-lg-4">
-                                <div className="box">
-                                    <div className="our-services ssl">
-                                        <div className="icon icon-payment " > <AttachMoneyOutlinedIcon className="" style={{ height: "70%", width: "70%", color: "whitesmoke" }} /> </div>
-                                        <h4>Payment</h4>
-                                        <p>Payment Information</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="col-sm-6 col-md-4 col-lg-4">
-                                <div className="box">
-                                    <div className="our-services database">
-                                        <div className="icon icon-scanQR"> <ScanQR className="" fill="white" style={{ height: "70%", width: "70%", color: "whitesmoke" }} /> </div>
-                                        <h4>SCAN QR</h4>
-                                        <p>Search By Scaning</p>
-                                    </div>
+                        <div className="col-sm-6 col-md-4 col-lg-4">
+                            <div className="box">
+                                <div className="our-services database">
+                                    <div className="icon icon-scanQR"> <ScanQR className="" fill="white" style={{ height: "70%", width: "70%", color: "whitesmoke" }} /> </div>
+                                    <h4>SCAN QR</h4>
+                                    <p>Search By Scaning</p>
                                 </div>
                             </div>
                         </div>
                     </div>
-
-
-
-
                 </div>
-
 
 
 
@@ -211,7 +236,13 @@ const  Homepage2 = () => {
 
 
 
+
         </div>
+
+
+
+
+        </div >
 
 
 

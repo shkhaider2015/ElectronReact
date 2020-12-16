@@ -80,6 +80,7 @@ const useStyle = makeStyles(
 export default function Login() {
 
     const [isLoading, setIsLoading] = React.useState(false)
+    const [isAccepted, setIsAccepted] = React.useState(false)
     const currentUser = React.useContext(AuthContext)
 
     const classes = useStyle();
@@ -88,15 +89,30 @@ export default function Login() {
     React.useEffect(
         () => 
         {
-            
-            if(currentUser.currentUser)
+            if(currentUser.currentUser && isAccepted)
             {
                 navigate("/")
             }
         },
-        [currentUser, navigate]
+        [isAccepted, navigate]
     )
 
+    const getUserdata = (user) =>
+    {
+        console.log("User uid : ", user.user.uid)
+        db.collection("users").doc(auth.currentUser.uid).get().then((doc) =>{
+            if(doc.exists)
+            {
+                var tr = doc.data()['personal']['isAccepted']
+                setIsAccepted(tr)
+                console.log("ghg", tr)
+                
+            }else
+            {
+                console.log("doc not exists")
+            }
+        }).catch(e => console.error(e))
+    }
     
 
     const handleSubmit = (e) => {
@@ -108,6 +124,7 @@ export default function Login() {
         auth.signInWithEmailAndPassword(email.value, password.value)
         .then((user) => {
             console.log("Login Succesfully")
+            getUserdata(user)
              setIsLoading(false)
         })
         .catch((err) => {

@@ -15,7 +15,8 @@ import PaymentInfo from "./forms/paymentInfo";
 import { MyProgress } from "../components/circulerProgress";
 import { db, storage, firebase } from "../config/firebase";
 import { AuthContext } from "../context/authContext";
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { IconButton } from '@material-ui/core';
 
 
 
@@ -177,10 +178,6 @@ const useStyles = makeStyles((theme) => ({
   homeIcon: {
     width: '50px',
     height: '50px',
-    marginTop: '30%',
-    '&:hover': {
-      boxShadow: '1px 1px 2px black'
-    },
 
 
   }
@@ -219,6 +216,8 @@ const getForms = (step, personalModel, plotModel, paymentModel) => {
 
 const Application = () => {
   const classes = useStyles();
+ const navigate = useNavigate()
+
   const [activeStep, setActiveStep] = React.useState(0);
   const [proceed, setProceed] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(true)
@@ -533,9 +532,14 @@ const Application = () => {
     <div className={classes.root}>
       <div className="row " >
         <div className="col-1 justify-content-center text-center" >
-          <Link to="/" style={{ textDecoration: 'none' }} >
+            <IconButton
+            color="inherit"
+            aria-haspopup="true"
+            style={{ marginTop : '20%' }}
+            onClick={() => navigate(-1)}
+            >
             <Home color="primary" className={classes.homeIcon} />
-          </Link>
+            </IconButton>
         </div>
         <div className="col-11" >
           <Stepper alternativeLabel activeStep={activeStep} connector={<ColorlibConnector />} className={classes.stepper} >
