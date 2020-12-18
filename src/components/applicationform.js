@@ -217,13 +217,13 @@ const getForms = (step, personalModel, plotModel, paymentModel) => {
 const Application = () => {
   const classes = useStyles();
  const navigate = useNavigate()
+ const steps = getSteps();
+ const currentUser = React.useContext(AuthContext);
 
   const [activeStep, setActiveStep] = React.useState(0);
   const [proceed, setProceed] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(true)
   const [isSucceed, setIsSucceed] = React.useState(false)
-  const steps = getSteps();
-  const currentUser = React.useContext(AuthContext);
   const [selectedImage, setSelectedImage] = React.useState(null)
 
   const [imageFile, setImageFile] = React.useState(null)
@@ -326,6 +326,7 @@ const Application = () => {
 
   const personalModel =
   {
+    imageURI,
     imageFile,
     setImageFile,
     selectedImage,

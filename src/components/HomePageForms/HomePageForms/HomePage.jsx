@@ -14,6 +14,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { auth } from "../../../config/firebase";
 import { AuthContext } from "../../../context/authContext";
 import { AdminContext } from "../../../context/adminContext";
+import { UserListContext, ClientsListContext } from "../../../context/dataContext";
 import { db } from "../../../config/firebase";
 
 const useStyle = makeStyles(
@@ -38,9 +39,13 @@ const Homepage2 = () => {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const currentUser = React.useContext(AuthContext);
     const isAdmin = React.useContext(AdminContext)
-
+    const clients = React.useContext(ClientsListContext)
+    const users = React.useContext(UserListContext)
     const navigate = useNavigate()
     const open = Boolean(anchorEl);
+
+    // const [clients, setClients] = React.useState([])
+    // const [users, setUsers] = React.useState([])
 
     const handleMenu = (event) => {
         setAnchorEl(event.currentTarget);
@@ -90,17 +95,68 @@ const Homepage2 = () => {
         }).catch(e => console.error(e))
     }
 
+    const getClientsData = () =>
+    {
+        db
+        .collection('clients')
+        .onSnapshot((querySnapshot) => {
+            var docs = []
+            querySnapshot.forEach((doc) =>
+            {
+                // console.log("Clients Data : ", doc.data())
+                if(doc.exists)
+                {
+                    for(let x in doc.data())
+                    {
+                        docs.push(doc.data()[x])
+                    }
+                }
+            })
+            
+            clients[1](docs)
+            console.log("Clients : ", clients)
+
+        })
+    }
+    const getUserData = () =>
+    {
+        db
+        .collection('users')
+        .onSnapshot((querySnapshot) => {
+            var docs = []
+            querySnapshot.forEach((doc) => {
+                if(doc.exists)
+                {
+                    for(let x in doc.data())
+                    {
+                        docs.push(doc.data()[x])
+                    }
+                }
+            })
+
+            users[1](docs)
+            console.log("UserList : ", users)
+        })
+    }
+
     React.useEffect(
         () => {
             console.log("Checking Admin : ", isAdmin[0])
+            
             if (!currentUser.currentUser) {
                 navigate("/login")
             }
-            else {
-                checkAdmin()
-            }
         },
         [currentUser, navigate]
+    )
+
+    React.useEffect(
+        () => {
+            checkAdmin()
+            getClientsData()
+            getUserData()
+        },
+        []
     )
 
     const getProfilePicture = () => {
@@ -109,9 +165,6 @@ const Homepage2 = () => {
         }
         console.log(currentUser.currentUser)
     }
-
-
-
 
     return (
         <div className="container-fluid " >
@@ -192,7 +245,7 @@ const Homepage2 = () => {
                                                 <p>Client Report (Admin Only)</p>
                                             </div>
                                         </div> </Link>
-                            </div>
+                                    </div>
                                     : <div className="col-sm-6 col-md-4 col-lg-4">
                                     <Link to="/report" className="myLink" >
                                         <div className="box">
@@ -208,6 +261,7 @@ const Homepage2 = () => {
                         </div>
                     <div className="row  mb-3 justify-content-center">
                         <div className="col-sm-6 col-md-4 col-lg-4">
+                            <Link to="/payment" className="myLink" >
                             <div className="box">
                                 <div className="our-services ssl">
                                     <div className="icon icon-payment " > <AttachMoneyOutlinedIcon className="" style={{ height: "70%", width: "70%", color: "whitesmoke" }} /> </div>
@@ -215,6 +269,7 @@ const Homepage2 = () => {
                                     <p>Payment Information</p>
                                 </div>
                             </div>
+                            </Link>
                         </div>
                         <div className="col-sm-6 col-md-4 col-lg-4">
                             <div className="box">
@@ -243,9 +298,6 @@ const Homepage2 = () => {
 
 
         </div >
-
-
-
 
     )
 }

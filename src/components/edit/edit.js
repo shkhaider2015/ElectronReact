@@ -242,7 +242,7 @@ console.log(`Object is ${obj} and index is ${index} and key is ${key} and name $
   const [selectedImage, setSelectedImage] = React.useState(null)
 
   const [imageFile, setImageFile] = React.useState(null)
-  const [imageURI, setImageURI] = React.useState(null)
+  const [imageURI, setImageURI] = React.useState(obj[index][0]['imageURI'])
   const [name, setName] = React.useState(obj[index][0]['name'])
   const [fatherName, setFatherName] = React.useState(obj[index][0]['fatherName'])
   const [cellPhone, setCellPhone] = React.useState(obj[index][0]['cellPhone'])
@@ -306,40 +306,43 @@ console.log(`Object is ${obj} and index is ${index} and key is ${key} and name $
     balance: balance,
     paymentMethod: paymentMethod
   }
+  
+  const info = {
+     createdAt : Date.now(),
+     isUpdate : true,
+  }
+  const uploadData = async (x, y, z ) => {
+
+    const number = x.cnic.replace(/-/g, "")
+
+    let data = {}
+    data[number] = [x, y, z] 
+    await db.collection("clients")
+    .doc(currentUser.currentUser.displayName.replace(/\s/g, "") +currentUser.currentUser.email.slice(0,3) )
+    .update(data, {merge : true})
+      .then((docRef) => {
+        console.log("Docement written with ID : ", docRef)
+        setIsLoading(false)
+        setIsSucceed(true)
+
+      })
+      .catch((error) => {
+        console.error("erro adding document : ", error)
+        setIsLoading(false)
+        setIsSucceed(false)
+      })
+  }
 
   React.useEffect(
     () => {
-      const uploadData = async (x, y, z ) => {
-
-        const number = x.cnic.replace(/-/g, "")
-        let data = {}
-        data[number] = [x, y, z] 
-        await db.collection("clients")
-        .doc(currentUser.currentUser.displayName.replace(/\s/g, "") +currentUser.currentUser.email.slice(0,3) )
-        .update(data, {merge : true})
-          .then((docRef) => {
-            console.log("Docement written with ID : ", docRef)
-            setIsLoading(false)
-            setIsSucceed(true)
-
-          })
-          .catch((error) => {
-            console.error("erro adding document : ", error)
-            setIsLoading(false)
-            setIsSucceed(false)
-          })
-      }
-
-      if (imageURI) {
-        console.log("Image Upload Succesfully")
-        uploadData(personal, asset, payment)
-      }
+      
     },
-    [imageURI]
+    []
   )
 
   const personalModel =
   {
+    imageURI,
     imageFile,
     setImageFile,
     selectedImage,
@@ -453,7 +456,7 @@ console.log(`Object is ${obj} and index is ${index} and key is ${key} and name $
   const uploadImage = () => {
 
     var storageRef = storage.ref().child(cNIC.replace(/-/g, ""));
-    var uploadTask = storageRef.child('profile.jpg').put(imageFile);
+    var uploadTask = storageRef.child('profile.jpg').put(imageFile );
 
     // Register three observers:
     // 1. 'state_changed' observer, called any time the state changes
@@ -482,9 +485,10 @@ console.log(`Object is ${obj} and index is ${index} and key is ${key} and name $
     }, () => {
       // Handle successful uploads on complete
       // For instance, get the download URL: https://firebasestorage.googleapis.com/...
-      uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+      uploadTask.snapshot.ref.getDownloadURL().then(  (downloadURL) => {
         console.log('File available at', downloadURL);
         setImageURI(downloadURL)
+        uploadData(personal, asset, payment, info)
       });
     });
 
@@ -510,7 +514,15 @@ console.log(`Object is ${obj} and index is ${index} and key is ${key} and name $
           console.log("Handle Payment Form")
           if (proceed) {
             console.log("Proceed True")
-            uploadImage()
+            if(imageFile)
+            {
+              uploadImage()
+            }
+            else
+            {
+              uploadData()
+            }
+            
             setActiveStep((prevActiveStep) => prevActiveStep + 1)
           }
           {

@@ -4,6 +4,7 @@ import { createMuiTheme, MuiThemeProvider } from '@material-ui/core';
 import { AuthProvider } from './context/authContext'
 import MyRoutes from './components/myRoutes/myRoutes'
 import { AdminContext } from "./context/adminContext";
+import { UserProvioder, ClientProvioder } from "./context/dataContext";
 
 
 const theme = createMuiTheme(
@@ -29,7 +30,11 @@ function App() {
       <MuiThemeProvider theme={theme}>
         <AuthProvider>
           <AdminContext.Provider value={isAdimn}>
-            <MyRoutes />
+            <UserProvioder>
+              <ClientProvioder>
+              <MyRoutes />
+              </ClientProvioder>
+            </UserProvioder>
           </AdminContext.Provider>
         </AuthProvider>
 

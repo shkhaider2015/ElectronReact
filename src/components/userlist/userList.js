@@ -8,11 +8,14 @@ import { db } from "../../config/firebase";
 import { AuthContext } from "../../context/authContext";
 import { Link, useNavigate } from "react-router-dom";
 import DialogueBox from "../printable/DialogueBox";
+import { UserListContext } from "../../context/dataContext";
 
 const UserList = (props) => {
 
     const navigate = useNavigate();
     const currentUser = React.useContext(AuthContext)
+    const users = React.useContext(UserListContext)
+
     const [userList, setUserList] = React.useState([])
 
     const getAllUsers = () => {
@@ -49,21 +52,24 @@ const UserList = (props) => {
                     console.log("Object : ", obj['personal']['email'])
                 }
             ) : null} */}
-    {console.log("histor : ", props) }
+   
 
             <div className="logo-hover text-center mt-2 pt-2"><img src={zainlogo} height="13%" width="13%" alt="hjh" onClick={()=> navigate(-1)} /></div>
 
             <table className="table card-body mt-4 ">
                 {/* <caption className="logo-hover text-center mt-2 pt-2"><img src={zainlogo} height="13%" width="13%" alt="hjh" /></caption> */}
                 <tbody>
-                    {userList.length !== 0 ? userList.map(
+                    {users[0].length !== 0 ? users[0].map(
                         (obj, ind) => (
                             <tr className="table-hover1  mt-5 pt-5 shadow rounded" >
 
                         <td colSpan="4" className="pt-4 pl-5" >
                             <div style={{ display: 'flex' }} >
-                                <Avatar atl="ss" src={obj['personal']['imageURI']} />
-                                <span style={{ marginTop : '2%', marginLeft : '3%' }} > {obj['personal']['name']} </span>
+                                <Avatar atl="ss" src={obj['imageURI']} />
+                                <div style={{ display : 'flex', flexDirection : 'column', marginLeft : '3%' }}>
+                                <span style={{ fontWeight : 'bold' }} > {obj['name']} </span>
+                                <span style={{ opacity : 0.8 }} > {obj['email']} </span>
+                                </div>
                             </div>
                         </td>
                         <td className="pl-5 pt-3 text-right" colSpan="1"> <button className="btn text-right btn-danger" >Approve</button> </td>

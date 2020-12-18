@@ -25,7 +25,12 @@ const config = {
   const db = firebase.firestore();
   const storage = firebase.storage();
 
-  db.
-  enablePersistence().then(()=> console.log("Persistence Works") ).catch( ()=> console.log("Persistence Works") )
+  db.settings({
+    cacheSizeBytes : db.CACHE_SIZE_UNLIMITED
+  })
+  db
+  .enablePersistence()
+  .then(()=> console.log("Persistence Works") )
+  .catch( ()=> console.log("Persistence Not Works") )
 
   export  {firebase, auth, db, storage};

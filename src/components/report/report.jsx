@@ -13,12 +13,14 @@ import DialogueBox from "../printable/DialogueBox";
 
 import { useReactToPrint } from "react-to-print";
 import PrintBox from "../printableForm/printBox";
+import { ClientsListContext } from "../../context/dataContext";
 
 const Reports = () => {
 
  const navigate = useNavigate();
     const currentUser = React.useContext(AuthContext)
     const isAdmin = React.useContext(AdminContext)
+    const clients = React.useContext(ClientsListContext)
 
     const [users, setUsers] = React.useState([]);
     const [userKeys, setUserKeys] = React.useState([]);
@@ -180,7 +182,7 @@ const Reports = () => {
                                     }
 
                                     {
-                                        users.map(
+                                        clients[0].map(
                                             (object, index) => (
                                                 object.map(
                                                     (obj, ind) => (
@@ -208,7 +210,7 @@ const Reports = () => {
 
                                                             {/* <Client_Tempory_Profile height="70%" style={{ margin: "15%" }} /> */}
                                                             {
-                                                                users.map(
+                                                                clients[0].map(
                                                                     (object, index) => (
                                                                         clicked === index
                                                                             ? object.map(
