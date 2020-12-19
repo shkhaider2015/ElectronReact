@@ -1,8 +1,8 @@
 import { Avatar, Grid, IconButton, makeStyles, TextField, InputAdornment, Paper } from "@material-ui/core"
 import { KeyboardBackspace, Search } from "@material-ui/icons"
 import React from "react"
-import { useNavigate } from "react-router"
-import { ClientsListContext, UserListContext } from "../../context/dataContext";
+import { Link, useNavigate } from "react-router-dom";
+import { ClientsListContext } from "../../context/dataContext";
 import SystemLogo from "../../RawData/mainassociates_icon.png";
 import SearchComponent from "./searchComponent";
 
@@ -59,6 +59,11 @@ const Payment = () =>
         searchResult[1](data)
     }
 
+    const handleClick = () =>
+    {
+
+    }
+
     return(
     <div>
         {searchResult ? console.log("Search result :::: ", searchResult[0]) : null}
@@ -105,7 +110,9 @@ const Payment = () =>
                             searchResult[0].length !== 0
                             ? searchResult[0].map(
                                 (object, index) => (
-                                    <SearchComponent data={object} key={index}  />
+                                   <Link to={"/cpp/" + object['cnic'] } key={index} style={{ textDecoration : 'none' }} >
+                                    <SearchComponent data={object}  />
+                                   </Link>
                                 )
                             )
                             : null
