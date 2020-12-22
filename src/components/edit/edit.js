@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import Stepper from '@material-ui/core/Stepper';
-import Step from '@material-ui/core/Step';
+import {Step, IconButton} from '@material-ui/core';
 import StepLabel from '@material-ui/core/StepLabel';
 import Check from '@material-ui/icons/Check';
-import { AccountCircle, HomeWorkOutlined, MonetizationOn, Home } from "@material-ui/icons";
+import { AccountCircle, HomeWorkOutlined, MonetizationOn, KeyboardBackspace } from "@material-ui/icons";
 import StepConnector from '@material-ui/core/StepConnector';
 import Button from '@material-ui/core/Button';
 import PersonalInfo from "../forms/personalInfo";
@@ -15,7 +15,7 @@ import PaymentInfo from "../forms/paymentInfo";
 import { MyProgress } from "../../components/circulerProgress";
 import { db, storage, firebase } from "../../config/firebase";
 import { AuthContext } from "../../context/authContext";
-import { Link, useLocation } from 'react-router-dom';
+import {useLocation, useNavigate } from 'react-router-dom';
 
 
 
@@ -232,8 +232,9 @@ const EditComp = () => {
   const classes = useStyles();
   const steps = getSteps();
   const {state} = useLocation()
-  const {obj, index, key} = state
-console.log(`Object is ${obj} and index is ${index} and key is ${key} and name ${obj[index][0]['name']}`)
+  const navigate = useNavigate()
+  const {obj} = state
+console.log(`Object is ${obj} `)
   const [activeStep, setActiveStep] = React.useState(0);
   const [proceed, setProceed] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(true)
@@ -242,34 +243,36 @@ console.log(`Object is ${obj} and index is ${index} and key is ${key} and name $
   const [selectedImage, setSelectedImage] = React.useState(null)
 
   const [imageFile, setImageFile] = React.useState(null)
-  const [imageURI, setImageURI] = React.useState(obj[index][0]['imageURI'])
-  const [name, setName] = React.useState(obj[index][0]['name'])
-  const [fatherName, setFatherName] = React.useState(obj[index][0]['fatherName'])
-  const [cellPhone, setCellPhone] = React.useState(obj[index][0]['cellPhone'])
-  const [phone, setPhone] = React.useState(obj[index][0]['phone'])
-  const [cNIC, setCNIC] = React.useState(obj[index][0]['cnic'])
-  const [email, setEmail] = React.useState(obj[index][0]['email'])
-  const [address, setAddress] = React.useState(obj[index][0]['address'])
-  const [transfor, setTransfor] = React.useState(true)
+  const [imageURI, setImageURI] = React.useState(obj['personal']['imageURI'])
+  const [id, setId] = React.useState(obj['personal']['id'])
+  const [name, setName] = React.useState(obj['personal']['name'])
+  const [fatherName, setFatherName] = React.useState(obj['personal']['fatherName'])
+  const [cellPhone, setCellPhone] = React.useState(obj['personal']['cellPhone'])
+  const [phone, setPhone] = React.useState(obj['personal']['phone'])
+  const [cNIC, setCNIC] = React.useState(obj['personal']['cnic'])
+  const [email, setEmail] = React.useState(obj['personal']['email'])
+  const [address, setAddress] = React.useState(obj['personal']['address'])
+  const [transfor, setTransfor] = React.useState(false)
 
-  const [area, setArea] = React.useState(obj[index][1]['plotName'])
-  const [measurement, setMeasurement] = React.useState(obj[index][1]['measurement'])
-  const [square, setSquare] = React.useState(obj[index][1]['square'])
-  const [block, setBlock] = React.useState(obj[index][1]['block'])
-  const [category, setCategory] = React.useState(obj[index][1]['category'])
-  const [nature, setNature] = React.useState(obj[index][1]['nature'])
-  const [type, setType] = React.useState(obj[index][1]['type'])
-  const [sitePlane, setSitePlane] = React.useState(obj[index][1]['sitePlane'])
-  const [purpose, setPurpose] = React.useState(obj[index][1]['purpose'])
+  const [area, setArea] = React.useState(obj['asset']['plotName'])
+  const [plotNumber, setPlotNumber]= React.useState(obj['plotNumber'])
+  const [measurement, setMeasurement] = React.useState(obj['asset']['measurement'])
+  const [square, setSquare] = React.useState(obj['asset']['square'])
+  const [block, setBlock] = React.useState(obj['asset']['block'])
+  const [category, setCategory] = React.useState(obj['asset']['category'])
+  const [nature, setNature] = React.useState(obj['asset']['nature'])
+  const [type, setType] = React.useState(obj['asset']['type'])
+  const [sitePlane, setSitePlane] = React.useState(obj['asset']['sitePlane'])
+  const [purpose, setPurpose] = React.useState(obj['asset']['purpose'])
 
-  const [amount, setAmount] = React.useState(parseInt(obj[index][2]['totalAmount']))
-  const [procedure, setProcedure] = React.useState(obj[index][2]['procedure'])
-  const [totalInstallment, setTotalInstallment] = React.useState(parseInt(obj[index][2]['installment']))
-  const [duration, setDuration] = React.useState(obj[index][2]['installmentDuration'])
-  const [installment, setInstallment] = React.useState(parseInt(obj[index][2]['firstInstallment']))
-  const [balance, setBalance] = React.useState(parseInt(obj[index][2]['balance']))
-  const [givenAmount, setGivenAmount] = React.useState(parseInt(obj[index][2]['givenAmount']))
-  const [paymentMethod, setPaymentMethod] = React.useState(obj[index][2]['paymentMethod'])
+  const [amount, setAmount] = React.useState(parseInt(obj['payment']['totalAmount']))
+  const [procedure, setProcedure] = React.useState(obj['payment']['procedure'])
+  const [totalInstallment, setTotalInstallment] = React.useState(parseInt(obj['payment']['installment']))
+  const [duration, setDuration] = React.useState(obj['payment']['installmentDuration'])
+  const [installment, setInstallment] = React.useState(parseInt(obj['payment']['remaining Installment']))
+  const [balance, setBalance] = React.useState(parseInt(obj['payment']['balance']))
+  const [givenAmount, setGivenAmount] = React.useState(parseInt(obj['payment']['givenAmount']))
+  const [paymentMethod, setPaymentMethod] = React.useState(obj['payment']['paymentMethod'])
   const [open, setOpen] = React.useState(true)
   const [disableInstallment, setDisableInstallment] = React.useState(true)
 
@@ -302,26 +305,58 @@ console.log(`Object is ${obj} and index is ${index} and key is ${key} and name $
     procedure: procedure,
     installment: totalInstallment,
     installmentDuration: duration,
-    firstInstallment: installment,
+    remainingInstallment: installment,
     balance: balance,
     paymentMethod: paymentMethod
   }
   
-  const info = {
-     createdAt : Date.now(),
-     isUpdate : true,
-  }
-  const uploadData = async (x, y, z ) => {
+  const uploadData =  ( image = imageURI ) => {
 
-    const number = x.cnic.replace(/-/g, "")
+    const number = cNIC.replace(/-/g, "")
 
-    let data = {}
-    data[number] = [x, y, z] 
-    await db.collection("clients")
-    .doc(currentUser.currentUser.displayName.replace(/\s/g, "") +currentUser.currentUser.email.slice(0,3) )
-    .update(data, {merge : true})
-      .then((docRef) => {
-        console.log("Docement written with ID : ", docRef)
+    let lastEditBy = currentUser.currentUser.displayName
+    let lastEditDate = Date.now()
+
+    db.collection("clients")
+    .doc(number)
+    .update({
+      "personal.id" : id,
+      "personal.name" : name,
+      "personal.email" : email,
+      "personal.imageURI" : image,
+      "personal.address" : address,
+      "personal.cnic" : cNIC,
+      "personal.phone" : phone,
+      "personal.fatherName" : fatherName,
+      "personal.transfor" : transfor,
+
+      "asset.block" : block,
+      "asset.category" : category,
+      "asset.measurement" : measurement,
+      "asset.nature" : nature,
+      "asset.plotName" : area,
+      "asset.purpose" : purpose,
+      "asset.sitePlane" : sitePlane,
+      "asset.square" : square,
+      "asset.type" : type,
+
+      "payment.balance" : balance,
+      "payment.givenAmount" : givenAmount,
+      "payment.installment" : totalInstallment,
+      "payment.installmentDuration" : duration,
+      "payment.paymentMethod" : paymentMethod,
+      "payment.procedure" : procedure,
+      "payment.remainingInstallment" : installment,
+      "payment.totalAmount" : amount,
+
+     
+      "extra.lastEditBy" : lastEditBy,
+      "extra.lastEditDate" : lastEditDate,
+
+
+    })
+      .then(() => {
+        console.log("Docement Edited with ID : ")
         setIsLoading(false)
         setIsSucceed(true)
 
@@ -333,12 +368,6 @@ console.log(`Object is ${obj} and index is ${index} and key is ${key} and name $
       })
   }
 
-  React.useEffect(
-    () => {
-      
-    },
-    []
-  )
 
   const personalModel =
   {
@@ -488,7 +517,7 @@ console.log(`Object is ${obj} and index is ${index} and key is ${key} and name $
       uploadTask.snapshot.ref.getDownloadURL().then(  (downloadURL) => {
         console.log('File available at', downloadURL);
         setImageURI(downloadURL)
-        uploadData(personal, asset, payment, info)
+        uploadData(downloadURL)
       });
     });
 
@@ -558,9 +587,14 @@ console.log(`Object is ${obj} and index is ${index} and key is ${key} and name $
     <div className={classes.root}>
       <div className="row " >
         <div className="col-1 justify-content-center text-center" >
-          <Link to="/" style={{ textDecoration: 'none' }} >
-            <Home color="primary" className={classes.homeIcon} />
-          </Link>
+        <IconButton
+            color="inherit"
+            aria-haspopup="true"
+            style={{ marginTop: '20%' }}
+            onClick={() => navigate(-1)}
+          >
+            <KeyboardBackspace color="primary" fontSize="large" />
+          </IconButton>
         </div>
         <div className="col-11" >
           <Stepper alternativeLabel activeStep={activeStep} connector={<ColorlibConnector />} className={classes.stepper} >

@@ -3,12 +3,14 @@ import { BorderBottom } from "@material-ui/icons";
 import React ,{useState} from "react";
 import { ReactComponent as Client_Tempory_Profile } from '../../RawData/Create.svg';
 import boxTermsAndConditoon from '../../RawData/terms_andcondition.JPG'
+import { getDate } from "../../utility/utils";
 
 
 
 function PrintTermsandCondition({obj}) {
 
-    const [CNIC  , func_CNIC] = useState("CNIC")
+    
+
     return (
         <div>
 
@@ -27,7 +29,7 @@ function PrintTermsandCondition({obj}) {
                     <div className="mt-5 col-12">
                         <div className="row">
                             <div className="offset-7 col-2 pl-4 text-right ">Date :</div>
-                            <div className="col-2 text-left pl-4  border-bottom">12-12-12</div>
+                            <div className="col-2 text-left pl-4  border-bottom">{getDate()}</div>
                         </div>
                     </div>
 
@@ -78,17 +80,17 @@ function PrintTermsandCondition({obj}) {
                     </div>
                     <div className="mt-5 col-12">
                         <div className=" row ">
-                        <div style={{border:"3px solid black" ,height:"5rem"}} className="offset-2 col-2 col-2 mb-2 text-left pl-4"></div>
-                        <div  className="offset-1 col-2  text-left pl-4 border-bottom"></div>
-                         <div className="offset-2 col-1   shadow-sm">
-                         <Avatar variant="rounded" alt="pic" src={obj[0]['imageURI']} />
-                            </div>
+                        <div style={{height:"5rem"}} className="offset-2 col-2 col-2 mb-2 text-left pl-4"></div>
+                        <div  className="offset-1 col-2  text-left pl-4 "></div>
+                         <div className="offset-2 col-1   ">
+                         <Avatar variant="rounded" alt="pic" src={obj['personal']['imageURI']} style={{ width : '100px', height : '100px' }} />
+                        </div>
                        
                         </div>
                         <div className="row ">
                         <div className="offset-2 col-2 text-left "> Read & Understood </div>
-                        <div className="offset-1  col-2 text-center  ">CNIC: {obj[0]['cnic']} </div> 
-                     
+                        <div className="offset-1  col-2 text-center  ">CNIC: {obj['personal']['cnic']} </div> 
+                       
                        
                         </div>
                         </div>

@@ -13,14 +13,10 @@ import ReactToPrint from "react-to-print";
 const ApplicationDialog = ({ setDialogue, formNumber, clicked, users  }) =>
 {
   const [open, setOpen] = React.useState(true)
-  // const [personal, setPersonal] = React.useState({})
-  // const [plot, setPlot] = React.useState({})
-  // const [payment, setPayment] = React.useState({})
   const [user, setUser] = React.useState([])
   const componentRef = useRef();
 
 const getUser = () => {
-  // console.log(`getUser : clicked = ${clicked} and users = ${users} `)
     users.map(
       (object, index) => (
         clicked === index
@@ -77,26 +73,9 @@ const getUser = () => {
         aria-describedby="alert-dialog-description"
         maxWidth="xl"
       >
-        {/* <DialogTitle id="alert-dialog-title">{"Once Data upload then you cannot change"}</DialogTitle>
-        <DialogContent style={{ border : '1px solid black' }} >
-          <DialogContentText id="alert-dialog-description">
-            Do you agree to proceed to the next step
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClickOpen} color="primary">
-            Disagree
-          </Button>
-          <Button onClick={handleClose} color="primary" autoFocus>
-            Agree
-          </Button>
-        </DialogActions> */}
         <div>
         { getForm(formNumber) }
         </div>
-        
-
-       
       </Dialog>
     </div>
   );

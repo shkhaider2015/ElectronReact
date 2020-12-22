@@ -4,7 +4,7 @@ import { ReactComponent as Client_Tempory_Profile } from '../../RawData/Create.s
 
 
 
-function Printconfirmation() {
+function Printconfirmation({ obj }) {
 
     const [RefNo, func_RefNo] = useState("RefNo")
     const [Date, func_Date] = useState("Date")
@@ -50,19 +50,19 @@ function Printconfirmation() {
                     <div className="mt-5 col-12">
                         <div className="row">
                             <div className="offset-1  col-2 pl-4 text-left ">Mr./Mrs./Miss :</div>
-                            <div className="col-3 text-left pl-4  border-bottom">{Mr_Mrs_Miss}</div>
+                            <div className="col-3 text-left pl-4  border-bottom">{obj['personal']['name']}</div>
                         </div>
                     </div>
                     <div className="mt-5 col-12">
                         <div className="row">
                             <div className="offset-1  col-2 pl-4 text-left ">S/o, D/o, W/o :</div>
-                            <div className="col-3 text-left pl-4  border-bottom">{So_Do_Wo}</div>
+                            <div className="col-3 text-left pl-4  border-bottom">{obj['personal']['fatherName']}</div>
                         </div>
                     </div>
                     <div className="mt-5 col-12">
                         <div className="row">
                             <div className="offset-1  col-2 pl-4 text-left ">CNIC :</div>
-                            <div className="col-3 text-left pl-4  border-bottom">{CNIC}</div>
+                            <div className="col-3 text-left pl-4  border-bottom">{obj['personal']['cnic']}</div>
                         </div>
                     </div>
                     <div className="mt-5  ml-5 pl-5 offset-2 col-10">
@@ -78,26 +78,26 @@ function Printconfirmation() {
                     <div className="mt-5 col-12">
                         <div className="row">
                             <div className="offset-1 col-2 pl-4 text-left ">Phone Office :</div>
-                            <div className="col-3 text-left pl-4  border-bottom">{Phone_Office}</div>
+                            <div className="col-3 text-left pl-4  border-bottom">{obj['personal']['phone']}</div>
                             <div className="offset-1 col-2 pl-5 text-center ">Plot:</div>
-                            <div className="col-2 text-left pl-4  border-bottom">{PlotNo}</div>
+                            <div className="col-2 text-left pl-4  border-bottom">{obj['asset']['plotNumber']}</div>
                         </div>
                     </div>
                     <div className="mt-5 col-12">
                         <div className="row">
                             <div className="offset-1 col-2 pl-4 text-left ">Measurement :</div>
-                            <div className="col-3 text-left pl-4  border-bottom">{Measurement}</div>
+                            <div className="col-3 text-left pl-4  border-bottom">{obj['asset']['measurement']}</div>
                             <div className="offset-1 col-2 pl-5 text-center ">Sq. Yds, Block:</div>
-                            <div className="col-2 text-left pl-4  border-bottom">{SqYds}</div>
+                            <div className="col-2 text-left pl-4  border-bottom">{obj['asset']['square']}</div>
                         </div>
                     </div>
 
                     <div className="mt-5 col-12">
                         <div className="row">
                             <div className="offset-1 col-2 pl-4 text-left ">Category:</div>
-                            <div className="col-3 text-left pl-4  border-bottom">{Category}</div>
+                            <div className="col-3 text-left pl-4  border-bottom">{obj['asset']['category']}</div>
                             <div className="offset-1 col-2 pl-5 text-center ">Nature:</div>
-                            <div className="col-2 text-left pl-4  border-bottom">{Nature}</div>
+                            <div className="col-2 text-left pl-4  border-bottom">{obj['asset']['nature']}</div>
                         </div>
                     </div>
 

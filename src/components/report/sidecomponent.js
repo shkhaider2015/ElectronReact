@@ -9,14 +9,14 @@ const Sidecomponent = ({ obj, checked }) =>
 
     
 
-    return(<div  className={checked[0] === checked[1] ? ('mt-2 pb-1 pb-1 row rounded shadow-sm clinet-back') : "mt-2 pb-1 pb-1 row rounded shadow-sm clinet-hover" }  > 
+    return(<div  className={checked[0] === checked[1] ? ('mt-2 ml-1 mr-1 pb-1  row rounded shadow-sm clinet-back') : "mt-2 ml-1 mr-1 pb-1  row rounded shadow-sm clinet-hover" }  > 
         
     <div className="m-2 col-3 client-pic">
-        <Avatar  alt={obj['name']} src={obj['imageURI']} style={{ height: '40px', width: '40px', margin: '15%' }} />
+        <Avatar  alt={obj['personal']['name']} src={obj['personal']['imageURI']} style={{ height: '40px', width: '40px', margin: '15%' }} />
 
     </div>
     <div className="col-7 mt-4 pt-1 client-Name">
-        <h6>{obj['name']}</h6>
+        <h6>{obj['personal']['name']}</h6>
     </div>
 
 </div>)

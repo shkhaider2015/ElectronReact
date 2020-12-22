@@ -119,7 +119,6 @@ const SignUp = () => {
     const [cellPhone, setCellPhone] = React.useState("")
     const [email, setEmail] = React.useState("")
     const [password, setPassword] = React.useState("")
-    const [imageURI, setImageURI] = React.useState(null)
     const [errorMsg, setErrorMsg] = React.useState("")
 
 
@@ -177,20 +176,21 @@ const SignUp = () => {
         return val;
     }
 
-    const createProfile = () => {
+    const createProfile = (image) => {
         let dd = Date.now()
         const userModel = {
             personal: {
+                id : auth.currentUser.uid,
                 name,
                 email,
                 cnic,
                 cellPhone,
-                imageURI,
+                imageURI : image,
                 adminRight: false,
                 isAccepted: false,
                 isDeleted: false,
-                createdAt : dd,
-                acceptedAt : null
+                createdAt: dd,
+                acceptedAt: null
             },
 
 
@@ -211,23 +211,30 @@ const SignUp = () => {
 
     }
 
-    const updateProfile = () => {
-        auth.currentUser.updateProfile(
-            {
-                displayName: name,
-                photoURL: imageURI,
-                phoneNumber: cellPhone,
+    const updateProfile = (image) => {
+       
 
-            }
-        )
-            .then(() => {
-                console.log("Profile Updated")
-                createProfile()
-            })
-            .catch((err) => {
-                console.log("ERROR : ", err)
-                setIsLoading(false)
-            })
+            setTimeout(
+                () => {
+                    auth.currentUser.updateProfile(
+                        {
+                            displayName: name,
+                            photoURL: image,
+                            phoneNumber: cellPhone,
+            
+                        }
+                    )
+                        .then(() => {
+                            console.log("Profile Updated")
+                            createProfile(image)
+                        })
+                        .catch((err) => {
+                            console.log("ERROR : ", err)
+                            setIsLoading(false)
+                        })
+                },
+                2000
+            )
     }
 
 
@@ -242,7 +249,7 @@ const SignUp = () => {
         // 1. 'state_changed' observer, called any time the state changes
         // 2. Error observer, called on failure
         // 3. Completion observer, called on successful completion
-        uploadTask.on('state_changed', (snapshot) => {
+        uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED, (snapshot) => {
             // Observe state change events such as progress, pause, and resume
             // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
             var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
@@ -260,15 +267,29 @@ const SignUp = () => {
             }
         }, (error) => {
             // Handle unsuccessful uploads
-            console.log(error)
+            console.log("Upload Failure :", error)
+            switch (error.code) {
+                case 'storage/unauthorized':
+                    // User doesn't have permission to access the object
+                    console.log("User doesn't have permission to access the object")
+                    break;
+                case 'storage/canceled':
+                    // User canceled the upload
+                    console.log("User canceled the upload")
+                    break;
+                case 'storage/unknown':
+                    // Unknown error occurred, inspect error.serverResponse
+                    console.log("Unknown error occurred, inspect error.serverResponse")
+                    break;
+            }
             setIsLoading(false)
         }, () => {
             // Handle successful uploads on complete
             // For instance, get the download URL: https://firebasestorage.googleapis.com/...
             uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
                 console.log('File available at', downloadURL);
-                setImageURI(downloadURL)
-                updateProfile()
+                // setImageURI(downloadURL)
+                updateProfile(downloadURL)
             });
         });
 
@@ -278,11 +299,12 @@ const SignUp = () => {
         auth.createUserWithEmailAndPassword(email, password)
             .then((user) => {
                 console.log("User created")
-                uploadImage()
+                
+                    uploadImage()
             })
             .catch((error) => {
                 var errorCode = error.code;
-                setErrorMsg(error.message)
+                // setErrorMsg(error.message)
                 console.error("Error creating user : ERROR_CODE -> ", errorCode)
                 console.error("Error creating user : ERROR_MESSAGE -> ", errorMsg)
                 setIsLoading(false)
@@ -321,190 +343,188 @@ const SignUp = () => {
     }
 
 
-    if(currentUser.currentUser)
-    {
-        console.log("jjkjjkjkk" ,auth.currentUser)
-        return(
-            <div>
+    if (currentUser.currentUser && !isLoading) {
+        console.log("jjkjjkjkk", auth.currentUser)
+        return (
+            <div className={classes.root} >
                 Wait for admin approval
-                <button onClick={() => navigate('/login')} >Go back </button>
-                <button onClick={() => auth.signOut()} >Log out</button>
+                <button onClick={() => navigate('/login')} style={{ margin : '0 auto' }} >Go back </button>
+                <button onClick={() => auth.signOut()} style={{ margin : '0 auto' }} >Log out</button>
             </div>
         )
-    }else
-    {
-        
-
-    return (
-        <div className={classes.root}>
-            <Grid container>
-                <Grid
-                    item
-                    lg={12}
-                    md={12}
-                    sm={12}
-                    xs={12}
-                >
-
-                    {isLoading ? <LinearProgress className={classes.linearProgress} /> : ""}
-                    <Paper elevation={3} className={classes.myPaper}>
-                        <span style={{ color: 'red' }} > {errorMsg} </span>
-                        <form onSubmit={handleSubmit} noValidate style={{ paddingTop: '5%' }} >
-
-                            <div className={classes.imageDiv}>
-                                {/* <Avatar alt="shakeel haider" src={selectedImage} variant="circle" className={classes.avatar} > */}
-                                <input
-                                    accept="image/*"
-                                    className={classes.input}
-                                    id="myinput"
-                                    multiple
-                                    type="file"
-                                    onChange={handleSelectImage}
-                                />
-                                <label htmlFor="myinput"  >
-
-                                    <Fab component="span" className={classes.avatar} >
-                                        {!selectedImage ? <PhotoCameraOutlined style={{ width: '50%', height: '50%' }} color="primary" /> : <Avatar alt="shakeel haider" src={selectedImage} variant="circle" className={classes.myImage} />}
+    } else {
 
 
-                                    </Fab>
-                                </label>
-                                {/* </Avatar> */}
+        return (
+            <div className={classes.root}>
+                <Grid container>
+                    <Grid
+                        item
+                        lg={12}
+                        md={12}
+                        sm={12}
+                        xs={12}
+                    >
+
+                        {isLoading ? <LinearProgress className={classes.linearProgress} /> : ""}
+                        <Paper elevation={3} className={classes.myPaper}>
+                            <span style={{ color: 'red' }} > {errorMsg} </span>
+                            <form onSubmit={handleSubmit} noValidate style={{ paddingTop: '5%' }} >
+
+                                <div className={classes.imageDiv}>
+                                    {/* <Avatar alt="shakeel haider" src={selectedImage} variant="circle" className={classes.avatar} > */}
+                                    <input
+                                        accept="image/*"
+                                        className={classes.input}
+                                        id="myinput"
+                                        multiple
+                                        type="file"
+                                        onChange={handleSelectImage}
+                                    />
+                                    <label htmlFor="myinput"  >
+
+                                        <Fab component="span" className={classes.avatar} >
+                                            {!selectedImage ? <PhotoCameraOutlined style={{ width: '50%', height: '50%' }} color="primary" /> : <Avatar alt="shakeel haider" src={selectedImage} variant="circle" className={classes.myImage} />}
 
 
-                                {/* <img src={selectedImage} alt="" /> */}
-                            </div>
+                                        </Fab>
+                                    </label>
+                                    {/* </Avatar> */}
 
-                            <div className={classes.myText} >
-                                <TextField
-                                    id="name"
-                                    label="Full Name"
-                                    variant="outlined"
-                                    type="text"
-                                    color="primary"
-                                    value={name}
-                                    className={classes.myElements}
-                                    onChange={(e) => setName(e.target.value)}
-                                    InputProps={{
-                                        endAdornment: (
-                                            <InputAdornment position="end">
-                                                <Name className={classes.iconColor} />
-                                            </InputAdornment>
-                                        ),
-                                    }}
-                                />
-                            </div>
-                            <div className={classes.phoneCnicDiv} >
-                                <div className={classes.cnicDiv} >
+
+                                    {/* <img src={selectedImage} alt="" /> */}
+                                </div>
+
+                                <div className={classes.myText} >
                                     <TextField
-                                        className={classes.myElements}
-                                        id="cnic"
-                                        label="CNIC"
+                                        id="name"
+                                        label="Full Name"
                                         variant="outlined"
                                         type="text"
                                         color="primary"
-                                        value={cnic}
-                                        onChange={handleCnic}
-                                        InputProps={{
-                                            endAdornment: (
-                                                <InputAdornment position="end">
-                                                    <CNIC className={classes.iconColor} />
-                                                </InputAdornment>
-                                            ),
-                                        }}
-
-                                    />
-                                </div>
-                                <div className={classes.phoneDiv} >
-                                    <TextField
+                                        value={name}
                                         className={classes.myElements}
-                                        id="phone"
-                                        label="Phone No. "
-                                        variant="outlined"
-                                        type="text"
-                                        color="primary"
-                                        value={cellPhone}
-                                        onChange={(e) => setCellPhone(e.target.value)}
+                                        onChange={(e) => setName(e.target.value)}
                                         InputProps={{
                                             endAdornment: (
                                                 <InputAdornment position="end">
-                                                    <Phone className={classes.iconColor} />
+                                                    <Name className={classes.iconColor} />
                                                 </InputAdornment>
                                             ),
                                         }}
-
                                     />
                                 </div>
-                            </div>
-                            <div className={classes.myText}>
-                                <TextField
-                                    id="email"
-                                    label="Email"
-                                    variant="outlined"
-                                    type="email"
-                                    color="primary"
-                                    value={email}
-                                    className={classes.myElements}
-                                    onChange={(e) => setEmail(e.target.value)}
-                                    helperText={validateEmail() ? "" : <span>Enter valid email</span>}
-                                    InputProps={{
-                                        endAdornment: (
-                                            <InputAdornment position="end">
-                                                <Email className={classes.iconColor} />
-                                            </InputAdornment>
-                                        ),
-                                    }}
-                                />
-                            </div>
+                                <div className={classes.phoneCnicDiv} >
+                                    <div className={classes.cnicDiv} >
+                                        <TextField
+                                            className={classes.myElements}
+                                            id="cnic"
+                                            label="CNIC"
+                                            variant="outlined"
+                                            type="text"
+                                            color="primary"
+                                            value={cnic}
+                                            onChange={handleCnic}
+                                            InputProps={{
+                                                endAdornment: (
+                                                    <InputAdornment position="end">
+                                                        <CNIC className={classes.iconColor} />
+                                                    </InputAdornment>
+                                                ),
+                                            }}
 
-                            <div className={classes.myText}>
-                                <TextField
-                                    id="password"
-                                    label="Password"
-                                    variant="outlined"
-                                    type="password"
-                                    color="primary"
-                                    value={password}
-                                    className={classes.myElements}
-                                    onChange={(e) => setPassword(e.target.value)}
-                                    helperText={password === "" ? <span>Password required</span> : password.length < 6 ? <span style={{ color: 'red' }} >At least 6 charechters or numbers </span> : ""}
-                                    InputProps={{
-                                        endAdornment: (
-                                            <InputAdornment position="end">
-                                                <Password className={classes.iconColor} />
-                                            </InputAdornment>
-                                        ),
-                                    }}
-                                />
-                            </div>
+                                        />
+                                    </div>
+                                    <div className={classes.phoneDiv} >
+                                        <TextField
+                                            className={classes.myElements}
+                                            id="phone"
+                                            label="Phone No. "
+                                            variant="outlined"
+                                            type="text"
+                                            color="primary"
+                                            value={cellPhone}
+                                            onChange={(e) => setCellPhone(e.target.value)}
+                                            InputProps={{
+                                                endAdornment: (
+                                                    <InputAdornment position="end">
+                                                        <Phone className={classes.iconColor} />
+                                                    </InputAdornment>
+                                                ),
+                                            }}
 
-                            <div className={classes.myButton}>
-                                <Button
-                                    variant="contained"
-                                    color="primary"
-                                    type="submit"
-                                    disabled={isLoading}
-                                    className={classes.myElements}
-                                >
-                                    Sign Up
+                                        />
+                                    </div>
+                                </div>
+                                <div className={classes.myText}>
+                                    <TextField
+                                        id="email"
+                                        label="Email"
+                                        variant="outlined"
+                                        type="email"
+                                        color="primary"
+                                        value={email}
+                                        className={classes.myElements}
+                                        onChange={(e) => setEmail(e.target.value)}
+                                        helperText={validateEmail() ? "" : <span>Enter valid email</span>}
+                                        InputProps={{
+                                            endAdornment: (
+                                                <InputAdornment position="end">
+                                                    <Email className={classes.iconColor} />
+                                                </InputAdornment>
+                                            ),
+                                        }}
+                                    />
+                                </div>
+
+                                <div className={classes.myText}>
+                                    <TextField
+                                        id="password"
+                                        label="Password"
+                                        variant="outlined"
+                                        type="password"
+                                        color="primary"
+                                        value={password}
+                                        className={classes.myElements}
+                                        onChange={(e) => setPassword(e.target.value)}
+                                        helperText={password === "" ? <span>Password required</span> : password.length < 6 ? <span style={{ color: 'red' }} >At least 6 charechters or numbers </span> : ""}
+                                        InputProps={{
+                                            endAdornment: (
+                                                <InputAdornment position="end">
+                                                    <Password className={classes.iconColor} />
+                                                </InputAdornment>
+                                            ),
+                                        }}
+                                    />
+                                </div>
+
+                                <div className={classes.myButton}>
+                                    <Button
+                                        variant="contained"
+                                        color="primary"
+                                        type="submit"
+                                        disabled={isLoading}
+                                        className={classes.myElements}
+                                    >
+                                        Sign Up
                             </Button>
-                            </div>
+                                </div>
 
-                            <div style={{ marginTop: '2%' }} >
-                                <Typography variant="caption" >
-                                    Already have an account ?  <Link to="/login" className={classes.loginLink} >Login</Link> here
+                                <div style={{ marginTop: '2%' }} >
+                                    <Typography variant="caption" >
+                                        Already have an account ?  <Link to="/login" className={classes.loginLink} >Login</Link> here
                             </Typography>
-                            </div>
+                                </div>
 
-                        </form>
-                    </Paper>
+                            </form>
+                        </Paper>
 
+                    </Grid>
                 </Grid>
-            </Grid>
-        </div>
-    )
-    
-}
+            </div>
+        )
+
+    }
 }
 
 export default SignUp;

@@ -3,6 +3,7 @@ import React ,{useState} from "react";
 import { ReactComponent as Client_Tempory_Profile } from '../../RawData/Create.svg';
 import diagram from '../../RawData/diagram.png'
 import MyRoutes from "../../components/myRoutes/myRoutes";
+import { getDate } from "../../utility/utils";
 const useStyle = makeStyles(
     (theme) => (
         {
@@ -54,7 +55,7 @@ function SitePlan({obj}) {
                         </div>
                         <div className="row p-3 mt-1 ">
                             <div className=" ml-2 col-5 "><h5> <em>Date : </em></h5></div>
-                            <div className="ml-2 col-5  border-bottom">{Date}</div>
+                            <div className="ml-2 col-5  border-bottom">{getDate()}</div>
                         </div>
                     </div>
                     <div style={{ width: "70%", border: "1px solid black", borderRadius: 30, padding: 0 }} className="mt-5 col-4 p-1 text-center">
@@ -70,18 +71,18 @@ function SitePlan({obj}) {
                 <div className="mt-5 col-12">
                     <div className="mt-5 row">
                         <div className="offset-1 col-3 text-left ">Site Plan for Plot No.</div>
-                          <div className="col-3 text-left pl-4  border-bottom">{obj[1]['sitePlane']}</div>
+                          <div className="col-3 text-left pl-4  border-bottom">{obj['asset']['sitePlane']}</div>
                         <div className=" col-2  text-center ">Type :</div>
-                     <div className="col-2 text-left pl-4  border-bottom">{obj[1]['type']}</div>
+                     <div className="col-2 text-left pl-4  border-bottom">{obj['asset']['type']}</div>
                     </div>
                 </div>
 
                 <div className="mt-5 col-12">
                     <div className="row">
                         <div className="offset-1 col-3 pl-3 text-left ">Purpose only of :</div>
-                      <div className="col-3 text-left pl-4  border-bottom">{obj[1]['purpose']}</div>
+                      <div className="col-3 text-left pl-4  border-bottom">{obj['asset']['purpose']}</div>
                         <div className=" col-2 pl-4 text-center ">Sq. Yds :</div>
-                     <div className="col-2 text-left pl-4  border-bottom">{obj[1]['square']}</div>
+                     <div className="col-2 text-left pl-4  border-bottom">{obj['asset']['square']}</div>
                     </div>
                 </div>
                 <div className="row mt-5 ">
@@ -95,8 +96,8 @@ function SitePlan({obj}) {
                         <div style={{position:"relative",right:"83%", top:"23%"}}><em>{West}</em></div>
                     </div>
                     <div  className="col-2">
-    <div style={{position:"relative",right:"421%", top:"48.5%"}}>{obj[1]['plotName']}</div>
-    <div style={{position:"relative",right:"421%", top:"48.5%"}}>{obj[1]['square']}</div>
+    <div style={{position:"relative",right:"421%", top:"48.5%"}}>{obj['asset']['plotName']}</div>
+    <div style={{position:"relative",right:"421%", top:"48.5%"}}>{obj['asset']['square']}</div>
       
                     </div>
                        
@@ -107,14 +108,14 @@ function SitePlan({obj}) {
                 <div className="mt-5 col-12 ">
                     <div className="row">
                         <div className="offset-1  col-4  text-left ">Name of Allotted Mr./Mrs./Miss :</div>
-                        <div className="col-3 text-left pl-4  border-bottom">{obj[0]['name']}</div>
+                        <div className="col-3 text-left pl-4  border-bottom">{obj['personal']['name']}</div>
                     </div>
                 </div>
 
                 <div className="mt-5 col-12 ">
                     <div className="row">
                         <div className="offset-1  col-4 pl-3 text-left ">S/o, D/o, W/o. :</div>
-                        <div className="col-3 text-left pl-4  border-bottom">{obj[0]['fatherName']}</div>
+                        <div className="col-3 text-left pl-4  border-bottom">{obj['personal']['fatherName']}</div>
                     </div>
                 </div>
  

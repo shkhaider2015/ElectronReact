@@ -1,18 +1,19 @@
 import React from 'react'
 import {
     Avatar, Grid, makeStyles, Paper, TextField, IconButton,
-    InputAdornment, Select, InputLabel, FormControl, FormHelperText
+    InputAdornment, Select, InputLabel, FormControl, FormHelperText, Button
 } from "@material-ui/core";
 import { PermIdentity as Name, Phone, Smartphone, KeyboardBackspace } from "@material-ui/icons";
-import MyImage from "../../RawData/default.jpg";
-import ActivityTable from "./activity_table/activityTable";
 import { useNavigate, useParams } from 'react-router';
 import { ClientsListContext } from '../../context/dataContext';
+import { db, firebase } from '../../config/firebase';
+import { AuthContext } from "../../context/authContext";
 
 const useStyle = makeStyles(
     {
         root: {
-            width: '100%'
+            width: '100%',
+            backgroundColor: '#fff'
         },
         paper: {
             width: '80%',
@@ -76,52 +77,237 @@ const useStyle = makeStyles(
         pairElement: {
             width: '100%'
         },
-        backButton : {
-            marginLeft : '2%',
-            marginTop : '2%'
+        backButton: {
+            marginLeft: '2%',
+            marginTop: '2%'
         }
     }
 )
+
 
 const ClientProfile = () => {
     const classes = useStyle();
     const navigate = useNavigate();
     const { cnic } = useParams();
+    let currentObject = null
     const clients = React.useContext(ClientsListContext);
+    const currentUser = React.useContext(AuthContext)
+
+    const [id, setId] = React.useState('')
+    const [imageURI, setImageURI] = React.useState('')
+    const [name, setName] = React.useState('')
+    const [fatherName, setFatherName] = React.useState('')
+    const [cNIC, setCNIC] = React.useState('')
+    const [email, setEmail] = React.useState('')
+    const [cellPhone, setCellPhone] = React.useState('')
+    const [phone, setPhone] = React.useState('')
+    const [address, setAddress] = React.useState('')
+    const [transfor, setTransfor] = React.useState(false)
+
+    const [area, setArea] = React.useState("")
+    const [plotNumber, setPlotNumber] = React.useState("")
+    const [measurement, setMeasurement] = React.useState(0)
+    const [square, setSquare] = React.useState(0)
+    const [block, setBlock] = React.useState("")
+    const [category, setCategory] = React.useState("")
+    const [nature, setNature] = React.useState("")
+    const [type, setType] = React.useState("")
+    const [sitePlane, setSitePlane] = React.useState("")
+    const [purpose, setPurpose] = React.useState("")
+
 
     const [totalAmount, setTotalAmount] = React.useState(0)
     const [procedure, setProcedure] = React.useState("")
     const [totalInstallment, setTotalInstallment] = React.useState(0)
     const [installmentDuration, setInstallmentDuration] = React.useState("")
-    const [firstInstallment, setFirstInstallment] = React.useState(0)
+    const [remainingInstallment, setRemainingInstallment] = React.useState(0)
     const [givenAmount, setGivenAmount] = React.useState(0)
     const [paymentMethod, setPaymentMethod] = React.useState("")
     const [balance, setBalance] = React.useState(0)
     const [currentClient, setCurrentClient] = React.useState(null)
 
+    const [newAmount, setNewAmount] = React.useState(0)
+    const [button, setButton] = React.useState(false)
+
+    const init = () => {
+
+        setId(currentObject['personal']['id'])
+        setImageURI(currentObject['personal']['imageURI'])
+        setName(currentObject['personal']['name'])
+        setFatherName(currentObject['personal']['fatherName'])
+        setEmail(currentObject['personal']['email'])
+        setCNIC(currentObject['personal']['cnic'])
+        setCellPhone(currentObject['personal']['cellPhone'])
+        setPhone(currentObject['personal']['phone'])
+        setAddress(currentObject['personal']['address'])
+        setTransfor(currentObject['personal']['transfor'])
+
+        setArea(currentObject['asset']['plotName'])
+        setPlotNumber(currentObject['asset']['plotNumber'])
+        setMeasurement(currentObject['asset']['measurement'])
+        setSquare(currentObject['asset']['square'])
+        setBlock(currentObject['asset']['block'])
+        setCategory(currentObject['asset']['category'])
+        setSitePlane(currentObject['asset']['sitePlane'])
+        setNature(currentObject['asset']['nature'])
+        setType(currentObject['asset']['type'])
+        setPurpose(currentObject['asset']['purpose'])
+
+        setTotalAmount(currentObject['payment']['totalAmount'])
+        setProcedure(currentObject['payment']['procedure'])
+        setTotalInstallment(currentObject['payment']['installment'])
+        setInstallmentDuration(currentObject['payment']['installmentDuration'])
+        setRemainingInstallment(currentObject['payment']['remainingInstallment'])
+        setGivenAmount(currentObject['payment']['givenAmount'])
+        setPaymentMethod(currentObject['payment']['paymentMethod'])
+        setBalance(currentObject['payment']['balance'])
+
+
+
+    }
+
+
+    const personal = {
+        id: id,
+        imageURI: imageURI,
+        name: name,
+        fatherName: fatherName,
+        email: email,
+        cellPhone: cellPhone,
+        phone: phone,
+        cnic: cNIC,
+        address: address,
+        transfor: transfor
+    }
+    const asset = {
+        plotName: area,
+        measurement: measurement,
+        square: square,
+        block: block,
+        category: category,
+        nature: nature,
+        type: type,
+        sitePlane: sitePlane,
+        purpose: purpose
+    }
+    const payment = {
+        totalAmount: totalAmount,
+        givenAmount: (givenAmount + newAmount),
+        procedure: procedure,
+        installment: totalInstallment,
+        installmentDuration: installmentDuration,
+        remainingInstallment: totalInstallment - 1,
+        balance: totalAmount - (givenAmount + newAmount),
+        paymentMethod: paymentMethod
+    }
+
+
+
     React.useEffect(
-        () =>{
+        () => {
             console.log("hhhhhhh : ", clients[0])
+            // clients[0].map(
+            //     (obj, ind) => (
+            //         obj.map(
+            //             (object, index) =>
+            //                 index === 0
+            //                     ? (object['cnic'] === cnic ? currentObject = obj : null)
+            //                     : null
+            //         )
+            //     )
+
+            // )
+
             clients[0].map(
-                (obj, ind) => (
-                    obj.map(
-                        (object, index) => 
-                        index === 0
-                        ? (object['cnic'] === cnic ? setCurrentClient(obj) : null )
-                        : null
-                    )
-                )
-        
+                (object, index) => object['personal']['cnic'] === cnic ? currentObject=object : null
             )
         },
         []
     )
 
+    React.useEffect(
+        () => {
+            if (currentObject) {
+                console.log("Current Object not null")
+                init()
+            }
+        },
+        [currentObject]
+    )
+    const handleUpdate = () => {
+        const number = cNIC.replace(/-/g, "")
+
+        let ga = Number(givenAmount) + Number(newAmount);
+        let bl = totalAmount - ga;
+        let lastEditBy = currentUser.currentUser.displayName;
+        let lastEditedDate = Date.now();
+
+        console.log(`given amount is ${ga} and balance is ${bl} and lastEdit ${lastEditBy} and date ${lastEditedDate} `)
+
+        db.collection('clients').doc(number)
+            .update({
+                "payment.givenAmount" : ga,
+                "payment.balance" : bl,
+                "extra.lastEditBy" : lastEditBy,
+                "extra.lastEditDate" : lastEditedDate,
+            })
+            .then(() => console.log("Update Success"))
+            .catch((e) => {
+                console.error(e)
+                setButton(false)
+            })
+    }
+
+    const handleInstallmentUpdate = () => {
+        const number = cNIC.replace(/-/g, "")
+
+        let ga = Number(givenAmount) + Number(newAmount);
+        let bl = totalAmount - ga;
+        let lastEditBy = currentUser.currentUser.displayName;
+        let lastEditedDate = Date.now();
+        let ri = Number(remainingInstallment) - 1
+
+        console.log(`given amount is ${ga} and balance is ${bl} and lastEdit ${lastEditBy} and date ${lastEditedDate} remaining installment is : ${ri} `)
+
+        db.collection('clients').doc(number)
+            .update({
+                "payment.givenAmount" : ga,
+                "payment.balance" : bl,
+                "payment.remainingInstallment" : ri,
+                "extra.lastEditBy" : lastEditBy,
+                "extra.lastEditDate" : lastEditedDate,
+            })
+            .then(() => console.log("Update Success"))
+            .catch((e) => {
+                console.error(e)
+                setButton(false)
+            })
+    }
+   
+
+    const handleSubmit = () => {
+        if (newAmount) {
+            if(procedure === "Installment")
+            {
+                handleInstallmentUpdate()
+            }
+            else
+            {
+                handleUpdate()
+            }
+
+            setButton(true)
+            
+        }
+        else {
+            return;
+        }
+    }
+
 
     return (
         <div className={classes.root}>
             <Grid container direction="column" >
-                { console.log("Object Param : ", currentClient) }
 
                 <Grid item xs={12} sm={12} md={12} lg={12} >
                     <Grid item xs={2} sm={2} md={2} >
@@ -129,7 +315,6 @@ const ClientProfile = () => {
                             aria-haspopup="true"
                             color="inherit"
                             onClick={() => navigate(-1)}
-                            className={classes.backButton}
                         >
                             <KeyboardBackspace fontSize="large" color="primary" />
 
@@ -137,224 +322,185 @@ const ClientProfile = () => {
                     </Grid>
                 </Grid>
                 <Grid item xs={12} sm={12} md={12} lg={12} >
-                    <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', marginLeft : '10%', marginTop : '3%' }} >
+                    <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', marginLeft: '15%', marginTop: '3%' }} >
                         <div>
-                            <Avatar alt="name" src={currentClient ? currentClient[0]['imageURI'] : MyImage} style={{ width: '150px', height: '150px' }} />
+                            <Avatar alt="name" src={imageURI} style={{ width: '150px', height: '150px', boxShadow: '0 0 30px 0 rgba(20, 27, 202, .17)' }} />
                         </div>
-                        <div style={{ display: 'flex', flexDirection: 'column', marginLeft: '5%' }} >
-                            <div style={{ display : 'flex', flexDirection : 'row' }} >
-                            <span style={{ fontSize: 14, fontWeight: 'bold' }} >Name : </span>
-                            <span style={{ fontSize: 14, fontWeight: 'bold' }} > { currentClient ? currentClient[0]['name'] : 'name' } </span>
+                        <div style={{ display: 'flex', flexDirection: 'column', marginLeft: '5%', width: '50%' }} >
+                            <div style={{ display: 'flex', flexDirection: 'row', width: '50%' }} >
+                                <div style={{ width: '40%' }} ><span style={{ fontSize: 10, fontWeight: 'normal', paddingRight: '10%' }} >Name</span></div>
+                                <div style={{ width: '60%' }} ><span style={{ fontSize: 10, fontWeight: 'bold' }} > {name} </span></div>
                             </div>
-                            <span style={{ fontSize: 12, opacity: 0.7 }} >Father name :</span>
-                            <span style={{ fontSize: 12, opacity: 0.7 }} >Email</span>
-                            <span style={{ fontSize: 12, opacity: 0.7 }} >Phone</span>
-                            <span style={{ fontSize: 12, opacity: 0.7 }} >CNIC</span>
-                            <span style={{ fontSize: 12, opacity: 0.7 }} >Address</span>
+
+                            <div style={{ display: 'flex', flexDirection: 'row', width: '50%' }} >
+                                <div style={{ width: '40%' }} ><span style={{ fontSize: 10, fontWeight: 'normal', paddingRight: '10%' }} >Father Name</span></div>
+                                <div style={{ width: '60%' }} ><span style={{ fontSize: 10, fontWeight: 'normal' }} > {fatherName} </span></div>
+                            </div>
+
+                            <div style={{ display: 'flex', flexDirection: 'row', width: '50%' }} >
+                                <div style={{ width: '40%' }} ><span style={{ fontSize: 10, fontWeight: 'normal', paddingRight: '10%' }} >CNIC</span></div>
+                                <div style={{ width: '60%' }} ><span style={{ fontSize: 10, fontWeight: 'normal' }} > {cNIC} </span></div>
+                            </div>
+
+                            <div style={{ display: 'flex', flexDirection: 'row', width: '50%' }} >
+                                <div style={{ width: '40%' }} ><span style={{ fontSize: 10, fontWeight: 'normal', paddingRight: '10%' }} >Email</span></div>
+                                <div style={{ width: '60%' }} ><span style={{ fontSize: 10, fontWeight: 'normal' }} > {email} </span></div>
+                            </div>
+
+                            <div style={{ display: 'flex', flexDirection: 'row', width: '50%' }} >
+                                <div style={{ width: '40%' }} ><span style={{ fontSize: 10, fontWeight: 'normal', paddingRight: '10%' }} >Phone</span></div>
+                                <div style={{ width: '60%' }} ><span style={{ fontSize: 10, fontWeight: 'normal' }} > {cellPhone} </span></div>
+                            </div>
+
+                            <div style={{ display: 'flex', flexDirection: 'row', width: '50%' }} >
+                                <div style={{ width: '40%' }} ><span style={{ fontSize: 10, fontWeight: 'normal', paddingRight: '10%' }} >Address</span></div>
+                                <div style={{ width: '60%' }} ><span style={{ fontSize: 10, fontWeight: 'normal' }} > {address} </span></div>
+                            </div>
+
                         </div>
                     </div>
                 </Grid>
 
-                <Grid item xs={12} sm={12} md={12} lg={12}>
-                    <div style={{ width: '70%', marginTop : '5%', marginLeft : '10%' }} >
+                <Grid item xs={12} sm={12} md={12} lg={12} >
+                    <div style={{ width: '70%', marginTop: '5%', marginLeft: '15%' }} className='row' >
 
-                        <div className={classes.phoneCnicDiv} >
+                        <Grid container >
 
-                            <div className={classes.cnicDiv} >
-                                <TextField
-                                    className={classes.pairElement}
-                                    id="totalAmount"
-                                    label="Total Amount"
-                                    variant="outlined"
-                                    type="number"
-                                    value={totalAmount}
-                                    color="primary"
-                                    onChange={(e) => setTotalAmount(e.target.value)}
-                                    helperText={totalAmount <= 0 ? <span style={{ color: 'red' }} >Please specify total amount</span> : ""}
-                                    InputProps={{
-                                        endAdornment: (
-                                            <InputAdornment position="end">
-                                                <Name className={classes.iconColor} />
-                                            </InputAdornment>
-                                        ),
-                                    }}
-                                />
-                            </div>
-                            <div className={classes.phoneDiv} >
-                                <FormControl variant="outlined" className={classes.pairElement}>
-                                    <InputLabel htmlFor="outlined-age-native-simple">Procedure</InputLabel>
-                                    <Select
-                                        native
-                                        value={procedure}
-                                        label="Procedure"
-                                        onChange={(e) => setProcedure(e.target.value)}
-                                        inputProps={{
-                                            name: 'procedure',
-                                            id: 'outlined-age-native-simple',
-                                        }}
-                                    >
-                                        <option aria-label="None" value="" />
-                                        <option value="Full Payment">Full Payment</option>
-                                        <option value="Half Payment">Half Payment</option>
-                                        <option value="Short Payment">Short Payment</option>
-                                        <option value="Installment">Installment</option>
-                                    </Select>
-                                    <FormHelperText> {procedure === "" ? <span style={{ color: 'red' }} >Please specify procedure</span> : ""} </FormHelperText>
-                                </FormControl>
-                            </div>
-                        </div>
-                        <div className={classes.phoneCnicDiv} >
-                            <div className={classes.cnicDiv} >
-                                <TextField
-                                    className={classes.pairElement}
-                                    id="installment"
-                                    label="Installment"
-                                    variant="outlined"
-                                    type="number"
-                                    color="primary"
-                                    disabled={!(procedure === "Installment")}
-                                    value={totalInstallment}
-                                    onChange={(e) => setTotalInstallment(e.target.value)}
-                                    helperText={totalInstallment === 0 ? <span style={{ color: 'red' }} >Please fill your first installment</span> : ""}
-                                    InputProps={{
-                                        endAdornment: (
-                                            <InputAdornment position="end">
-                                                <Smartphone className={classes.iconColor} />
-                                            </InputAdornment>
-                                        ),
-                                    }}
-
-                                />
-                            </div>
-                            <div className={classes.phoneDiv} >
-                                <FormControl variant="outlined" className={classes.pairElement}>
-                                    <InputLabel htmlFor="outlined-age-native-simple">Installment Duration</InputLabel>
-                                    <Select
-                                        native
-                                        disabled={!(procedure === "Installment")}
-                                        value={installmentDuration}
-                                        label="Installment Duration"
-                                        onChange={(e) => setInstallmentDuration(e.target.value)}
-                                        inputProps={{
-                                            name: 'procedure',
-                                            id: 'outlined-age-native-simple',
-                                        }}
-                                    >
-                                        <option aria-label="None" value="" />
-                                        <option value={"Three Months"}>Three Months</option>
-                                        <option value={"Six Months"}>Six Months</option>
-                                        <option value={"Nine Months"}>Nine Months</option>
-                                        <option value={"One Year"}>One Year</option>
-                                        <option value={"Two Year"}>Two Year</option>
-                                        <option value={"Three Year"}>Three Year</option>
-                                    </Select>
-                                    <FormHelperText>{installmentDuration === "" ? <span style={{ color: 'red' }} >Please select duration</span> : ""}</FormHelperText>
-                                </FormControl>
-                            </div>
-                        </div>
-
-                        <div className={classes.phoneCnicDiv} >
-                            <div className={classes.cnicDiv} >
-                                <TextField
-                                    className={classes.pairElement}
-                                    id="firstInstallment"
-                                    label="First Installment"
-                                    variant="outlined"
-                                    type="text"
-                                    color="primary"
-                                    disabled={procedure !== "Installment"}
-                                    value={totalInstallment}
-                                    onChange={(e) => {
-                                        setTotalInstallment(e.target.value)
-                                        setGivenAmount(e.target.value)
-                                    }}
-                                    helperText={totalInstallment === 0 ? <span style={{ color: 'red' }} >Please specify total amount</span> : ""}
-                                    InputProps={{
-                                        endAdornment: (
-                                            <InputAdornment position="end">
-                                                <Smartphone className={classes.iconColor} />
-                                            </InputAdornment>
-                                        ),
-                                    }}
-
-                                />
-                            </div>
-                            <div className={classes.phoneDiv} >
-                                <TextField
-                                    className={classes.pairElement}
-                                    id="givenAmount"
-                                    label="Given Amount"
-                                    variant="outlined"
-                                    type="number"
-                                    color="primary"
-                                    value={givenAmount}
-                                    onChange={(e) => {
-                                        setGivenAmount(e.target.value)
-                                        setBalance(totalAmount - e.target.value)
-                                    }}
-                                    InputProps={{
-                                        endAdornment: (
-                                            <InputAdornment position="end">
-                                                <Phone className={classes.iconColor} />
-                                            </InputAdornment>
-                                        ),
-                                    }}
-
-                                />
-                            </div>
-                        </div>
-                        <div className={classes.phoneCnicDiv} >
-
-                            <div className={classes.cnicDiv} >
-                                <TextField
-                                    className={classes.pairElement}
-                                    id="balance"
-                                    label="Balance"
-                                    variant="outlined"
-                                    type="number"
-                                    color="primary"
-                                    value={balance}
-                                    disabled={procedure === "Full Payment"}
-                                    onChange={(e) => setBalance(e.target.value)}
-                                    InputProps={{
-                                        endAdornment: (
-                                            <InputAdornment position="end">
-                                                <Phone className={classes.iconColor} />
-                                            </InputAdornment>
-                                        ),
-                                    }}
-
-                                />
-
-                            </div>
-
-                            <div className={classes.phoneDiv} >
-                                <FormControl variant="outlined" className={classes.pairElement}>
-                                    <InputLabel htmlFor="outlined-age-native-simple">Payment Method</InputLabel>
-                                    <Select
-                                        native
-                                        value={paymentMethod}
-                                        label="Payment Method"
-                                        onChange={(e) => setPaymentMethod(e.target.value)}
-                                        inputProps={{
-                                            name: 'procedure',
-                                            id: 'outlined-age-native-simple',
-                                        }}
-                                    >
-                                        <option aria-label="None" value="" />
-                                        <option value={"Cheque"}>Cheque</option>
-                                        <option value={"Cash"}>Cash</option>
-                                        <option value={"Payorder"}>Payorder</option>
-                                    </Select>
-                                    <FormHelperText>{paymentMethod === "" ? <span style={{ color: 'red' }} >Please select payment method</span> : ""}</FormHelperText>
-                                </FormControl>
-
-                            </div>
+                            <Grid item xs={12} sm={12} md={6} lg={6} >
+                                <div style={{ display: 'flex', flexDirection: 'column', width: '100%', paddingBottom: '3%' }}>
 
 
-                        </div>
+                                    <div style={{ display: 'flex', flexDirection: 'row' }} >
+                                        <div style={{ width: '50%' }} >
+                                            <span>Total Amount</span>
+                                        </div>
+                                        <div style={{ width: '50%' }} >
+                                            <span> {totalAmount} </span>
+                                        </div>
+                                    </div>
+
+                                    <div style={{ display: 'flex', flexDirection: 'row' }} >
+                                        <div style={{ width: '50%' }} >
+                                            <span>Given Amount</span>
+                                        </div>
+                                        <div style={{ width: '50%' }} >
+                                            <span> {Number(givenAmount) + Number(newAmount)} </span>
+                                        </div>
+                                    </div>
+
+                                    <div style={{ display: 'flex', flexDirection: 'row' }} >
+                                        <div style={{ width: '50%' }} >
+                                            <span>Balance</span>
+                                        </div>
+                                        <div style={{ width: '50%' }} >
+                                            <span> {Number(totalAmount) - (Number(givenAmount) + Number(newAmount))} </span>
+                                        </div>
+                                    </div>
+
+                                    <div style={{ display: 'flex', flexDirection: 'row' }} >
+                                        <div style={{ width: '50%' }} >
+                                            <span>Procedure</span>
+                                        </div>
+                                        <div style={{ width: '50%' }} >
+                                            <span> {procedure} </span>
+                                        </div>
+                                    </div>
+
+                                    {
+                                        procedure === "Installment"
+                                            ? <div style={{ display: 'flex', flexDirection: 'column', width: '100%' }} >
+
+                                                <div style={{ display: 'flex', flexDirection: 'row' }} >
+                                                    <div style={{ width: '50%' }} >
+                                                        <span>Total Installment</span>
+                                                    </div>
+                                                    <div style={{ width: '50%' }} >
+                                                        <span> {totalInstallment} </span>
+                                                    </div>
+                                                </div>
+
+                                                <div style={{ display: 'flex', flexDirection: 'row' }} >
+                                                    <div style={{ width: '50%' }} >
+                                                        <span>Remaining Installment</span>
+                                                    </div>
+                                                    <div style={{ width: '50%' }} >
+                                                        <span> {remainingInstallment} </span>
+                                                    </div>
+                                                </div>
+
+
+                                            </div>
+                                            : null
+                                    }
+
+                                </div>
+                            </Grid>
+                            <Grid item xs={12} sm={12} md={6} lg={6} >
+
+                                <div style={{ display: 'flex', flexDirection: 'column', width: '100%' }} >
+
+                                    {
+                                        procedure !== "Installment"
+                                            ? <TextField
+                                                style={{ width: '80%' }}
+                                                id="totalAmount"
+                                                label="New Amount"
+                                                variant="outlined"
+                                                type="number"
+                                                value={newAmount}
+                                                color="primary"
+                                                onChange={(e) => {
+                                                    setNewAmount(e.target.value)
+                                                }}
+                                                helperText={totalAmount <= 0 ? <span  >Please specify total amount</span> : ""}
+                                                InputProps={{
+                                                    endAdornment: (
+                                                        <InputAdornment position="end">
+                                                            <Name className={classes.iconColor} />
+                                                        </InputAdornment>
+                                                    ),
+                                                }}
+                                            />
+                                            : <TextField
+                                                style={{ width: '80%' }}
+                                                id="install"
+                                                label="New Installment"
+                                                variant="outlined"
+                                                type="number"
+                                                value={newAmount}
+                                                color="primary"
+                                                onChange={(e) => {
+                                                    setNewAmount(e.target.value)
+                                                
+                                                }}
+                                                helperText={totalAmount <= 0 ? <span  >Please specify total amount</span> : ""}
+                                                InputProps={{
+                                                    endAdornment: (
+                                                        <InputAdornment position="end">
+                                                            <Name className={classes.iconColor} />
+                                                        </InputAdornment>
+                                                    ),
+                                                }}
+                                            />
+                                    }
+
+                                    <Button
+                                        variant="outlined"
+                                        color="primary"
+                                        title="Submit"
+                                        disabled={button}
+                                        style={{ width: '80%', height: '3%', marginTop : '2%' }}
+                                        onClick={() => handleSubmit()}
+                                    >Submit</Button>
+
+                                </div>
+
+                            </Grid>
+
+                        </Grid>
 
                     </div>
+
                 </Grid>
 
 

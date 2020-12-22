@@ -23,12 +23,13 @@ const SearchComponent = ({ data }) =>
 
     return(
         <div className={classes.root} elevation={2} >
+            { console.log("jjjjj : ", data) }
             <div>
-                <Avatar alt="name" src={data['imageURI']} />
+                <Avatar alt="name" src={data['personal']['imageURI']} />
             </div>
             <div className={classes.name} >
-                <span style={{ fontSize : 14, fontWeight : 'bold' }} >{data['name']}</span>
-                <span style={{ fontSize : 12, opacity : 0.7 }} >{data['email']}</span>
+                <span style={{ fontSize : 14, fontWeight : 'bold' }} >{data['personal']['name']}</span>
+                <span style={{ fontSize : 12, opacity : 0.7 }} >{data['personal']['email']}</span>
             </div>
         </div>
     )

@@ -41,11 +41,9 @@ const Homepage2 = () => {
     const isAdmin = React.useContext(AdminContext)
     const clients = React.useContext(ClientsListContext)
     const users = React.useContext(UserListContext)
+    const [profilePic, setProfilePic] = React.useState(null)
     const navigate = useNavigate()
     const open = Boolean(anchorEl);
-
-    // const [clients, setClients] = React.useState([])
-    // const [users, setUsers] = React.useState([])
 
     const handleMenu = (event) => {
         setAnchorEl(event.currentTarget);
@@ -68,81 +66,45 @@ const Homepage2 = () => {
         navigate("/userlist")
     }
 
-    // const chekAdmin = (email) =>
-    // {
-    //         db.collection("users").doc(currentUser.currentUser.uid).get()
-    //         .then((querySnapshot) => {
-    //             querySnapshot.forEach((doc) => {
-    //                 isAdmin[1](doc.data().adminRight)
-    //                 console.log("Admin Checked")
-    //             } )
-    //         })
-    //         .catch((error) => 
-    //         {
-    //             console.log("error", error)
-    //         })
-    // }
-    const checkAdmin = () => {
-        db.collection("users").doc(currentUser.currentUser.uid).get().then((doc) => {
-            if (doc.exists) {
-                var tr = doc.data()['personal']['adminRight']
-                isAdmin[1](tr)
-                console.log("Admin Right : ", tr)
-
-            } else {
-                console.log("doc not exists")
-            }
-        }).catch(e => console.error(e))
-    }
-
-    const getClientsData = () =>
-    {
+    const getClientsData = () => {
         db
-        .collection('clients')
-        .onSnapshot((querySnapshot) => {
-            var docs = []
-            querySnapshot.forEach((doc) =>
-            {
-                // console.log("Clients Data : ", doc.data())
-                if(doc.exists)
-                {
-                    for(let x in doc.data())
-                    {
-                        docs.push(doc.data()[x])
+            .collection('clients')
+            .onSnapshot((querySnapshot) => {
+                var docs = []
+                querySnapshot.forEach((doc) => {
+                    // console.log("Clients Data : ", doc.data())
+                    if (doc.exists) {
+                        docs.push(doc.data())
                     }
-                }
-            })
-            
-            clients[1](docs)
-            console.log("Clients : ", clients)
+                })
 
-        })
+                clients[1](docs)
+
+            })
     }
-    const getUserData = () =>
-    {
+    const getUserData = () => {
         db
-        .collection('users')
-        .onSnapshot((querySnapshot) => {
-            var docs = []
-            querySnapshot.forEach((doc) => {
-                if(doc.exists)
-                {
-                    for(let x in doc.data())
-                    {
-                        docs.push(doc.data()[x])
+            .collection('users')
+            .onSnapshot((querySnapshot) => {
+                var docs = []
+                querySnapshot.forEach((doc) => {
+                    if (doc.exists) {
+                        for (let x in doc.data()) {
+                            if (doc.data()[x]['id'] === currentUser.currentUser.uid) {
+                                // isAdmin[1](true)
+                                isAdmin[1](doc.data()[x]['adminRight'])
+                            }
+                            docs.push(doc.data()[x])
+                        }
                     }
-                }
-            })
+                })
 
-            users[1](docs)
-            console.log("UserList : ", users)
-        })
+                users[1](docs)
+            })
     }
 
     React.useEffect(
         () => {
-            console.log("Checking Admin : ", isAdmin[0])
-            
             if (!currentUser.currentUser) {
                 navigate("/login")
             }
@@ -152,9 +114,11 @@ const Homepage2 = () => {
 
     React.useEffect(
         () => {
-            checkAdmin()
-            getClientsData()
-            getUserData()
+            if (currentUser.currentUser) {
+                getClientsData()
+                getUserData()
+                setProfilePic(currentUser.currentUser.photoURL)
+            }
         },
         []
     )
@@ -169,7 +133,7 @@ const Homepage2 = () => {
     return (
         <div className="container-fluid " >
 
-            {getProfilePicture()}
+            { console.log(clients[0])}
 
             <div className="row">
 
@@ -186,13 +150,12 @@ const Homepage2 = () => {
                                     aria-controls="menu-appbar"
                                     aria-haspopup="true"
                                     color="inherit"
-                                    onClick={handleMenu}
+                                    onClick={(e) => handleMenu(e)}
                                 >
-                                    {currentUser.currentUser.photoURL
-                                        ? <Avatar alt="name" src={currentUser.currentUser.photoURL} />
+                                    {profilePic
+                                        ? <Avatar alt="name" src={profilePic} />
                                         : <AccountCircle className={classes.icon} />
                                     }
-
                                 </IconButton>
                                 <Menu
                                     id="menu-appbar"
@@ -207,17 +170,13 @@ const Homepage2 = () => {
                                         horizontal: 'right',
                                     }}
                                     open={open}
-                                    onClose={handleClose}
+                                    onClose={() => handleClose()}
                                 >
-                                    <MenuItem onClick={handleClose}>Profile</MenuItem>
+                                    <MenuItem onClick={() => handleClose()}>Profile</MenuItem>
                                     {isAdmin[0] ? <MenuItem onClick={userList}>User List</MenuItem> : null}
-                                    <MenuItem onClick={handleLogout}>logout</MenuItem>
+                                    <MenuItem onClick={() => handleLogout()}>logout</MenuItem>
                                 </Menu>
-
                             </div>
-
-
-
 
                         </div>
                         <div className="row justify-content-center text-center">
@@ -238,61 +197,61 @@ const Homepage2 = () => {
                                     ?
                                     <div className="col-sm-6 col-md-4 col-lg-4">
                                         <Link to="/report" className="myLink" >
-                                        <div className="box">
-                                            <div className="our-services privacy">
-                                                <div className="icon icon-query"> <SVG_Query className="" fill="white" style={{ height: "70%", width: "70%", color: "whitesmoke" }} /></div>
-                                                <h4>QUERY</h4>
-                                                <p>Client Report (Admin Only)</p>
-                                            </div>
-                                        </div> </Link>
+                                            <div className="box">
+                                                <div className="our-services privacy">
+                                                    <div className="icon icon-query"> <SVG_Query className="" fill="white" style={{ height: "70%", width: "70%", color: "whitesmoke" }} /></div>
+                                                    <h4>QUERY</h4>
+                                                    <p>Client Report (Admin Only)</p>
+                                                </div>
+                                            </div> </Link>
                                     </div>
                                     : <div className="col-sm-6 col-md-4 col-lg-4">
-                                    <Link to="/report" className="myLink" >
-                                        <div className="box">
-                                        <div className="our-services speedup">
-                                        <div className="icon icon-report"> <SVG_Report className="" fill="white" style={{ height: "70%", width: "70%", color: "whitesmoke" }} /> </div>
-                                        <h4>REPORTS</h4>
-                                        <p>Client Report (Admin Only) </p>
-                                        </div>
-                                        </div>
-                                    </Link>
-                        </div>
+                                        <Link to="/report" className="myLink" >
+                                            <div className="box">
+                                                <div className="our-services speedup">
+                                                    <div className="icon icon-report"> <SVG_Report className="" fill="white" style={{ height: "70%", width: "70%", color: "whitesmoke" }} /> </div>
+                                                    <h4>REPORTS</h4>
+                                                    <p>Client Report (Admin Only) </p>
+                                                </div>
+                                            </div>
+                                        </Link>
+                                    </div>
                             }
                         </div>
-                    <div className="row  mb-3 justify-content-center">
-                        <div className="col-sm-6 col-md-4 col-lg-4">
-                            <Link to="/payment" className="myLink" >
-                            <div className="box">
-                                <div className="our-services ssl">
-                                    <div className="icon icon-payment " > <AttachMoneyOutlinedIcon className="" style={{ height: "70%", width: "70%", color: "whitesmoke" }} /> </div>
-                                    <h4>Payment</h4>
-                                    <p>Payment Information</p>
-                                </div>
+                        <div className="row  mb-3 justify-content-center">
+                            <div className="col-sm-6 col-md-4 col-lg-4">
+                                <Link to="/payment" className="myLink" >
+                                    <div className="box">
+                                        <div className="our-services ssl">
+                                            <div className="icon icon-payment " > <AttachMoneyOutlinedIcon className="" style={{ height: "70%", width: "70%", color: "whitesmoke" }} /> </div>
+                                            <h4>Payment</h4>
+                                            <p>Payment Information</p>
+                                        </div>
+                                    </div>
+                                </Link>
                             </div>
-                            </Link>
-                        </div>
-                        <div className="col-sm-6 col-md-4 col-lg-4">
-                            <div className="box">
-                                <div className="our-services database">
-                                    <div className="icon icon-scanQR"> <ScanQR className="" fill="white" style={{ height: "70%", width: "70%", color: "whitesmoke" }} /> </div>
-                                    <h4>SCAN QR</h4>
-                                    <p>Search By Scaning</p>
+                            <div className="col-sm-6 col-md-4 col-lg-4">
+                                <div className="box">
+                                    <div className="our-services database">
+                                        <div className="icon icon-scanQR"> <ScanQR className="" fill="white" style={{ height: "70%", width: "70%", color: "whitesmoke" }} /> </div>
+                                        <h4>SCAN QR</h4>
+                                        <p>Search By Scaning</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+
+
+
+
                 </div>
 
 
 
 
+
             </div>
-
-
-
-
-
-        </div>
 
 
 

@@ -100,9 +100,7 @@ const useStyle = makeStyles(
 
 const PlotInformation = ({ model }) => {
 
-    const classes = useStyle();
-
-    
+    const classes = useStyle(); 
 
     return (
         <div className={classes.root}>
@@ -222,13 +220,9 @@ const PlotInformation = ({ model }) => {
                                     variant="outlined"
                                     type="text"
                                     color="primary"
-                                    disabled={model.procedure !== "Installment"}
-                                    value={model.installment}
-                                    onChange={(e) => {
-                                        model.setInstallment(e.target.value)
-                                        model.setGivenAmount(e.target.value)
-                                    } }
-                                    helperText={ model.installment === 0 ? <span style={{ color : 'red' }} >Please specify total amount</span> : "" }
+                                    disabled
+                                    value={model.totalInstallment !== 0 && model.totalInstallment ? Number(model.amount)/Number(model.totalInstallment) : 0}
+                                    helperText={ model.totalInstallment === 0 ? <span style={{ color : 'red' }} >Please specify total amount</span> : "" }
                                     InputProps={{
                                         endAdornment: (
                                             <InputAdornment position="end">
@@ -272,10 +266,9 @@ const PlotInformation = ({ model }) => {
                                     label="Balance"
                                     variant="outlined"
                                     type="number"
+                                    disabled
                                     color="primary"
-                                    value={model.balance}
-                                    disabled={model.procedure === "Full Payment"}
-                                    onChange={(e) => model.setBalance(e.target.value) }
+                                    value={model.amount - model.givenAmount}
                                     InputProps={{
                                         endAdornment: (
                                             <InputAdornment position="end">

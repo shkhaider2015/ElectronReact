@@ -89,9 +89,12 @@ export default function Login() {
     React.useEffect(
         () => 
         {
-            if(currentUser.currentUser && isAccepted)
+            if(currentUser.currentUser)
             {
-                navigate("/")
+                if(isAccepted)
+                {
+                    navigate("/")
+                }
             }
         },
         [isAccepted, navigate]
@@ -147,7 +150,7 @@ export default function Login() {
                 >
                     {isLoading ? <LinearProgress className={classes.linearProgress} /> : "" }
                     <Paper elevation={2} className={classes.myPaper}>
-                        <form noValidate onSubmit={handleSubmit}>
+                        <form noValidate onSubmit={e => handleSubmit(e)}>
 
 
                             <div className={classes.avatarDiv}>

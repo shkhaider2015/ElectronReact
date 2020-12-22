@@ -43,33 +43,33 @@ function PrintAllotmentOrder({ obj }) {
                     <div className="mt-5  col-12">
                         <div className="mt-2 row">
                             <div className="offset-1  col-2 pl-4 text-left ">Mr./Mrs./Miss :</div>
-                            <div className="col-3 text-left pl-4  border-bottom">{obj[0]['name']}</div>
+                            <div className="col-3 text-left pl-4  border-bottom">{obj['personal']['name']}</div>
                         </div>
                     </div>
                     <div className="mt-5 col-12">
                         <div className="row">
                             <div className="offset-1  col-2 pl-4 text-left ">S/o, D/o, W/o :</div>
-                            <div className="col-3 text-left pl-4  border-bottom">{obj[0]['fatherName']}</div>
+                            <div className="col-3 text-left pl-4  border-bottom">{obj['personal']['fatherName']}</div>
                         </div>
                     </div>
                     <div className="mt-5 col-12">
                         <div className="row">
                             <div className="offset-1  col-2 pl-4 text-left ">CNIC :</div>
-                            <div className="col-3 text-left pl-4  border-bottom">{obj[0]['cnic']}</div>
+                            <div className="col-3 text-left pl-4  border-bottom">{obj['personal']['cnic']}</div>
                         </div>
                     </div>
                     <div className="mt-5 col-12">
                         <div className="row">
                             <div className="offset-1  col-2 pl-4 text-left ">Alloted Plot No. :</div>
-                            <div className="col-2 text-left pl-4  border-bottom">{obj[1]['plotName']}</div>
+                            <div className="col-2 text-left pl-4  border-bottom">{obj['asset']['plotName']}</div>
                             <div className="offset-2  col-2 pl-4 text-right ">Size :</div>
-                            <div className="col-2 text-left pl-4  border-bottom">{obj[1]['square']}</div>
+                            <div className="col-2 text-left pl-4  border-bottom">{obj['asset']['square']}</div>
                         </div>
                     </div>
                     <div className="mt-5 col-12">
                         <div className="row">
                             <div className="offset-1  col-2 pl-4 text-left ">Category :</div>
-                            <div className="col-3 text-left pl-4  border-bottom">{obj[1]['category']}</div>
+                            <div className="col-3 text-left pl-4  border-bottom">{obj['asset']['category']}</div>
                         </div>
                     </div>
                     <div className="mt-5  ml-5  col-12">

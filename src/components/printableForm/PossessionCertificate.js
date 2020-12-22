@@ -1,6 +1,7 @@
 import { makeStyles, TextField, RadioGroup, Paper, Radio, Button, FormControlLabel } from "@material-ui/core";
 import React ,{useState} from "react";
 import { ReactComponent as Client_Tempory_Profile } from '../../RawData/Create.svg';
+import { getDate } from "../../utility/utils";
 
 
 
@@ -39,7 +40,7 @@ function PrintPossessionCertificate({obj}) {
                             <div className="offset-1 col-2 pl-4 text-left ">RefNo:</div>
                             <div className="col-3 text-left pl-4  border-bottom">{RefNo}</div>
                             <div className="offset-1 col-2 pl-5 text-left ">Date:</div>
-                            <div className="col-2 text-left pl-4  border-bottom">{Date}</div>
+                            <div className="col-2 text-left pl-4  border-bottom">{getDate()}</div>
                         </div>
                     </div>
                     <div className="mt-5  ml-5  col-12">
@@ -50,23 +51,23 @@ function PrintPossessionCertificate({obj}) {
                     <div className="mt-5 col-12">
                         <div className="row">
                             <div className="offset-1 col-2 pl-4 text-left ">Plot:</div>
-                            <div className="col-3 text-left pl-4  border-bottom">{obj[1]['plotName']}</div>
+                            <div className="col-3 text-left pl-4  border-bottom">{obj['asset']['plotName']}</div>
                             <div className="offset-1 col-2 pl-5 text-left ">Measurement:</div>
-                            <div className="col-2 text-left pl-4  border-bottom">{obj[1]['measurement']}</div>
+                            <div className="col-2 text-left pl-4  border-bottom">{obj['asset']['measurement']}</div>
                         </div>
                     </div>
                     <div className="mt-5 col-12">
                         <div className="row">
                             <div className="offset-1  col-2 pl-4 text-left ">Sq. Yds, Block:</div>
-                            <div className="col-3 text-left pl-4  border-bottom">{obj[1]['square']}, {obj[1]['block']} </div>
+                            <div className="col-3 text-left pl-4  border-bottom">{obj['asset']['square']}, {obj['asset']['block']} </div>
                         </div>
                     </div>
                     <div className="mt-5 col-12">
                         <div className="row">
                             <div className="offset-1 col-2 pl-4 text-left ">Category:</div>
-                            <div className="col-3 text-left pl-4  border-bottom">{obj[1]['category']}</div>
+                            <div className="col-3 text-left pl-4  border-bottom">{obj['asset']['category']}</div>
                             <div className="offset-1 col-2 pl-5 text-left ">Nature:</div>
-                            <div className="col-2 text-left pl-4  border-bottom">{obj[1]['nature']}</div>
+                            <div className="col-2 text-left pl-4  border-bottom">{obj['asset']['nature']}</div>
                         </div>
                     </div>
                    
@@ -78,26 +79,26 @@ function PrintPossessionCertificate({obj}) {
                     <div className="mt-5  col-12">
                         <div className="row">
                             <div className="offset-1  col-2 pl-4 text-left ">Mr./Mrs./Miss :</div>
-                            <div className="col-3 text-left pl-4  border-bottom">{obj[0]['name']}</div>
+                            <div className="col-3 text-left pl-4  border-bottom">{obj['personal']['name']}</div>
                         </div>
                     </div>
                     <div className="mt-5 col-12">
                         <div className="row">
                             <div className="offset-1  col-2 pl-4 text-left ">S/o, D/o, W/o :</div>
-                            <div className="col-3 text-left pl-4  border-bottom">{obj[0]['fatherName']}</div>
+                            <div className="col-3 text-left pl-4  border-bottom">{obj['personal']['fatherName']}</div>
                         </div>
                     </div>
                     <div className="mt-5 col-12">
                         <div className="row">
                             <div className="offset-1  col-2 pl-4 text-left ">CNIC :</div>
-                            <div className="col-3 text-left pl-4  border-bottom">{obj[0]['cnic']}</div>
+                            <div className="col-3 text-left pl-4  border-bottom">{obj['personal']['cnic']}</div>
                         </div>
                     </div>
                   
                     <div className="mt-5 col-12">
                         <div className="row">
                             <div className="offset-1  col-2 pl-4 text-left ">Adress :</div>
-                            <div className="col-3 text-left pl-4  border-bottom">{obj[0]['address']}</div>
+                            <div className="col-3 text-left pl-4  border-bottom">{obj['personal']['address']}</div>
                         </div>
                     </div>
             

@@ -16,6 +16,11 @@ body {
     color: black;
 
 }
+.client-list{
+    max-height: 100%;
+    overflow-y:inherit;
+    overflow-x: hidden;
+}
 .clinet-back{
     background-image: linear-gradient(-45deg, #fb0054d2 0%, #f5592aad 100%) !important;
     color: white;

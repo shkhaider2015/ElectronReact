@@ -11,7 +11,8 @@ class PrintBox extends Component {
     constructor(props) {
         super()
         this.state = {
-            user : []
+            user : [],
+            isImageReady : false,
         }
     }
     getUser = () => {
@@ -23,18 +24,19 @@ class PrintBox extends Component {
             )
           )
       }
+      
     getForm = (x) => {
         switch (x) {
             case 1:
-                return <Application obj={this.state.user} formNumber={x} />
+                return <Application obj={this.state.user} formNumber={x}  />
             case 2:
-                return <Application obj={this.state.user} formNumber={x} />
+                return <Application obj={this.state.user} formNumber={x}  />
             case 3:
                 return <Confirmation obj={this.state.user} />
             case 4:
                 return <SitePlan obj={this.state.user} />
             case 5:
-                return <TermsAndCond obj={this.state.user} />
+                return <TermsAndCond obj={this.state.user}  />
             case 6:
                 return <Possession obj={this.state.user} />
             case 7:
@@ -52,16 +54,25 @@ class PrintBox extends Component {
 
     
     componentDidUpdate(prevProps, prevState) {
-        if(this.props.print)
-        {
-            this.props.handlePrinttt()
-        }
+        console.log("cdu")
 
         console.log(prevProps)
 
         if(prevProps.clicked !== this.props.clicked)
         {
             this.getUser()
+        }
+
+        if(this.props.print)
+        {
+            
+            setTimeout(
+                ()=>
+                {
+                    this.props.handlePrinttt()
+                },
+                1000
+            )
         }
     }
     

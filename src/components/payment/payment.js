@@ -15,8 +15,14 @@ const useStyle = makeStyles({
         border : '1px solid black'
     },
     backButton : {
-        marginLeft : '2%',
+        marginLeft : '0%',
         marginTop : '2%'
+    },
+    myLink : {
+        textDecoration : 'none',
+        '&:hover' : {
+            textDecoration : 'none'
+        }
     }
 })
 
@@ -45,10 +51,10 @@ const Payment = () =>
         // })
 
         clients[0].filter(item => {
-            if(item[0]['name'].toLowerCase().includes(lowercaseResult))
+            if(item['personal']['name'].toLowerCase().includes(lowercaseResult))
             {
 
-                data.push(item[0])
+                data.push(item)
             }
             
         })
@@ -66,7 +72,7 @@ const Payment = () =>
 
     return(
     <div>
-        {searchResult ? console.log("Search result :::: ", searchResult[0]) : null}
+        
         <Grid container spacing={4} direction="row" align="center" >
 
             <Grid item xs={2} sm={2} md={2} >
@@ -110,7 +116,7 @@ const Payment = () =>
                             searchResult[0].length !== 0
                             ? searchResult[0].map(
                                 (object, index) => (
-                                   <Link to={"/cpp/" + object['cnic'] } key={index} style={{ textDecoration : 'none' }} >
+                                   <Link to={"/cpp/" + object['personal']['cnic'] } key={index} style={{ textDecoration : 'none', color : 'black' }} >
                                     <SearchComponent data={object}  />
                                    </Link>
                                 )

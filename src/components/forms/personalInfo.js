@@ -117,12 +117,22 @@ const PersonalInformation = ({ model }) => {
         let reader = new FileReader();
         let file = e.target.files[0];
 
-        reader.onloadend = () => {
-            model.setImageFile(file)
-            model.setSelectedImage(reader.result)
+        try
+        {
+            if(file)
+            {
+                reader.onloadend = () => {
+                    model.setImageFile(file)
+                    model.setSelectedImage(reader.result)
+                }
+        
+                reader.readAsDataURL(file)
+            }
         }
-
-        reader.readAsDataURL(file)
+        catch(e)
+        {
+            console.error(e)
+        }
         
     }
 

@@ -6,7 +6,7 @@ import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 import Check from '@material-ui/icons/Check';
-import { AccountCircle, HomeWorkOutlined, MonetizationOn, Home } from "@material-ui/icons";
+import { AccountCircle, HomeWorkOutlined, MonetizationOn, Home, KeyboardBackspace } from "@material-ui/icons";
 import StepConnector from '@material-ui/core/StepConnector';
 import Button from '@material-ui/core/Button';
 import PersonalInfo from "./forms/personalInfo";
@@ -176,8 +176,6 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: '10%'
   },
   homeIcon: {
-    width: '50px',
-    height: '50px',
 
 
   }
@@ -216,9 +214,9 @@ const getForms = (step, personalModel, plotModel, paymentModel) => {
 
 const Application = () => {
   const classes = useStyles();
- const navigate = useNavigate()
- const steps = getSteps();
- const currentUser = React.useContext(AuthContext);
+  const navigate = useNavigate()
+  const steps = getSteps();
+  const currentUser = React.useContext(AuthContext);
 
   const [activeStep, setActiveStep] = React.useState(0);
   const [proceed, setProceed] = React.useState(false);
@@ -238,6 +236,7 @@ const Application = () => {
   const [transfor, setTransfor] = React.useState(false)
 
   const [area, setArea] = React.useState("")
+  const [plotNumber, setPlotNumber] = React.useState("")
   const [measurement, setMeasurement] = React.useState(0)
   const [square, setSquare] = React.useState(0)
   const [block, setBlock] = React.useState("")
@@ -252,6 +251,7 @@ const Application = () => {
   const [totalInstallment, setTotalInstallment] = React.useState(0)
   const [duration, setDuration] = React.useState("")
   const [installment, setInstallment] = React.useState(0)
+  const [remainingIntsallment, setRemainingInstallment] = React.useState(0)
   const [balance, setBalance] = React.useState(0)
   const [givenAmount, setGivenAmount] = React.useState(0)
   const [paymentMethod, setPaymentMethod] = React.useState("")
@@ -263,16 +263,18 @@ const Application = () => {
     id: "",
     imageURI: imageURI,
     name: name,
-    fatherName : fatherName,
+    fatherName: fatherName,
     email: email,
     cellPhone: cellPhone,
     phone: phone,
     cnic: cNIC,
     address: address,
-    transfor: transfor
+    transfor: transfor,
+    addedBy : currentUser.currentUser.displayName.replace(/\s/g, "")
   }
   const asset = {
     plotName: area,
+    plotNumber: plotNumber,
     measurement: measurement,
     square: square,
     block: block,
@@ -288,21 +290,32 @@ const Application = () => {
     procedure: procedure,
     installment: totalInstallment,
     installmentDuration: duration,
-    firstInstallment: installment,
-    balance: balance,
+    remainingInstallment: totalInstallment - 1,
+    balance: amount - givenAmount,
     paymentMethod: paymentMethod
   }
 
   React.useEffect(
     () => {
-      const uploadData = async (x, y, z ) => {
+      const uploadData = () => {
 
-        const number = x.cnic.replace(/-/g, "")
-        let data = {}
-        data[number] = [x, y, z] 
-        await db.collection("clients")
-        .doc(currentUser.currentUser.displayName.replace(/\s/g, "") +currentUser.currentUser.email.slice(0,3) )
-        .set(data, {merge : true})
+
+        const cnid = cNIC.replace(/-/g, "");
+        const date = Date.now()
+
+        const ee = {
+          addedBy : currentUser.currentUser.displayName,
+          addedDate : date
+        }
+
+         db.collection("clients")
+          .doc(cnid)
+          .set({
+            personal : personal,
+            asset : asset,
+            payment : payment,
+            extra : ee
+          })
           .then((docRef) => {
             console.log("Docement written with ID : ", docRef)
             setIsLoading(false)
@@ -318,7 +331,7 @@ const Application = () => {
 
       if (imageURI) {
         console.log("Image Upload Succesfully")
-        uploadData(personal, asset, payment)
+        uploadData()
       }
     },
     [imageURI]
@@ -350,6 +363,8 @@ const Application = () => {
   const plotModel = {
     area,
     setArea,
+    plotNumber,
+    setPlotNumber,
     measurement,
     setMeasurement,
     square,
@@ -422,16 +437,14 @@ const Application = () => {
     }
     else if (procedure === "Installment") {
       duration === "" || paymentMethod === ""
-        || amount === 0 || totalInstallment === 0 || installment === 0
-        || balance === 0
+        || amount === 0 || totalInstallment === 0
         ? val = false
         : val = true
     }
-    else
-    {
-       paymentMethod === "" || amount === 0 || balance === 0
-      ? val = false
-      : val = true
+    else {
+      paymentMethod === "" || amount === 0
+        ? val = false
+        : val = true
     }
 
     return val
@@ -482,17 +495,20 @@ const Application = () => {
 
     switch (activeStep) {
       case 0:
+        console.log("Step 1")
         if (handlePersonalForm()) {
           setActiveStep((prevActiveStep) => prevActiveStep + 1)
         }
         break;
       case 1:
+        console.log("Step 2")
         if (handlePlotForm()) {
           setActiveStep((prevActiveStep) => prevActiveStep + 1)
         }
         break;
       case 2:
         //
+        console.log("Step 3")
         if (handlePaymentForm()) {
           console.log("Handle Payment Form")
           if (proceed) {
@@ -532,17 +548,17 @@ const Application = () => {
   return (
     <div className={classes.root}>
       <div className="row " >
-        <div className="col-1 justify-content-center text-center" >
-            <IconButton
+        <div className="col-xs-12  col-sm-1 cl-md-1 col-lg-1 justify-content-center text-center" >
+          <IconButton
             color="inherit"
             aria-haspopup="true"
-            style={{ marginTop : '20%' }}
+            style={{ marginTop: '20%' }}
             onClick={() => navigate(-1)}
-            >
-            <Home color="primary" className={classes.homeIcon} />
-            </IconButton>
+          >
+            <KeyboardBackspace color="primary" fontSize="large" />
+          </IconButton>
         </div>
-        <div className="col-11" >
+        <div className="col-xs-12  col-sm-11 cl-md-11 col-lg-11" >
           <Stepper alternativeLabel activeStep={activeStep} connector={<ColorlibConnector />} className={classes.stepper} >
             {steps.map((label) => (
               <Step key={label}>
@@ -556,22 +572,13 @@ const Application = () => {
 
       <div className="row" >
 
-        <div className="col-1" >
+        <div className="col-xs-12  col-sm-1 cl-md-1 col-lg-1" >
 
         </div>
 
-        <div className="col-11" >
-          {activeStep === steps.length ? Progress
-            // (
-            //   <div style={{ width: '100%', textAlign: 'center' }} >
-            //     <Typography className={classes.instructions}>
-            //       All steps completed - you&apos;re finished
-            //     </Typography>
-            //     <Button onClick={handleReset} className={classes.button}>
-            //       Reset
-            //     </Button>
-            //   </div>
-            // ) 
+        <div className="col-xs-12  col-sm-11 cl-md-11 col-lg-11" >
+          {activeStep === steps.length
+            ? Progress
             : (
               <div style={{ width: '100%', textAlign: 'center' }} >
                 {getForms(activeStep, personalModel, plotModel, paymentModel)}
