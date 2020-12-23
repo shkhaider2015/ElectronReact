@@ -14,6 +14,7 @@ import EditComp from '../edit/edit';
 import UserList from "../userlist/userList";
 import Payment from "../payment/payment";
 import CPP from "../profile/clientPaymentProfile";
+import IdCardGenrator from "../idCard/idCardGenrator";
 
 
 
@@ -27,6 +28,7 @@ function MyRoutes() {
                     <Route path="/" element={< Home />} /> 
                     <Route path="/report" element={< Report />}/> 
                     <Route path="/edit" element={<EditComp />} />
+                    <Route path="/idcard" element={<IdCardGenrator />} />
                     <Route path="/create" element={< CreateApp />}/> 
                     <Route path="/payment" element={ <Payment /> }  />
                     <Route path="/cpp/:cnic" element={ <CPP /> } />

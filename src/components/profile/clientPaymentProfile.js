@@ -8,6 +8,7 @@ import { useNavigate, useParams } from 'react-router';
 import { ClientsListContext } from '../../context/dataContext';
 import { db, firebase } from '../../config/firebase';
 import { AuthContext } from "../../context/authContext";
+import SuccessBox from "../payment/success";
 
 const useStyle = makeStyles(
     {
@@ -92,6 +93,7 @@ const ClientProfile = () => {
     let currentObject = null
     const clients = React.useContext(ClientsListContext);
     const currentUser = React.useContext(AuthContext)
+    const [success, setSuccess] = React.useState(false);
 
     const [id, setId] = React.useState('')
     const [imageURI, setImageURI] = React.useState('')
@@ -219,7 +221,7 @@ const ClientProfile = () => {
             // )
 
             clients[0].map(
-                (object, index) => object['personal']['cnic'] === cnic ? currentObject=object : null
+                (object, index) => object['personal']['cnic'] === cnic ? currentObject = object : null
             )
         },
         []
@@ -246,12 +248,15 @@ const ClientProfile = () => {
 
         db.collection('clients').doc(number)
             .update({
-                "payment.givenAmount" : ga,
-                "payment.balance" : bl,
-                "extra.lastEditBy" : lastEditBy,
-                "extra.lastEditDate" : lastEditedDate,
+                "payment.givenAmount": ga,
+                "payment.balance": bl,
+                "extra.lastEditBy": lastEditBy,
+                "extra.lastEditDate": lastEditedDate,
             })
-            .then(() => console.log("Update Success"))
+            .then(() => {
+                console.log("Update Success")
+                setSuccess(!success)
+            })
             .catch((e) => {
                 console.error(e)
                 setButton(false)
@@ -271,33 +276,34 @@ const ClientProfile = () => {
 
         db.collection('clients').doc(number)
             .update({
-                "payment.givenAmount" : ga,
-                "payment.balance" : bl,
-                "payment.remainingInstallment" : ri,
-                "extra.lastEditBy" : lastEditBy,
-                "extra.lastEditDate" : lastEditedDate,
+                "payment.givenAmount": ga,
+                "payment.balance": bl,
+                "payment.remainingInstallment": ri,
+                "extra.lastEditBy": lastEditBy,
+                "extra.lastEditDate": lastEditedDate,
             })
-            .then(() => console.log("Update Success"))
+            .then(() => {
+                console.log("Update Success")
+                setSuccess(!success);
+            })
             .catch((e) => {
                 console.error(e)
                 setButton(false)
             })
     }
-   
+
 
     const handleSubmit = () => {
         if (newAmount) {
-            if(procedure === "Installment")
-            {
+            if (procedure === "Installment") {
                 handleInstallmentUpdate()
             }
-            else
-            {
+            else {
                 handleUpdate()
             }
 
             setButton(true)
-            
+
         }
         else {
             return;
@@ -307,204 +313,209 @@ const ClientProfile = () => {
 
     return (
         <div className={classes.root}>
-            <Grid container direction="column" >
+            {
+                success
+                    ? <SuccessBox open={success} />
+                    :
+                    <Grid container direction="column" >
 
-                <Grid item xs={12} sm={12} md={12} lg={12} >
-                    <Grid item xs={2} sm={2} md={2} >
-                        <IconButton
-                            aria-haspopup="true"
-                            color="inherit"
-                            onClick={() => navigate(-1)}
-                        >
-                            <KeyboardBackspace fontSize="large" color="primary" />
+                        <Grid item xs={12} sm={12} md={12} lg={12} >
+                            <Grid item xs={2} sm={2} md={2} >
+                                <IconButton
+                                    aria-haspopup="true"
+                                    color="inherit"
+                                    onClick={() => navigate(-1)}
+                                >
+                                    <KeyboardBackspace fontSize="large" color="primary" />
 
-                        </IconButton>
-                    </Grid>
-                </Grid>
-                <Grid item xs={12} sm={12} md={12} lg={12} >
-                    <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', marginLeft: '15%', marginTop: '3%' }} >
-                        <div>
-                            <Avatar alt="name" src={imageURI} style={{ width: '150px', height: '150px', boxShadow: '0 0 30px 0 rgba(20, 27, 202, .17)' }} />
-                        </div>
-                        <div style={{ display: 'flex', flexDirection: 'column', marginLeft: '5%', width: '50%' }} >
-                            <div style={{ display: 'flex', flexDirection: 'row', width: '50%' }} >
-                                <div style={{ width: '40%' }} ><span style={{ fontSize: 10, fontWeight: 'normal', paddingRight: '10%' }} >Name</span></div>
-                                <div style={{ width: '60%' }} ><span style={{ fontSize: 10, fontWeight: 'bold' }} > {name} </span></div>
-                            </div>
-
-                            <div style={{ display: 'flex', flexDirection: 'row', width: '50%' }} >
-                                <div style={{ width: '40%' }} ><span style={{ fontSize: 10, fontWeight: 'normal', paddingRight: '10%' }} >Father Name</span></div>
-                                <div style={{ width: '60%' }} ><span style={{ fontSize: 10, fontWeight: 'normal' }} > {fatherName} </span></div>
-                            </div>
-
-                            <div style={{ display: 'flex', flexDirection: 'row', width: '50%' }} >
-                                <div style={{ width: '40%' }} ><span style={{ fontSize: 10, fontWeight: 'normal', paddingRight: '10%' }} >CNIC</span></div>
-                                <div style={{ width: '60%' }} ><span style={{ fontSize: 10, fontWeight: 'normal' }} > {cNIC} </span></div>
-                            </div>
-
-                            <div style={{ display: 'flex', flexDirection: 'row', width: '50%' }} >
-                                <div style={{ width: '40%' }} ><span style={{ fontSize: 10, fontWeight: 'normal', paddingRight: '10%' }} >Email</span></div>
-                                <div style={{ width: '60%' }} ><span style={{ fontSize: 10, fontWeight: 'normal' }} > {email} </span></div>
-                            </div>
-
-                            <div style={{ display: 'flex', flexDirection: 'row', width: '50%' }} >
-                                <div style={{ width: '40%' }} ><span style={{ fontSize: 10, fontWeight: 'normal', paddingRight: '10%' }} >Phone</span></div>
-                                <div style={{ width: '60%' }} ><span style={{ fontSize: 10, fontWeight: 'normal' }} > {cellPhone} </span></div>
-                            </div>
-
-                            <div style={{ display: 'flex', flexDirection: 'row', width: '50%' }} >
-                                <div style={{ width: '40%' }} ><span style={{ fontSize: 10, fontWeight: 'normal', paddingRight: '10%' }} >Address</span></div>
-                                <div style={{ width: '60%' }} ><span style={{ fontSize: 10, fontWeight: 'normal' }} > {address} </span></div>
-                            </div>
-
-                        </div>
-                    </div>
-                </Grid>
-
-                <Grid item xs={12} sm={12} md={12} lg={12} >
-                    <div style={{ width: '70%', marginTop: '5%', marginLeft: '15%' }} className='row' >
-
-                        <Grid container >
-
-                            <Grid item xs={12} sm={12} md={6} lg={6} >
-                                <div style={{ display: 'flex', flexDirection: 'column', width: '100%', paddingBottom: '3%' }}>
-
-
-                                    <div style={{ display: 'flex', flexDirection: 'row' }} >
-                                        <div style={{ width: '50%' }} >
-                                            <span>Total Amount</span>
-                                        </div>
-                                        <div style={{ width: '50%' }} >
-                                            <span> {totalAmount} </span>
-                                        </div>
+                                </IconButton>
+                            </Grid>
+                        </Grid>
+                        <Grid item xs={12} sm={12} md={12} lg={12} >
+                            <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', marginLeft: '15%', marginTop: '3%' }} >
+                                <div>
+                                    <Avatar alt="name" src={imageURI} style={{ width: '150px', height: '150px', boxShadow: '0 0 30px 0 rgba(20, 27, 202, .17)' }} />
+                                </div>
+                                <div style={{ display: 'flex', flexDirection: 'column', marginLeft: '5%', width: '50%' }} >
+                                    <div style={{ display: 'flex', flexDirection: 'row', width: '50%' }} >
+                                        <div style={{ width: '40%' }} ><span style={{ fontSize: 10, fontWeight: 'normal', paddingRight: '10%' }} >Name</span></div>
+                                        <div style={{ width: '60%' }} ><span style={{ fontSize: 10, fontWeight: 'bold' }} > {name} </span></div>
                                     </div>
 
-                                    <div style={{ display: 'flex', flexDirection: 'row' }} >
-                                        <div style={{ width: '50%' }} >
-                                            <span>Given Amount</span>
-                                        </div>
-                                        <div style={{ width: '50%' }} >
-                                            <span> {Number(givenAmount) + Number(newAmount)} </span>
-                                        </div>
+                                    <div style={{ display: 'flex', flexDirection: 'row', width: '50%' }} >
+                                        <div style={{ width: '40%' }} ><span style={{ fontSize: 10, fontWeight: 'normal', paddingRight: '10%' }} >Father Name</span></div>
+                                        <div style={{ width: '60%' }} ><span style={{ fontSize: 10, fontWeight: 'normal' }} > {fatherName} </span></div>
                                     </div>
 
-                                    <div style={{ display: 'flex', flexDirection: 'row' }} >
-                                        <div style={{ width: '50%' }} >
-                                            <span>Balance</span>
-                                        </div>
-                                        <div style={{ width: '50%' }} >
-                                            <span> {Number(totalAmount) - (Number(givenAmount) + Number(newAmount))} </span>
-                                        </div>
+                                    <div style={{ display: 'flex', flexDirection: 'row', width: '50%' }} >
+                                        <div style={{ width: '40%' }} ><span style={{ fontSize: 10, fontWeight: 'normal', paddingRight: '10%' }} >CNIC</span></div>
+                                        <div style={{ width: '60%' }} ><span style={{ fontSize: 10, fontWeight: 'normal' }} > {cNIC} </span></div>
                                     </div>
 
-                                    <div style={{ display: 'flex', flexDirection: 'row' }} >
-                                        <div style={{ width: '50%' }} >
-                                            <span>Procedure</span>
-                                        </div>
-                                        <div style={{ width: '50%' }} >
-                                            <span> {procedure} </span>
-                                        </div>
+                                    <div style={{ display: 'flex', flexDirection: 'row', width: '50%' }} >
+                                        <div style={{ width: '40%' }} ><span style={{ fontSize: 10, fontWeight: 'normal', paddingRight: '10%' }} >Email</span></div>
+                                        <div style={{ width: '60%' }} ><span style={{ fontSize: 10, fontWeight: 'normal' }} > {email} </span></div>
                                     </div>
 
-                                    {
-                                        procedure === "Installment"
-                                            ? <div style={{ display: 'flex', flexDirection: 'column', width: '100%' }} >
+                                    <div style={{ display: 'flex', flexDirection: 'row', width: '50%' }} >
+                                        <div style={{ width: '40%' }} ><span style={{ fontSize: 10, fontWeight: 'normal', paddingRight: '10%' }} >Phone</span></div>
+                                        <div style={{ width: '60%' }} ><span style={{ fontSize: 10, fontWeight: 'normal' }} > {cellPhone} </span></div>
+                                    </div>
 
-                                                <div style={{ display: 'flex', flexDirection: 'row' }} >
-                                                    <div style={{ width: '50%' }} >
-                                                        <span>Total Installment</span>
-                                                    </div>
-                                                    <div style={{ width: '50%' }} >
-                                                        <span> {totalInstallment} </span>
-                                                    </div>
+                                    <div style={{ display: 'flex', flexDirection: 'row', width: '50%' }} >
+                                        <div style={{ width: '40%' }} ><span style={{ fontSize: 10, fontWeight: 'normal', paddingRight: '10%' }} >Address</span></div>
+                                        <div style={{ width: '60%' }} ><span style={{ fontSize: 10, fontWeight: 'normal' }} > {address} </span></div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </Grid>
+
+                        <Grid item xs={12} sm={12} md={12} lg={12} >
+                            <div style={{ width: '70%', marginTop: '5%', marginLeft: '15%' }} className='row' >
+
+                                <Grid container >
+
+                                    <Grid item xs={12} sm={12} md={6} lg={6} >
+                                        <div style={{ display: 'flex', flexDirection: 'column', width: '100%', paddingBottom: '3%' }}>
+
+
+                                            <div style={{ display: 'flex', flexDirection: 'row' }} >
+                                                <div style={{ width: '50%' }} >
+                                                    <span>Total Amount</span>
                                                 </div>
-
-                                                <div style={{ display: 'flex', flexDirection: 'row' }} >
-                                                    <div style={{ width: '50%' }} >
-                                                        <span>Remaining Installment</span>
-                                                    </div>
-                                                    <div style={{ width: '50%' }} >
-                                                        <span> {remainingInstallment} </span>
-                                                    </div>
+                                                <div style={{ width: '50%' }} >
+                                                    <span> {totalAmount} </span>
                                                 </div>
-
-
                                             </div>
-                                            : null
-                                    }
 
-                                </div>
-                            </Grid>
-                            <Grid item xs={12} sm={12} md={6} lg={6} >
+                                            <div style={{ display: 'flex', flexDirection: 'row' }} >
+                                                <div style={{ width: '50%' }} >
+                                                    <span>Given Amount</span>
+                                                </div>
+                                                <div style={{ width: '50%' }} >
+                                                    <span> {Number(givenAmount) + Number(newAmount)} </span>
+                                                </div>
+                                            </div>
 
-                                <div style={{ display: 'flex', flexDirection: 'column', width: '100%' }} >
+                                            <div style={{ display: 'flex', flexDirection: 'row' }} >
+                                                <div style={{ width: '50%' }} >
+                                                    <span>Balance</span>
+                                                </div>
+                                                <div style={{ width: '50%' }} >
+                                                    <span> {Number(totalAmount) - (Number(givenAmount) + Number(newAmount))} </span>
+                                                </div>
+                                            </div>
 
-                                    {
-                                        procedure !== "Installment"
-                                            ? <TextField
-                                                style={{ width: '80%' }}
-                                                id="totalAmount"
-                                                label="New Amount"
+                                            <div style={{ display: 'flex', flexDirection: 'row' }} >
+                                                <div style={{ width: '50%' }} >
+                                                    <span>Procedure</span>
+                                                </div>
+                                                <div style={{ width: '50%' }} >
+                                                    <span> {procedure} </span>
+                                                </div>
+                                            </div>
+
+                                            {
+                                                procedure === "Installment"
+                                                    ? <div style={{ display: 'flex', flexDirection: 'column', width: '100%' }} >
+
+                                                        <div style={{ display: 'flex', flexDirection: 'row' }} >
+                                                            <div style={{ width: '50%' }} >
+                                                                <span>Total Installment</span>
+                                                            </div>
+                                                            <div style={{ width: '50%' }} >
+                                                                <span> {totalInstallment} </span>
+                                                            </div>
+                                                        </div>
+
+                                                        <div style={{ display: 'flex', flexDirection: 'row' }} >
+                                                            <div style={{ width: '50%' }} >
+                                                                <span>Remaining Installment</span>
+                                                            </div>
+                                                            <div style={{ width: '50%' }} >
+                                                                <span> {remainingInstallment} </span>
+                                                            </div>
+                                                        </div>
+
+
+                                                    </div>
+                                                    : null
+                                            }
+
+                                        </div>
+                                    </Grid>
+                                    <Grid item xs={12} sm={12} md={6} lg={6} >
+
+                                        <div style={{ display: 'flex', flexDirection: 'column', width: '100%' }} >
+
+                                            {
+                                                procedure !== "Installment"
+                                                    ? <TextField
+                                                        style={{ width: '80%' }}
+                                                        id="totalAmount"
+                                                        label="New Amount"
+                                                        variant="outlined"
+                                                        type="number"
+                                                        value={newAmount}
+                                                        color="primary"
+                                                        onChange={(e) => {
+                                                            setNewAmount(e.target.value)
+                                                        }}
+                                                        helperText={totalAmount <= 0 ? <span  >Please specify total amount</span> : ""}
+                                                        InputProps={{
+                                                            endAdornment: (
+                                                                <InputAdornment position="end">
+                                                                    <Name className={classes.iconColor} />
+                                                                </InputAdornment>
+                                                            ),
+                                                        }}
+                                                    />
+                                                    : <TextField
+                                                        style={{ width: '80%' }}
+                                                        id="install"
+                                                        label="New Installment"
+                                                        variant="outlined"
+                                                        type="number"
+                                                        value={newAmount}
+                                                        color="primary"
+                                                        onChange={(e) => {
+                                                            setNewAmount(e.target.value)
+
+                                                        }}
+                                                        helperText={totalAmount <= 0 ? <span  >Please specify total amount</span> : ""}
+                                                        InputProps={{
+                                                            endAdornment: (
+                                                                <InputAdornment position="end">
+                                                                    <Name className={classes.iconColor} />
+                                                                </InputAdornment>
+                                                            ),
+                                                        }}
+                                                    />
+                                            }
+
+                                            <Button
                                                 variant="outlined"
-                                                type="number"
-                                                value={newAmount}
                                                 color="primary"
-                                                onChange={(e) => {
-                                                    setNewAmount(e.target.value)
-                                                }}
-                                                helperText={totalAmount <= 0 ? <span  >Please specify total amount</span> : ""}
-                                                InputProps={{
-                                                    endAdornment: (
-                                                        <InputAdornment position="end">
-                                                            <Name className={classes.iconColor} />
-                                                        </InputAdornment>
-                                                    ),
-                                                }}
-                                            />
-                                            : <TextField
-                                                style={{ width: '80%' }}
-                                                id="install"
-                                                label="New Installment"
-                                                variant="outlined"
-                                                type="number"
-                                                value={newAmount}
-                                                color="primary"
-                                                onChange={(e) => {
-                                                    setNewAmount(e.target.value)
-                                                
-                                                }}
-                                                helperText={totalAmount <= 0 ? <span  >Please specify total amount</span> : ""}
-                                                InputProps={{
-                                                    endAdornment: (
-                                                        <InputAdornment position="end">
-                                                            <Name className={classes.iconColor} />
-                                                        </InputAdornment>
-                                                    ),
-                                                }}
-                                            />
-                                    }
+                                                title="Submit"
+                                                disabled={button}
+                                                style={{ width: '80%', height: '3%', marginTop: '2%' }}
+                                                onClick={() => handleSubmit()}
+                                            >Submit</Button>
 
-                                    <Button
-                                        variant="outlined"
-                                        color="primary"
-                                        title="Submit"
-                                        disabled={button}
-                                        style={{ width: '80%', height: '3%', marginTop : '2%' }}
-                                        onClick={() => handleSubmit()}
-                                    >Submit</Button>
+                                        </div>
 
-                                </div>
+                                    </Grid>
 
-                            </Grid>
+                                </Grid>
+
+                            </div>
 
                         </Grid>
 
-                    </div>
 
-                </Grid>
-
-
-            </Grid>
+                    </Grid>
+            }
 
         </div>
     )

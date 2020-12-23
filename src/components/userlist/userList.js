@@ -1,8 +1,8 @@
 import React from "react";
 import './reportCSS.css'
 import SearchBar from '../report/searchBar'
-import { Avatar, Button, Dialog } from "@material-ui/core";
-import { Edit } from '@material-ui/icons';
+import { Avatar, Button, Dialog, IconButton } from "@material-ui/core";
+import { Edit, KeyboardBackspace } from '@material-ui/icons';
 import zainlogo from '../../RawData/mainassociates_icon.png'
 import { db } from "../../config/firebase";
 import { AuthContext } from "../../context/authContext";
@@ -17,26 +17,8 @@ const UserList = (props) => {
     const currentUser = React.useContext(AuthContext)
     const users = React.useContext(UserListContext)
 
-    const [userList, setUserList] = React.useState([])
     const [open, setOpen] = React.useState(false)
     const [propsObject, setPropsObject] = React.useState(null)
-
-    const getAllUsers = () => {
-        db.collection('users').get()
-            .then((ref) => {
-                console.log("All users", ref.docs)
-                var usersArray = []
-                for (let x in ref.docs) {
-                    console.log("Single : ", ref.docs[x])
-                    if (ref.docs[x].exists) {
-                        console.log(ref.docs[x].data())
-                        usersArray.push(ref.docs[x].data())
-                    }
-                }
-                setUserList(usersArray)
-            })
-            .catch(e => console.log(e))
-    }
 
     React.useEffect(
         () => {
@@ -84,7 +66,19 @@ const UserList = (props) => {
 
         <div className="container" >
 
-            <div className="logo-hover text-center mt-2 pt-2"><img src={zainlogo} height="13%" width="13%" alt="hjh" onClick={() => navigate(-1)} /></div>
+            <div className="logo-hover d-flex flex-row justify-content-between text-center mt-2 pt-2">
+                <div style={{ left : 0 }} > 
+                
+                    <IconButton
+                     color="inherit"
+                     onClick={() => navigate(-1)}
+                    >
+                        <KeyboardBackspace fontSize="large" color="primary" />
+                    </IconButton>
+                 </div>
+                <img className src={zainlogo} height="13%" width="13%" alt="hjh" />
+                <span></span>
+                </div>
 
             {
                 open
@@ -95,11 +89,10 @@ const UserList = (props) => {
                     <tbody>
                         {users[0].length !== 0 ? users[0].map(
                             (obj, ind) => (
-                                obj['isDeleted']
+                                obj['isDeleted'] || obj['id'] === currentUser.currentUser.uid
                                 ? null
-                                : <tr className="table-hover1  mt-5 pt-5 shadow rounded" key={ind}  >
-    
-                                <td colSpan="4" className="pt-4 pl-5" onClick={() => handleOpen(obj)} >
+                                : <tr className="table-hover1  mt-5 pt-5 shadow rounded" key={ind} >    
+                                    <td colSpan="4" className="pt-4 pl-5" onClick={() => handleOpen(obj)} >
                                     <div style={{ display: 'flex' }} >
                                         <Avatar atl="ss" src={obj['imageURI']} />
                                         <div style={{ display: 'flex', flexDirection: 'column', marginLeft: '3%' }}>
@@ -108,7 +101,7 @@ const UserList = (props) => {
                                         </div>
                                     </div>
                                 </td>
-                                <td className="pl-5 pt-3 text-right" colSpan="1">
+                                    <td className="pl-5 pt-3 text-right" colSpan="1">
                                     {
                                         obj['isAccepted']
                                             ? <button className="btn text-right btn-succes disable " disabled >Approved</button>
@@ -116,9 +109,9 @@ const UserList = (props) => {
                                     }
     
                                 </td>
-                                <td className="text-center  pt-3" colSpan="1">
+                                    <td className="text-center  pt-3" colSpan="1">
                                    <button className="btn btn-danger" onClick={() => deleteUser(obj)} >Delete</button> 
-                                 </td>
+                                </td>
                             </tr>
                             )
                         ) : null}

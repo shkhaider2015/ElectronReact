@@ -16,6 +16,7 @@ import { AuthContext } from "../../../context/authContext";
 import { AdminContext } from "../../../context/adminContext";
 import { UserListContext, ClientsListContext } from "../../../context/dataContext";
 import { db } from "../../../config/firebase";
+import UserProfile from "../../profile/userProfile";
 
 const useStyle = makeStyles(
     (theme) => ({
@@ -42,6 +43,8 @@ const Homepage2 = () => {
     const clients = React.useContext(ClientsListContext)
     const users = React.useContext(UserListContext)
     const [profilePic, setProfilePic] = React.useState(null)
+    const [profileOpen, setProfileOpen] = React.useState(false)
+    const [objectForProfile, setObjectForProfile] = React.useState(null);
     const navigate = useNavigate()
     const open = Boolean(anchorEl);
 
@@ -93,6 +96,7 @@ const Homepage2 = () => {
                             if (doc.data()[x]['id'] === currentUser.currentUser.uid) {
                                 // isAdmin[1](true)
                                 isAdmin[1](doc.data()[x]['adminRight'])
+                                setObjectForProfile(doc.data()[x])
                             }
                             docs.push(doc.data()[x])
                         }
@@ -130,10 +134,17 @@ const Homepage2 = () => {
         console.log(currentUser.currentUser)
     }
 
+    const handleProfileOpen = () => {
+        setAnchorEl(null)
+        setProfileOpen(true)
+    }
+    const handleProfileClose = () => {
+        setProfileOpen(false)
+    }
+
     return (
         <div className="container-fluid " >
 
-            { console.log(clients[0])}
 
             <div className="row">
 
@@ -172,74 +183,88 @@ const Homepage2 = () => {
                                     open={open}
                                     onClose={() => handleClose()}
                                 >
-                                    <MenuItem onClick={() => handleClose()}>Profile</MenuItem>
+                                    <MenuItem onClick={() => handleProfileOpen()}>Profile</MenuItem>
                                     {isAdmin[0] ? <MenuItem onClick={userList}>User List</MenuItem> : null}
                                     <MenuItem onClick={() => handleLogout()}>logout</MenuItem>
                                 </Menu>
                             </div>
 
                         </div>
-                        <div className="row justify-content-center text-center">
-                            <div className="col-sm-6 col-md-4 col-lg-4">
-                                <Link to="/create" className="myLink"  >
-                                    <div className="box">
-                                        <div className="our-services settings">
-                                            <div className="icon icon-create"> <SVG_Create className="" fill="white" style={{ height: "70%", width: "70%", color: "whitesmoke" }} /> </div>
-                                            <h4>CREATE</h4>
-                                            <p>Create Client Profile</p>
-                                        </div>
-                                    </div>
-                                </Link>
-                            </div>
 
-                            {
-                                isAdmin[0]
-                                    ?
+                        {
+                            profileOpen && objectForProfile
+                                ? <div> <UserProfile open={profileOpen} handleClose={handleProfileClose} obj={objectForProfile} /> </div>
+                                : <div>
+
+                                <div className="row justify-content-center text-center">
                                     <div className="col-sm-6 col-md-4 col-lg-4">
-                                        <Link to="/report" className="myLink" >
+                                        <Link to="/create" className="myLink"  >
                                             <div className="box">
-                                                <div className="our-services privacy">
-                                                    <div className="icon icon-query"> <SVG_Query className="" fill="white" style={{ height: "70%", width: "70%", color: "whitesmoke" }} /></div>
-                                                    <h4>QUERY</h4>
-                                                    <p>Client Report (Admin Only)</p>
-                                                </div>
-                                            </div> </Link>
-                                    </div>
-                                    : <div className="col-sm-6 col-md-4 col-lg-4">
-                                        <Link to="/report" className="myLink" >
-                                            <div className="box">
-                                                <div className="our-services speedup">
-                                                    <div className="icon icon-report"> <SVG_Report className="" fill="white" style={{ height: "70%", width: "70%", color: "whitesmoke" }} /> </div>
-                                                    <h4>REPORTS</h4>
-                                                    <p>Client Report (Admin Only) </p>
+                                                <div className="our-services settings">
+                                                    <div className="icon icon-create"> <SVG_Create className="" fill="white" style={{ height: "70%", width: "70%", color: "whitesmoke" }} /> </div>
+                                                    <h4>CREATE</h4>
+                                                    <p>Create Client Profile</p>
                                                 </div>
                                             </div>
                                         </Link>
                                     </div>
-                            }
-                        </div>
-                        <div className="row  mb-3 justify-content-center">
-                            <div className="col-sm-6 col-md-4 col-lg-4">
-                                <Link to="/payment" className="myLink" >
-                                    <div className="box">
-                                        <div className="our-services ssl">
-                                            <div className="icon icon-payment " > <AttachMoneyOutlinedIcon className="" style={{ height: "70%", width: "70%", color: "whitesmoke" }} /> </div>
-                                            <h4>Payment</h4>
-                                            <p>Payment Information</p>
+    
+                                    {
+                                        isAdmin[0]
+                                            ?
+                                            <div className="col-sm-6 col-md-4 col-lg-4">
+                                                <Link to="/report" className="myLink" >
+                                                    <div className="box">
+                                                        <div className="our-services privacy">
+                                                            <div className="icon icon-query"> <SVG_Query className="" fill="white" style={{ height: "70%", width: "70%", color: "whitesmoke" }} /></div>
+                                                            <h4>QUERY</h4>
+                                                            <p>Client Report (Admin Only)</p>
+                                                        </div>
+                                                    </div> </Link>
+                                            </div>
+                                            : <div className="col-sm-6 col-md-4 col-lg-4">
+                                                <Link to="/report" className="myLink" >
+                                                    <div className="box">
+                                                        <div className="our-services speedup">
+                                                            <div className="icon icon-report"> <SVG_Report className="" fill="white" style={{ height: "70%", width: "70%", color: "whitesmoke" }} /> </div>
+                                                            <h4>REPORTS</h4>
+                                                            <p>Client Report (Admin Only) </p>
+                                                        </div>
+                                                    </div>
+                                                </Link>
+                                            </div>
+                                    }
+    
+                                </div>
+                                <div className="row  mb-3 justify-content-center">
+                                    <div className="col-sm-6 col-md-4 col-lg-4">
+                                        <Link to="/payment" className="myLink" >
+                                            <div className="box">
+                                                <div className="our-services ssl">
+                                                    <div className="icon icon-payment " > <AttachMoneyOutlinedIcon className="" style={{ height: "70%", width: "70%", color: "whitesmoke" }} /> </div>
+                                                    <h4>Payment</h4>
+                                                    <p>Payment Information</p>
+                                                </div>
+                                            </div>
+                                        </Link>
+                                    </div>
+                                    <div className="col-sm-6 col-md-4 col-lg-4">
+                                        <div className="box">
+                                            <div className="our-services database">
+                                                <div className="icon icon-scanQR"> <ScanQR className="" fill="white" style={{ height: "70%", width: "70%", color: "whitesmoke" }} /> </div>
+                                                <h4>SCAN QR</h4>
+                                                <p>Search By Scaning</p>
+                                            </div>
                                         </div>
                                     </div>
-                                </Link>
-                            </div>
-                            <div className="col-sm-6 col-md-4 col-lg-4">
-                                <div className="box">
-                                    <div className="our-services database">
-                                        <div className="icon icon-scanQR"> <ScanQR className="" fill="white" style={{ height: "70%", width: "70%", color: "whitesmoke" }} /> </div>
-                                        <h4>SCAN QR</h4>
-                                        <p>Search By Scaning</p>
-                                    </div>
                                 </div>
+    
                             </div>
-                        </div>
+                        }
+
+                        
+
+
                     </div>
 
 

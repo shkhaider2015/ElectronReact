@@ -75,7 +75,7 @@ const UserProfile = ({ obj, handleClose, open }) => {
     return (<Dialog
         open={open}
         onClose={handleClose}
-        maxWidth="lg"
+        maxWidth="xl"
     >
         <div>
 

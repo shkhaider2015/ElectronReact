@@ -144,6 +144,15 @@ const Reports = () => {
         setPrintNo(x)
     }
 
+    const handleIdCard = (cnic) =>
+    {
+        clients[0].map(
+            (object, index) => object['personal']['cnic'] === cnic
+            ? navigate("/idcard", { state : { obj : object } })
+            : null
+        )
+    }
+
 
 
     return (
@@ -177,21 +186,6 @@ const Reports = () => {
                                     <SearchBar />
                                 </div>
                                 <div className="mt-2 mb-2 pb-3 col-12 client-list">
-
-                                    {/* {
-                                        clients[0].map(
-                                            (object, index) => (
-                                                object.map(
-                                                    (obj, ind) => (
-                                                        ind === 0
-                                                            ? <div key={index} onClick={e => muClick(index)} > <Sidecomponent obj={obj} checked={[index, clicked]} /> </div>
-                                                            : null
-                                                    )
-                                                )
-                                            )
-                                        )
-
-                                    } */}
                                     {
                                         clients[0].map(
                                             (object, index) => (
@@ -211,72 +205,6 @@ const Reports = () => {
 
                                                     <div className="row">
                                                         <div className="col-12  ">
-                                                            {/* {
-                                                                clients[0].map(
-                                                                    (object, index) => (
-                                                                        clicked === index
-                                                                            ? object.map(
-                                                                                (obj, ind) => (
-                                                                                    ind === 0
-                                                                                        ? <div key={index} className="row " >
-                                                                                            <div className=" col-8" >
-                                                                                                <Avatar alt={obj['name']} src={obj['imageURI']} style={{ height: '60px', width: '60px', marginLeft: '15%', marginRight: 'auto' }} />
-
-                                                                                                <span style={{ marginLeft: '3%', fontSize: '12' }} > {obj['name']} </span>
-                                                                                            </div>
-                                                                                            {
-                                                                                                isAdmin[0]
-                                                                                                    ? <div className="col-4 " >
-                                                                                                        {/* <Button
-                                                                                                            className="mt-3 ml-0"
-                                                                                                            variant="contained"
-                                                                                                            color="primary"
-                                                                                                            startIcon={<Edit />}
-                                                                                                            onClick={handleEdit}
-                                                                                                        >
-                                                                                                            Edit
-                                                                                                </Button> */}
-                                                            {/* <IconButton
-                                                                                                            aria-label="account of current user"
-                                                                                                            aria-controls="menu-appbar"
-                                                                                                            aria-haspopup="true"
-                                                                                                            color="inherit"
-                                                                                                            onClick={(e) => handleMenu(e)}
-                                                                                                        >
-                                                                                                            <MoreVert fontSize="large" color="primary" />
-                                                                                                        </IconButton>
-                                                                                                        <Menu
-                                                                                                            id="menu-appbar"
-                                                                                                            anchorEl={anchorEl}
-                                                                                                            anchorOrigin={{
-                                                                                                                vertical: 'top',
-                                                                                                                horizontal: 'right',
-                                                                                                            }}
-                                                                                                            keepMounted
-                                                                                                            transformOrigin={{
-                                                                                                                vertical: 'top',
-                                                                                                                horizontal: 'right',
-                                                                                                            }}
-                                                                                                            open={open}
-                                                                                                            onClose={() => handleMenuClose()}
-                                                                                                        >
-                                                                                                            <MenuItem onClick={() => handleEdit()}>Edit</MenuItem>
-                                                                                                            <MenuItem onClick={() => handleDelete()}>Delete</MenuItem>
-                                                                                                        </Menu>
-                                                                                                    </div>
-                                                                                                    : null
-                                                                                            }
-
-                                                                                        </div>
-                                                                                        : null
-                                                                                )
-                                                                            )
-                                                                            : null
-                                                                    )
-                                                                )
-                                                            } */}
-                                                            {/* } */}
-
 
 
                                                             {
@@ -317,6 +245,7 @@ const Reports = () => {
                                                                                                 onClose={() => handleMenuClose()}
                                                                                             >
                                                                                                 <MenuItem onClick={() => handleEdit(object['personal']['cnic'])}>Edit</MenuItem>
+                                                                                                <MenuItem onClick={() => handleIdCard(object['personal']['cnic'])}>ID Card</MenuItem>
                                                                                                 <MenuItem onClick={() => handleDelete(object['personal']['cnic'])}>Delete</MenuItem>
                                                                                             </Menu>
                                                                                         </div>
