@@ -13,7 +13,9 @@ const theme = createMuiTheme(
       primary: {
         main: '#EF3729',
       },
-      gradient: 'linear-gradient(to top left, #c74081, #ef3729)'
+      secondary: {
+        main : '#FF7F75',
+      }
     }
   }
 )

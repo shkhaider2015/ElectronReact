@@ -110,7 +110,7 @@ const useColorlibStepIconStyles = makeStyles({
   active: {
     backgroundImage:
       'linear-gradient( 136deg, rgb(242,113,33) 0%, rgb(233,64,87) 50%, rgb(138,35,135) 100%)',
-    boxShadow: '0 4px 10px 0 rgba(0,0,0,.25)',
+    boxShadow: '0 4px 10px 0 rgba(20, 27, 202, .17)',
   },
   completed: {
     backgroundImage:
@@ -586,7 +586,7 @@ const Application = () => {
                   <div>
                     <Button disabled={activeStep === 0} onClick={handleBack} className={classes.buttonLeft}>
                       Back
-              </Button>
+                   </Button>
                     <Button
                       variant="contained"
                       color="primary"

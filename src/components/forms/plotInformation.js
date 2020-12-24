@@ -12,11 +12,8 @@ const useStyle = makeStyles(
     (theme) => (
         {
             root: {
-                // backgroundImage: `url(${BackgroundImage})`,
-                // backgroundRepeat: 'repeat-y',
-                // backgroundSize: '100% 100%',
-                // backgroundPosition: '0% 0%',
                 marginTop : '6.55%',
+                height : '80%',
             },
             linearProgress: {
                 backgroundColor: "#ffffff",

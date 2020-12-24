@@ -10,11 +10,8 @@ const useStyle = makeStyles(
     (theme) => (
         {
             root: {
-                // backgroundImage: `url(${BackgroundImage})`,
-                // backgroundRepeat: 'repeat-y',
-                // backgroundSize: '100% 100%',
-                // backgroundPosition: '0% 0%',
                 marginTop: '0%',
+                height : '80%',
             },
             linearProgress: {
                 backgroundColor: "#ffffff",
@@ -83,6 +80,7 @@ const useStyle = makeStyles(
                 width: theme.spacing(13),
                 height: theme.spacing(13),
                 background: 'linear-gradient(to top left, #c74081, #ef3729)',
+                boxShadow: '0 0 30px 0 rgba(20, 27, 202, .17)'
 
             },
             pairElement: {
@@ -98,7 +96,7 @@ const useStyle = makeStyles(
                 height: '50%'
             },
             iconColor: {
-                color: theme.palette.primary.main
+                color: theme.palette.secondary.main
             },
             input: {
                 display: 'none',
@@ -216,7 +214,7 @@ return (
                                 color="primary"
                                 value={model.name}
                                 onChange={(e) => model.setName(e.target.value)}
-                                helperText={model.name === "" ? <span style={{ color: 'red' }} >Required</span> : <span style={{ color: 'lightgreen' }} >Correct</span>}
+                                helperText={model.name === "" ? <span>Required</span> : <span style={{ color: 'lightgreen' }} >Correct</span>}
                                 InputProps={{
                                     endAdornment: (
                                         <InputAdornment position="end">
@@ -236,7 +234,7 @@ return (
                                 color="primary"
                                 value={model.fatherName}
                                 onChange={(e) => model.setFatherName(e.target.value)}
-                                helperText={model.fatherName === "" ? <span style={{ color: 'red' }} >Required</span> : <span style={{ color: 'lightgreen' }} >Correct</span>}
+                                helperText={model.fatherName === "" ? <span>Required</span> : <span style={{ color: 'lightgreen' }} >Correct</span>}
                                 InputProps={{
                                     endAdornment: (
                                         <InputAdornment position="end">
@@ -303,7 +301,7 @@ return (
                                 color="primary"
                                 value={model.email}
                                 onChange={(e) => model.setEmail(e.target.value)}
-                                helperText={model.email === "" ? <span style={{ color: 'red' }} >Required</span> : !validateEmail(model.email) ? <span style={{ color: 'red' }} >Incorrect email</span> : <span style={{ color: 'lightgreen' }} >Correct</span>}
+                                helperText={model.email === "" ? <span >Required</span> : !validateEmail(model.email) ? <span style={{ color: 'red' }} >Incorrect email</span> : <span style={{ color: 'lightgreen' }} >Correct</span>}
                                 InputProps={{
                                     endAdornment: (
                                         <InputAdornment position="end">
@@ -324,7 +322,7 @@ return (
                                 color="primary"
                                 value={model.cNIC}
                                 onChange={handleCnic}
-                                helperText={model.cNIC === "" ? <span style={{ color: 'red' }} >Required</span> : model.cNIC.length !== 15 ? <span style={{ color: 'red' }} >Incorrect</span> : <span style={{ color: 'lightgreen' }} >Correct</span>}
+                                helperText={model.cNIC === "" ? <span>Required</span> : model.cNIC.length !== 15 ? <span style={{ color: 'red' }} >Incorrect</span> : <span style={{ color: 'lightgreen' }} >Correct</span>}
                                 InputProps={{
                                     endAdornment: (
                                         <InputAdornment position="end">
@@ -346,7 +344,7 @@ return (
                             value={model.address}
                             className={classes.myElements}
                             onChange={(e) => model.setAddress(e.target.value)}
-                            helperText={model.address === "" ? <span style={{ color: 'red' }} >Required</span> : <span style={{ color: 'lightgreen' }} >Correct</span>}
+                            helperText={model.address === "" ? <span>Required</span> : <span style={{ color: 'lightgreen' }} >Correct</span>}
                             InputProps={{
                                 endAdornment: (
                                     <InputAdornment position="end">
