@@ -104,7 +104,9 @@ const PlotInformation = ({ model }) => {
 
     return (
         <div className={classes.root}>
-            { model.open ?  ""  : <AlertDialog setProceed={model.setProceed} open={model.open} setOpen={model.setOpen} /> }
+            {/* { !model.open ?  ""  
+            : <AlertDialog setProceed={model.setProceed} proceed={model.proceed} open={model.open} setOpen={model.setOpen} handleNext={handleNext} /> }
+             */}
             <Grid container>
                 <Grid
                     item

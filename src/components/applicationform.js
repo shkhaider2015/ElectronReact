@@ -17,6 +17,7 @@ import { db, storage, firebase } from "../config/firebase";
 import { AuthContext } from "../context/authContext";
 import { useNavigate } from 'react-router-dom';
 import { IconButton } from '@material-ui/core';
+import AlertDialog from './forms/confirmDialog';
 
 
 
@@ -198,7 +199,7 @@ function getStepContent(step) {
   }
 }
 
-const getForms = (step, personalModel, plotModel, paymentModel) => {
+const getForms = (step, personalModel, plotModel, paymentModel, handleNext) => {
   switch (step) {
     case 0:
       return <PersonalInfo model={personalModel} />;
@@ -255,7 +256,7 @@ const Application = () => {
   const [balance, setBalance] = React.useState(0)
   const [givenAmount, setGivenAmount] = React.useState(0)
   const [paymentMethod, setPaymentMethod] = React.useState("")
-  const [open, setOpen] = React.useState(true)
+  const [open, setOpen] = React.useState(false)
   const [disableInstallment, setDisableInstallment] = React.useState(true)
 
 
@@ -270,7 +271,7 @@ const Application = () => {
     cnic: cNIC,
     address: address,
     transfor: transfor,
-    addedBy : currentUser.currentUser.displayName.replace(/\s/g, "")
+    addedBy: currentUser.currentUser.displayName.replace(/\s/g, "")
   }
   const asset = {
     plotName: area,
@@ -295,46 +296,43 @@ const Application = () => {
     paymentMethod: paymentMethod
   }
 
+  const uploadData = (image = "") => {
+
+
+    const cnid = cNIC.replace(/-/g, "");
+    const date = Date.now()
+    personal.imageURI = image;
+    const ee = {
+      addedBy: currentUser.currentUser.displayName,
+      addedDate: date
+    }
+
+    db.collection("clients")
+      .doc(cnid)
+      .set({
+        personal: personal,
+        asset: asset,
+        payment: payment,
+        extra: ee
+      })
+      .then((docRef) => {
+        console.log("Docement written with ID : ", docRef)
+        setIsLoading(false)
+        setIsSucceed(true)
+
+      })
+      .catch((error) => {
+        console.error("erro adding document : ", error)
+        setIsLoading(false)
+        setIsSucceed(false)
+      })
+  }
   React.useEffect(
     () => {
-      const uploadData = () => {
 
 
-        const cnid = cNIC.replace(/-/g, "");
-        const date = Date.now()
-
-        const ee = {
-          addedBy : currentUser.currentUser.displayName,
-          addedDate : date
-        }
-
-         db.collection("clients")
-          .doc(cnid)
-          .set({
-            personal : personal,
-            asset : asset,
-            payment : payment,
-            extra : ee
-          })
-          .then((docRef) => {
-            console.log("Docement written with ID : ", docRef)
-            setIsLoading(false)
-            setIsSucceed(true)
-
-          })
-          .catch((error) => {
-            console.error("erro adding document : ", error)
-            setIsLoading(false)
-            setIsSucceed(false)
-          })
-      }
-
-      if (imageURI) {
-        console.log("Image Upload Succesfully")
-        uploadData()
-      }
     },
-    [imageURI]
+    []
   )
 
   const personalModel =
@@ -401,9 +399,6 @@ const Application = () => {
     setBalance,
     paymentMethod,
     setPaymentMethod,
-    open,
-    setOpen,
-    setProceed,
     disableInstallment,
     setDisableInstallment
   }
@@ -484,14 +479,15 @@ const Application = () => {
       // For instance, get the download URL: https://firebasestorage.googleapis.com/...
       uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
         console.log('File available at', downloadURL);
-        setImageURI(downloadURL)
+        // setImageURI(downloadURL)
+        uploadData(downloadURL)
       });
     });
 
 
   }
 
-  const handleNext = () => {
+  const handleNext = (back=false) => {
 
     switch (activeStep) {
       case 0:
@@ -510,25 +506,26 @@ const Application = () => {
         //
         console.log("Step 3")
         if (handlePaymentForm()) {
-          console.log("Handle Payment Form")
-          if (proceed) {
-            console.log("Proceed True")
-            uploadImage()
-            setActiveStep((prevActiveStep) => prevActiveStep + 1)
-          }
-          {
-            console.log("Proceed False")
-            setOpen(false)
-          }
-
-        }
-        else {
-          console.log("")
+          setActiveStep((prevActiveStep) => prevActiveStep + 1)
         }
         break;
       case 3:
-        //
-        console.log("Ste is 3")
+        console.log("Step is 4")
+        
+        if(back)
+        {
+          setActiveStep((prevActiveStep) => prevActiveStep - 1)
+        }
+        else
+        {
+          setActiveStep((prevActiveStep) => prevActiveStep + 1)
+          uploadImage()
+        }
+        break;
+        case 4:
+        console.log("Step is 5")
+        //upload here
+        
         break;
       default:
       //
@@ -544,9 +541,11 @@ const Application = () => {
   };
 
   const Progress = (<MyProgress isLoading={isLoading} reset={handleReset} succeed={isSucceed} />)
+  const alert = (<AlertDialog handleNext={handleNext} />)
 
   return (
     <div className={classes.root}>
+
       <div className="row " >
         <div className="col-xs-12  col-sm-1 cl-md-1 col-lg-1 justify-content-center text-center" >
           <IconButton
@@ -578,25 +577,28 @@ const Application = () => {
 
         <div className="col-xs-12  col-sm-11 cl-md-11 col-lg-11" >
           {activeStep === steps.length
-            ? Progress
-            : (
-              <div style={{ width: '100%', textAlign: 'center' }} >
-                {getForms(activeStep, personalModel, plotModel, paymentModel)}
-                <div>
-                  <Button disabled={activeStep === 0} onClick={handleBack} className={classes.buttonLeft}>
-                    Back
+            ? alert
+            : activeStep === steps.length + 1
+              ? Progress
+              : (
+                <div style={{ width: '100%', textAlign: 'center' }} >
+                  {getForms(activeStep, personalModel, plotModel, paymentModel, handleNext)}
+                  <div>
+                    <Button disabled={activeStep === 0} onClick={handleBack} className={classes.buttonLeft}>
+                      Back
               </Button>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={handleNext}
-                    className={classes.buttonRight}
-                  >
-                    {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
-                  </Button>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={handleNext}
+                      className={classes.buttonRight}
+                    >
+                      {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
+                    </Button>
+                  </div>
                 </div>
-              </div>
-            )}
+              )
+          }
         </div>
 
       </div>

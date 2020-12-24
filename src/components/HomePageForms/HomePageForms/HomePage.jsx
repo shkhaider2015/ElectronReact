@@ -197,7 +197,7 @@ const Homepage2 = () => {
                                 : <div>
 
                                 <div className="row justify-content-center text-center">
-                                    <div className="col-sm-6 col-md-4 col-lg-4">
+                                    <div className="col-sm-12 col-md-6 col-lg-6">
                                         <Link to="/create" className="myLink"  >
                                             <div className="box">
                                                 <div className="our-services settings">
@@ -212,7 +212,7 @@ const Homepage2 = () => {
                                     {
                                         isAdmin[0]
                                             ?
-                                            <div className="col-sm-6 col-md-4 col-lg-4">
+                                            <div className="col-sm-12 col-md-6 col-lg-6">
                                                 <Link to="/report" className="myLink" >
                                                     <div className="box">
                                                         <div className="our-services privacy">
@@ -222,7 +222,7 @@ const Homepage2 = () => {
                                                         </div>
                                                     </div> </Link>
                                             </div>
-                                            : <div className="col-sm-6 col-md-4 col-lg-4">
+                                            : <div className="col-sm-12 col-md-6 col-lg-6">
                                                 <Link to="/report" className="myLink" >
                                                     <div className="box">
                                                         <div className="our-services speedup">
@@ -237,7 +237,7 @@ const Homepage2 = () => {
     
                                 </div>
                                 <div className="row  mb-3 justify-content-center">
-                                    <div className="col-sm-6 col-md-4 col-lg-4">
+                                    <div className="col-sm-12 col-md-6 col-lg-6">
                                         <Link to="/payment" className="myLink" >
                                             <div className="box">
                                                 <div className="our-services ssl">
@@ -248,7 +248,7 @@ const Homepage2 = () => {
                                             </div>
                                         </Link>
                                     </div>
-                                    <div className="col-sm-6 col-md-4 col-lg-4">
+                                    <div className="col-sm-12 col-md-6 col-lg-6">
                                         <div className="box">
                                             <div className="our-services database">
                                                 <div className="icon icon-scanQR"> <ScanQR className="" fill="white" style={{ height: "70%", width: "70%", color: "whitesmoke" }} /> </div>

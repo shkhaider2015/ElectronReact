@@ -277,38 +277,6 @@ console.log(`Object is ${obj} `)
   const [disableInstallment, setDisableInstallment] = React.useState(true)
 
 
-  const personal = {
-    id: "",
-    imageURI: imageURI,
-    name: name,
-    fatherName : fatherName,
-    email: email,
-    cellPhone: cellPhone,
-    phone: phone,
-    cnic: cNIC,
-    address: address,
-  }
-  const asset = {
-    plotName: area,
-    measurement: measurement,
-    square: square,
-    block: block,
-    category: category,
-    nature: nature,
-    type: type,
-    sitePlane: sitePlane,
-    purpose: purpose
-  }
-  const payment = {
-    totalAmount: amount,
-    givenAmount: givenAmount,
-    procedure: procedure,
-    installment: totalInstallment,
-    installmentDuration: duration,
-    remainingInstallment: installment,
-    balance: balance,
-    paymentMethod: paymentMethod
-  }
   
   const uploadData =  ( image = imageURI ) => {
 
@@ -335,6 +303,7 @@ console.log(`Object is ${obj} `)
       "asset.measurement" : measurement,
       "asset.nature" : nature,
       "asset.plotName" : area,
+      "asset.plotNumber" : plotNumber,
       "asset.purpose" : purpose,
       "asset.sitePlane" : sitePlane,
       "asset.square" : square,
@@ -395,6 +364,8 @@ console.log(`Object is ${obj} `)
   const plotModel = {
     area,
     setArea,
+    plotNumber,
+    setPlotNumber,
     measurement,
     setMeasurement,
     square,

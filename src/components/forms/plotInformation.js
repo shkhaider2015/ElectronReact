@@ -70,7 +70,8 @@ const useStyle = makeStyles(
             phoneDiv: {
                 width: '45%',
                 marginLeft: 'auto',
-                marginRight: "0"
+                marginRight: "0",
+                display : 'flex'
             },
             pairElement : {
                 width : '100%'
@@ -147,9 +148,27 @@ const PersonalInformation = ({ model }) => {
                             </div>
                             <div className={classes.phoneDiv} >
                             <TextField
-                            className={classes.pairElement}
+                            className={classes.square}
+                                id="plotNo"
+                                label="Plot No."
+                                variant="outlined"
+                                type="number"
+                                color="primary"
+                                value={model.plotNumber}
+                                onChange={(e) => model.setPlotNumber(e.target.value) }
+                                helperText={ model.plotNumber === 0? <span style={{ color : 'red' }} >Required</span> : <span style={{ color : 'lightgreen' }} >Correct</span> }
+                                InputProps={{
+                                    endAdornment: (
+                                        <InputAdornment position="end">
+                                            <SquareFoot className={classes.iconColor} />
+                                        </InputAdornment>
+                                    ),
+                                }}
+                            />
+                            <TextField
+                            className={classes.block}
                                 id="measurment"
-                                label="Measurement"
+                                label="Measur"
                                 variant="outlined"
                                 type="number"
                                 color="primary"
@@ -294,7 +313,6 @@ const PersonalInformation = ({ model }) => {
                                             </InputAdornment>
                                         ),
                                     }}
-
                                 />
                             </div>
                             <div className={classes.phoneDiv} >

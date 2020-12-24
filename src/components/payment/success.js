@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router';
 import GIF from "../../RawData/successgif.gif";
 
 
-const Success = ({ open }) => {
+const Success = ({ open, title }) => {
 
     const navigate = useNavigate()
 
@@ -22,9 +22,18 @@ const Success = ({ open }) => {
                 <div style={{ width: 'auto', }}>
 
                     <div style={{ width : '40%', height : '40%' }} >  <img alt="gif" src={GIF} /> </div>
-                    <div> <span>Transaction Added Successfully</span> </div>
+                    <div> <span> {title} </span> </div>
                     <div style={{ width : '100%', marginTop : '2%' }} > 
-                    <Button style={{ width : '100%' }} color="primary" variant="contained" onClick={() => navigate(-2)}  >Back To Home</Button> </div>
+                    <Button style={{ width : '100%' }} color="primary" variant="contained" onClick={() => {
+                        if(title === "Client created successfully")
+                        {
+                            navigate(-1)
+                        }
+                        else
+                        {
+                            navigate(-2)
+                        }
+                    }}  >Back To Home</Button> </div>
                 </div>
             </div>
         </Dialog>

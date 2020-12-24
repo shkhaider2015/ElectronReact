@@ -6,24 +6,25 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
-const AlertDialog = ({ setProceed, open, setOpen }) =>
+const AlertDialog = ({ handleNext }) =>
 {
   
-
+const [open, setOpen] = React.useState(true);
   const handleClickOpen = () => {
-    setProceed(false);
-    setOpen(true)
+    // setProceed(true);
+    handleNext()
   };
 
   const handleClose = () => {
-    setProceed(true);
-    setOpen(true)
+    setOpen(false);
+    handleNext(true)
   };
 
   return (
-    <div>
+    <div style={{ width : '100%', height : '100%' }} >
+     { console.log("Alert is running") }
       <Dialog
-        open={!open}
+        open={open}
         onClose={handleClose}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
@@ -35,10 +36,10 @@ const AlertDialog = ({ setProceed, open, setOpen }) =>
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClickOpen} color="primary">
+          <Button onClick={handleClose} color="primary">
             Disagree
           </Button>
-          <Button onClick={handleClose} color="primary" autoFocus>
+          <Button onClick={handleClickOpen} color="primary" autoFocus>
             Agree
           </Button>
         </DialogActions>

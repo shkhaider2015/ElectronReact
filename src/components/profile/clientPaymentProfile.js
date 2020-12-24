@@ -315,7 +315,7 @@ const ClientProfile = () => {
         <div className={classes.root}>
             {
                 success
-                    ? <SuccessBox open={success} />
+                    ? <SuccessBox open={success} title="Transaction Added Successfully" />
                     :
                     <Grid container direction="column" >
 

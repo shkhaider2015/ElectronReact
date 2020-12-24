@@ -12,10 +12,23 @@ body {
 
 .box {
     position: relative;
-    width: 100%;
+    width: 80%;
     padding-right: 15px;
     padding-left: 15px
 }
+
+
+@media screen and (max-width : 1200px)
+{
+    .box {
+        position: relative;
+        width: 100%;
+        padding-right: 15px;
+        padding-left: 15px
+    }
+
+}
+
 
 .our-services {
     margin-top: 65px;
@@ -27,6 +40,7 @@ body {
     background-color: #fff;
     transition: all .4s ease-in-out;
     box-shadow: 0 0 30px 0 rgba(20, 27, 202, .17)
+
 }
 
 .myLink {
