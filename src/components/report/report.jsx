@@ -147,7 +147,7 @@ const Reports = () => {
     const handleIdCard = (cnic) =>
     {
         clients[0].map(
-            (object, index) => object['personal']['cnic'] === cnic
+            (object) => object['personal']['cnic'] === cnic
             ? navigate("/idcard", { state : { obj : object } })
             : null
         )
@@ -266,7 +266,7 @@ const Reports = () => {
                                                     clients[0].map(
                                                         (object, index) => clicked === index
                                                             ? <span key={index} style={{ fontSize: 12, opacity: 0.7 }} > Created at {getDateFromMillis(object['extra']['addedDate'])} </span>
-                                                            : <span></span>
+                                                            : <span key={index} ></span>
                                                     )
                                                 }</h5>
                                             </div>

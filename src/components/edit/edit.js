@@ -16,6 +16,7 @@ import { MyProgress } from "../../components/circulerProgress";
 import { db, storage, firebase } from "../../config/firebase";
 import { AuthContext } from "../../context/authContext";
 import {useLocation, useNavigate } from 'react-router-dom';
+import AlertDialog from '../forms/confirmDialog';
 
 
 
@@ -495,49 +496,51 @@ console.log(`Object is ${obj} `)
 
   }
 
-  const handleNext = () => {
+  const handleNext = (back=false) => {
 
     switch (activeStep) {
       case 0:
+        console.log("Step 1")
         if (handlePersonalForm()) {
           setActiveStep((prevActiveStep) => prevActiveStep + 1)
         }
         break;
       case 1:
+        console.log("Step 2")
         if (handlePlotForm()) {
           setActiveStep((prevActiveStep) => prevActiveStep + 1)
         }
         break;
       case 2:
-        //
+        console.log("Step 3")
         if (handlePaymentForm()) {
           console.log("Handle Payment Form")
-          if (proceed) {
-            console.log("Proceed True")
-            if(imageFile)
-            {
-              uploadImage()
-            }
-            else
-            {
-              uploadData()
-            }
-            
-            setActiveStep((prevActiveStep) => prevActiveStep + 1)
-          }
-          {
-            console.log("Proceed False")
-            setOpen(false)
-          }
-
+          setActiveStep((prevActiveStep) => prevActiveStep + 1)
         }
         else {
-          console.log("")
+          console.log("Something Mikssing")
         }
         break;
       case 3:
-        //
-        console.log("Ste is 3")
+        console.log("Step is 4")
+        if(back)
+        {
+          setActiveStep((prevActiveStep) => prevActiveStep - 1)
+        }
+        else
+        {
+          setActiveStep((prevActiveStep) => prevActiveStep + 1)
+          if(selectedImage)
+          {
+            uploadImage()
+          }
+          {
+            uploadData()
+          }
+        }
+        break;
+      case 4:
+        console.log("Step 5")
         break;
       default:
       //
@@ -553,6 +556,7 @@ console.log(`Object is ${obj} `)
   };
 
   const Progress = (<MyProgress isLoading={isLoading} reset={handleReset} succeed={isSucceed} />)
+  const Alert = (<AlertDialog handleNext={handleNext} />)
 
   return (
     <div className={classes.root}>
@@ -586,17 +590,9 @@ console.log(`Object is ${obj} `)
         </div>
 
         <div className="col-11" >
-          {activeStep === steps.length ? Progress
-            // (
-            //   <div style={{ width: '100%', textAlign: 'center' }} >
-            //     <Typography className={classes.instructions}>
-            //       All steps completed - you&apos;re finished
-            //     </Typography>
-            //     <Button onClick={handleReset} className={classes.button}>
-            //       Reset
-            //     </Button>
-            //   </div>
-            // ) 
+          {activeStep === steps.length ? Alert
+            : activeStep === steps.length + 1
+            ? Progress
             : (
               <div style={{ width: '100%', textAlign: 'center' }} >
                 {getForms(activeStep, personalModel, plotModel, paymentModel)}

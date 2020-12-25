@@ -192,8 +192,8 @@ return (
                                 {/* {!model.selectedImage ? <PhotoCamera className={classes.imageIcon} color="primary" /> : <Avatar alt="shakeel haider" src={model.selectedImage} variant="circle" className={classes.myImage} />} */}
                                 {
                                     model.selectedImage
-                                    ? <Avatar alt="name" src={model.selectedImage} variant="circle" className={classes.myImage} />
-                                    : model.imageURI !== "" ? <Avatar alt="shakeel haider" src={model.imageURI} variant="circle" className={classes.myImage} />
+                                    ? <Avatar alt="name" src={model.selectedImage} variant="circular" className={classes.myImage} />
+                                    : model.imageURI !== "" ? <Avatar alt="shakeel haider" src={model.imageURI} variant="circular" className={classes.myImage} />
                                     : <PhotoCamera className={classes.imageIcon} color="primary" />
                                 }
 

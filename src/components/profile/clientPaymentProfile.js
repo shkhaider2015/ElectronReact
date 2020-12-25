@@ -1,7 +1,7 @@
 import React from 'react'
 import {
     Avatar, Grid, makeStyles, Paper, TextField, IconButton,
-    InputAdornment, Select, InputLabel, FormControl, FormHelperText, Button
+    InputAdornment, Select, InputLabel, FormControl, FormHelperText, Button, CircularProgress
 } from "@material-ui/core";
 import { PermIdentity as Name, Phone, Smartphone, KeyboardBackspace } from "@material-ui/icons";
 import { useNavigate, useParams } from 'react-router';
@@ -374,6 +374,8 @@ const ClientProfile = () => {
                         <Grid item xs={12} sm={12} md={12} lg={12} >
                             <div style={{ width: '70%', marginTop: '5%', marginLeft: '15%' }} className='row' >
 
+                                
+
                                 <Grid container >
 
                                     <Grid item xs={12} sm={12} md={6} lg={6} >
@@ -495,13 +497,15 @@ const ClientProfile = () => {
                                             }
 
                                             <Button
-                                                variant="outlined"
+                                                variant="contained"
                                                 color="primary"
                                                 title="Submit"
                                                 disabled={button}
                                                 style={{ width: '80%', height: '3%', marginTop: '2%' }}
                                                 onClick={() => handleSubmit()}
-                                            >Submit</Button>
+                                            >
+                                                Submit { button ? <CircularProgress size={24} /> : "" } 
+                                            </Button>
 
                                         </div>
 

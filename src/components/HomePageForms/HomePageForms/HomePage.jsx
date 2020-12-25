@@ -249,6 +249,7 @@ const Homepage2 = () => {
                                         </Link>
                                     </div>
                                     <div className="col-sm-12 col-md-6 col-lg-6">
+                                        <Link to="/search" className="myLink" >
                                         <div className="box">
                                             <div className="our-services database">
                                                 <div className="icon icon-scanQR"> <ScanQR className="" fill="white" style={{ height: "70%", width: "70%", color: "whitesmoke" }} /> </div>
@@ -256,6 +257,7 @@ const Homepage2 = () => {
                                                 <p>Search By Scaning</p>
                                             </div>
                                         </div>
+                                        </Link>
                                     </div>
                                 </div>
     

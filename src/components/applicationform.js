@@ -199,7 +199,7 @@ function getStepContent(step) {
   }
 }
 
-const getForms = (step, personalModel, plotModel, paymentModel, handleNext) => {
+const getForms = (step, personalModel, plotModel, paymentModel) => {
   switch (step) {
     case 0:
       return <PersonalInfo model={personalModel} />;
@@ -261,7 +261,7 @@ const Application = () => {
 
 
   const personal = {
-    id: "",
+    id: cNIC.replace(/-/g, "") + name.toLocaleLowerCase().slice(0, 4).replace(/\s/g, ""),
     imageURI: imageURI,
     name: name,
     fatherName: fatherName,
@@ -271,7 +271,6 @@ const Application = () => {
     cnic: cNIC,
     address: address,
     transfor: transfor,
-    addedBy: currentUser.currentUser.displayName.replace(/\s/g, "")
   }
   const asset = {
     plotName: area,

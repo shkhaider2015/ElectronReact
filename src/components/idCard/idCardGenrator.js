@@ -1,6 +1,7 @@
 import React from 'react'
 import { useLocation, useNavigate } from 'react-router';
-import  QR from "react-qr-code";
+import { useBarcode } from "react-barcodes";
+import BarCodeReader from "react-barcode-reader";
 
 
 
@@ -30,14 +31,33 @@ const IdCardGenrator = () =>
     const navigate = useNavigate();
     const { state } = useLocation();
     const { obj } = state
+    // const cnic = obj['personal']['cnic'].replace(/-/g, "");
+    const value = null;
+    const { inputRef } = useBarcode({
+      value : "424019917847shtlk",
+
+    })
+
+    const handleScan = (data) =>
+    {
+      console.log("Scan : ", data)
+    }
+    const handleError = (err) =>
+    {
+      console.log("Error : ", err)
+    }
+
 
     return(
         <div style={{ marginLeft : '2%' }} >
             <h1>Id Card genrator</h1>
             <h3>Check name {obj['personal']['name']} </h3>
-            <QR value={obj} fgColor="#eb4034" />
-            <button onClick={() => downloadQR() } >Doenload</button>
-
+            <canvas ref={inputRef} />
+            <BarCodeReader
+             onError={(e) => handleError(e)}
+             onScan={(d) => handleScan(d)}
+             />
+        { console.log("get : ", value) }
         </div>
     )
 }

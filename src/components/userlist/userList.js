@@ -76,7 +76,7 @@ const UserList = (props) => {
                         <KeyboardBackspace fontSize="large" color="primary" />
                     </IconButton>
                  </div>
-                <img className src={zainlogo} height="13%" width="13%" alt="hjh" />
+                <img src={zainlogo} height="13%" width="13%" alt="hjh" />
                 <span></span>
                 </div>
 
