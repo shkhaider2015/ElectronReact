@@ -16,6 +16,7 @@ import Payment from "../payment/payment";
 import CPP from "../profile/clientPaymentProfile";
 import IdCardGenrator from "../idCard/idCardGenrator";
 import SearchByBarcode from '../searcByBarcode/serchByBarcode';
+import CompleteProfile from "../profile/CompleteProfile";
 
 
 
@@ -36,6 +37,7 @@ function MyRoutes() {
                     <Route path="/print/application" element={< PrintApplicationForm />}/> 
                     <Route path="/userlist" element={< UserList />}/> 
                     <Route path="/search" element={<SearchByBarcode />} />
+                    <Route path="/completeprofile" element={<CompleteProfile />} />
 
                 </Route >
 
