@@ -127,12 +127,7 @@ const Homepage2 = () => {
         []
     )
 
-    const getProfilePicture = () => {
-        if (currentUser.currentUser.photoURL) {
-            console.log("Photo avaliable")
-        }
-        console.log(currentUser.currentUser)
-    }
+   
 
     const handleProfileOpen = () => {
         setAnchorEl(null)

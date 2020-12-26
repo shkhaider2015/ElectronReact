@@ -198,7 +198,7 @@ const ClientProfile = () => {
         procedure: procedure,
         installment: totalInstallment,
         installmentDuration: installmentDuration,
-        remainingInstallment: totalInstallment - 1,
+        remainingInstallment: remainingInstallment - 1,
         balance: totalAmount - (givenAmount + newAmount),
         paymentMethod: paymentMethod
     }

@@ -1,4 +1,5 @@
-import { Avatar, Button, Grid, makeStyles, Paper, TextField, Typography, InputAdornment, Fab, LinearProgress } from '@material-ui/core'
+import { Avatar, Button, Grid, makeStyles, Paper, TextField,
+     Typography, InputAdornment, Fab, LinearProgress } from '@material-ui/core'
 import {
     EmailOutlined as Email, VpnKeyOutlined as Password, PermIdentityOutlined as Name,
     CreditCardOutlined as CNIC, PhoneOutlined as Phone, PhotoCameraOutlined
@@ -347,9 +348,18 @@ const SignUp = () => {
         console.log("jjkjjkjkk", auth.currentUser)
         return (
             <div className={classes.root} >
-                Wait for admin approval
-                <button onClick={() => navigate('/login')} style={{ margin : '0 auto' }} >Go back </button>
-                <button onClick={() => auth.signOut()} style={{ margin : '0 auto' }} >Log out</button>
+                
+
+                <Paper className={classes.myPaper} >
+                    <div style={{ display : 'flex', flexDirection : 'column' }} >
+                    <span style={{ margin : 'auto', fontSize : 20, fontWeight : 'bold', color : 'green' }} >
+                        Thanks for Registration <br /> Wait for admin approval</span>
+                <Button color="primary" variant="contained" onClick={() => navigate('/login')} style={{ width : '90%', marginTop : '3%' }} >Go back </Button>
+                <Button color="primary" variant="text" onClick={() => auth.signOut()} style={{ width : '90%', marginTop : '1%', marginBottom : '1%' }} >
+                    Log out</Button>
+
+                    </div>
+                </Paper>
             </div>
         )
     } else {

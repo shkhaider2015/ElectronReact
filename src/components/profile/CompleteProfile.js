@@ -6,90 +6,103 @@ import MyImage from "../../RawData/default.jpg";
 
 
 
-const CompleteProfile = () => {
+const CompleteProfile = ({ object }) => {
 
     const navigate = useNavigate()
     return (
-        <Grid container direction="column" >
+        <div style={{ overflow : 'hidden', height : 'auto' }} >
 
-            <Grid item xs={12} sm={12} md={12} lg={12} >
-                <Grid item xs={2} sm={2} md={2} >
-                    <IconButton
-                        aria-haspopup="true"
-                        color="inherit"
-                        onClick={() => navigate(-1)}
-                    >
-                        <KeyboardBackspace fontSize="large" color="primary" />
+            <Grid container >
 
-                    </IconButton>
+                {/* Backspace */}
+                <Grid item xs={12} sm={12} md={12} lg={12} >
+                    <Grid item xs={2} sm={2} md={2} >
+                        <IconButton
+                            aria-haspopup="true"
+                            color="inherit"
+                            onClick={() => navigate(-1)}
+                        >
+                            <KeyboardBackspace fontSize="large" color="primary" />
+
+                        </IconButton>
+                    </Grid>
                 </Grid>
-            </Grid>
-            <Grid item xs={12} sm={12} md={12} lg={12} >
-                <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', marginLeft: '15%', marginTop: '3%' }} >
-                    <div>
-                        <Avatar alt="name" src={MyImage} style={{ width: '150px', height: '150px', boxShadow: '0 0 30px 0 rgba(20, 27, 202, .17)' }} />
+
+                {/* Personal Info */}
+                <Grid item xs={12} sm={12} md={12} lg={12} >
+                    <div style={{ display: 'flex', flexDirection: 'row', marginLeft: '15%', marginTop: '3%' }} >
+                        <div style={{ display: 'flex', flexDirection: 'column' }} >
+                            <Avatar alt="name" src={object['personal']['imageURI']} style={{ width: '150px', height: '150px', boxShadow: '0 0 30px 0 rgba(20, 27, 202, .17)' }} />
+                        </div>
+                        <div style={{ display: 'flex', flexDirection: 'column', marginLeft: '5%', width: '50%' }} >
+                            <div style={{ display: 'flex', flexDirection: 'row', width: '50%' }} >
+                                <div style={{ width: '40%' }} ><span style={{ fontSize: 10, fontWeight: 'normal', paddingRight: '10%' }} >Name</span></div>
+                                <div style={{ width: '60%' }} ><span style={{ fontSize: 10, fontWeight: 'bold' }} > {object['personal']['name']}  </span></div>
+                            </div>
+
+                            <div style={{ display: 'flex', flexDirection: 'row', width: '50%' }} >
+                                <div style={{ width: '40%' }} ><span style={{ fontSize: 10, fontWeight: 'normal', paddingRight: '10%' }} >Father Name</span></div>
+                                <div style={{ width: '60%' }} ><span style={{ fontSize: 10, fontWeight: 'normal' }} > {object['personal']['fatherName']} </span></div>
+                            </div>
+
+                            <div style={{ display: 'flex', flexDirection: 'row', width: '50%' }} >
+                                <div style={{ width: '40%' }} ><span style={{ fontSize: 10, fontWeight: 'normal', paddingRight: '10%' }} >CNIC</span></div>
+                                <div style={{ width: '60%' }} ><span style={{ fontSize: 10, fontWeight: 'normal' }} > {object['personal']['cnic']} </span></div>
+                            </div>
+
+                            <div style={{ display: 'flex', flexDirection: 'row', width: '50%' }} >
+                                <div style={{ width: '40%' }} ><span style={{ fontSize: 10, fontWeight: 'normal', paddingRight: '10%' }} >Email</span></div>
+                                <div style={{ width: '60%' }} ><span style={{ fontSize: 10, fontWeight: 'normal' }} > {object['personal']['email']} </span></div>
+                            </div>
+
+                            <div style={{ display: 'flex', flexDirection: 'row', width: '50%' }} >
+                                <div style={{ width: '40%' }} ><span style={{ fontSize: 10, fontWeight: 'normal', paddingRight: '10%' }} >Phone</span></div>
+                                <div style={{ width: '60%' }} ><span style={{ fontSize: 10, fontWeight: 'normal' }} > {object['personal']['cellPhone']} </span></div>
+                            </div>
+
+                            <div style={{ display: 'flex', flexDirection: 'row', width: '50%' }} >
+                                <div style={{ width: '40%' }} ><span style={{ fontSize: 10, fontWeight: 'normal', paddingRight: '10%' }} >Address</span></div>
+                                <div style={{ width: '60%' }} ><span style={{ fontSize: 10, fontWeight: 'normal' }} > {object['personal']['address']} </span></div>
+                            </div>
+
+                        </div>
                     </div>
-                    <div style={{ display: 'flex', flexDirection: 'column', marginLeft: '5%', width: '50%' }} >
-                        <div style={{ display: 'flex', flexDirection: 'row', width: '50%' }} >
-                            <div style={{ width: '40%' }} ><span style={{ fontSize: 10, fontWeight: 'normal', paddingRight: '10%' }} >Name</span></div>
-                            <div style={{ width: '60%' }} ><span style={{ fontSize: 10, fontWeight: 'bold' }} > Shakeel haider  </span></div>
-                        </div>
-
-                        <div style={{ display: 'flex', flexDirection: 'row', width: '50%' }} >
-                            <div style={{ width: '40%' }} ><span style={{ fontSize: 10, fontWeight: 'normal', paddingRight: '10%' }} >Father Name</span></div>
-                            <div style={{ width: '60%' }} ><span style={{ fontSize: 10, fontWeight: 'normal' }} > Abdul Rasheed </span></div>
-                        </div>
-
-                        <div style={{ display: 'flex', flexDirection: 'row', width: '50%' }} >
-                            <div style={{ width: '40%' }} ><span style={{ fontSize: 10, fontWeight: 'normal', paddingRight: '10%' }} >CNIC</span></div>
-                            <div style={{ width: '60%' }} ><span style={{ fontSize: 10, fontWeight: 'normal' }} > 42401-9917847-9 </span></div>
-                        </div>
-
-                        <div style={{ display: 'flex', flexDirection: 'row', width: '50%' }} >
-                            <div style={{ width: '40%' }} ><span style={{ fontSize: 10, fontWeight: 'normal', paddingRight: '10%' }} >Email</span></div>
-                            <div style={{ width: '60%' }} ><span style={{ fontSize: 10, fontWeight: 'normal' }} > shkhaider2015@gmail.com </span></div>
-                        </div>
-
-                        <div style={{ display: 'flex', flexDirection: 'row', width: '50%' }} >
-                            <div style={{ width: '40%' }} ><span style={{ fontSize: 10, fontWeight: 'normal', paddingRight: '10%' }} >Phone</span></div>
-                            <div style={{ width: '60%' }} ><span style={{ fontSize: 10, fontWeight: 'normal' }} > 03460027852 </span></div>
-                        </div>
-
-                        <div style={{ display: 'flex', flexDirection: 'row', width: '50%' }} >
-                            <div style={{ width: '40%' }} ><span style={{ fontSize: 10, fontWeight: 'normal', paddingRight: '10%' }} >Address</span></div>
-                            <div style={{ width: '60%' }} ><span style={{ fontSize: 10, fontWeight: 'normal' }} > Pathan Colony, Manghopir Road, Khi </span></div>
-                        </div>
-
-                    </div>
-                </div>
-            </Grid>
-
-            <Grid item xs={12} sm={12} md={12} lg={12} >
-                <div style={{ width: '70%', marginTop: '5%', marginLeft: '15%' }} className='row' >
-
-
-
-                    <Grid container >
+                </Grid>
+                {/* Details */}
+                <Grid item xs={12} sm={12} md={12} lg={12} >
+                    <div style={{ width: '70%', marginLeft: '15%', marginTop : '5%' }} className='row' >
 
                         <Grid item xs={12} sm={12} md={6} lg={6} >
                             <div style={{ display: 'flex', flexDirection: 'column', width: '100%', paddingBottom: '3%' }}>
 
+                                <div style={{ display: 'grid', placeItems: 'center' }} >
+                                    <span style={{ fontSize : 18, fontWeight : 'bold' }} >Payment Details</span>
+                                </div>
 
-                                <div style={{ display: 'flex', flexDirection: 'row' }} >
+                                <div style={{ display: 'flex', flexDirection: 'row', marginTop : '1%' }} >
                                     <div style={{ width: '50%' }} >
                                         <span>Total Amount</span>
                                     </div>
                                     <div style={{ width: '50%' }} >
-                                        <span> 6556 </span>
+                                        <span> {object['payment']['totalAmount']} </span>
                                     </div>
                                 </div>
 
                                 <div style={{ display: 'flex', flexDirection: 'row' }} >
                                     <div style={{ width: '50%' }} >
-                                        <span>Given Amount</span>
+                                        <span>Given Amnount</span>
                                     </div>
                                     <div style={{ width: '50%' }} >
-                                        <span> 9898 </span>
+                                        <span> {object['payment']['givenAmount']} </span>
+                                    </div>
+                                </div>
+
+                                <div style={{ display: 'flex', flexDirection: 'row' }} >
+                                    <div style={{ width: '50%' }} >
+                                        <span>Payment Method</span>
+                                    </div>
+                                    <div style={{ width: '50%' }} >
+                                        <span> {object['payment']['paymentMethod']} </span>
                                     </div>
                                 </div>
 
@@ -98,7 +111,7 @@ const CompleteProfile = () => {
                                         <span>Balance</span>
                                     </div>
                                     <div style={{ width: '50%' }} >
-                                        <span> 9898 </span>
+                                        <span> {object['payment']['balance']} </span>
                                     </div>
                                 </div>
 
@@ -107,12 +120,12 @@ const CompleteProfile = () => {
                                         <span>Procedure</span>
                                     </div>
                                     <div style={{ width: '50%' }} >
-                                        <span> 8787 </span>
+                                        <span> {object['payment']['procedure']} </span>
                                     </div>
                                 </div>
 
                                 {
-                                    "procedure" === "Installment"
+                                    object['payment']['procedure'] === "Installment"
                                         ? <div style={{ display: 'flex', flexDirection: 'column', width: '100%' }} >
 
                                             <div style={{ display: 'flex', flexDirection: 'row' }} >
@@ -120,7 +133,7 @@ const CompleteProfile = () => {
                                                     <span>Total Installment</span>
                                                 </div>
                                                 <div style={{ width: '50%' }} >
-                                                    <span> 878878 </span>
+                                                    <span> {object['payment']['installment']} </span>
                                                 </div>
                                             </div>
 
@@ -129,7 +142,7 @@ const CompleteProfile = () => {
                                                     <span>Remaining Installment</span>
                                                 </div>
                                                 <div style={{ width: '50%' }} >
-                                                    <span> 7878 </span>
+                                                    <span> {object['payment']['remainingInstallment']} </span>
                                                 </div>
                                             </div>
 
@@ -140,62 +153,135 @@ const CompleteProfile = () => {
 
                             </div>
                         </Grid>
+
+
                         <Grid item xs={12} sm={12} md={6} lg={6} >
 
-
-                            <div style={{ display: 'flex', flexDirection: 'column', width: '100%', paddingBottom: '3%' }}>
-
-
-                                <div style={{ display: 'flex', flexDirection: 'row' }} >
-                                    <div style={{ width: '50%' }} >
-                                        <span>Total Amount</span>
-                                    </div>
-                                    <div style={{ width: '50%' }} >
-                                        <span> 7676 </span>
-                                    </div>
+                            <div style={{ display: 'flex', flexDirection: 'column', marginTop : '1%' }} >
+                                <div style={{ display: 'grid', placeItems: 'center'}} >
+                                    <span style={{ fontSize : 18, fontWeight : 'bold' }}>Asset Details</span>
                                 </div>
 
                                 <div style={{ display: 'flex', flexDirection: 'row' }} >
-                                    <div style={{ width: '50%' }} >
-                                        <span>Given Amount</span>
+
+                                    <div style={{ display: 'flex', flexDirection: 'column', width: '50%', paddingBottom: '3%' }}>
+
+
+                                        <div style={{ display: 'flex', flexDirection: 'row' }} >
+                                            <div style={{ width: '50%' }} >
+                                                <span>Plot Name</span>
+                                            </div>
+                                            <div style={{ width: '50%' }} >
+                                                <span> {object['asset']['plotName']} </span>
+                                            </div>
+                                        </div>
+
+                                        <div style={{ display: 'flex', flexDirection: 'row' }} >
+                                            <div style={{ width: '50%' }} >
+                                                <span>Plot N0.</span>
+                                            </div>
+                                            <div style={{ width: '50%' }} >
+                                                <span> {object['asset']['plotNumber']} </span>
+                                            </div>
+                                        </div>
+
+                                        <div style={{ display: 'flex', flexDirection: 'row' }} >
+                                            <div style={{ width: '50%' }} >
+                                                <span>Measurement</span>
+                                            </div>
+                                            <div style={{ width: '50%' }} >
+                                                <span> {object['asset']['measurement']} </span>
+                                            </div>
+                                        </div>
+
+                                        <div style={{ display: 'flex', flexDirection: 'row' }} >
+                                            <div style={{ width: '50%' }} >
+                                                <span>square. Yards</span>
+                                            </div>
+                                            <div style={{ width: '50%' }} >
+                                                <span> {object['asset']['square']} </span>
+                                            </div>
+                                        </div>
+
+                                        <div style={{ display: 'flex', flexDirection: 'row' }} >
+                                            <div style={{ width: '50%' }} >
+                                                <span>Block</span>
+                                            </div>
+                                            <div style={{ width: '50%' }} >
+                                                <span> {object['asset']['block']} </span>
+                                            </div>
+                                        </div>
+
+                                        <div style={{ display: 'flex', flexDirection: 'row' }} >
+                                            <div style={{ width: '50%' }} >
+                                                <span>Category</span>
+                                            </div>
+                                            <div style={{ width: '50%' }} >
+                                                <span> {object['asset']['category']} </span>
+                                            </div>
+                                        </div>
+
+
+
                                     </div>
-                                    <div style={{ width: '50%' }} >
-                                        <span> 87878 </span>
+
+                                    <div style={{ display: 'flex', flexDirection: 'column', width: '50%', paddingBottom: '3%' }}>
+
+                                        <div style={{ display: 'flex', flexDirection: 'row' }} >
+                                            <div style={{ width: '50%' }} >
+                                                <span>Type</span>
+                                            </div>
+                                            <div style={{ width: '50%' }} >
+                                                <span> {object['asset']['type']} </span>
+                                            </div>
+                                        </div>
+
+                                        <div style={{ display: 'flex', flexDirection: 'row' }} >
+                                            <div style={{ width: '50%' }} >
+                                                <span>Nature</span>
+                                            </div>
+                                            <div style={{ width: '50%' }} >
+                                                <span> {object['asset']['nature']} </span>
+                                            </div>
+                                        </div>
+
+                                        <div style={{ display: 'flex', flexDirection: 'row' }} >
+                                            <div style={{ width: '50%' }} >
+                                                <span>Site Plan</span>
+                                            </div>
+                                            <div style={{ width: '50%' }} >
+                                                <span> {object['asset']['sitePlane']} </span>
+                                            </div>
+                                        </div>
+
+                                        <div style={{ display: 'flex', flexDirection: 'row' }} >
+                                            <div style={{ width: '50%' }} >
+                                                <span>Purpose</span>
+                                            </div>
+                                            <div style={{ width: '50%' }} >
+                                                <span> {object['asset']['purpose']} </span>
+                                            </div>
+                                        </div>
+
+
+
                                     </div>
+
                                 </div>
-
-                                <div style={{ display: 'flex', flexDirection: 'row' }} >
-                                    <div style={{ width: '50%' }} >
-                                        <span>Balance</span>
-                                    </div>
-                                    <div style={{ width: '50%' }} >
-                                        <span> 87878 </span>
-                                    </div>
-                                </div>
-
-                                <div style={{ display: 'flex', flexDirection: 'row' }} >
-                                    <div style={{ width: '50%' }} >
-                                        <span>Procedure</span>
-                                    </div>
-                                    <div style={{ width: '50%' }} >
-                                        <span> 87877 </span>
-                                    </div>
-                                </div>
-
-
                             </div>
-
 
                         </Grid>
 
-                    </Grid>
 
-                </div>
+
+                    </div>
+
+                </Grid>
+
 
             </Grid>
 
-
-        </Grid>
+        </div>
     )
 }
 

@@ -1,5 +1,5 @@
 import { Avatar, Button, Grid, makeStyles, Paper, TextField, Typography, InputAdornment, LinearProgress } from '@material-ui/core'
-import { EmailOutlined as Email,VpnKeyOutlined as VpnKey } from "@material-ui/icons";
+import { EmailOutlined as Email, VpnKeyOutlined as VpnKey } from "@material-ui/icons";
 import React from 'react'
 import { Link, useNavigate } from "react-router-dom";
 import ICON from "../../RawData/mainassociates_icon.png"
@@ -15,7 +15,7 @@ const useStyle = makeStyles(
                 backgroundRepeat: 'repeat-y',
                 backgroundSize: '100% 100%',
                 backgroundPosition: '0% 0%',
-                height : '100vh'
+                height: '100vh'
 
             },
             linearProgress: {
@@ -71,7 +71,7 @@ const useStyle = makeStyles(
             iconColor: {
                 color: theme.palette.primary.light
             },
-            footer : {
+            footer: {
             }
         }
     )
@@ -81,18 +81,16 @@ export default function Login() {
 
     const [isLoading, setIsLoading] = React.useState(false)
     const [isAccepted, setIsAccepted] = React.useState(false)
+    const [isDeleted, setIsDeleted] = React.useState(false)
     const currentUser = React.useContext(AuthContext)
 
     const classes = useStyle();
     const navigate = useNavigate()
 
     React.useEffect(
-        () => 
-        {
-            if(currentUser.currentUser)
-            {
-                if(isAccepted)
-                {
+        () => {
+            if (currentUser.currentUser) {
+                if (isAccepted) {
                     navigate("/")
                 }
             }
@@ -100,23 +98,34 @@ export default function Login() {
         [isAccepted, navigate]
     )
 
-    const getUserdata = (user) =>
-    {
-        console.log("User uid : ", user.user.uid)
-        db.collection("users").doc(auth.currentUser.uid).get().then((doc) =>{
-            if(doc.exists)
+    React.useEffect(
+        () =>
+        {
+            if(isDeleted)
             {
+                setTimeout(() => {
+                    auth.signOut()
+                }, 3000)
+            }
+            
+        },
+        [isDeleted]
+    )
+
+    const getUserdata = (user) => {
+        db.collection("users").doc(auth.currentUser.uid).get().then((doc) => {
+            if (doc.exists) {
                 var tr = doc.data()['personal']['isAccepted']
+                var trr = doc.data()['personal']['isDeleted']
                 setIsAccepted(tr)
-                console.log("ghg", tr)
-                
-            }else
-            {
+                setIsDeleted(trr)
+
+            } else {
                 console.log("doc not exists")
             }
         }).catch(e => console.error(e))
     }
-    
+
 
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -125,18 +134,20 @@ export default function Login() {
         setIsLoading(true)
 
         auth.signInWithEmailAndPassword(email.value, password.value)
-        .then((user) => {
-            console.log("Login Succesfully")
-            getUserdata(user)
-             setIsLoading(false)
-        })
-        .catch((err) => {
-            console.error("ERROR CODE : ", err.code)
-            console.error("ERROR CODE : ", err.message)
-            setIsLoading(false)
-        })
+            .then((user) => {
+                console.log("Login Succesfully")
+                getUserdata(user)
+                setIsLoading(false)
+            })
+            .catch((err) => {
+                console.error("ERROR CODE : ", err.code)
+                console.error("ERROR CODE : ", err.message)
+                setIsLoading(false)
+            })
 
     }
+
+
 
     return (
         <div className={classes.root}>
@@ -148,8 +159,17 @@ export default function Login() {
                     sm={12}
                     xs={12}
                 >
-                    {isLoading ? <LinearProgress className={classes.linearProgress} /> : "" }
+                    {console.log("isAcce[pted", isAccepted)}
+                    {isLoading ? <LinearProgress className={classes.linearProgress} /> : ""}
                     <Paper elevation={2} className={classes.myPaper}>
+                        
+                        {
+                            currentUser.currentUser
+                                ? !isAccepted ? <span style={{ color: 'green' }} > Wait for admin approval </span>
+                                    : isDeleted ? <span style={{ color: 'red' }} >Sorry this account has been deleted by admin </span>
+                                        : null
+                                : null
+                        }
                         <form noValidate onSubmit={e => handleSubmit(e)}>
 
 
@@ -220,7 +240,7 @@ export default function Login() {
 
                 </Grid>
             </Grid>
-                                    
+
         </div>
     )
 }
