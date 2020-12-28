@@ -1,8 +1,7 @@
 import { Grid, IconButton, Avatar } from '@material-ui/core'
 import { KeyboardBackspace } from '@material-ui/icons'
 import React from 'react'
-import { useNavigate } from 'react-router'
-import MyImage from "../../RawData/default.jpg";
+import { useNavigate } from 'react-router-dom'
 
 
 

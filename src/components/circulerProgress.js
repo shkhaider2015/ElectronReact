@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Typography, Button } from "@material-ui/core";
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Success from './payment/success';
+import { SpinnerLoading } from "../components/loading/loadingSpinner";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -28,7 +29,7 @@ const MyProgress = ({ isLoading, reset, succeed }) => {
     return (
         <div className={classes.root}>
 
-            { isLoading ? <div style={{ width: '100%', textAlign: 'center' }} > <CircularProgress color="primary" />
+            { isLoading ? <div style={{ width: '100%', textAlign: 'center' }} > <SpinnerLoading />
             </div>
                 :
                 succeed ?

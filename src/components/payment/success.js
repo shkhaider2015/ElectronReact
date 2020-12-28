@@ -1,6 +1,6 @@
 import { Button, Dialog } from '@material-ui/core';
 import React from 'react'
-import { useNavigate } from 'react-router';
+import { useNavigate } from 'react-router-dom';
 import GIF from "../../RawData/successgif.gif";
 
 

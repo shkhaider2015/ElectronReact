@@ -6,15 +6,13 @@ import Possession from "../printableForm/PossessionCertificate";
 import TermsAndCond from "../printableForm/TermsAndCondtition";
 import SitePlan from "../printableForm/sitePlan";
 import Allotment from "../printableForm/AlotmentOrder";
-import ReactToPrint from "react-to-print";
 
 
 
 const ApplicationDialog = ({ setDialogue, formNumber, clicked, users  }) =>
 {
-  const [open, setOpen] = React.useState(true)
+  const open = true
   const [user, setUser] = React.useState([])
-  const componentRef = useRef();
 
 const getUser = () => {
     users.map(
@@ -51,7 +49,6 @@ const getUser = () => {
 }
 
   const handleClose = () => {    
-    //   setOpen(false)
       setDialogue(false)
   };
 

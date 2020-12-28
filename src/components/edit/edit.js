@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import Stepper from '@material-ui/core/Stepper';
-import {Step, IconButton} from '@material-ui/core';
+import { Step, IconButton } from '@material-ui/core';
 import StepLabel from '@material-ui/core/StepLabel';
 import Check from '@material-ui/icons/Check';
 import { AccountCircle, HomeWorkOutlined, MonetizationOn, KeyboardBackspace } from "@material-ui/icons";
@@ -15,8 +15,9 @@ import PaymentInfo from "../forms/paymentInfo";
 import { MyProgress } from "../../components/circulerProgress";
 import { db, storage, firebase } from "../../config/firebase";
 import { AuthContext } from "../../context/authContext";
-import {useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import AlertDialog from '../forms/confirmDialog';
+import { Offline } from "react-detect-offline";
 
 
 
@@ -76,10 +77,10 @@ const ColorlibConnector = withStyles({
   },
   active: {
     '& $line': {
-    //   backgroundImage:
-    //     'linear-gradient( 95deg,rgb(242,113,33) 0%,rgb(233,64,87) 50%,rgb(138,35,135) 100%)',
-        backgroundImage:
-    'linear-gradient( 136deg, rgb(255, 0, 0) 0%, rgb(255, 0, 0) 50%, rgb(33, 12, 89) 100%)'
+      //   backgroundImage:
+      //     'linear-gradient( 95deg,rgb(242,113,33) 0%,rgb(233,64,87) 50%,rgb(138,35,135) 100%)',
+      backgroundImage:
+        'linear-gradient( 136deg, rgb(255, 0, 0) 0%, rgb(255, 0, 0) 50%, rgb(33, 12, 89) 100%)'
     },
   },
   completed: {
@@ -113,13 +114,13 @@ const useColorlibStepIconStyles = makeStyles({
     //   'linear-gradient( 136deg, rgb(242,113,33) 0%, rgb(233,64,87) 50%, rgb(138,35,135) 100%)',
     boxShadow: '0 4px 10px 0 rgba(0,0,0,.25)',
     backgroundImage:
-    'linear-gradient( 136deg, rgb(255, 0, 0) 0%, rgb(255, 0, 0) 50%, rgb(33, 12, 89) 100%)'
+      'linear-gradient( 136deg, rgb(255, 0, 0) 0%, rgb(255, 0, 0) 50%, rgb(33, 12, 89) 100%)'
   },
   completed: {
     // backgroundImage:
     //   'linear-gradient( 136deg, rgb(242,113,33) 0%, rgb(233,64,87) 50%, rgb(138,35,135) 100%)',
     backgroundImage:
-    'linear-gradient( 136deg, rgb(255, 0, 0) 0%, rgb(255, 0, 0) 50%, rgb(33, 12, 89) 100%)'
+      'linear-gradient( 136deg, rgb(255, 0, 0) 0%, rgb(255, 0, 0) 50%, rgb(33, 12, 89) 100%)'
   },
 });
 
@@ -188,9 +189,9 @@ const useStyles = makeStyles((theme) => ({
     '&:hover': {
       boxShadow: '1px 1px 2px black'
     },
-    picBackground : {
-        backgroundImage:
-    'linear-gradient( 136deg, rgb(255, 0, 0) 0%, rgb(255, 0, 0) 50%, rgb(33, 12, 89) 100%)'
+    picBackground: {
+      backgroundImage:
+        'linear-gradient( 136deg, rgb(255, 0, 0) 0%, rgb(255, 0, 0) 50%, rgb(33, 12, 89) 100%)'
     }
 
 
@@ -232,10 +233,10 @@ const EditComp = () => {
 
   const classes = useStyles();
   const steps = getSteps();
-  const {state} = useLocation()
+  const { state } = useLocation()
   const navigate = useNavigate()
-  const {obj} = state
-console.log(`Object is ${obj} `)
+  const { obj } = state
+  console.log(`Object is ${obj} `)
   const [activeStep, setActiveStep] = React.useState(0);
   const [proceed, setProceed] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(true)
@@ -256,7 +257,7 @@ console.log(`Object is ${obj} `)
   const [transfor, setTransfor] = React.useState(false)
 
   const [area, setArea] = React.useState(obj['asset']['plotName'])
-  const [plotNumber, setPlotNumber]= React.useState(obj['plotNumber'])
+  const [plotNumber, setPlotNumber] = React.useState(obj['asset']['plotNumber'])
   const [measurement, setMeasurement] = React.useState(obj['asset']['measurement'])
   const [square, setSquare] = React.useState(obj['asset']['square'])
   const [block, setBlock] = React.useState(obj['asset']['block'])
@@ -278,8 +279,8 @@ console.log(`Object is ${obj} `)
   const [disableInstallment, setDisableInstallment] = React.useState(true)
 
 
-  
-  const uploadData =  ( image = imageURI ) => {
+
+  const uploadData = (image = imageURI) => {
 
     const number = cNIC.replace(/-/g, "")
 
@@ -287,44 +288,44 @@ console.log(`Object is ${obj} `)
     let lastEditDate = Date.now()
 
     db.collection("clients")
-    .doc(number)
-    .update({
-      "personal.id" : id,
-      "personal.name" : name,
-      "personal.email" : email,
-      "personal.imageURI" : image,
-      "personal.address" : address,
-      "personal.cnic" : cNIC,
-      "personal.phone" : phone,
-      "personal.fatherName" : fatherName,
-      "personal.transfor" : transfor,
+      .doc(number)
+      .update({
+        "personal.id": id,
+        "personal.name": name,
+        "personal.email": email,
+        "personal.imageURI": image,
+        "personal.address": address,
+        "personal.cnic": cNIC,
+        "personal.phone": phone,
+        "personal.fatherName": fatherName,
+        "personal.transfor": transfor,
 
-      "asset.block" : block,
-      "asset.category" : category,
-      "asset.measurement" : measurement,
-      "asset.nature" : nature,
-      "asset.plotName" : area,
-      "asset.plotNumber" : plotNumber,
-      "asset.purpose" : purpose,
-      "asset.sitePlane" : sitePlane,
-      "asset.square" : square,
-      "asset.type" : type,
+        "asset.block": block,
+        "asset.category": category,
+        "asset.measurement": measurement,
+        "asset.nature": nature,
+        "asset.plotName": area,
+        "asset.plotNumber": plotNumber,
+        "asset.purpose": purpose,
+        "asset.sitePlane": sitePlane,
+        "asset.square": square,
+        "asset.type": type,
 
-      "payment.balance" : balance,
-      "payment.givenAmount" : givenAmount,
-      "payment.installment" : totalInstallment,
-      "payment.installmentDuration" : duration,
-      "payment.paymentMethod" : paymentMethod,
-      "payment.procedure" : procedure,
-      "payment.remainingInstallment" : installment,
-      "payment.totalAmount" : amount,
-
-     
-      "extra.lastEditBy" : lastEditBy,
-      "extra.lastEditDate" : lastEditDate,
+        "payment.balance": balance,
+        "payment.givenAmount": givenAmount,
+        "payment.installment": totalInstallment,
+        "payment.installmentDuration": duration,
+        "payment.paymentMethod": paymentMethod,
+        "payment.procedure": procedure,
+        "payment.remainingInstallment": installment,
+        "payment.totalAmount": amount,
 
 
-    })
+        "extra.lastEditBy": lastEditBy,
+        "extra.lastEditDate": lastEditDate,
+
+
+      })
       .then(() => {
         console.log("Docement Edited with ID : ")
         setIsLoading(false)
@@ -444,11 +445,10 @@ console.log(`Object is ${obj} `)
         ? val = false
         : val = true
     }
-    else
-    {
-       paymentMethod === "" || amount === 0 || balance === 0
-      ? val = false
-      : val = true
+    else {
+      paymentMethod === "" || amount === 0 || balance === 0
+        ? val = false
+        : val = true
     }
 
     return val
@@ -457,7 +457,7 @@ console.log(`Object is ${obj} `)
   const uploadImage = () => {
 
     var storageRef = storage.ref().child(cNIC.replace(/-/g, ""));
-    var uploadTask = storageRef.child('profile.jpg').put(imageFile );
+    var uploadTask = storageRef.child('profile.jpg').put(imageFile);
 
     // Register three observers:
     // 1. 'state_changed' observer, called any time the state changes
@@ -486,7 +486,7 @@ console.log(`Object is ${obj} `)
     }, () => {
       // Handle successful uploads on complete
       // For instance, get the download URL: https://firebasestorage.googleapis.com/...
-      uploadTask.snapshot.ref.getDownloadURL().then(  (downloadURL) => {
+      uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
         console.log('File available at', downloadURL);
         setImageURI(downloadURL)
         uploadData(downloadURL)
@@ -496,7 +496,7 @@ console.log(`Object is ${obj} `)
 
   }
 
-  const handleNext = (back=false) => {
+  const handleNext = (back = false) => {
 
     switch (activeStep) {
       case 0:
@@ -523,20 +523,17 @@ console.log(`Object is ${obj} `)
         break;
       case 3:
         console.log("Step is 4")
-        if(back)
-        {
+        if (back) {
           setActiveStep((prevActiveStep) => prevActiveStep - 1)
         }
-        else
-        {
-          setActiveStep((prevActiveStep) => prevActiveStep + 1)
-          if(selectedImage)
-          {
-            uploadImage()
-          }
-          {
-            uploadData()
-          }
+        else {
+            setActiveStep((prevActiveStep) => prevActiveStep + 1)
+            if (selectedImage) {
+              uploadImage()
+            }
+            else {
+              uploadData()
+            }
         }
         break;
       case 4:
@@ -562,7 +559,7 @@ console.log(`Object is ${obj} `)
     <div className={classes.root}>
       <div className="row " >
         <div className="col-1 justify-content-center text-center" >
-        <IconButton
+          <IconButton
             color="inherit"
             aria-haspopup="true"
             style={{ marginTop: '20%' }}
@@ -592,29 +589,40 @@ console.log(`Object is ${obj} `)
         <div className="col-11" >
           {activeStep === steps.length ? Alert
             : activeStep === steps.length + 1
-            ? Progress
-            : (
-              <div style={{ width: '100%', textAlign: 'center' }} >
-                {getForms(activeStep, personalModel, plotModel, paymentModel)}
-                <div>
-                  <Button disabled={activeStep === 0} onClick={handleBack} className={classes.buttonLeft}>
-                    Back
+              ? Progress
+              : (
+                <div style={{ width: '100%', textAlign: 'center' }} >
+                  {getForms(activeStep, personalModel, plotModel, paymentModel)}
+                  <div>
+                    <Button disabled={activeStep === 0} onClick={handleBack} className={classes.buttonLeft}>
+                      Back
               </Button>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={handleNext}
-                    className={classes.buttonRight}
-                  >
-                    {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
-                  </Button>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={handleNext}
+                      className={classes.buttonRight}
+                    >
+                      {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
+                    </Button>
+                  </div>
                 </div>
-              </div>
-            )}
+              )}
         </div>
 
       </div>
 
+      <div style={{ 
+        position : 'fixed',
+        left : 0,
+        bottom : 0,
+        width : '100%',
+        backgroundColor : 'red',
+        textAlign : 'center',
+        color : 'white'
+       }} >
+      <Offline >Check Your Internet Connection</Offline>
+      </div>
     </div>
   );
 }

@@ -38,17 +38,11 @@ const Payment = () =>
     console.log("Clients : ", clients[0])
     const getSearchresult = (e) =>
     {
-        // let result = e.target.value;
         setSearchText(e)
         let lowercaseResult = e.toLowerCase();
         let data = []
 
         console.log("Given key", lowercaseResult)
-
-        // const filterData = clients[0].filter(item => {
-        //     console.log("Items : ", item)
-        //     return Object.keys(item).some(key => item[key].toLowerCase().includes(lowercaseResult))
-        // })
 
         clients[0].filter(item => {
             if(item['personal']['name'].toLowerCase().includes(lowercaseResult))
@@ -63,11 +57,7 @@ const Payment = () =>
             data = []
         }
         searchResult[1](data)
-    }
-
-    const handleClick = () =>
-    {
-
+        return
     }
 
     return(
@@ -127,6 +117,8 @@ const Payment = () =>
             </Grid>
 
         </Grid>
+    
+        
     </div>
     )
 

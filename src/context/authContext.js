@@ -1,6 +1,7 @@
 import React from 'react'
 import { useAuthState } from 'react-firebase-hooks/auth';
-import {auth} from '../config/firebase'
+import { auth } from '../config/firebase'
+import { SpinnerLoading } from "../components/loading/loadingSpinner";
 
 // const currentUser = auth.currentUser
 
@@ -8,31 +9,31 @@ export const AuthContext = React.createContext();
 
 export const AuthProvider = ({ children }) => {
 
-    
-    
+
+
     const [user, loading, error] = useAuthState(auth);
 
     console.log("Auth : ", auth)
     console.log("AuthContext : ", AuthContext)
-    
+
     if (loading) {
         return (
             <>
-                Loading ....
+                <div style={{ display: 'grid', placeItems: 'center' }} > <SpinnerLoading /> </div>
             </>
         )
     }
 
     if (error) {
         return <>
-            Error ...
+            <div style={{ display: 'grid', placeItems: 'center' }} > <span> {error} </span> </div>
         </>
     }
 
     return (
         <AuthContext.Provider
             value={{
-               currentUser : user
+                currentUser: user
             }}
         >
             {children}

@@ -6,7 +6,7 @@ import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 import Check from '@material-ui/icons/Check';
-import { AccountCircle, HomeWorkOutlined, MonetizationOn, Home, KeyboardBackspace } from "@material-ui/icons";
+import { AccountCircle, HomeWorkOutlined, MonetizationOn, KeyboardBackspace } from "@material-ui/icons";
 import StepConnector from '@material-ui/core/StepConnector';
 import Button from '@material-ui/core/Button';
 import PersonalInfo from "./forms/personalInfo";
@@ -18,6 +18,7 @@ import { AuthContext } from "../context/authContext";
 import { useNavigate } from 'react-router-dom';
 import { IconButton } from '@material-ui/core';
 import AlertDialog from './forms/confirmDialog';
+import { Offline } from "react-detect-offline";
 
 
 
@@ -186,18 +187,7 @@ function getSteps() {
   return ['Client Information', 'Client Assets Information', 'Client Payment Information'];
 }
 
-function getStepContent(step) {
-  switch (step) {
-    case 0:
-      return 'Personal Information';
-    case 1:
-      return 'Plot Information';
-    case 2:
-      return 'Payment Information';
-    default:
-      return 'Unknown step';
-  }
-}
+
 
 const getForms = (step, personalModel, plotModel, paymentModel) => {
   switch (step) {
@@ -220,13 +210,12 @@ const Application = () => {
   const currentUser = React.useContext(AuthContext);
 
   const [activeStep, setActiveStep] = React.useState(0);
-  const [proceed, setProceed] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(true)
   const [isSucceed, setIsSucceed] = React.useState(false)
   const [selectedImage, setSelectedImage] = React.useState(null)
 
   const [imageFile, setImageFile] = React.useState(null)
-  const [imageURI, setImageURI] = React.useState(null)
+  const imageURI = null
   const [name, setName] = React.useState("")
   const [fatherName, setFatherName] = React.useState("")
   const [cellPhone, setCellPhone] = React.useState("")
@@ -234,7 +223,6 @@ const Application = () => {
   const [cNIC, setCNIC] = React.useState("")
   const [email, setEmail] = React.useState("")
   const [address, setAddress] = React.useState("")
-  const [transfor, setTransfor] = React.useState(false)
 
   const [area, setArea] = React.useState("")
   const [plotNumber, setPlotNumber] = React.useState("")
@@ -252,17 +240,15 @@ const Application = () => {
   const [totalInstallment, setTotalInstallment] = React.useState(0)
   const [duration, setDuration] = React.useState("")
   const [installment, setInstallment] = React.useState(0)
-  const [remainingIntsallment, setRemainingInstallment] = React.useState(0)
   const [balance, setBalance] = React.useState(0)
   const [givenAmount, setGivenAmount] = React.useState(0)
   const [paymentMethod, setPaymentMethod] = React.useState("")
-  const [open, setOpen] = React.useState(false)
   const [disableInstallment, setDisableInstallment] = React.useState(true)
 
 
   const personal = {
     id: cNIC.replace(/-/g, "") + name.toLocaleLowerCase().slice(0, 4).replace(/\s/g, ""),
-    imageURI: imageURI,
+    imageURI: "",
     name: name,
     fatherName: fatherName,
     email: email,
@@ -270,7 +256,7 @@ const Application = () => {
     phone: phone,
     cnic: cNIC,
     address: address,
-    transfor: transfor,
+    transfor: false,
   }
   const asset = {
     plotName: area,
@@ -478,7 +464,6 @@ const Application = () => {
       // For instance, get the download URL: https://firebasestorage.googleapis.com/...
       uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
         console.log('File available at', downloadURL);
-        // setImageURI(downloadURL)
         uploadData(downloadURL)
       });
     });
@@ -518,7 +503,15 @@ const Application = () => {
         else
         {
           setActiveStep((prevActiveStep) => prevActiveStep + 1)
-          uploadImage()
+          if(selectedImage)
+          {
+            uploadImage()
+          }
+          else
+          {
+            uploadData()
+          }
+          
         }
         break;
         case 4:
@@ -600,6 +593,18 @@ const Application = () => {
           }
         </div>
 
+      </div>
+
+      <div style={{ 
+        position : 'fixed',
+        left : 0,
+        bottom : 0,
+        width : '100%',
+        backgroundColor : 'red',
+        textAlign : 'center',
+        color : 'white'
+       }} >
+      <Offline >Check Your Internet Connection</Offline>
       </div>
 
     </div>

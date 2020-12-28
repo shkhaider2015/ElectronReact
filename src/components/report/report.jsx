@@ -1,8 +1,8 @@
 import React from "react";
 import './reportCSS.css'
 import SearchBar from '../report/searchBar'
-import { Avatar, Button, Dialog, IconButton, Menu, MenuItem } from "@material-ui/core";
-import { Edit, KeyboardBackspace, MoreVert } from '@material-ui/icons';
+import { Avatar, IconButton, Menu, MenuItem } from "@material-ui/core";
+import { KeyboardBackspace, MoreVert } from '@material-ui/icons';
 import zainlogo from '../../RawData/mainassociates_icon.png'
 import { db } from "../../config/firebase";
 import { AuthContext } from "../../context/authContext";
@@ -23,7 +23,7 @@ const Reports = () => {
     const isAdmin = React.useContext(AdminContext)
     const clients = React.useContext(ClientsListContext)
 
-    const [users, setUsers] = React.useState([]);
+    const [users, setUsers] = React.useState([])
     const [userKeys, setUserKeys] = React.useState([]);
     const [Dialogue, setDialogue] = React.useState(false);
     const [clicked, setClicked] = React.useState(0);
@@ -74,35 +74,9 @@ const Reports = () => {
 
     }
 
-    const getData = async () => {
-        // var dd = db.doc(`Clients/${currentUser.currentUser.email}`);
-        let route = currentUser.currentUser.displayName.replace(/\s/g, "") + currentUser.currentUser.email.slice(0, 3)
-        var docRef = db.collection("clients").doc(route);
-        var dataArrays = []
-
-        await docRef.get().then(function (doc) {
-            if (doc.exists) {
-                // console.log("OutSide", doc.data())
-
-
-                for (let x in doc.data()) {
-                    // console.log("In Function : ", doc.data()[x])
-                    // setUsers([doc.data()[x]])
-                    dataArrays.push(doc.data()[x])
-                }
-                // console.log("CVhecking : ", dataArrays)
-                setUsers(dataArrays)
-            }
-        }).catch(function (error) {
-            console.log("Error getting document:", error);
-        });
-
-        // setUsers(dataArrays)
-    }
-
     React.useEffect(
         () => {
-            getCollection()
+            // getCollection()
         },
         []
     )

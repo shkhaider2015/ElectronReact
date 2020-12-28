@@ -9,6 +9,8 @@ import { Link, useNavigate } from "react-router-dom";
 import BackgroundImage from "../../RawData/jj2.png";
 import { firebase, storage, auth, db } from "../../config/firebase";
 import { AuthContext } from "../../context/authContext";
+import { Offline } from "react-detect-offline";
+import { SpinnerLoading } from "../loading/loadingSpinner";
 
 
 const useStyle = makeStyles(
@@ -120,7 +122,7 @@ const SignUp = () => {
     const [cellPhone, setCellPhone] = React.useState("")
     const [email, setEmail] = React.useState("")
     const [password, setPassword] = React.useState("")
-    const [errorMsg, setErrorMsg] = React.useState("")
+    const [errorMsg, setErrorMsg] = React.useState('')
 
 
 
@@ -305,9 +307,8 @@ const SignUp = () => {
             })
             .catch((error) => {
                 var errorCode = error.code;
-                // setErrorMsg(error.message)
+                setErrorMsg(error.message)
                 console.error("Error creating user : ERROR_CODE -> ", errorCode)
-                console.error("Error creating user : ERROR_MESSAGE -> ", errorMsg)
                 setIsLoading(false)
                 // ..
             });
@@ -376,7 +377,7 @@ const SignUp = () => {
                         xs={12}
                     >
 
-                        {isLoading ? <LinearProgress className={classes.linearProgress} /> : ""}
+                        {isLoading ? <div style={{ display : 'grid', placeItems : 'center' }} > <SpinnerLoading /> </div> : ""}
                         <Paper elevation={3} className={classes.myPaper}>
                             <span style={{ color: 'red' }} > {errorMsg} </span>
                             <form onSubmit={handleSubmit} noValidate style={{ paddingTop: '5%' }} >
@@ -531,6 +532,20 @@ const SignUp = () => {
 
                     </Grid>
                 </Grid>
+            
+            
+                <div style={{ 
+        position : 'fixed',
+        left : 0,
+        bottom : 0,
+        width : '100%',
+        backgroundColor : 'red',
+        textAlign : 'center',
+        color : 'white'
+       }} >
+      <Offline >Check Your Internet Connection</Offline>
+      </div>
+                        
             </div>
         )
 

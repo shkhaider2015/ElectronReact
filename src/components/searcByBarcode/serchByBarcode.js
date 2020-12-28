@@ -3,11 +3,15 @@ import ReactBarCodeReader from "react-barcode-reader";
 import BarCodeGif from "../../RawData/Frame4443.gif";
 import { db } from "../../config/firebase";
 import CompleteProfile from '../profile/CompleteProfile';
+import { IconButton } from "@material-ui/core";
+import { KeyboardBackspace } from "@material-ui/icons";
+import { useNavigate } from "react-router-dom";
 
 const SearchByBarcode = () => {
 
     const [code, setCode] = React.useState(null)
     const [userData, setUserData] = React.useState(null)
+    const navigate = useNavigate();
 
     React.useEffect(
         () => {
@@ -38,26 +42,39 @@ const SearchByBarcode = () => {
         console.log("Error : ", err)
     }
 
-    const UserProfile = (<CompleteProfile object={userData} />)
 
     return (
         userData
             ? <CompleteProfile object={userData} />
-            : <div style={{ display: 'grid', placeItems: 'center' }} >
-                <img alt="search" src={BarCodeGif} />
+            : <div>
 
-                {
-                    (!code && !userData)
-                        ? <span>Please Scan to Search Client</span>
-                        : (code && !userData)
-                            ? <span>Sacnned Success ! wait for client profile</span>
-                            : ""
+                <div style={{ left: 10, top : 5 }} >
 
-                }
-                <ReactBarCodeReader
-                    onError={(e) => handleError(e)}
-                    onScan={(data) => handleScan(data)}
-                />
+                    <IconButton
+                        color="inherit"
+                        onClick={() => navigate(-1)}
+                    >
+                        <KeyboardBackspace fontSize="large" color="primary" />
+                    </IconButton>
+                </div>
+
+                <div style={{ display: 'grid', placeItems: 'center' }} >
+                    <img alt="search" src={BarCodeGif} />
+
+                    {
+                        (!code && !userData)
+                            ? <span>Please Scan to Search Client</span>
+                            : (code && !userData)
+                                ? <span>Sacnned Success ! wait for client profile</span>
+                                : ""
+
+                    }
+                    <ReactBarCodeReader
+                        onError={(e) => handleError(e)}
+                        onScan={(data) => handleScan(data)}
+                    />
+                </div>
+
             </div>
     )
 }

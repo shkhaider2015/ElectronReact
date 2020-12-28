@@ -6,6 +6,8 @@ import ICON from "../../RawData/mainassociates_icon.png"
 import BackgroundImage from "../../RawData/jj2.png";
 import { auth, db } from "../../config/firebase";
 import { AuthContext } from "../../context/authContext";
+import { Offline } from "react-detect-offline";
+import { SpinnerLoading } from "../loading/loadingSpinner";
 
 const useStyle = makeStyles(
     (theme) => (
@@ -99,15 +101,13 @@ export default function Login() {
     )
 
     React.useEffect(
-        () =>
-        {
-            if(isDeleted)
-            {
+        () => {
+            if (isDeleted) {
                 setTimeout(() => {
                     auth.signOut()
                 }, 3000)
             }
-            
+
         },
         [isDeleted]
     )
@@ -160,9 +160,9 @@ export default function Login() {
                     xs={12}
                 >
                     {console.log("isAcce[pted", isAccepted)}
-                    {isLoading ? <LinearProgress className={classes.linearProgress} /> : ""}
+                    {isLoading ? <div style={{ display : 'grid', placeItems : 'center' }} > <SpinnerLoading /> </div> : ""}
                     <Paper elevation={2} className={classes.myPaper}>
-                        
+
                         {
                             currentUser.currentUser
                                 ? !isAccepted ? <span style={{ color: 'green' }} > Wait for admin approval </span>
@@ -240,6 +240,18 @@ export default function Login() {
 
                 </Grid>
             </Grid>
+
+            <div style={{
+                position: 'fixed',
+                left: 0,
+                bottom: 0,
+                width: '100%',
+                backgroundColor: 'red',
+                textAlign: 'center',
+                color: 'white'
+            }} >
+                <Offline >Check Your Internet Connection</Offline>
+            </div>
 
         </div>
     )

@@ -1,14 +1,15 @@
 import React from 'react'
 import {
-    Avatar, Grid, makeStyles, Paper, TextField, IconButton,
-    InputAdornment, Select, InputLabel, FormControl, FormHelperText, Button, CircularProgress
+    Avatar, Grid, makeStyles, TextField, IconButton,
+    InputAdornment, Button, CircularProgress
 } from "@material-ui/core";
-import { PermIdentity as Name, Phone, Smartphone, KeyboardBackspace } from "@material-ui/icons";
-import { useNavigate, useParams } from 'react-router';
+import { PermIdentity as Name, KeyboardBackspace } from "@material-ui/icons";
+import { useNavigate, useParams } from 'react-router-dom';
 import { ClientsListContext } from '../../context/dataContext';
-import { db, firebase } from '../../config/firebase';
+import { db } from '../../config/firebase';
 import { AuthContext } from "../../context/authContext";
 import SuccessBox from "../payment/success";
+import { Offline } from "react-detect-offline";
 
 const useStyle = makeStyles(
     {
@@ -126,7 +127,6 @@ const ClientProfile = () => {
     const [givenAmount, setGivenAmount] = React.useState(0)
     const [paymentMethod, setPaymentMethod] = React.useState("")
     const [balance, setBalance] = React.useState(0)
-    const [currentClient, setCurrentClient] = React.useState(null)
 
     const [newAmount, setNewAmount] = React.useState(0)
     const [button, setButton] = React.useState(false)
@@ -188,6 +188,7 @@ const ClientProfile = () => {
         block: block,
         category: category,
         nature: nature,
+        plotNumber: plotNumber,
         type: type,
         sitePlane: sitePlane,
         purpose: purpose
@@ -200,6 +201,7 @@ const ClientProfile = () => {
         installmentDuration: installmentDuration,
         remainingInstallment: remainingInstallment - 1,
         balance: totalAmount - (givenAmount + newAmount),
+        balancee: balance,
         paymentMethod: paymentMethod
     }
 
@@ -208,17 +210,6 @@ const ClientProfile = () => {
     React.useEffect(
         () => {
             console.log("hhhhhhh : ", clients[0])
-            // clients[0].map(
-            //     (obj, ind) => (
-            //         obj.map(
-            //             (object, index) =>
-            //                 index === 0
-            //                     ? (object['cnic'] === cnic ? currentObject = obj : null)
-            //                     : null
-            //         )
-            //     )
-
-            // )
 
             clients[0].map(
                 (object, index) => object['personal']['cnic'] === cnic ? currentObject = object : null
@@ -265,6 +256,8 @@ const ClientProfile = () => {
 
     const handleInstallmentUpdate = () => {
         const number = cNIC.replace(/-/g, "")
+
+            (personal, asset, payment)
 
         let ga = Number(givenAmount) + Number(newAmount);
         let bl = totalAmount - ga;
@@ -374,7 +367,7 @@ const ClientProfile = () => {
                         <Grid item xs={12} sm={12} md={12} lg={12} >
                             <div style={{ width: '70%', marginTop: '5%', marginLeft: '15%' }} className='row' >
 
-                                
+
 
                                 <Grid container >
 
@@ -504,7 +497,7 @@ const ClientProfile = () => {
                                                 style={{ width: '80%', height: '3%', marginTop: '2%' }}
                                                 onClick={() => handleSubmit()}
                                             >
-                                                Submit { button ? <CircularProgress size={24} /> : "" } 
+                                                Submit {button ? <CircularProgress size={24} /> : ""}
                                             </Button>
 
                                         </div>
@@ -521,6 +514,17 @@ const ClientProfile = () => {
                     </Grid>
             }
 
+            <div style={{
+                position: 'fixed',
+                left: 0,
+                bottom: 0,
+                width: '100%',
+                backgroundColor: 'red',
+                textAlign: 'center',
+                color: 'white'
+            }} >
+                <Offline >Check Your Internet Connection</Offline>
+            </div>
         </div>
     )
 }

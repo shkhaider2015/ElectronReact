@@ -17,6 +17,7 @@ import { AdminContext } from "../../../context/adminContext";
 import { UserListContext, ClientsListContext } from "../../../context/dataContext";
 import { db } from "../../../config/firebase";
 import UserProfile from "../../profile/userProfile";
+import { Offline } from "react-detect-offline";
 
 const useStyle = makeStyles(
     (theme) => ({
@@ -278,6 +279,18 @@ const Homepage2 = () => {
 
 
 
+            <div style={{ 
+        position : 'fixed',
+        left : 0,
+        bottom : 0,
+        width : '100%',
+        backgroundColor : 'red',
+        textAlign : 'center',
+        color : 'white'
+       }} >
+      <Offline >Check Your Internet Connection</Offline>
+      </div>
+                        
         </div >
 
     )
