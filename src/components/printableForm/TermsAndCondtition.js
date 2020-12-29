@@ -1,8 +1,5 @@
-import { makeStyles, TextField, RadioGroup, Paper, Radio, Button, FormControlLabel, Avatar } from "@material-ui/core";
-import { BorderBottom } from "@material-ui/icons";
-import React ,{useState} from "react";
-import { ReactComponent as Client_Tempory_Profile } from '../../RawData/Create.svg';
-import boxTermsAndConditoon from '../../RawData/terms_andcondition.JPG'
+import {  Avatar } from "@material-ui/core";
+import React from "react";
 import { getDate } from "../../utility/utils";
 
 
@@ -28,8 +25,8 @@ function PrintTermsandCondition({obj}) {
 
                     <div className="mt-5 col-12">
                         <div className="row">
-                            <div className="offset-7 col-2 pl-4 text-right ">Date :</div>
-                            <div className="col-2 text-left pl-4  border-bottom">{getDate()}</div>
+                            <div className="offset-7 col-2 pl-4 text-right "><span style={{fontSize: 12, opacity: 0.5 }} >Date :</span></div>
+                            <div className="col-2 text-left pl-4  border-bottom"><span style={{fontSize: 12, opacity: 0.5 }} >{getDate()}</span></div>
                         </div>
                     </div>
 
@@ -89,7 +86,7 @@ function PrintTermsandCondition({obj}) {
                         </div>
                         <div className="row ">
                         <div className="offset-2 col-2 text-left "> Read & Understood </div>
-                        <div className="offset-1  col-2 text-center  ">CNIC: {obj['personal']['cnic']} </div> 
+                        <div className="offset-1  col-2 text-center  "><span>CNIC: {obj['personal']['cnic']}</span> </div> 
                        
                        
                         </div>

@@ -84,6 +84,7 @@ export default function Login() {
     const [isLoading, setIsLoading] = React.useState(false)
     const [isAccepted, setIsAccepted] = React.useState(false)
     const [isDeleted, setIsDeleted] = React.useState(false)
+    const [errorMessage, setErrorMessage] = React.useState("")
     const currentUser = React.useContext(AuthContext)
 
     const classes = useStyle();
@@ -92,7 +93,7 @@ export default function Login() {
     React.useEffect(
         () => {
             if (currentUser.currentUser) {
-                if (isAccepted) {
+                if (isAccepted && !isDeleted) {
                     navigate("/")
                 }
             }
@@ -123,7 +124,11 @@ export default function Login() {
             } else {
                 console.log("doc not exists")
             }
-        }).catch(e => console.error(e))
+            setIsLoading(false)
+        }).catch(e => {
+            console.error(e)
+            setIsLoading(false)
+        })
     }
 
 
@@ -137,12 +142,12 @@ export default function Login() {
             .then((user) => {
                 console.log("Login Succesfully")
                 getUserdata(user)
-                setIsLoading(false)
             })
             .catch((err) => {
                 console.error("ERROR CODE : ", err.code)
                 console.error("ERROR CODE : ", err.message)
                 setIsLoading(false)
+                setErrorMessage(err.message)
             })
 
     }
@@ -159,17 +164,31 @@ export default function Login() {
                     sm={12}
                     xs={12}
                 >
-                    {console.log("isAcce[pted", isAccepted)}
-                    {isLoading ? <div style={{ display : 'grid', placeItems : 'center' }} > <SpinnerLoading /> </div> : ""}
+                    {isLoading ? <div style={{ display : 'grid', placeItems : 'center', marginTop : '1%' }} > <SpinnerLoading /> </div> : ""}
                     <Paper elevation={2} className={classes.myPaper}>
+                        {
+                            errorMessage
+                            ? <span> {errorMessage} </span>
+                            : null
+                        }
 
                         {
+                            currentUser.currentUser
+                            ? (isDeleted 
+                                ? <span style={{ color: 'red' }} >Sorry this account has been deleted by admin </span>
+                                : !isAccepted
+                                ? <span style={{ color: 'green' }} > Wait for admin approval </span>
+                                : null)
+                            : null
+                        }
+
+                        {/* {
                             currentUser.currentUser
                                 ? !isAccepted ? <span style={{ color: 'green' }} > Wait for admin approval </span>
                                     : isDeleted ? <span style={{ color: 'red' }} >Sorry this account has been deleted by admin </span>
                                         : null
                                 : null
-                        }
+                        } */}
                         <form noValidate onSubmit={e => handleSubmit(e)}>
 
 

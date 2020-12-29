@@ -29,7 +29,7 @@ const MyProgress = ({ isLoading, reset, succeed }) => {
     return (
         <div className={classes.root}>
 
-            { isLoading ? <div style={{ width: '100%', textAlign: 'center' }} > <SpinnerLoading />
+            { isLoading ? <div style={{ display : 'grid', width: '100%', textAlign: 'center', placeItems : 'center' }} > <SpinnerLoading />
             </div>
                 :
                 succeed ?

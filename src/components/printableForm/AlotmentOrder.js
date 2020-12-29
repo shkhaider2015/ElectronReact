@@ -1,19 +1,9 @@
-import { makeStyles, TextField, RadioGroup, Paper, Radio, Button, FormControlLabel } from "@material-ui/core";
-import React ,{useState} from "react";
-import { ReactComponent as Client_Tempory_Profile } from '../../RawData/Create.svg';
+import React from "react";
+import { getDate } from "../../utility/utils";
 
 
 
 function PrintAllotmentOrder({ obj }) {
-
-    const [RefNo , func_RefNo] = useState("RefNo")
-    const [Date , func_Date ]   = useState("Date")
-    const [Mr_Mrs_Miss  , func_Mr_Mrs_Miss] = useState("Mr_Mrs_Miss")
-    const [So_Do_Wo  , func_So_Do_Wo] = useState("So_Do_Wo")
-    const [CNIC  , func_CNIC] = useState("CNIC")
-    const [PlotNo  , func_PlotNo] = useState("PlotNo")
-    const [Category  , func_Category] = useState("Category")
-    const [Size  , func_Size] = useState("Size")
 
 
 
@@ -33,43 +23,43 @@ function PrintAllotmentOrder({ obj }) {
                     </div>
                     <div className="mt-5 col-12">
                         <div className="mt-5 row">
-                            <div className="offset-1  col-2 pl-4 text-left ">Ref No. :</div>
-                            <div className="col-2 text-left pl-4  border-bottom">{RefNo}</div>
-                            <div className="offset-2  col-2 pl-4 text-right ">Date :</div>
-                            <div className="col-2 text-left pl-4  border-bottom">{Date}</div>
+                            <div className="offset-1  col-2 pl-4 text-left "><span style={{ fontSize: 12, opacity: 0.5 }} >Ref No.:</span></div>
+                            <div className="col-2 text-left pl-4  border-bottom"><span style={{ fontSize: 12, opacity: 0.5 }} >Ref No.:</span></div>
+                            <div className="offset-2  col-2 pl-4 text-right "><span style={{ fontSize: 12, opacity: 0.5 }} >Date:</span></div>
+                            <div className="col-2 text-left pl-4  border-bottom"> <span style={{ fontSize: 12, opacity: 0.5 }} >{ getDate() }</span> </div>
                         </div>
                     </div>
             
                     <div className="mt-5  col-12">
                         <div className="mt-2 row">
-                            <div className="offset-1  col-2 pl-4 text-left ">Mr./Mrs./Miss :</div>
-                            <div className="col-3 text-left pl-4  border-bottom">{obj['personal']['name']}</div>
+                            <div className="offset-1  col-2 pl-4 text-left "><span style={{ fontSize: 12 }} >Mr./Mrs./Miss :</span></div>
+                            <div className="col-3 text-left pl-4  border-bottom"><span style={{ fontSize: 12, fontWeight: 'bold'  }} >{obj['personal']['name']}</span></div>
                         </div>
                     </div>
                     <div className="mt-5 col-12">
                         <div className="row">
-                            <div className="offset-1  col-2 pl-4 text-left ">S/o, D/o, W/o :</div>
-                            <div className="col-3 text-left pl-4  border-bottom">{obj['personal']['fatherName']}</div>
+                            <div className="offset-1  col-2 pl-4 text-left "><span style={{ fontSize: 12 }} >S/o, D/o, W/o :</span></div>
+                            <div className="col-3 text-left pl-4  border-bottom"><span style={{ fontSize: 12, fontWeight: 'bold'  }} >{obj['personal']['fatherName']}</span></div>
                         </div>
                     </div>
                     <div className="mt-5 col-12">
                         <div className="row">
-                            <div className="offset-1  col-2 pl-4 text-left ">CNIC :</div>
-                            <div className="col-3 text-left pl-4  border-bottom">{obj['personal']['cnic']}</div>
+                            <div className="offset-1  col-2 pl-4 text-left "><span style={{ fontSize: 12 }} >CNIC :</span></div>
+                            <div className="col-3 text-left pl-4  border-bottom"><span style={{ fontSize: 12, fontWeight: 'bold'  }} >{obj['personal']['cnic']}</span></div>
                         </div>
                     </div>
                     <div className="mt-5 col-12">
                         <div className="row">
-                            <div className="offset-1  col-2 pl-4 text-left ">Alloted Plot No. :</div>
-                            <div className="col-2 text-left pl-4  border-bottom">{obj['asset']['plotName']}</div>
-                            <div className="offset-2  col-2 pl-4 text-right ">Size :</div>
-                            <div className="col-2 text-left pl-4  border-bottom">{obj['asset']['square']}</div>
+                            <div className="offset-1  col-2 pl-4 text-left "><span style={{ fontSize: 12 }} >Alloted Plot No. :</span></div>
+                            <div className="col-2 text-left pl-4  border-bottom"><span style={{ fontSize: 12, fontWeight: 'bold' }} >{obj['asset']['plotName']}</span></div>
+                            <div className="offset-2  col-2 pl-4 text-right "><span style={{ fontSize: 12 }} >Size :</span></div>
+                            <div className="col-2 text-left pl-4  border-bottom"><span style={{ fontSize: 12, fontWeight: 'bold' }} >{obj['asset']['square']}</span></div>
                         </div>
                     </div>
                     <div className="mt-5 col-12">
                         <div className="row">
-                            <div className="offset-1  col-2 pl-4 text-left ">Category :</div>
-                            <div className="col-3 text-left pl-4  border-bottom">{obj['asset']['category']}</div>
+                            <div className="offset-1  col-2 pl-4 text-left "><span style={{ fontSize: 12 }} >Category :</span></div>
+                            <div className="col-3 text-left pl-4  border-bottom"><span style={{ fontSize: 12, fontWeight: 'bold'  }} >{obj['asset']['category']}</span></div>
                         </div>
                     </div>
                     <div className="mt-5  ml-5  col-12">

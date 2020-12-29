@@ -1,25 +1,9 @@
-import { makeStyles, TextField, RadioGroup, Paper, Radio, Button, FormControlLabel } from "@material-ui/core";
-import React ,{useState} from "react";
-import { ReactComponent as Client_Tempory_Profile } from '../../RawData/Create.svg';
+import React from "react";
 import { getDate } from "../../utility/utils";
 
 
 
 function PrintPossessionCertificate({obj}) {
-
-    const [RefNo , func_RefNo] = useState("RefNo")
-    const [Date , func_Date ]   = useState("Date")
-    const [Mr_Mrs_Miss  , func_Mr_Mrs_Miss] = useState("Mr_Mrs_Miss")
-    const [So_Do_Wo  , func_So_Do_Wo] = useState("So_Do_Wo")
-    const [CNIC  , func_CNIC] = useState("CNIC")
-    const [PlotNo  , func_PlotNo] = useState("PlotNo")
-    const [Measurement  , func_Measurement] = useState("Measurement")
-    const [SqYds  , func_SqYds] = useState("SqYds")
-    const [Category  , func_Category] = useState("Category")
-    const [Nature  , func_Nature] = useState("Nature")
-    const [Adress  , func_Adress] = useState("Adress")
-
-
 
     return (
         <div>
@@ -37,10 +21,10 @@ function PrintPossessionCertificate({obj}) {
                     </div>
                     <div className="mt-5 col-12">
                         <div className="row">
-                            <div className="offset-1 col-2 pl-4 text-left ">RefNo:</div>
-                            <div className="col-3 text-left pl-4  border-bottom">{RefNo}</div>
-                            <div className="offset-1 col-2 pl-5 text-left ">Date:</div>
-                            <div className="col-2 text-left pl-4  border-bottom">{getDate()}</div>
+                            <div className="offset-1 col-2 pl-4 text-left "><span style={{fontSize: 12, opacity: 0.5 }} >RefNo:</span></div>
+                            <div className="col-3 text-left pl-4  border-bottom"><span style={{fontSize: 12, opacity: 0.5 }} >8787</span></div>
+                            <div className="offset-1 col-2 pl-5 text-left "><span style={{fontSize: 12, opacity: 0.5 }} >Date:</span></div>
+                            <div className="col-2 text-left pl-4  border-bottom"><span style={{fontSize: 12, opacity: 0.5 }} >{getDate()}</span></div>
                         </div>
                     </div>
                     <div className="mt-5  ml-5  col-12">
@@ -50,24 +34,24 @@ function PrintPossessionCertificate({obj}) {
                     </div>
                     <div className="mt-5 col-12">
                         <div className="row">
-                            <div className="offset-1 col-2 pl-4 text-left ">Plot:</div>
-                            <div className="col-3 text-left pl-4  border-bottom">{obj['asset']['plotName']}</div>
-                            <div className="offset-1 col-2 pl-5 text-left ">Measurement:</div>
-                            <div className="col-2 text-left pl-4  border-bottom">{obj['asset']['measurement']}</div>
+                            <div className="offset-1 col-2 pl-4 text-left "><span style={{ fontSize: 12 }} >Plot:</span></div>
+                            <div className="col-3 text-left pl-4  border-bottom"><span style={{ fontSize: 12, fontWeight: 'bold' }} >{obj['asset']['plotName']}</span></div>
+                            <div className="offset-1 col-2 pl-5 text-left "><span style={{ fontSize: 12 }} >Measurement:</span></div>
+                            <div className="col-2 text-left pl-4  border-bottom"><span style={{ fontSize: 12, fontWeight: 'bold' }} >{obj['asset']['measurement']}</span></div>
                         </div>
                     </div>
                     <div className="mt-5 col-12">
                         <div className="row">
-                            <div className="offset-1  col-2 pl-4 text-left ">Sq. Yds, Block:</div>
-                            <div className="col-3 text-left pl-4  border-bottom">{obj['asset']['square']}, {obj['asset']['block']} </div>
+                            <div className="offset-1  col-2 pl-4 text-left "><span style={{ fontSize: 12 }} >Sq. Yds, Block:</span></div>
+                            <div className="col-3 text-left pl-4  border-bottom"><span style={{ fontSize: 12, fontWeight: 'bold' }} >{obj['asset']['square']}, Block {obj['asset']['block']} </span></div>
                         </div>
                     </div>
                     <div className="mt-5 col-12">
                         <div className="row">
-                            <div className="offset-1 col-2 pl-4 text-left ">Category:</div>
-                            <div className="col-3 text-left pl-4  border-bottom">{obj['asset']['category']}</div>
-                            <div className="offset-1 col-2 pl-5 text-left ">Nature:</div>
-                            <div className="col-2 text-left pl-4  border-bottom">{obj['asset']['nature']}</div>
+                            <div className="offset-1 col-2 pl-4 text-left "><span style={{ fontSize: 12 }} >Category:</span></div>
+                            <div className="col-3 text-left pl-4  border-bottom"><span style={{ fontSize: 12, fontWeight: 'bold' }} >{obj['asset']['category']}</span></div>
+                            <div className="offset-1 col-2 pl-5 text-left "><span style={{ fontSize: 12 }} >Nature:</span></div>
+                            <div className="col-2 text-left pl-4  border-bottom"><span style={{ fontSize: 12, fontWeight: 'bold' }} >{obj['asset']['nature']}</span></div>
                         </div>
                     </div>
                    
@@ -78,27 +62,27 @@ function PrintPossessionCertificate({obj}) {
                     </div>
                     <div className="mt-5  col-12">
                         <div className="row">
-                            <div className="offset-1  col-2 pl-4 text-left ">Mr./Mrs./Miss :</div>
-                            <div className="col-3 text-left pl-4  border-bottom">{obj['personal']['name']}</div>
+                            <div className="offset-1  col-2 pl-4 text-left "><span style={{ fontSize: 12 }} >Mr./Mrs./Miss :</span></div>
+                            <div className="col-3 text-left pl-4  border-bottom"><span style={{ fontSize: 12, fontWeight: 'bold' }} >{obj['personal']['name']}</span></div>
                         </div>
                     </div>
                     <div className="mt-5 col-12">
                         <div className="row">
-                            <div className="offset-1  col-2 pl-4 text-left ">S/o, D/o, W/o :</div>
-                            <div className="col-3 text-left pl-4  border-bottom">{obj['personal']['fatherName']}</div>
+                            <div className="offset-1  col-2 pl-4 text-left "><span style={{ fontSize: 12 }} >S/o, D/o, W/o :</span></div>
+                            <div className="col-3 text-left pl-4  border-bottom"><span style={{ fontSize: 12, fontWeight: 'bold' }} >{obj['personal']['fatherName']}</span> </div>
                         </div>
                     </div>
                     <div className="mt-5 col-12">
                         <div className="row">
-                            <div className="offset-1  col-2 pl-4 text-left ">CNIC :</div>
-                            <div className="col-3 text-left pl-4  border-bottom">{obj['personal']['cnic']}</div>
+                            <div className="offset-1  col-2 pl-4 text-left "><span style={{ fontSize: 12 }} >CNIC :</span></div>
+                            <div className="col-3 text-left pl-4  border-bottom"><span style={{ fontSize: 12, fontWeight: 'bold' }} >{obj['personal']['cnic']}</span></div>
                         </div>
                     </div>
                   
                     <div className="mt-5 col-12">
                         <div className="row">
-                            <div className="offset-1  col-2 pl-4 text-left ">Adress :</div>
-                            <div className="col-3 text-left pl-4  border-bottom">{obj['personal']['address']}</div>
+                            <div className="offset-1  col-2 pl-4 text-left "><span style={{ fontSize: 12 }} >Adress :</span></div>
+                            <div className="col-3 text-left pl-4  border-bottom"><span style={{ fontSize: 12, fontWeight: 'bold' }} >{obj['personal']['address']}</span></div>
                         </div>
                     </div>
             

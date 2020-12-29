@@ -41,6 +41,7 @@ const Homepage2 = () => {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const currentUser = React.useContext(AuthContext);
     const isAdmin = React.useContext(AdminContext)
+    const [isDeleted, setIsDeleted] = React.useState(false)
     const clients = React.useContext(ClientsListContext)
     const users = React.useContext(UserListContext)
     const [profilePic, setProfilePic] = React.useState(null)
@@ -97,6 +98,7 @@ const Homepage2 = () => {
                             if (doc.data()[x]['id'] === currentUser.currentUser.uid) {
                                 // isAdmin[1](true)
                                 isAdmin[1](doc.data()[x]['adminRight'])
+                                setIsDeleted(doc.data()[x]['isDeleted'])
                                 setObjectForProfile(doc.data()[x])
                             }
                             docs.push(doc.data()[x])
@@ -126,6 +128,17 @@ const Homepage2 = () => {
             }
         },
         []
+    )
+
+    React.useEffect(
+        () =>
+        {
+            if(isDeleted)
+            {
+                auth.signOut();
+            }
+        },
+        [isDeleted]
     )
 
    

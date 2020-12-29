@@ -43,7 +43,8 @@ const UserList = (props) => {
         db.collection('users')
             .doc(obj['id'])
             .update({
-                "personal.isDeleted": true
+                "personal.isDeleted": true,
+                "personal.isAccepted" : false
             })
             .then(() => console.log("user deleted succesfully"))
             .catch((e) => console.error("Error deleteding user : ", e))
