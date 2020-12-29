@@ -100,6 +100,15 @@ const Reports = () => {
         // navigate('/edit', { state: { obj: clients[0], index: clicked, key: userKeys[clicked] } })
     }
 
+    const handleTransfor = (cnic) =>
+    {
+        clients[0].map(
+            (object, index) => object['personal']['cnic'] === cnic
+                ? navigate('/transfer', { state: { obj: object } })
+                : null
+        )
+    }
+
     const handleDelete = (cnic) => {
 
         setAnchorEl(null)
@@ -220,6 +229,7 @@ const Reports = () => {
                                                                                             >
                                                                                                 <MenuItem onClick={() => handleEdit(object['personal']['cnic'])}>Edit</MenuItem>
                                                                                                 <MenuItem onClick={() => handleIdCard(object['personal']['cnic'])}>ID Card</MenuItem>
+                                                                                                <MenuItem onClick={() => handleTransfor(object['personal']['cnic'])}>Transfor</MenuItem>
                                                                                                 <MenuItem onClick={() => handleDelete(object['personal']['cnic'])}>Delete</MenuItem>
                                                                                             </Menu>
                                                                                         </div>

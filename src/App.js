@@ -5,6 +5,8 @@ import { AuthProvider } from './context/authContext'
 import MyRoutes from './components/myRoutes/myRoutes'
 import { AdminContext } from "./context/adminContext";
 import { UserProvioder, ClientProvioder } from "./context/dataContext";
+import { SplashScreen } from './components/splashScreen/splashScreen';
+
 
 
 const theme = createMuiTheme(
@@ -20,31 +22,59 @@ const theme = createMuiTheme(
   }
 )
 
-function App() {
+
+
+const App = () => {
 
   const isAdimn = React.useState(false)
   
-
+const [isReady, setIsReady] = React.useState(true)
   
-  return (
-    <div>
 
-      <MuiThemeProvider theme={theme}>
-        <AuthProvider>
-          <AdminContext.Provider value={isAdimn}>
-            <UserProvioder>
-              <ClientProvioder>
-              <MyRoutes />
-              </ClientProvioder>
-            </UserProvioder>
-          </AdminContext.Provider>
-        </AuthProvider>
+  React.useEffect(
+    () =>
+    {
+      if(!isReady)
+      {
+        setTimeout(
+          () =>
+          {
+            setIsReady(!isReady)
+          },
+          3000
+        )
+      }
+    },
+    [isReady]
+  )
+  
 
-      </MuiThemeProvider>
-
-
-    </div>
-  );
+  if(isReady)
+  {
+    return (
+      <div>
+  
+        <MuiThemeProvider theme={theme}>
+          <AuthProvider>
+            <AdminContext.Provider value={isAdimn}>
+              <UserProvioder>
+                <ClientProvioder>
+                <MyRoutes />
+                </ClientProvioder>
+              </UserProvioder>
+            </AdminContext.Provider>
+          </AuthProvider>
+  
+        </MuiThemeProvider>
+  
+  
+      </div>
+    );
+  }
+  else
+  {
+    return <SplashScreen />
+  }
 }
 
 export default App;

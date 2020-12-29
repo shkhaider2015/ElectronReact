@@ -13,6 +13,7 @@ import CPP from "../profile/clientPaymentProfile";
 import IdCardGenrator from "../idCard/idCardGenrator";
 import SearchByBarcode from '../searcByBarcode/serchByBarcode';
 import CompleteProfile from "../profile/CompleteProfile";
+import Transfor from '../tranfor/transfor';
 
 
 
@@ -26,6 +27,7 @@ function MyRoutes() {
                     <Route path="/" element={< Home />} /> 
                     <Route path="/report" element={< Report />}/> 
                     <Route path="/edit" element={<EditComp />} />
+                    <Route path="/transfer" element={ <Transfor /> } />
                     <Route path="/idcard" element={<IdCardGenrator />} />
                     <Route path="/create" element={< CreateApp />}/> 
                     <Route path="/payment" element={ <Payment /> }  />

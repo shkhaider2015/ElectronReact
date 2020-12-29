@@ -12,7 +12,7 @@ const IdCardGenrator = () =>
     const { inputRef } = useBarcode({
       value : obj['personal']['id'],
       options : {
-        displayValue : true
+        displayValue : false
       }
 
     })

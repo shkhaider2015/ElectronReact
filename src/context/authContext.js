@@ -18,9 +18,9 @@ export const AuthProvider = ({ children }) => {
 
     if (loading) {
         return (
-            <>
-                <div style={{ width : '100%', height : '100%', display: 'grid', placeItems: 'center' }} > <SpinnerLoading /> </div>
-            </>
+            <div>
+                <div style={{ display: 'grid', placeItems: 'center', height : '100vh' }} > <div><SpinnerLoading /></div>  </div>
+            </div>
         )
     }
 
