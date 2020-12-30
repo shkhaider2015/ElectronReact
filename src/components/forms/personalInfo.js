@@ -19,8 +19,8 @@ const useStyle = makeStyles(
             myPaper: {
                 padding: '0%',
                 paddingTop: '2%',
-                paddingLeft: '4%',
-                paddingRight: '4%',
+                paddingLeft: '1%',
+                paddingRight: '1%',
                 paddingBottom: '3%',
                 width: '60%',
                 background: 'rgba(255, 255, 255, 0.98)',
@@ -192,8 +192,8 @@ return (
                                 {/* {!model.selectedImage ? <PhotoCamera className={classes.imageIcon} color="primary" /> : <Avatar alt="shakeel haider" src={model.selectedImage} variant="circle" className={classes.myImage} />} */}
                                 {
                                     model.selectedImage
-                                    ? <Avatar alt="name" src={model.selectedImage} variant="circular" className={classes.myImage} />
-                                    : model.imageURI !== "" ? <Avatar alt="shakeel haider" src={model.imageURI} variant="circular" className={classes.myImage} />
+                                    ? <Avatar alt="name" src={model.selectedImage} variant="circle" className={classes.myImage} />
+                                    : model.imageURI !== "" ? <Avatar alt="shakeel haider" src={model.imageURI} variant="circle" className={classes.myImage} />
                                     : <PhotoCamera className={classes.imageIcon} color="primary" />
                                 }
 
