@@ -7,6 +7,7 @@ import { AdminContext } from "./context/adminContext";
 import { UserProvioder, ClientProvioder } from "./context/dataContext";
 import { SplashScreen } from './components/splashScreen/splashScreen';
 import TransferForm from './components/printableForm/TransferForm';
+import PlotAndPaymentInformationForm from './components/printableForm/PlotPaymentInformationForm';
 
 
 
@@ -74,7 +75,7 @@ const [isReady, setIsReady] = React.useState(true)
   }
   else
   {
-    return <TransferForm />
+    return <PlotAndPaymentInformationForm />
   }
 }
 
