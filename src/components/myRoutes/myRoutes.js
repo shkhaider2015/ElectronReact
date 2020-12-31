@@ -14,6 +14,7 @@ import IdCardGenrator from "../idCard/idCardGenrator";
 import SearchByBarcode from '../searcByBarcode/serchByBarcode';
 import CompleteProfile from "../profile/CompleteProfile";
 import Transfor from '../tranfor/transfor';
+import TransferForm from '../printableForm/TransferForm';
 
 
 

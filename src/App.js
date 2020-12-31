@@ -6,6 +6,7 @@ import MyRoutes from './components/myRoutes/myRoutes'
 import { AdminContext } from "./context/adminContext";
 import { UserProvioder, ClientProvioder } from "./context/dataContext";
 import { SplashScreen } from './components/splashScreen/splashScreen';
+import TransferForm from './components/printableForm/TransferForm';
 
 
 
@@ -49,7 +50,7 @@ const [isReady, setIsReady] = React.useState(true)
   )
   
 
-  if(isReady)
+  if(1 === 3)
   {
     return (
       <div>
@@ -73,7 +74,7 @@ const [isReady, setIsReady] = React.useState(true)
   }
   else
   {
-    return <SplashScreen />
+    return <TransferForm />
   }
 }
 
