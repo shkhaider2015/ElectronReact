@@ -5,6 +5,9 @@ import { KeyboardBackspace } from '@material-ui/icons';
 import LOGO from "../../RawData/mainassociates_icon.png";
 import PersonalInformation from '../forms/personalInfo';
 import { SpinnerLoading } from '../loading/loadingSpinner';
+import { db, storage, firebase } from "../../config/firebase";
+import { AuthContext } from "../../context/authContext";
+import Success from '../payment/success';
 
 
 
@@ -13,6 +16,7 @@ const Transfor = () => {
     const { state } = useLocation();
     const navigate = useNavigate();
     const { obj } = state
+    const currentUser = React.useContext(AuthContext)
 
     const [imageFile, setImageFile] = React.useState(null)
     const [selectedImage, setSelectedImage] = React.useState(null)
@@ -25,8 +29,21 @@ const Transfor = () => {
     const [address, setAddress] = React.useState("")
 
     const [isLoading, setIsloading] = React.useState(false)
+    const [isSuccess, setIsSuccess] = React.useState(false)
     const [err, setErr] = React.useState(null)
 
+    const personal = {
+        id: cNIC.replace(/-/g, "") + name.toLocaleLowerCase().slice(0, 4).replace(/\s/g, ""),
+        imageURI: "",
+        name: name,
+        fatherName: fatherName,
+        email: email,
+        cellPhone: cellPhone,
+        phone: phone,
+        cnic: cNIC,
+        address: address,
+        transfor: false,
+    }
     const asset = {
         plotName: obj['asset']['plotName'],
         plotNumber: obj['asset']['plotNumber'],
@@ -51,40 +68,161 @@ const Transfor = () => {
     }
 
     const personalModel =
-  {
-    imageFile,
-    setImageFile,
-    selectedImage,
-    setSelectedImage,
-    name,
-    setName,
-    fatherName,
-    setFatherName,
-    cellPhone,
-    setCellPhone,
-    phone,
-    setPhone,
-    cNIC,
-    setCNIC,
-    email,
-    setEmail,
-    address,
-    setAddress
-  }
-
-  const handleSubmit = () =>
-  {
-      setIsloading(!isLoading);
+    {
+        imageFile,
+        setImageFile,
+        selectedImage,
+        setSelectedImage,
+        name,
+        setName,
+        fatherName,
+        setFatherName,
+        cellPhone,
+        setCellPhone,
+        phone,
+        setPhone,
+        cNIC,
+        setCNIC,
+        email,
+        setEmail,
+        address,
+        setAddress
+    }
 
 
-  }
+    const uploadData = (imageURI = "") => {
+        var key = cNIC.replace(/-/g, "");
+        var cu = currentUser.currentUser.displayName
+        var date = Date.now()
+        personal.imageURI = imageURI
 
-    return <div style={{ overflowX : 'hidden' }} >
+        db.collection('clients')
+            .doc(key)
+            .set({
+                personal: personal,
+                asset: asset,
+                payment: payment,
+                extra: {
+                    addedBy: cu,
+                    addedDate: date,
+                    transforFrom: {
+                        name: obj['personal']['name'],
+                        cnic: obj['personal']['cnic'],
+                        cellPhone: obj['personal']['cellPhone'],
+                        email: obj['personal']['email'],
+                        address: obj['personal']['address'],
+                        imageURI: obj['personal']['imageURI']
+                    }
+                }
+            })
+            .then(() => {
+                console.log("Transfor Success")
+                setIsloading(false)
+                setIsSuccess(!isSuccess)
+            })
+            .catch((e) => {
+                console.log("Transfer Failed")
+                setErr(e)
+                setIsloading(false)
+            })
+
+
+    }
+
+    const uploadImage = () => {
+        var storageRef = storage.ref().child(cNIC.replace(/-/g, ""));
+        var uploadTask = storageRef.child('profile.jpg').put(imageFile);
+
+        // Register three observers:
+        // 1. 'state_changed' observer, called any time the state changes
+        // 2. Error observer, called on failure
+        // 3. Completion observer, called on successful completion
+        uploadTask.on('state_changed', (snapshot) => {
+            // Observe state change events such as progress, pause, and resume
+            // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+            var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            console.log('Upload is ' + progress + '% done');
+            switch (snapshot.state) {
+                case firebase.storage.TaskState.PAUSED: // or 'paused'
+                    console.log('Upload is paused');
+                    break;
+                case firebase.storage.TaskState.RUNNING: // or 'running'
+                    console.log('Upload is running');
+                    break;
+                default:
+                    console.log("Default case")
+                    break;
+            }
+        }, (error) => {
+            // Handle unsuccessful uploads
+            console.log(error)
+            setErr(error)
+            setIsloading(false)
+        }, () => {
+            // Handle successful uploads on complete
+            // For instance, get the download URL: https://firebasestorage.googleapis.com/...
+            uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+                console.log('File available at', downloadURL);
+                uploadData(downloadURL)
+            });
+        });
+
+
+    }
+
+    const updateInfo = () => {
+        db
+            .collection('clients')
+            .doc(obj['personal']['cnic'].replace(/-/g, ""))
+            .update({
+                'personal.transfor': true
+            })
+            .then(() => {
+                console.log("Update Success")
+                if (selectedImage) {
+                    uploadImage()
+                }
+                else {
+                    uploadData()
+                }
+
+            })
+            .catch((e) => {
+                console.log("Update Failed")
+                setErr(e)
+                setIsloading(false)
+            })
+
+    }
+
+    const checkInfo = val => {
+        var val = false;
+
+        name === "" || email === "" || cellPhone === "" || cNIC === "" || address === ""
+            ? val = false
+            : val = true
+
+        console.log("Value : ", val)
+        return val;
+    }
+
+    const handleSubmit = () => {
+
+        if (checkInfo() && window.confirm("Are you sure you want to transfor ?")) {
+            updateInfo()
+            setIsloading(!isLoading);
+
+        }
+
+
+    }
+
+    return <div style={{ overflowX: 'hidden' }} >
         <div style={{ display: 'flex', flexDirection: 'row' }} >
 
             <div>
                 <IconButton
-                onClick={() => navigate(-1)}
+                    onClick={() => navigate(-1)}
                 >
                     <KeyboardBackspace fontSize="large" color="primary" />
                 </IconButton>
@@ -94,8 +232,11 @@ const Transfor = () => {
             </div>
 
         </div>
-        <Grid container direction="row"  style={{ marginTop: '4%', marginLeft : '5%', marginRight : '10%' }}  >
-            <Grid item xs={12} sm={12} md={3} lg={3} style={{  }}>
+        {
+            isSuccess
+            ? <Success open={isSuccess} title="Tranfor Complete Successfully" />
+            : <Grid container direction="row" style={{ marginTop: '4%', marginLeft: '5%', marginRight: '10%' }}  >
+            <Grid item xs={12} sm={12} md={3} lg={3} style={{}}>
 
                 <div style={{ display: 'flex', flexDirection: 'column' }} >
 
@@ -106,7 +247,7 @@ const Transfor = () => {
                         <div style={{ display: 'grid', placeItems: 'center', paddingLeft: '2%' }} >
                             <div style={{ display: 'flex', flexDirection: 'column' }} >
                                 <span style={{ fontSize: 16, fontWeight: 'bold' }} > {obj['personal']['name']} </span>
-                                <span style={{ fontSize: 12, fontWeight: 'bold', opacity : '0.7' }} > {obj['personal']['email']} </span>
+                                <span style={{ fontSize: 12, fontWeight: 'bold', opacity: '0.7' }} > {obj['personal']['email']} </span>
                             </div>
                         </div>
                     </div>
@@ -115,31 +256,31 @@ const Transfor = () => {
                         <div style={{ display: 'flex', flexDirection: 'row', width: '100%' }} >
 
                             <span style={{ fontSize: 12 }} > Father/Husband : </span>
-                            <span style={{ fontSize: 12,opacity : '0.7', fontWeight: 'bold', marginLeft: 'auto', marginRight: '30%' }} > {obj['personal']['fatherName']} </span>
+                            <span style={{ fontSize: 12, opacity: '0.7', fontWeight: 'bold', marginLeft: 'auto', marginRight: '30%' }} > {obj['personal']['fatherName']} </span>
 
                         </div>
                         <div style={{ display: 'flex', flexDirection: 'row' }} >
 
                             <span style={{ fontSize: 12 }} > CNIC : </span>
-                            <span style={{ fontSize: 12,opacity : '0.7', fontWeight: 'bold', marginLeft: 'auto', marginRight: '30%' }} > {obj['personal']['cnic']} </span>
+                            <span style={{ fontSize: 12, opacity: '0.7', fontWeight: 'bold', marginLeft: 'auto', marginRight: '30%' }} > {obj['personal']['cnic']} </span>
 
                         </div>
                         <div style={{ display: 'flex', flexDirection: 'row' }} >
 
                             <span style={{ fontSize: 12 }} > Cell Phone : </span>
-                            <span style={{ fontSize: 12,opacity : '0.7', fontWeight: 'bold', marginLeft: 'auto', marginRight: '30%' }} > {obj['personal']['cellPhone']} </span>
+                            <span style={{ fontSize: 12, opacity: '0.7', fontWeight: 'bold', marginLeft: 'auto', marginRight: '30%' }} > {obj['personal']['cellPhone']} </span>
 
                         </div>
                         <div style={{ display: 'flex', flexDirection: 'row' }} >
 
                             <span style={{ fontSize: 12 }} > Phone Office : </span>
-                            <span style={{ fontSize: 12,opacity : '0.7', fontWeight: 'bold', marginLeft: 'auto', marginRight: '30%' }} > {obj['personal']['phone']} </span>
+                            <span style={{ fontSize: 12, opacity: '0.7', fontWeight: 'bold', marginLeft: 'auto', marginRight: '30%' }} > {obj['personal']['phone']} </span>
 
                         </div>
                         <div style={{ display: 'flex', flexDirection: 'row' }} >
 
                             <span style={{ fontSize: 12 }} > Address : </span>
-                            <span style={{ fontSize: 12,opacity : '0.7', fontWeight: 'bold', marginLeft: 'auto', marginRight: '30%' }} > {obj['personal']['address']} </span>
+                            <span style={{ fontSize: 12, opacity: '0.7', fontWeight: 'bold', marginLeft: 'auto', marginRight: '30%' }} > {obj['personal']['address']} </span>
 
                         </div>
 
@@ -151,8 +292,8 @@ const Transfor = () => {
 
                         <div style={{ display: 'flex', flexDirection: 'row', width: '100%' }} >
 
-                            <span style={{ fontSize: 12, fontWeight : 'normal' }} > Payment Procedure : </span>
-                            <span style={{ fontSize: 12,opacity : '0.7', fontWeight: 'bold', marginLeft: 'auto', marginRight: '30%' }} > {obj['payment']['procedure']} </span>
+                            <span style={{ fontSize: 12, fontWeight: 'normal' }} > Payment Procedure : </span>
+                            <span style={{ fontSize: 12, opacity: '0.7', fontWeight: 'bold', marginLeft: 'auto', marginRight: '30%' }} > {obj['payment']['procedure']} </span>
 
                         </div>
 
@@ -161,7 +302,7 @@ const Transfor = () => {
                                 ? <div style={{ display: 'flex', flexDirection: 'row' }} >
 
                                     <span style={{ fontSize: 12 }} > Total Installment : </span>
-                                    <span style={{ fontSize: 12,opacity : '0.7', fontWeight: 'bold', marginLeft: 'auto', marginRight: '30%' }} > {obj['payment']['installment']} </span>
+                                    <span style={{ fontSize: 12, opacity: '0.7', fontWeight: 'bold', marginLeft: 'auto', marginRight: '30%' }} > {obj['payment']['installment']} </span>
 
                                 </div>
                                 : null
@@ -171,7 +312,7 @@ const Transfor = () => {
                                 ? <div style={{ display: 'flex', flexDirection: 'row' }} >
 
                                     <span style={{ fontSize: 12 }} > Remaining Installment : </span>
-                                    <span style={{ fontSize: 12,opacity : '0.7', fontWeight: 'bold', marginLeft: 'auto', marginRight: '30%' }} > {obj['payment']['remainingInstallment']} </span>
+                                    <span style={{ fontSize: 12, opacity: '0.7', fontWeight: 'bold', marginLeft: 'auto', marginRight: '30%' }} > {obj['payment']['remainingInstallment']} </span>
 
                                 </div>
                                 : null
@@ -180,25 +321,25 @@ const Transfor = () => {
                         <div style={{ display: 'flex', flexDirection: 'row' }} >
 
                             <span style={{ fontSize: 12 }} > Total Amount : </span>
-                            <span style={{ fontSize: 12,opacity : '0.7', fontWeight: 'bold', marginLeft: 'auto', marginRight: '30%' }} > {obj['payment']['totalAmount']} </span>
+                            <span style={{ fontSize: 12, opacity: '0.7', fontWeight: 'bold', marginLeft: 'auto', marginRight: '30%' }} > {obj['payment']['totalAmount']} </span>
 
                         </div>
                         <div style={{ display: 'flex', flexDirection: 'row' }} >
 
                             <span style={{ fontSize: 12 }} > Given Amount : </span>
-                            <span style={{ fontSize: 12, opacity : '0.7', fontWeight: 'bold', marginLeft: 'auto', marginRight: '30%' }} > {obj['payment']['givenAmount']} </span>
+                            <span style={{ fontSize: 12, opacity: '0.7', fontWeight: 'bold', marginLeft: 'auto', marginRight: '30%' }} > {obj['payment']['givenAmount']} </span>
 
                         </div>
                         <div style={{ display: 'flex', flexDirection: 'row' }} >
 
                             <span style={{ fontSize: 12 }} > Balance : </span>
-                            <span style={{ fontSize: 12,opacity : '0.7', fontWeight: 'bold', marginLeft: 'auto', marginRight: '30%' }} > {obj['payment']['balance']} </span>
+                            <span style={{ fontSize: 12, opacity: '0.7', fontWeight: 'bold', marginLeft: 'auto', marginRight: '30%' }} > {obj['payment']['balance']} </span>
 
                         </div>
                         <div style={{ display: 'flex', flexDirection: 'row' }} >
 
                             <span style={{ fontSize: 12 }} > Address : </span>
-                            <span style={{ fontSize: 12,opacity : '0.7', fontWeight: 'bold', marginLeft: 'auto', marginRight: '30%' }} > {obj['personal']['address']} </span>
+                            <span style={{ fontSize: 12, opacity: '0.7', fontWeight: 'bold', marginLeft: 'auto', marginRight: '30%' }} > {obj['personal']['address']} </span>
 
                         </div>
 
@@ -210,41 +351,50 @@ const Transfor = () => {
                 </div>
 
             </Grid>
-            <Grid item xs={12} sm={12} md={1} lg={1} style={{  }} >
-                <div style={{ height : '100%', display : 'grid', placeItems : 'center' }} >
-                {
-                    isLoading
-                    ? <SpinnerLoading />
-                    : null
-                }
-                </div>
-            </Grid>
-            <Grid item xs={12} sm={12} md={7} lg={7} style={{  }} >
-
-                <div style={{ display : 'flex', flexDirection : 'column', width : '100%'}} >
-                <PersonalInformation model={personalModel} />
-
-                
-                <Button 
-                disabled={isLoading} 
-                variant="contained" 
-                color="primary" 
-                style={{ marginLeft : '20%', marginRight : '20%' }} 
-                onClick={() => handleSubmit()}
-                >
-                    Submit
+            <Grid item xs={12} sm={12} md={1} lg={1} style={{}} >
+                <div style={{ height: '100%', display: 'grid', placeItems: 'center' }} >
                     {
                         isLoading
-                        ? <CircularProgress color="inherit" style={{ marginLeft : 'auto', marginRight : 0, width : '25px', height : '25px' }} />
-                        : null
+                            ? <SpinnerLoading />
+                            : null
                     }
-                </Button>
+                </div>
+            </Grid>
+            <Grid item xs={12} sm={12} md={7} lg={7} style={{}} >
+
+                <div style={{ display: 'flex', flexDirection: 'column', width: '100%' }} >
+                    <PersonalInformation model={personalModel} />
+
+
+                    <Button
+                        disabled={isLoading}
+                        variant="contained"
+                        color="primary"
+                        style={{ marginLeft: '20%', marginRight: '20%' }}
+                        onClick={() => handleSubmit()}
+                    >
+                        Submit
+                    {
+                            isLoading
+                                ? <CircularProgress color="inherit" style={{ marginLeft: 'auto', marginRight: 0, width: '25px', height: '25px' }} />
+                                : null
+                        }
+                    </Button>
 
                 </div>
 
 
             </Grid>
         </Grid>
+        }
+
+        {
+            err
+                ? <div style={{ position: 'absolute', left: 0, bottom: 0 }} >
+                    <span style={{ color: 'red' }} > {err} </span>
+                </div>
+                : null
+        }
     </div>
 }
 

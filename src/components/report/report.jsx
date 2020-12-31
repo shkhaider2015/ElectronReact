@@ -172,7 +172,9 @@ const Reports = () => {
                                     {
                                         clients[0].map(
                                             (object, index) => (
-                                                <div key={index} onClick={e => muClick(index)} > <Sidecomponent obj={object} checked={[index, clicked]} /> </div>
+                                                object['personal']['transfor']
+                                                ? null
+                                                : <div key={index} onClick={e => muClick(index)} > <Sidecomponent obj={object} checked={[index, clicked]} /> </div>
                                             )
                                         )
                                     }
