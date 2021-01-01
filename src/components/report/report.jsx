@@ -1,7 +1,7 @@
 import React from "react";
 import './reportCSS.css'
 import SearchBar from '../report/searchBar'
-import { Avatar, IconButton, Menu, MenuItem } from "@material-ui/core";
+import { Avatar, IconButton, Paper, MenuItem, Popper, Grow, ClickAwayListener, MenuList } from "@material-ui/core";
 import { KeyboardBackspace, MoreVert } from '@material-ui/icons';
 import zainlogo from '../../RawData/mainassociates_icon.png'
 import { db } from "../../config/firebase";
@@ -34,8 +34,9 @@ const Reports = () => {
     const [print, setPrint] = React.useState(false);
 
     const componentRef = React.useRef()
+    const anchorRef = React.useRef(null);
 
-    const open = Boolean(anchorEl);
+    const [open, setOpen] = React.useState(false);
 
     const handlePrinttt = useReactToPrint({
         content: () => componentRef.current,
@@ -47,8 +48,26 @@ const Reports = () => {
     const handleMenu = (e) => {
         setAnchorEl(e.target)
     }
-    const handleMenuClose = () => {
+    const handleMenuClosee = () => {
         setAnchorEl(null)
+    }
+
+
+    const handleMenuToggle = () => {
+        setOpen((prevOpen) => !prevOpen);
+    };
+    const handleMenuClose = (event) => {
+        if (anchorRef.current && anchorRef.current.contains(event.target)) {
+            return;
+        }
+
+        setOpen(false);
+    };
+    const handleListKeyDown = (event) => {
+        if (event.key === 'Tab') {
+            event.preventDefault();
+            setOpen(false);
+        }
     }
 
     const getCollection = async () => {
@@ -100,8 +119,7 @@ const Reports = () => {
         // navigate('/edit', { state: { obj: clients[0], index: clicked, key: userKeys[clicked] } })
     }
 
-    const handleTransfor = (cnic) =>
-    {
+    const handleTransfor = (cnic) => {
         clients[0].map(
             (object, index) => object['personal']['cnic'] === cnic
                 ? navigate('/transfer', { state: { obj: object } })
@@ -127,12 +145,11 @@ const Reports = () => {
         setPrintNo(x)
     }
 
-    const handleIdCard = (cnic) =>
-    {
+    const handleIdCard = (cnic) => {
         clients[0].map(
             (object) => object['personal']['cnic'] === cnic
-            ? navigate("/idcard", { state : { obj : object } })
-            : null
+                ? navigate("/idcard", { state: { obj: object } })
+                : null
         )
     }
 
@@ -173,8 +190,8 @@ const Reports = () => {
                                         clients[0].map(
                                             (object, index) => (
                                                 object['personal']['transfor']
-                                                ? null
-                                                : <div key={index} onClick={e => muClick(index)} > <Sidecomponent obj={object} checked={[index, clicked]} /> </div>
+                                                    ? null
+                                                    : <div key={index} onClick={e => muClick(index)} > <Sidecomponent obj={object} checked={[index, clicked]} /> </div>
                                             )
                                         )
                                     }
@@ -206,15 +223,15 @@ const Reports = () => {
                                                                                     isAdmin[0]
                                                                                         ? <div className="col-4 " >
                                                                                             <IconButton
-                                                                                                aria-label="account of current user"
-                                                                                                aria-controls="menu-appbar"
+                                                                                                ref={anchorRef}
+                                                                                                aria-controls={open ? 'menu-list-grow' : undefined}
                                                                                                 aria-haspopup="true"
-                                                                                                color="inherit"
-                                                                                                onClick={(e) => handleMenu(e)}
+                                                                                                onClick={() => handleMenuToggle()
+                                                                                                }
                                                                                             >
                                                                                                 <MoreVert fontSize="large" color="primary" />
                                                                                             </IconButton>
-                                                                                            <Menu
+                                                                                            {/* <Menu
                                                                                                 id="menu-appbar"
                                                                                                 anchorEl={anchorEl}
                                                                                                 anchorOrigin={{
@@ -233,7 +250,28 @@ const Reports = () => {
                                                                                                 <MenuItem onClick={() => handleIdCard(object['personal']['cnic'])}>ID Card</MenuItem>
                                                                                                 <MenuItem onClick={() => handleTransfor(object['personal']['cnic'])}>Transfor</MenuItem>
                                                                                                 <MenuItem onClick={() => handleDelete(object['personal']['cnic'])}>Delete</MenuItem>
-                                                                                            </Menu>
+                                                                                            </Menu> */}
+
+                                                                                            <Popper open={open} anchorEl={anchorRef.current} role={undefined} transition disablePortal>
+                                                                                                {({ TransitionProps, placement }) => (
+                                                                                                    <Grow
+                                                                                                        {...TransitionProps}
+                                                                                                        style={{ transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom' }}
+                                                                                                    >
+                                                                                                        <Paper>
+                                                                                                            <ClickAwayListener onClickAway={handleMenuClose}>
+                                                                                                                <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
+                                                                                                                    <MenuItem onClick={() => handleEdit(object['personal']['cnic'])}>Edit</MenuItem>
+                                                                                                                    <MenuItem onClick={() => handleIdCard(object['personal']['cnic'])}>ID Card</MenuItem>
+                                                                                                                    <MenuItem onClick={() => handleTransfor(object['personal']['cnic'])}>Transfor</MenuItem>
+                                                                                                                    <MenuItem onClick={() => handleDelete(object['personal']['cnic'])}>Delete</MenuItem>
+                                                                                                                </MenuList>
+                                                                                                            </ClickAwayListener>
+                                                                                                        </Paper>
+                                                                                                    </Grow>
+                                                                                                )}
+                                                                                            </Popper>
+
                                                                                         </div>
                                                                                         : null
                                                                                 }
@@ -297,11 +335,31 @@ const Reports = () => {
                                                         <td className="pl-5 pt-3 text-right" colSpan="1"> <button className="btn btn-danger" onClick={() => handlePrint(7)} >Print</button></td>
                                                         <td className="text-center pt-3" colSpan="1"> <button className="btn btn-info" onClick={() => preview(7)} >Preview</button></td>
                                                     </tr>
+
+
+                                                    {
+                                                        clients[0].map(
+                                                            (object, index) => (
+                                                                clicked === index
+                                                                    ? object['extra']['transforFrom']
+                                                                        ? <tr className="mt-5 pt-5 table-hover1 shadow rounded" >
+                                                                            <td colSpan="4" className="pt-4 pl-5 "> Transfer Form</td>
+                                                                            <td className="pl-5 text-right pt-3" colSpan="1"> <button className="btn btn-danger" onClick={() => handlePrint(8)} >Print</button></td>
+                                                                            <td className="text-center pt-3" colSpan="1"> <button className="btn btn-info" onClick={() => preview(8)} >Preview</button></td>
+                                                                        </tr>
+                                                                        : null
+                                                                    : null
+                                                            )
+                                                        )
+                                                    }
+
                                                     <tr className="mt-5 pt-5 table-hover1 shadow rounded" >
-                                                        <td colSpan="4" className="pt-4 pl-5 "> Transfer Form</td>
-                                                        <td className="pl-5 text-right pt-3" colSpan="1"> <button className="btn btn-danger" onClick={() => handlePrint(8)} >Print</button></td>
-                                                        <td className="text-center pt-3" colSpan="1"> <button className="btn btn-info" onClick={() => preview(8)} >Preview</button></td>
+                                                        <td colSpan="4" className="pt-4 pl-5 "> Plot &amp; Payment Information</td>
+                                                        <td className="pl-5 pt-3 text-right" colSpan="1"> <button className="btn btn-danger" onClick={() => handlePrint(9)} >Print</button></td>
+                                                        <td className="text-center pt-3" colSpan="1"> <button className="btn btn-info" onClick={() => preview(9)} >Preview</button></td>
                                                     </tr>
+
+
                                                 </tbody>
                                             </table>
 

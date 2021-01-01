@@ -51,7 +51,7 @@ const [isReady, setIsReady] = React.useState(true)
   )
   
 
-  if(1 === 3)
+  if(isReady)
   {
     return (
       <div>
@@ -75,7 +75,7 @@ const [isReady, setIsReady] = React.useState(true)
   }
   else
   {
-    return <PlotAndPaymentInformationForm />
+    return <SplashScreen />
   }
 }
 
