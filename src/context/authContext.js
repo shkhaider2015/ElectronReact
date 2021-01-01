@@ -1,7 +1,7 @@
 import React from 'react'
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../config/firebase'
-import { SpinnerLoading } from "../components/loading/loadingSpinner";
+import { SplashScreen } from "../components/splashScreen/splashScreen";
 
 // const currentUser = auth.currentUser
 
@@ -18,9 +18,7 @@ export const AuthProvider = ({ children }) => {
 
     if (loading) {
         return (
-            <div>
-                <div style={{ display: 'grid', placeItems: 'center', height : '100vh' }} > <div><SpinnerLoading /></div>  </div>
-            </div>
+            <SplashScreen />
         )
     }
 

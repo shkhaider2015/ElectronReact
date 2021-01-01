@@ -1,12 +1,13 @@
 import React from 'react'
 import BOX from "../../RawData/box.png";
 import YN from "../../RawData/yesno.png";
+import { getDateFromMillis } from "../../utility/utils";
 
 
-const PlotAndPaymentInformationForm = () => {
+const PlotAndPaymentInformationForm = ({ obj } ) => {
     return <div style={{ width: '100%', height : 'auto' }}>
         <div className="container" >
-            <div style={{ position : 'relative',  width: '100%', textAlign: 'center', backgroundColor: "#EF3729", marginTop : '5%' }} >
+            <div className="bg-danger" style={{ position : 'relative',  width: '100%', textAlign: 'center', marginTop : '5%' }} >
                 <span style={{ fontSize : 44, fontWeight : 'bold', color : 'white' }} >Plot &amp; Payment Information</span>
             </div>
 
@@ -20,7 +21,7 @@ const PlotAndPaymentInformationForm = () => {
                 </div>
 
                 <div style={{ marginLeft: 'auto', marginRight: '0', display: 'flex', flexDirection: 'row' }} >
-                    <span>Date &nbsp; &nbsp; &nbsp;</span>
+                    <span>{getDateFromMillis(obj['extra']['addedDate'])} &nbsp; &nbsp; &nbsp;</span>
                     <div >
                         <span>12/26/2025</span>
                     </div>
@@ -31,15 +32,15 @@ const PlotAndPaymentInformationForm = () => {
 
                 <div className="col-4 d-flex" >
                     <span style={{ fontSize : 20, fontWeight : 'bold' }} >Plot:</span>
-                    <div style={{ borderBottom : 'solid black', width : '70%', textAlign : 'center' }} > <span style={{ fontWeight : 'bold', opacity : '0.7' }} >Home</span> </div>
+                    <div style={{ borderBottom : 'solid black', width : '70%', textAlign : 'center' }} > <span style={{ fontWeight : 'bold', opacity : '0.7' }} >{obj['asset']['plotName']} </span> </div>
                 </div>
                 <div className="col-4 d-flex" >
                     <span style={{ fontSize : 20, fontWeight : 'bold' }} >Measurement:</span>
-                    <div style={{ borderBottom : 'solid black', width : '50%', textAlign : 'center' }} > <span style={{ fontWeight : 'bold', opacity : '0.7' }} >Home</span> </div>
+                    <div style={{ borderBottom : 'solid black', width : '50%', textAlign : 'center' }} > <span style={{ fontWeight : 'bold', opacity : '0.7' }} >{obj['asset']['measurement']}</span> </div>
                 </div>
                 <div className="col-4 d-flex" >
                     <span style={{ fontSize : 20, fontWeight : 'bold' }} >Sq. Yds, Block:</span>
-                    <div style={{ borderBottom : 'solid black', width : '45%', textAlign : 'center' }} > <span style={{ fontWeight : 'bold', opacity : '0.7' }} >Home</span> </div>
+                    <div style={{ borderBottom : 'solid black', width : '45%', textAlign : 'center' }} > <span style={{ fontWeight : 'bold', opacity : '0.7' }} >{obj['asset']['square']}, Block {obj['asset']['block']}</span> </div>
                 </div>
 
             </div>
@@ -49,15 +50,15 @@ const PlotAndPaymentInformationForm = () => {
 
                 <div className="col-4 d-flex" >
                     <span style={{ fontSize : 20, fontWeight : 'bold' }} >Category:</span>
-                    <div style={{ borderBottom : 'solid black', width : '57%', textAlign : 'center' }} > <span style={{ fontWeight : 'bold', opacity : '0.7' }} >Home</span> </div>
+                    <div style={{ borderBottom : 'solid black', width : '57%', textAlign : 'center' }} > <span style={{ fontWeight : 'bold', opacity : '0.7' }} >{obj['asset']['category']}</span> </div>
                 </div>
                 <div className="col-4 d-flex" >
                     <span style={{ fontSize : 20, fontWeight : 'bold' }} >Nature:</span>
-                    <div style={{ borderBottom : 'solid black', width : '70%', textAlign : 'center' }} > <span style={{ fontWeight : 'bold', opacity : '0.7' }} >Home</span> </div>
+                    <div style={{ borderBottom : 'solid black', width : '70%', textAlign : 'center' }} > <span style={{ fontWeight : 'bold', opacity : '0.7' }} >{obj['asset']['nature']}</span> </div>
                 </div>
                 <div className="col-4 d-flex" >
                     <span style={{ fontSize : 20, fontWeight : 'bold' }} >Total Cost:</span>
-                    <div style={{ borderBottom : 'solid black', width : '55%', textAlign : 'center' }} > <span style={{ fontWeight : 'bold', opacity : '0.7' }} >Home</span> </div>
+                    <div style={{ borderBottom : 'solid black', width : '55%', textAlign : 'center' }} > <span style={{ fontWeight : 'bold', opacity : '0.7' }} >{obj['payment']['totalAmount']}</span> </div>
                 </div>
 
             </div>
@@ -80,7 +81,7 @@ const PlotAndPaymentInformationForm = () => {
 
                     <div style={{ display : 'flex', flexDirection : 'column', textAlign : 'center' }} >
 
-                        <span style={{ fontSize : 20, fontWeight : 'bold' }} >Ordinary</span>
+                        <span style={{ fontSize : 20, fontWeight : 'bold' }} >Corner</span>
                         <div style={{ width : '100%', height : '50px', border : 'solid black' }} >
 
                         </div>
@@ -93,7 +94,7 @@ const PlotAndPaymentInformationForm = () => {
 
                     <div style={{ display : 'flex', flexDirection : 'column', textAlign : 'center' }} >
 
-                        <span style={{ fontSize : 20, fontWeight : 'bold' }} >Ordinary</span>
+                        <span style={{ fontSize : 20, fontWeight : 'bold' }} >West Open</span>
                         <div style={{ width : '100%', height : '50px', border : 'solid black' }} >
 
                         </div>
@@ -106,7 +107,7 @@ const PlotAndPaymentInformationForm = () => {
 
                     <div style={{ display : 'flex', flexDirection : 'column', textAlign : 'center' }} >
 
-                        <span style={{ fontSize : 20, fontWeight : 'bold' }} >Ordinary</span>
+                        <span style={{ fontSize : 20, fontWeight : 'bold' }} >Road facing</span>
                         <div style={{ width : '100%', height : '50px', border : 'solid black' }} >
 
                         </div>
@@ -119,7 +120,7 @@ const PlotAndPaymentInformationForm = () => {
 
                     <div style={{ display : 'flex', flexDirection : 'column', textAlign : 'center' }} >
 
-                        <span style={{ fontSize : 20, fontWeight : 'bold' }} >Ordinary</span>
+                        <span style={{ fontSize : 20, fontWeight : 'bold' }} >Commercial</span>
                         <div style={{ width : '100%', height : '50px', border : 'solid black' }} >
 
                         </div>
@@ -192,11 +193,11 @@ const PlotAndPaymentInformationForm = () => {
                 <div className="col-6" >
                 <div style={{ display : 'flex', flexDirection : 'row' }} >
                         <span style={{ fontSize : 12, fontWeight : 'bold' }} >Balance</span>
-                        <div style={{ width : '30%', borderBottom : '1px solid black' }} > <span></span> </div>
+                        <div style={{ width : '30%', borderBottom : '1px solid black' }} > <span style={{ fontWeight : 'bold', opacity : '0.7' }} >{obj['payment']['balance']}</span> </div>
                     </div>
                     <div style={{ display : 'flex', flexDirection : 'row' }} >
                         <span style={{ fontSize : 12, fontWeight : 'bold' }} >Cost</span>
-                        <div style={{ width : '30%', borderBottom : '1px solid black' }} > <span></span> </div>
+                        <div style={{ width : '30%', borderBottom : '1px solid black' }} > <span style={{ fontWeight : 'bold', opacity : '0.7' }} >{obj['payment']['totalAmount']}</span> </div>
                     </div>
                 </div>
 

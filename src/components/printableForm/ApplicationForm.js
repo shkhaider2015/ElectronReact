@@ -17,7 +17,7 @@ function ApplicationForm({ obj, formNumber }) {
 
                     <div className="col-12 col-sm-12  heading">
 
-                        <h3 className="mt-5 rounded text-center bg-danger text-white p-2"><em> { formNumber === 1?"Application Form":"Nomination Form" } </em></h3>
+                        <h3 className="mt-5 rounded text-center bg-danger text-white p-2"><span style={{ fontSize : 44, fontWeight : 'bold' }} > { formNumber === 1?"Application Form":"Nomination Form" } </span></h3>
 
                     </div>
                     <div className="mt-2 col-12">
@@ -32,16 +32,16 @@ function ApplicationForm({ obj, formNumber }) {
                             <div className="col-6 " >
 
                                 <div style={{ display: 'flex', marginLeft: '20%' }} >
-                                    <span style={{ fontSize: 12, opacity: 0.5 }} >Ref No.:</span>
-                                    <span style={{ fontSize: 12, opacity: 0.5 }} >88777878</span>
+                                    <span style={{ fontSize: 12, opacity: 0.7 }} >Ref No.:</span>
+                                    <span style={{ fontSize: 12, opacity: 0.7 }} >88777878</span>
                                 </div>
 
                             </div>
                             <div className="col-6  " >
 
                                 <div style={{ display: 'flex', width: '100%' }} >
-                                    <span style={{ marginLeft: 'auto', marginRight: '0%', fontSize: 12, opacity: 0.5 }} >Date:</span>
-                                    <div style={{ marginRight: '5%', fontSize: 12, opacity: 0.5 }} ><span>{getDate()}</span></div>
+                                    <span style={{ marginLeft: 'auto', marginRight: '0%', fontSize: 12, opacity: 0.7 }} >Date:</span>
+                                    <div style={{ marginRight: '5%', fontSize: 12, opacity: 0.7 }} ><span>{getDate()}</span></div>
                                 </div>
 
                             </div>
@@ -53,38 +53,38 @@ function ApplicationForm({ obj, formNumber }) {
 
                         <div className="mt-3 col-12">
                             <div className="row">
-                                <div className=" col-4 text-right "><span style={{ fontSize: 12 }} >Mr./Mrs./Miss :</span></div>
-                                <div className="col-4 ml-2 text-left pl-4  border-bottom"><span style={{ fontSize: 10, fontWeight: 'bold' }} >{obj['personal']['name']}</span></div>
+                                <div className=" col-4 text-right "><span style={{ fontSize: 20 }} >Mr./Mrs./Miss :</span></div>
+                                <div className="col-4 ml-2 text-left pl-4 w-100  border-bottom"><span style={{  fontWeight: 'bold' }} >{obj['personal']['name']}</span></div>
                             </div>
                         </div>
                         <div className="mt-2 col-12">
                             <div className="row">
-                                <div className="   col-4 text-right "><span style={{ fontSize: 12 }} >S/o, D/o, W/o :</span></div>
-                                <div className="col-4 ml-2 text-left pl-4  border-bottom"><span style={{ fontSize: 10, fontWeight: 'bold' }} > {obj['personal']['fatherName']} </span></div>
+                                <div className="   col-4 text-right "><span style={{ fontSize: 20 }} >S/o, D/o, W/o :</span></div>
+                                <div className="col-4 ml-2 text-left pl-4  border-bottom"><span style={{  fontWeight: 'bold' }} > {obj['personal']['fatherName']} </span></div>
                             </div>
                         </div>
                         <div className="mt-2 col-12">
                             <div className="row">
-                                <div className="   col-4 text-right "><span style={{ fontSize: 12 }} >CNIC :</span></div>
-                                <div className="col-4 ml-2 text-left pl-4  border-bottom"><span style={{ fontSize: 10, fontWeight: 'bold' }} > {obj['personal']['cnic']} </span></div>
+                                <div className="   col-4 text-right "><span style={{ fontSize: 20 }} >CNIC :</span></div>
+                                <div className="col-4 ml-2 text-left pl-4  border-bottom"><span style={{  fontWeight: 'bold' }} > {obj['personal']['cnic']} </span></div>
                             </div>
                         </div>
                         <div className="mt-2 col-12">
                             <div className="row">
-                                <div className="   col-4 text-right "><span style={{ fontSize: 12 }} >Adress :</span></div>
-                                <div className="col-4 ml-2 text-left pl-4  border-bottom"><span style={{ fontSize: 10, fontWeight: 'bold' }} > {obj['personal']['address']} </span></div>
+                                <div className="   col-4 text-right "><span style={{ fontSize: 20 }} >Adress :</span></div>
+                                <div className="col-4 ml-2 text-left pl-4  border-bottom"><span style={{  fontWeight: 'bold' }} > {obj['personal']['address']} </span></div>
                             </div>
                         </div>
                         <div className="mt-2 col-12">
                             <div className="row">
-                                <div className="   col-4 text-right "><span style={{ fontSize: 12 }} >Phone Office :</span></div>
-                                <div className="col-4 ml-2 text-left pl-4  border-bottom"><span style={{ fontSize: 10, fontWeight: 'bold' }} > {obj['personal']['phone']} </span></div>
+                                <div className="   col-4 text-right "><span style={{ fontSize: 20 }} >Phone Office :</span></div>
+                                <div className="col-4 ml-2 text-left pl-4  border-bottom"><span style={{  fontWeight: 'bold' }} > {obj['personal']['phone']} </span></div>
                             </div>
                         </div>
                         <div className="mt-2 col-12">
                             <div className="row">
-                                <div className=" col-4 text-right "><span style={{ fontSize: 12 }} >Cell :</span></div>
-                                <div className="col-4 ml-2 text-left pl-4  border-bottom"><span style={{ fontSize: 10, fontWeight: 'bold' }} >{obj['personal']['cellPhone']}</span></div>
+                                <div className=" col-4 text-right "><span style={{ fontSize: 20 }} >Cell :</span></div>
+                                <div className="col-4 ml-2 text-left pl-4  border-bottom"><span style={{  fontWeight: 'bold' }} >jjsajdjk hkjsahdkjahj jhaskjdhsakjdh jahsdkjhasdjhkjsa hsakjdshaas ashjdhsj</span></div>
                             </div>
                         </div>
 
@@ -93,7 +93,7 @@ function ApplicationForm({ obj, formNumber }) {
                     <div className="mt-2  col-4 pic">
                         <div className="row">
                             <div className="col-5 ml-2 mt-1 ">
-                                <Avatar alt="name" variant="rounded" src={obj['personal']['imageURI']} style={{ width: '150px', height: '150px', borderColor : 'black' }} />
+                                <Avatar alt="name" variant="rounded" src={obj['personal']['imageURI']} style={{ width: '150px', height: '150px', borderColor : 'black', marginTop : 'auto', marginBottom : 'auto' }} />
                             </div>
                         </div>
                     </div>

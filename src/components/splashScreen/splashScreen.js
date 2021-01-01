@@ -1,29 +1,39 @@
 import React from 'react';
 import LOGO from "../../RawData/mainassociates_icon.png";
 import { SpinnerLoading } from '../loading/loadingSpinner';
+import { Offline } from "react-detect-offline";
 
 
 const SplashScreen = () => {
     return <div style={{ height: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center' }} >
 
-        <div style={{ height: '80vh', display: 'grid', placeItems: 'center' }} >
+        <div style={{ height: '95vh', display: 'grid', placeItems: 'center' }} >
             <div >
-                <img alt="nn" src={LOGO} style={{ width: '250px', height: '110px' }} />
+                <img alt="nn" src={LOGO} style={{ width: '300px', height: 'auto' }} />
             </div>
 
             <div >
-                <SpinnerLoading />
+                <div style={{ display : 'flex', flexDirection : 'column' }} >
+                        <span style={{ fontSize : 18, color : 'black' }} >Developed By <b>HESOGENS</b> Digital Service Provider</span>
+                        <div style={{ display : 'flex', flexDirection : 'row', marginLeft : 'auto', marginRight : 'auto' }} >
+                            <span>www.hesogens.com</span><span>&nbsp;|&nbsp;</span>
+                            <span>+92-312-2027770</span>
+                        </div>
+                </div>
             </div>
         </div>
-        <div style={{ height: '30vh' }} >
-
-            <div style={{ position: 'absolute', left: 10, bottom: 10}} >
-                <span style={{ fontSize : 14, fontWeight : 'bold' }} >Developers Hegengang</span> <br />
-                <span style={{ fontSize : 14 }} >Email : shkhaider2015@gmail.com</span>
-            </div>
-
-        </div>
-
+        <div style={{ 
+        position : 'fixed',
+        left : 0,
+        bottom : 0,
+        width : '100%',
+        backgroundColor : 'red',
+        textAlign : 'center',
+        color : 'white'
+       }} >
+      <Offline >Check Your Internet Connection</Offline>
+      </div>
+                     
     </div>
 }
 

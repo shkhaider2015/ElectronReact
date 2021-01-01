@@ -284,6 +284,8 @@ const SignUp = () => {
                     // Unknown error occurred, inspect error.serverResponse
                     console.log("Unknown error occurred, inspect error.serverResponse")
                     break;
+                default:
+                    console.log("Default Case at signup")
             }
             setIsLoading(false)
         }, () => {

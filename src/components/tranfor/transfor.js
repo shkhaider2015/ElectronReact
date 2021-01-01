@@ -107,8 +107,10 @@ const Transfor = () => {
                     addedDate: date,
                     transforFrom: {
                         name: obj['personal']['name'],
+                        fatherName: obj['personal']['fatherName'],
                         cnic: obj['personal']['cnic'],
                         cellPhone: obj['personal']['cellPhone'],
+                        phone: obj['personal']['phone'],
                         email: obj['personal']['email'],
                         address: obj['personal']['address'],
                         imageURI: obj['personal']['imageURI']
