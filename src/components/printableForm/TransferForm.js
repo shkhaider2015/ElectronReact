@@ -3,7 +3,8 @@ import { getDateFromMillis } from '../../utility/utils';
 
 
 const TransferForm = ({ obj }) => {
-    return  ( <div className="container" >
+    return  ( <div>
+        <div className="container" >
             
             <div className="bg-danger"  style={{ position: 'relative', width: '100%', textAlign: 'center', marginTop: '5%' }} >
                     <span style={{ fontSize: 44, fontWeight: 'bold', color: 'white' }} >Transfer Form</span>
@@ -121,11 +122,16 @@ const TransferForm = ({ obj }) => {
             </div>
 
 
-            <div style={{ position: 'absolute', bottom: 0, width : '100%' }} >
-                <span>shkhaider2015@gmail.com</span>
-            </div>
-        </div>)
+        </div>
+        <div  style={{ display : 'flex', flexDirection : 'column', bottom : 0, left : 0, position : 'fixed' }} >
+                        <span style={{ fontSize : 8, color : 'black', opacity : '0.7' }} >Developed By <b>HESOGENS</b> Digital Service Provider</span>
+                        <div style={{ display : 'flex', flexDirection : 'row', marginLeft : 'auto', marginRight : 'auto' }} >
+                            <span style={{ fontSize : 8, color : 'black', opacity : '0.7' }} >www.hesogens.com&nbsp;|&nbsp;+92-312-2027770</span>
+                        </div>
+                </div>
 
+    </div>)
+    
 }
 
 export default TransferForm;

@@ -129,6 +129,12 @@ function PrintPossessionCertificate({obj}) {
             </div>
 
 
+            <div  style={{ display : 'flex', flexDirection : 'column', bottom : 0, left : 0, position : 'fixed' }} >
+                        <span style={{ fontSize : 8, color : 'black', opacity : '0.7' }} >Developed By <b>HESOGENS</b> Digital Service Provider</span>
+                        <div style={{ display : 'flex', flexDirection : 'row', marginLeft : 'auto', marginRight : 'auto' }} >
+                            <span style={{ fontSize : 8, color : 'black', opacity : '0.7' }} >www.hesogens.com&nbsp;|&nbsp;+92-312-2027770</span>
+                        </div>
+                </div>
 
 
         </div>

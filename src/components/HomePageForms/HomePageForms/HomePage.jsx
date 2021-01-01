@@ -243,7 +243,7 @@ const Homepage2 = () => {
                                                 <ClickAwayListener onClickAway={handleMenuClose}>
                                                     <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
                                                         <MenuItem onClick={handleProfileOpen}>Profile</MenuItem>
-                                                        {isAdmin[0] ? <MenuItem onClick={() => userList()}>User List</MenuItem> : null}
+                                                        {isAdmin[0] ? <MenuItem onClick={() => userList()}>Users</MenuItem> : null}
                                                         <MenuItem onClick={() => handleLogout()}>Logout</MenuItem>
                                                     </MenuList>
                                                 </ClickAwayListener>
@@ -282,7 +282,7 @@ const Homepage2 = () => {
                                                             <div className="our-services privacy">
                                                                 <div className="icon icon-query"> <SVG_Query className="" fill="white" style={{ height: "70%", width: "70%", color: "whitesmoke" }} /></div>
                                                                 <h4>QUERY</h4>
-                                                                <p>Client Report (Admin Only)</p>
+                                                                <p>Client Report</p>
                                                             </div>
                                                         </div> </Link>
                                                 </div>
@@ -292,7 +292,7 @@ const Homepage2 = () => {
                                                             <div className="our-services speedup">
                                                                 <div className="icon icon-report"> <SVG_Report className="" fill="white" style={{ height: "70%", width: "70%", color: "whitesmoke" }} /> </div>
                                                                 <h4>REPORTS</h4>
-                                                                <p>Client Report (Admin Only) </p>
+                                                                <p>Client Report </p>
                                                             </div>
                                                         </div>
                                                     </Link>
@@ -317,7 +317,7 @@ const Homepage2 = () => {
                                                 <div className="box">
                                                     <div className="our-services database">
                                                         <div className="icon icon-scanQR"> <ScanQR className="" fill="white" style={{ height: "70%", width: "70%", color: "whitesmoke" }} /> </div>
-                                                        <h4>SCAN QR</h4>
+                                                        <h4>SCAN Barcode</h4>
                                                         <p>Search By Scaning</p>
                                                     </div>
                                                 </div>
@@ -346,7 +346,12 @@ const Homepage2 = () => {
 
 
 
-
+            <div  style={{ display : 'flex', flexDirection : 'column', bottom : 0, left : 0, position : 'fixed' }} >
+                        <span style={{ fontSize : 8, color : 'black', opacity : '0.7' }} >Developed By <b>HESOGENS</b> Digital Service Provider</span>
+                        <div style={{ display : 'flex', flexDirection : 'row', marginLeft : 'auto', marginRight : 'auto' }} >
+                            <span style={{ fontSize : 8, color : 'black', opacity : '0.7' }} >www.hesogens.com&nbsp;|&nbsp;+92-312-2027770</span>
+                        </div>
+                </div>
             <div style={{
                 position: 'fixed',
                 left: 0,
@@ -354,7 +359,8 @@ const Homepage2 = () => {
                 width: '100%',
                 backgroundColor: 'red',
                 textAlign: 'center',
-                color: 'white'
+                color: 'white',
+                zIndex: 1
             }} >
                 <Offline >Check Your Internet Connection</Offline>
             </div>
