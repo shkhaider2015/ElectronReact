@@ -6,8 +6,6 @@ import MyRoutes from './components/myRoutes/myRoutes'
 import { AdminContext } from "./context/adminContext";
 import { UserProvioder, ClientProvioder } from "./context/dataContext";
 import { SplashScreen } from './components/splashScreen/splashScreen';
-import TransferForm from './components/printableForm/TransferForm';
-import PlotAndPaymentInformationForm from './components/printableForm/PlotPaymentInformationForm';
 
 
 
@@ -30,7 +28,7 @@ const App = () => {
 
   const isAdimn = React.useState(false)
   
-const [isReady, setIsReady] = React.useState(true)
+const [isReady, setIsReady] = React.useState(false)
   
 
   React.useEffect(
