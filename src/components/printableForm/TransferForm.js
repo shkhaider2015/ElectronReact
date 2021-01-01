@@ -4,8 +4,8 @@ import React from 'react'
 const TransferForm = () => {
     return <div style={{ width: '100%', height : 'auto' }}>
         <div className="container" >
-            <div style={{ position : 'relative',  width: '100%', textAlign: 'center', backgroundColor: "lightgreen", marginTop : '5%' }} >
-                <span style={{ fontSize : 44, fontWeight : 'bold' }} >Transfer Form</span>
+            <div style={{ position : 'relative',  width: '100%', textAlign: 'center', backgroundColor: "#EF3729", marginTop : '5%' }} >
+                <span style={{ fontSize : 44, fontWeight : 'bold', color : 'white' }} >Transfer Form</span>
             </div>
 
             {/* Refrenec and Date */}
