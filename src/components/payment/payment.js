@@ -42,8 +42,6 @@ const Payment = () =>
         let lowercaseResult = e.toLowerCase();
         let data = []
 
-        console.log("Given key", lowercaseResult)
-
         clients[0].filter(item => {
             if(item['personal']['name'].toLowerCase().includes(lowercaseResult))
             {
@@ -105,11 +103,14 @@ const Payment = () =>
                         {
                             searchResult[0].length !== 0
                             ? searchResult[0].map(
-                                (object, index) => (
-                                   <Link to={"/cpp/" + object['personal']['cnic'] } key={index} style={{ textDecoration : 'none', color : 'black' }} >
-                                    <SearchComponent data={object}  />
-                                   </Link>
-                                )
+                                (object, index) => 
+                                object['personal']['transfor']
+                                ? null
+                                : (
+                                    <Link to={"/cpp/" + object['personal']['cnic'] } key={index} style={{ textDecoration : 'none', color : 'black' }} >
+                                     <SearchComponent data={object}  />
+                                    </Link>
+                                 )
                             )
                             : null
                         }

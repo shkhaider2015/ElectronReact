@@ -38,7 +38,6 @@ const useStyle = makeStyles(
 const Homepage2 = () => {
 
     const classes = useStyle()
-    const [anchorEl, setAnchorEl] = React.useState(null);
     const anchorRef = React.useRef(null);
     const currentUser = React.useContext(AuthContext);
     const isAdmin = React.useContext(AdminContext)
@@ -52,13 +51,7 @@ const Homepage2 = () => {
     const [open, setOpen] = React.useState(false)
     // const prevOpen = React.useRef(open);
 
-    const handleMenu = (event) => {
-        setAnchorEl(event.currentTarget);
-    };
-
-    const handleClose = () => {
-        setAnchorEl(null);
-    };
+   
     const handleLogout = () => {
         setOpen(false)
         auth.signOut()
@@ -142,13 +135,6 @@ const Homepage2 = () => {
     )
 
     
-    // React.useEffect(() => {
-    //   if (prevOpen.current === true && open === false) {
-    //     anchorRef.current.focus();
-    //   }
-  
-    //   prevOpen.current = open;
-    // }, [open]);
 
     const handleToggle = () => {
         setOpen((prevOpen) => !prevOpen);
@@ -180,46 +166,13 @@ const Homepage2 = () => {
 
             <div className="row">
 
-                <div className=" offset-1 col-10 justify-content-center text-center shape">
+                <div className="offset-1  col-11 justify-content-center text-center shape">
 
                     <div className="container-fluid">
                         <div className="d-flex flex-row mt-4 ">
                             <div className="col-11" ><img src={zainlogo} height="100%" width="25%" /></div>
 
                             {/* Profile Menu */}
-                            {/* <div className="col-1" >
-                                <IconButton
-                                    aria-label="account of current user"
-                                    aria-controls="menu-appbar"
-                                    aria-haspopup="true"
-                                    color="inherit"
-                                    onClick={(e) => handleMenu(e)}
-                                >
-                                    {profilePic
-                                        ? <Avatar alt="name" src={profilePic} />
-                                        : <AccountCircle className={classes.icon} />
-                                    }
-                                </IconButton>
-                                <Menu
-                                    id="menu-appbar"
-                                    anchorEl={anchorEl}
-                                    anchorOrigin={{
-                                        vertical: 'top',
-                                        horizontal: 'right',
-                                    }}
-                                    keepMounted
-                                    transformOrigin={{
-                                        vertical: 'top',
-                                        horizontal: 'right',
-                                    }}
-                                    open={open}
-                                    onClose={() => handleClose()}
-                                >
-                                    <MenuItem onClick={() => handleProfileOpen()}>Profile</MenuItem>
-                                    {isAdmin[0] ? <MenuItem onClick={userList}>User List</MenuItem> : null}
-                                    <MenuItem onClick={() => handleLogout()}>logout</MenuItem>
-                                </Menu>
-                            </div> */}
 
                             <div style={{ zIndex : 1 }} >
                                 <IconButton
@@ -337,9 +290,6 @@ const Homepage2 = () => {
 
 
                 </div>
-
-
-
 
 
             </div>

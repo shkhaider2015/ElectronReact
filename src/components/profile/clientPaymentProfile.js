@@ -228,7 +228,7 @@ const ClientProfile = () => {
         [currentObject]
     )
     const handleUpdate = () => {
-        const number = cNIC.replace(/-/g, "")
+        const number = cNIC.toString().replace(/-/g, "")
 
         let ga = Number(givenAmount) + Number(newAmount);
         let bl = totalAmount - ga;
@@ -255,9 +255,8 @@ const ClientProfile = () => {
     }
 
     const handleInstallmentUpdate = () => {
-        const number = cNIC.replace(/-/g, "")
+        const number = cNIC.toString().replace(/-/g, "")
 
-            (personal, asset, payment)
 
         let ga = Number(givenAmount) + Number(newAmount);
         let bl = totalAmount - ga;

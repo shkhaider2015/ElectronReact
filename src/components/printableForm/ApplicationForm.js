@@ -84,7 +84,7 @@ function ApplicationForm({ obj, formNumber }) {
                         <div className="mt-2 col-12">
                             <div className="row">
                                 <div className=" col-4 text-right "><span style={{ fontSize: 20 }} >Cell :</span></div>
-                                <div className="col-4 ml-2 text-left pl-4  border-bottom"><span style={{  fontWeight: 'bold' }} >jjsajdjk hkjsahdkjahj jhaskjdhsakjdh jahsdkjhasdjhkjsa hsakjdshaas ashjdhsj</span></div>
+                                <div className="col-4 ml-2 text-left pl-4  border-bottom"><span style={{  fontWeight: 'bold' }} >{obj['personal']['address']}</span></div>
                             </div>
                         </div>
 

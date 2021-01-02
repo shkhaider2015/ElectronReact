@@ -1,5 +1,5 @@
 {
-  "name": "my-app",
+  "name": "MianAssociate",
   "homepage": "./",
   "main": "./electron/main.js",
   "version": "0.1.0",

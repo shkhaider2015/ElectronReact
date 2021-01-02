@@ -1,7 +1,7 @@
 import React from "react";
 import './reportCSS.css'
 import SearchBar from '../report/searchBar'
-import { Avatar, IconButton, Paper, MenuItem, Popper, Grow, ClickAwayListener, MenuList } from "@material-ui/core";
+import { Avatar, IconButton, Paper, MenuItem, Popper, Grow, ClickAwayListener, MenuList, TextField } from "@material-ui/core";
 import { KeyboardBackspace, MoreVert } from '@material-ui/icons';
 import zainlogo from '../../RawData/mainassociates_icon.png'
 import { db } from "../../config/firebase";
@@ -15,6 +15,7 @@ import { useReactToPrint } from "react-to-print";
 import PrintBox from "../printableForm/printBox";
 import { ClientsListContext } from "../../context/dataContext";
 import { getDateFromMillis } from "../../utility/utils";
+import { SpinnerLoading } from "../loading/loadingSpinner";
 
 const Reports = () => {
 
@@ -23,15 +24,16 @@ const Reports = () => {
     const isAdmin = React.useContext(AdminContext)
     const clients = React.useContext(ClientsListContext)
 
-    const [users, setUsers] = React.useState([])
-    const [userKeys, setUserKeys] = React.useState([]);
     const [Dialogue, setDialogue] = React.useState(false);
     const [clicked, setClicked] = React.useState(0);
     const [formNumber, setFormNumber] = React.useState(1);
     const [anchorEl, setAnchorEl] = React.useState(null);
+    const [searchValue, setSearchValue] = React.useState("")
+    const [searchResult, setSearchResult] = React.useState([])
 
     const [printNo, setPrintNo] = React.useState(0);
     const [print, setPrint] = React.useState(false);
+    const [mySpinner, setMySpinner] = React.useState(false);
 
     const componentRef = React.useRef()
     const anchorRef = React.useRef(null);
@@ -43,15 +45,30 @@ const Reports = () => {
         onAfterPrint: () => setPrint(false)
     });
 
+    
 
 
-    const handleMenu = (e) => {
-        setAnchorEl(e.target)
+    const handleSearchField = (e) => {
+        setSearchValue(e)
+        let lowercaseResult = e.toLowerCase();
+        let data = []
+
+
+        clients[0].filter(item => {
+            if (item['personal']['name'].toLowerCase().includes(lowercaseResult)) {
+                if (!item['personal']['transfor']) {
+                    data.push(item)
+                }
+
+            }
+
+        })
+        if (e === "") {
+            data = []
+        }
+        setSearchResult(data)
+        return
     }
-    const handleMenuClosee = () => {
-        setAnchorEl(null)
-    }
-
 
     const handleMenuToggle = () => {
         setOpen((prevOpen) => !prevOpen);
@@ -70,35 +87,6 @@ const Reports = () => {
         }
     }
 
-    const getCollection = async () => {
-
-        const docRef = db.collection("clients");
-        var dataArray = []
-
-        docRef.get().then((querySnapshot) => {
-
-            console.log("GetCollection : ", querySnapshot)
-            querySnapshot.forEach((doc) => {
-                if (doc.exists) {
-                    console.log("getCollection : snapshot : doc.data() ", doc.data())
-                    for (let x in doc.data()) {
-                        dataArray.push(doc.data()[x])
-                    }
-
-                    setUsers(dataArray);
-                    setUserKeys(Object.keys(doc.data()))
-                }
-            })
-        }).catch((e) => console.error("getCollection", e))
-
-    }
-
-    React.useEffect(
-        () => {
-            // getCollection()
-        },
-        []
-    )
 
     const muClick = (e) => {
         setClicked(e)
@@ -157,7 +145,7 @@ const Reports = () => {
 
     return (
 
-        <div>
+        <div style={{ height: '100%' }} >
             <div style={{ display: "none" }} >
                 {
                     clients[0].length
@@ -172,7 +160,7 @@ const Reports = () => {
                     <div className="container-fluid">
                         <div className="row ">
 
-                            <div className="col-3 shadow  searchBar  border-right pb-4 ">
+                            <div className="col-md-3 col-lg-3 col-sm-3 col-xs-0 side-bar  pb-4 " >
                                 <div className="col-12" >
                                     <IconButton
                                         aria-haspopup="true"
@@ -182,28 +170,38 @@ const Reports = () => {
                                         <KeyboardBackspace fontSize="large" color="primary" />
                                     </IconButton>
                                 </div>
-                                <div className="col-12 mt-2 ml-5">
-                                    <SearchBar />
+                                <div className="col-12 mt-2">
+                                    <TextField
+                                        placeholder="Search"
+                                        value={searchValue}
+                                        onChange={(e) => handleSearchField(e.target.value)}
+                                        style={{ width: '100%', height: 'auto' }}
+                                    />
                                 </div>
                                 <div className="mt-2 mb-2 pb-3 col-12 client-list">
                                     {
-                                        clients[0].map(
-                                            (object, index) => (
-                                                object['personal']['transfor']
-                                                    ? null
-                                                    : <div key={index} onClick={e => muClick(index)} > <Sidecomponent obj={object} checked={[index, clicked]} /> </div>
+                                        searchResult.length !== 0
+                                            ? searchResult.map(
+                                                (object, index) =>
+                                                    <div key={index} onClick={e => muClick(index)} > <Sidecomponent obj={object} checked={[index, clicked]} /> </div>
                                             )
-                                        )
+                                            : clients[0].map(
+                                                (object, index) => (
+                                                    object['personal']['transfor']
+                                                        ? null
+                                                        : <div key={index} onClick={e => muClick(index)} > <Sidecomponent obj={object} checked={[index, clicked]} /> </div>
+                                                )
+                                            )
                                     }
 
                                 </div>
                             </div>
-                            <div className="col-9 shadow-sm h-100 ">
+                            <div className="col-md-9 col-lg-9 col-sm-9 col-xs-12 h-100 ">
                                 <div className="row justify-content-center">
-                                    <div className="mt-1 ml-1 shadow-sm card table-responsive offset-1 col-11">
+                                    <div className="mt-1 ml-1   table-responsive offset-1 col-11">
                                         <div className=" mt-2 pt-2 col-12 ">
                                             <div className="row d-flex align-items-baseline mb-3">
-                                                <div className="col-3 pb-1 ">
+                                                <div className="col-4 pb-1 ">
 
                                                     <div className="row">
                                                         <div className="col-12  ">
@@ -213,15 +211,15 @@ const Reports = () => {
                                                                 clients[0].map(
                                                                     (object, index) =>
                                                                         clicked === index
-                                                                            ? <div key={index} className="row " >
-                                                                                <div className=" col-8" >
+                                                                            ? <div key={index} className="row topRowWidth"  >
+                                                                                <div className=" col-7 " >
                                                                                     <Avatar alt={object['personal']['name']} src={object['personal']['imageURI']} style={{ height: '60px', width: '60px', marginLeft: '15%', marginRight: 'auto' }} />
 
                                                                                     <span style={{ marginLeft: '3%', fontSize: '12' }} > {object['personal']['name']} </span>
                                                                                 </div>
                                                                                 {
                                                                                     isAdmin[0]
-                                                                                        ? <div className="col-4 " >
+                                                                                        ? <div className="col-1 " >
                                                                                             <IconButton
                                                                                                 ref={anchorRef}
                                                                                                 aria-controls={open ? 'menu-list-grow' : undefined}
@@ -231,26 +229,6 @@ const Reports = () => {
                                                                                             >
                                                                                                 <MoreVert fontSize="large" color="primary" />
                                                                                             </IconButton>
-                                                                                            {/* <Menu
-                                                                                                id="menu-appbar"
-                                                                                                anchorEl={anchorEl}
-                                                                                                anchorOrigin={{
-                                                                                                    vertical: 'top',
-                                                                                                    horizontal: 'right',
-                                                                                                }}
-                                                                                                keepMounted
-                                                                                                transformOrigin={{
-                                                                                                    vertical: 'top',
-                                                                                                    horizontal: 'right',
-                                                                                                }}
-                                                                                                open={open}
-                                                                                                onClose={() => handleMenuClose()}
-                                                                                            >
-                                                                                                <MenuItem onClick={() => handleEdit(object['personal']['cnic'])}>Edit</MenuItem>
-                                                                                                <MenuItem onClick={() => handleIdCard(object['personal']['cnic'])}>ID Card</MenuItem>
-                                                                                                <MenuItem onClick={() => handleTransfor(object['personal']['cnic'])}>Transfor</MenuItem>
-                                                                                                <MenuItem onClick={() => handleDelete(object['personal']['cnic'])}>Delete</MenuItem>
-                                                                                            </Menu> */}
 
                                                                                             <Popper open={open} anchorEl={anchorRef.current} role={undefined} transition disablePortal>
                                                                                                 {({ TransitionProps, placement }) => (
@@ -285,7 +263,7 @@ const Reports = () => {
 
                                                     </div>
                                                 </div>
-                                                <h3 className="col-6  text-center ">Client Forms</h3>
+                                                <h3 className="col-5  text-center ">Client Forms</h3>
                                                 <h5 className="col-3 text-right">{
                                                     clients[0].map(
                                                         (object, index) => clicked === index
@@ -301,38 +279,38 @@ const Reports = () => {
                                                     <tr className="table-hover1  mt-5 pt-5 shadow rounded" >
 
                                                         <td colSpan="4" className="pt-4 pl-5" >Application Form</td>
-                                                        <td className="pl-5 pt-3 text-right" colSpan="1"> <button className="btn text-right btn-danger" onClick={() => handlePrint(1)} >Print</button> </td>
+                                                        <td className="pl-5 pt-3 text-right" colSpan="1"> <button disabled={print} className="btn text-right btn-danger" onClick={() => handlePrint(1)} >Print</button> </td>
                                                         <td className="text-center  pt-3" colSpan="1"> <button className="btn btn-info" onClick={() => preview(1)} >Preview</button>  </td>
                                                     </tr>
                                                     <tr className="mt-5 pt-5 table-hover1 shadow rounded" >
                                                         <td colSpan="4" className="pt-4 pl-5 " > Nomination Form</td>
-                                                        <td className="pl-5 pt-3 text-right" colSpan="1"> <button className="btn btn-danger" onClick={() => handlePrint(2)} >Print</button></td>
+                                                        <td className="pl-5 pt-3 text-right" colSpan="1"> <button disabled={print} className="btn btn-danger" onClick={() => handlePrint(2)} >Print</button></td>
                                                         <td className="text-center pt-3" colSpan="1"> <button className="btn btn-info" onClick={() => preview(2)} >Preview</button></td>
                                                     </tr>
                                                     <tr className="mt-5 pt-5 table-hover1 shadow rounded" >
                                                         <td colSpan="4" className="pt-4 pl-5 " >Confirmation Letter</td>
-                                                        <td className="pl-5 pt-3 text-right" colSpan="1"> <button className="btn btn-danger" onClick={() => handlePrint(3)} >Print</button></td>
+                                                        <td className="pl-5 pt-3 text-right" colSpan="1"> <button disabled={print} className="btn btn-danger" onClick={() => handlePrint(3)} >Print</button></td>
                                                         <td className="text-center pt-3" colSpan="1"> <button className="btn btn-info" onClick={() => preview(3)} >Preview</button></td>
                                                     </tr>
                                                     <tr className="mt-5 pt-5 table-hover1 shadow rounded" >
                                                         <td colSpan="4" className="pt-4 pl-5 " >Site Plan</td>
-                                                        <td className="pl-5 pt-3 text-right" colSpan="1"> <button className="btn btn-danger" onClick={() => handlePrint(4)} >Print</button></td>
+                                                        <td className="pl-5 pt-3 text-right" colSpan="1"> <button disabled={print} className="btn btn-danger" onClick={() => handlePrint(4)} >Print</button></td>
                                                         <td className="text-center pt-3" colSpan="1"> <button className="btn btn-info" onClick={() => preview(4)} >Preview</button></td>
                                                     </tr>
                                                     <tr className="mt-5 pt-5 table-hover1 shadow rounded" >
 
                                                         <td colSpan="4" className="pt-4 pl-5 " >  Terms and Condition</td>
-                                                        <td className="pl-5  pt-3 text-right" colSpan="1"> <button className="btn btn-danger" onClick={() => handlePrint(5)} >Print</button></td>
+                                                        <td className="pl-5  pt-3 text-right" colSpan="1"> <button disabled={print} className="btn btn-danger" onClick={() => handlePrint(5)} >Print</button></td>
                                                         <td className="text-center pt-3" colSpan="1"> <button className="btn btn-info" onClick={() => preview(5)}  >Preview</button></td>
                                                     </tr>
                                                     <tr className="mt-5 pt-5 table-hover1 shadow rounded" >
                                                         <td colSpan="4" className="pt-4 pl-5 " >Possesion Certificate</td>
-                                                        <td className="pl-5 pt-3 text-right" colSpan="1"> <button className="btn btn-danger" onClick={() => handlePrint(6)} >Print</button></td>
+                                                        <td className="pl-5 pt-3 text-right" colSpan="1"> <button disabled={print} className="btn btn-danger" onClick={() => handlePrint(6)} >Print</button></td>
                                                         <td className="text-center pt-3" colSpan="1"> <button className="btn btn-info" onClick={() => preview(6)} >Preview</button></td>
                                                     </tr>
                                                     <tr className="mt-5 pt-5 table-hover1 shadow rounded" >
                                                         <td colSpan="4" className="pt-4 pl-5 "> Alotment Order</td>
-                                                        <td className="pl-5 pt-3 text-right" colSpan="1"> <button className="btn btn-danger" onClick={() => handlePrint(7)} >Print</button></td>
+                                                        <td className="pl-5 pt-3 text-right" colSpan="1"> <button disabled={print} className="btn btn-danger" onClick={() => handlePrint(7)} >Print</button></td>
                                                         <td className="text-center pt-3" colSpan="1"> <button className="btn btn-info" onClick={() => preview(7)} >Preview</button></td>
                                                     </tr>
 
@@ -377,8 +355,8 @@ const Reports = () => {
                     </div>
 
 
-
             }
+            
 
         </div>
     )
