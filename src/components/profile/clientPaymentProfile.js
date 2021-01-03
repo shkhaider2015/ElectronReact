@@ -228,6 +228,15 @@ const ClientProfile = () => {
                     var kk = Number(currentObject['payment']['totalAmount'])/Number(currentObject['payment']['installment']);
                     setNewAmount(kk)
                 }
+                else if(currentObject['payment']['procedure'] === "Half Payment")
+                {
+                    var kk = Number(currentObject['payment']['totalAmount']) / 2
+                    setNewAmount(kk)
+                }
+                else if(currentObject['payment']['procedure'] === "Full payment")
+                {
+                    
+                }
             }
         },
         [currentObject]
@@ -458,6 +467,7 @@ const ClientProfile = () => {
                                                         type="number"
                                                         value={newAmount}
                                                         color="primary"
+                                                        disabled={ procedure !== "Short Payment" }
                                                         onChange={(e) => {
                                                             setNewAmount(e.target.value)
                                                         }}
