@@ -86,7 +86,7 @@ function PrintTermsandCondition({ obj }) {
                         </div>
                         <div className="row ">
                             <div className="offset-2 col-2 text-left "> Read &amp; Understood </div>
-                            <div className="offset-1  col-2 text-center  "><span>CNIC: {obj['personal']['cnic']}</span> </div>
+                            <div className="offset-1  col-4 text-center  "><span>CNIC: {obj['personal']['cnic']}</span> </div>
 
 
                         </div>

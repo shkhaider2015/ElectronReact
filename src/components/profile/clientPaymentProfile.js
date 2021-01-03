@@ -165,7 +165,7 @@ const ClientProfile = () => {
         setBalance(currentObject['payment']['balance'])
 
 
-
+        // Number(currentObject['payment']['totalAmount'])/Number(currentObject['payment']['installmentDuration'])
     }
 
 
@@ -223,6 +223,11 @@ const ClientProfile = () => {
             if (currentObject) {
                 console.log("Current Object not null")
                 init()
+                if(currentObject['payment']['procedure'] === "Installment")
+                {
+                    var kk = Number(currentObject['payment']['totalAmount'])/Number(currentObject['payment']['installment']);
+                    setNewAmount(kk)
+                }
             }
         },
         [currentObject]
@@ -330,33 +335,33 @@ const ClientProfile = () => {
                                 </div>
                                 <div style={{ display: 'flex', flexDirection: 'column', marginLeft: '5%', width: '50%' }} >
                                     <div style={{ display: 'flex', flexDirection: 'row', width: '50%' }} >
-                                        <div style={{ width: '40%' }} ><span style={{ fontSize: 10, fontWeight: 'normal', paddingRight: '10%' }} >Name</span></div>
-                                        <div style={{ width: '60%' }} ><span style={{ fontSize: 10, fontWeight: 'bold' }} > {name} </span></div>
+                                        <div style={{ width: '40%' }} ><span style={{ fontSize: 12, fontWeight: 'normal', paddingRight: '10%' }} >Name</span></div>
+                                        <div style={{ width: '60%' }} ><span style={{ fontSize: 12, fontWeight: 'bold' }} > {name} </span></div>
                                     </div>
 
                                     <div style={{ display: 'flex', flexDirection: 'row', width: '50%' }} >
-                                        <div style={{ width: '40%' }} ><span style={{ fontSize: 10, fontWeight: 'normal', paddingRight: '10%' }} >Father Name</span></div>
-                                        <div style={{ width: '60%' }} ><span style={{ fontSize: 10, fontWeight: 'normal' }} > {fatherName} </span></div>
+                                        <div style={{ width: '40%' }} ><span style={{ fontSize: 12, fontWeight: 'normal', paddingRight: '10%' }} >Father Name</span></div>
+                                        <div style={{ width: '60%' }} ><span style={{ fontSize: 12, fontWeight: 'normal' }} > {fatherName} </span></div>
                                     </div>
 
                                     <div style={{ display: 'flex', flexDirection: 'row', width: '50%' }} >
-                                        <div style={{ width: '40%' }} ><span style={{ fontSize: 10, fontWeight: 'normal', paddingRight: '10%' }} >CNIC</span></div>
-                                        <div style={{ width: '60%' }} ><span style={{ fontSize: 10, fontWeight: 'normal' }} > {cNIC} </span></div>
+                                        <div style={{ width: '40%' }} ><span style={{ fontSize: 12, fontWeight: 'normal', paddingRight: '10%' }} >CNIC</span></div>
+                                        <div style={{ width: '60%' }} ><span style={{ fontSize: 12, fontWeight: 'normal' }} > {cNIC} </span></div>
                                     </div>
 
                                     <div style={{ display: 'flex', flexDirection: 'row', width: '50%' }} >
-                                        <div style={{ width: '40%' }} ><span style={{ fontSize: 10, fontWeight: 'normal', paddingRight: '10%' }} >Email</span></div>
-                                        <div style={{ width: '60%' }} ><span style={{ fontSize: 10, fontWeight: 'normal' }} > {email} </span></div>
+                                        <div style={{ width: '40%' }} ><span style={{ fontSize: 12, fontWeight: 'normal', paddingRight: '10%' }} >Email</span></div>
+                                        <div style={{ width: '60%' }} ><span style={{ fontSize: 12, fontWeight: 'normal' }} > {email} </span></div>
                                     </div>
 
                                     <div style={{ display: 'flex', flexDirection: 'row', width: '50%' }} >
-                                        <div style={{ width: '40%' }} ><span style={{ fontSize: 10, fontWeight: 'normal', paddingRight: '10%' }} >Phone</span></div>
-                                        <div style={{ width: '60%' }} ><span style={{ fontSize: 10, fontWeight: 'normal' }} > {cellPhone} </span></div>
+                                        <div style={{ width: '40%' }} ><span style={{ fontSize: 12, fontWeight: 'normal', paddingRight: '10%' }} >Phone</span></div>
+                                        <div style={{ width: '60%' }} ><span style={{ fontSize: 12, fontWeight: 'normal' }} > {cellPhone} </span></div>
                                     </div>
 
                                     <div style={{ display: 'flex', flexDirection: 'row', width: '50%' }} >
-                                        <div style={{ width: '40%' }} ><span style={{ fontSize: 10, fontWeight: 'normal', paddingRight: '10%' }} >Address</span></div>
-                                        <div style={{ width: '60%' }} ><span style={{ fontSize: 10, fontWeight: 'normal' }} > {address} </span></div>
+                                        <div style={{ width: '40%' }} ><span style={{ fontSize: 12, fontWeight: 'normal', paddingRight: '10%' }} >Address</span></div>
+                                        <div style={{ width: '60%' }} ><span style={{ fontSize: 12, fontWeight: 'normal' }} > {address} </span></div>
                                     </div>
 
                                 </div>
@@ -472,10 +477,10 @@ const ClientProfile = () => {
                                                         variant="outlined"
                                                         type="number"
                                                         value={newAmount}
+                                                        disabled
                                                         color="primary"
                                                         onChange={(e) => {
                                                             setNewAmount(e.target.value)
-
                                                         }}
                                                         helperText={totalAmount <= 0 ? <span  >Please specify total amount</span> : ""}
                                                         InputProps={{

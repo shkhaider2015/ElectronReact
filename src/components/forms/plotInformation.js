@@ -1,5 +1,5 @@
 import { Grid, makeStyles, Paper, TextField, 
-    InputAdornment, InputLabel, FormControl, Select } from '@material-ui/core'
+    InputAdornment, InputLabel, FormControl, Select, FormHelperText } from '@material-ui/core'
 import {
     LinearScale, SquareFoot, DashboardOutlined, CategoryOutlined, NaturePeopleOutlined, 
     MergeType, FiberSmartRecordOutlined, StoreOutlined,
@@ -83,7 +83,7 @@ const useStyle = makeStyles(
                 textAlign: 'center'
             },
             iconColor: {
-                color: theme.palette.primary.main
+                color: theme.palette.secondary.main
             },
             input: {
                 display: 'none',
@@ -141,6 +141,7 @@ const PersonalInformation = ({ model }) => {
                                         <option value="Home">Home</option>
                                         <option value="Flat">Flat</option>
                                     </Select>
+                                    <FormHelperText> { model.area === "" || !model.area ? <span>Required</span> : <span style={{ color : 'lightgreen' }} >Correct</span> } </FormHelperText>
                                 </FormControl>
                             </div>
                             <div className={classes.phoneDiv} >
@@ -153,7 +154,7 @@ const PersonalInformation = ({ model }) => {
                                 color="primary"
                                 value={model.plotNumber}
                                 onChange={(e) => model.setPlotNumber(e.target.value) }
-                                helperText={ model.plotNumber === 0? <span style={{ color : 'red' }} >Required</span> : <span style={{ color : 'lightgreen' }} >Correct</span> }
+                                helperText={ Number(model.plotNumber) === 0 || !model.plotNumber? <span >Required</span> : <span style={{ color : 'lightgreen' }} >Correct</span> }
                                 InputProps={{
                                     endAdornment: (
                                         <InputAdornment position="end">
@@ -164,14 +165,14 @@ const PersonalInformation = ({ model }) => {
                             />
                             <TextField
                             className={classes.block}
-                                id="measurment"
-                                label="Measur"
+                                id="measurement"
+                                label="Measure"
                                 variant="outlined"
                                 type="number"
                                 color="primary"
                                 value={model.measurement}
                                 onChange={(e) => model.setMeasurement(e.target.value) }
-                                helperText={ model.measurement === 0? <span style={{ color : 'red' }} >Required</span> : <span style={{ color : 'lightgreen' }} >Correct</span> }
+                                helperText={ Number(model.measurement) === 0 || !model.measurement ? <span>Required</span> : <span style={{ color : 'lightgreen' }} >Correct</span> }
                                 InputProps={{
                                     endAdornment: (
                                         <InputAdornment position="end">
@@ -193,7 +194,7 @@ const PersonalInformation = ({ model }) => {
                                     color="primary"
                                     value={model.square}
                                     onChange={(e) => model.setSquare(e.target.value) }
-                                    helperText={ model.square === 0? <span style={{ color : 'red' }} >Required</span> : <span style={{ color : 'lightgreen' }} >Correct</span> }
+                                    helperText={ Number(model.square) === 0 || !model.square? <span >Required</span> : <span style={{ color : 'lightgreen' }} >Correct</span> }
                                     InputProps={{
                                         endAdornment: (
                                             <InputAdornment position="end">
@@ -212,7 +213,7 @@ const PersonalInformation = ({ model }) => {
                                     color="primary"
                                     value={model.block}
                                     onChange={(e) => model.setBlock(e.target.value) }
-                                    helperText={ model.block === ""? <span style={{ color : '' }} >Required</span> : <span style={{ color : 'lightgreen' }} >Correct</span> }
+                                    helperText={ model.block === "" || !model.block ? <span >Required</span> : <span style={{ color : 'lightgreen' }} >Correct</span> }
                                     InputProps={{
                                         endAdornment: (
                                             <InputAdornment position="end">
@@ -233,7 +234,7 @@ const PersonalInformation = ({ model }) => {
                                     color="primary"
                                     value={model.category}
                                     onChange={(e) => model.setCategory(e.target.value) }
-                                    helperText={ model.category === ""? <span style={{ color : 'red' }} >Required</span> : <span style={{ color : 'lightgreen' }} >Correct</span> }
+                                    helperText={ model.category === "" || !model.category ? <span >Required</span> : <span style={{ color : 'lightgreen' }} >Correct</span> }
                                     InputProps={{
                                         endAdornment: (
                                             <InputAdornment position="end">
@@ -257,7 +258,7 @@ const PersonalInformation = ({ model }) => {
                                     color="primary"
                                     value={model.nature}
                                     onChange={(e) => model.setNature(e.target.value) }
-                                    helperText={ model.nature === ""? <span style={{ color : 'red' }} >Required</span> : <span style={{ color : 'lightgreen' }} >Correct</span> }
+                                    helperText={ model.nature === "" || !model.nature ? <span >Required</span> : <span style={{ color : 'lightgreen' }} >Correct</span> }
                                     InputProps={{
                                         endAdornment: (
                                             <InputAdornment position="end">
@@ -278,7 +279,7 @@ const PersonalInformation = ({ model }) => {
                                     color="primary"
                                     value={model.type}
                                     onChange={(e) => model.setType(e.target.value) }
-                                    helperText={ model.type === ""? <span style={{ color : 'red' }} >Required</span> : <span style={{ color : 'lightgreen' }} >Correct</span> }
+                                    helperText={ model.type === "" || !model.type ? <span >Required</span> : <span style={{ color : 'lightgreen' }} >Correct</span> }
                                     InputProps={{
                                         endAdornment: (
                                             <InputAdornment position="end">
@@ -302,7 +303,7 @@ const PersonalInformation = ({ model }) => {
                                     color="primary"
                                     value={model.sitePlane}
                                     onChange={(e) => model.setSitePlane(e.target.value) }
-                                    helperText={ model.sitePlane === ""? <span style={{ color : 'red' }} >Required</span> : <span style={{ color : 'lightgreen' }} >Correct</span> }
+                                    helperText={ model.sitePlane === "" || !model.sitePlane ? <span >Required</span> : <span style={{ color : 'lightgreen' }} >Correct</span> }
                                     InputProps={{
                                         endAdornment: (
                                             <InputAdornment position="end">
@@ -322,7 +323,7 @@ const PersonalInformation = ({ model }) => {
                                     color="primary"
                                     value={model.purpose}
                                     onChange={(e) => model.setPurpose(e.target.value) }
-                                    helperText={ model.purpose === ""? <span style={{ color : 'red' }} >Required</span> : <span style={{ color : 'lightgreen' }} >Correct</span> }
+                                    helperText={ model.purpose === "" || !model.purpose ? <span>Required</span> : <span style={{ color : 'lightgreen' }} >Correct</span> }
                                     InputProps={{
                                         endAdornment: (
                                             <InputAdornment position="end">

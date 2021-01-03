@@ -28,7 +28,7 @@ const App = () => {
 
   const isAdimn = React.useState(false)
   
-const [isReady, setIsReady] = React.useState(false)
+const [isReady, setIsReady] = React.useState(true)
   
 
   React.useEffect(

@@ -125,6 +125,7 @@ const Reports = () => {
                 .then(() => console.log("Document Deleted Succesfully"))
                 .catch((e) => console.error("Error while deleting doc : ", e))
         }
+        setOpen(false)
 
     }
 
