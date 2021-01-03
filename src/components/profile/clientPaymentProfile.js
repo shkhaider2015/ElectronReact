@@ -350,27 +350,27 @@ const ClientProfile = () => {
 
                                     <div style={{ display: 'flex', flexDirection: 'row', width: '50%' }} >
                                         <div style={{ width: '40%' }} ><span style={{ fontSize: 12, fontWeight: 'normal', paddingRight: '10%' }} >Father Name</span></div>
-                                        <div style={{ width: '60%' }} ><span style={{ fontSize: 12, fontWeight: 'normal' }} > {fatherName} </span></div>
+                                        <div style={{ width: '60%' }} ><span style={{ fontSize: 12, fontWeight: 'bold' }} > {fatherName} </span></div>
                                     </div>
 
                                     <div style={{ display: 'flex', flexDirection: 'row', width: '50%' }} >
                                         <div style={{ width: '40%' }} ><span style={{ fontSize: 12, fontWeight: 'normal', paddingRight: '10%' }} >CNIC</span></div>
-                                        <div style={{ width: '60%' }} ><span style={{ fontSize: 12, fontWeight: 'normal' }} > {cNIC} </span></div>
+                                        <div style={{ width: '60%' }} ><span style={{ fontSize: 12, fontWeight: 'bold' }} > {cNIC} </span></div>
                                     </div>
 
                                     <div style={{ display: 'flex', flexDirection: 'row', width: '50%' }} >
                                         <div style={{ width: '40%' }} ><span style={{ fontSize: 12, fontWeight: 'normal', paddingRight: '10%' }} >Email</span></div>
-                                        <div style={{ width: '60%' }} ><span style={{ fontSize: 12, fontWeight: 'normal' }} > {email} </span></div>
+                                        <div style={{ width: '60%' }} ><span style={{ fontSize: 12, fontWeight: 'bold' }} > {email} </span></div>
                                     </div>
 
                                     <div style={{ display: 'flex', flexDirection: 'row', width: '50%' }} >
                                         <div style={{ width: '40%' }} ><span style={{ fontSize: 12, fontWeight: 'normal', paddingRight: '10%' }} >Phone</span></div>
-                                        <div style={{ width: '60%' }} ><span style={{ fontSize: 12, fontWeight: 'normal' }} > {cellPhone} </span></div>
+                                        <div style={{ width: '60%' }} ><span style={{ fontSize: 12, fontWeight: 'bold' }} > {cellPhone} </span></div>
                                     </div>
 
                                     <div style={{ display: 'flex', flexDirection: 'row', width: '50%' }} >
                                         <div style={{ width: '40%' }} ><span style={{ fontSize: 12, fontWeight: 'normal', paddingRight: '10%' }} >Address</span></div>
-                                        <div style={{ width: '60%' }} ><span style={{ fontSize: 12, fontWeight: 'normal' }} > {address} </span></div>
+                                        <div style={{ width: '60%' }} ><span style={{ fontSize: 12, fontWeight: 'bold' }} > {address} </span></div>
                                     </div>
 
                                 </div>
