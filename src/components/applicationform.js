@@ -272,12 +272,12 @@ const Application = () => {
   }
   const payment = {
     totalAmount: amount,
-    givenAmount: givenAmount,
+    givenAmount: procedure === "Installment" ? Number(amount) / Number(totalInstallment) : givenAmount ,
     procedure: procedure,
     installment: totalInstallment,
     installmentDuration: duration,
     remainingInstallment: totalInstallment - 1,
-    balance: amount - givenAmount,
+    balance: Number(amount) - Number(givenAmount),
     paymentMethod: paymentMethod
   }
 
@@ -416,6 +416,7 @@ const Application = () => {
       val = false;
     }
     else if (procedure === "Installment") {
+      console.log(`Duration : ${duration} and paymentMethod : ${paymentMethod} and amount : ${amount} and totalInstallment : ${totalInstallment} `)
       duration === "" || paymentMethod === ""
         || amount === 0 || totalInstallment === 0
         ? val = false

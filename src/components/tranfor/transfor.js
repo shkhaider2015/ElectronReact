@@ -236,158 +236,157 @@ const Transfor = () => {
         </div>
         {
             isSuccess
-            ? <Success open={isSuccess} title="Tranfor Complete Successfully" />
-            : <Grid container direction="row" style={{ marginTop: '4%', marginLeft: '5%', marginRight: '10%' }}  >
-            <Grid item xs={12} sm={12} md={3} lg={3} style={{}}>
+                ? <Success open={isSuccess} title="Tranfor Complete Successfully" />
+                : <Grid container direction="row" style={{ marginTop: '4%', marginLeft: '5%', marginRight: '10%' }}  >
+                    <Grid item xs={12} sm={12} md={4} lg={4} style={{}}>
 
-                <div style={{ display: 'flex', flexDirection: 'column' }} >
+                        <div style={{ display: 'flex', flexDirection: 'column', paddingLeft : '15%' }} >
 
-                    <div style={{ display: 'flex', flexDirection: 'row' }} >
-                        <div style={{ display: 'grid', placeItems: 'center' }} >
-                            <Avatar alt="pic" src={obj['personal']['imageURI']} style={{ width: '130px', height: '130px' }} />
-                        </div>
-                        <div style={{ display: 'grid', placeItems: 'center', paddingLeft: '2%' }} >
-                            <div style={{ display: 'flex', flexDirection: 'column' }} >
-                                <span style={{ fontSize: 16, fontWeight: 'bold' }} > {obj['personal']['name']} </span>
-                                <span style={{ fontSize: 12, fontWeight: 'bold', opacity: '0.7' }} > {obj['personal']['email']} </span>
+                            <div style={{ display: 'flex', flexDirection: 'row' }} >
+                                <div style={{ display: 'grid', placeItems: 'center' }} >
+                                    <Avatar alt="pic" src={obj['personal']['imageURI']} style={{ width: '130px', height: '130px' }} />
+                                </div>
+                                <div style={{ display: 'grid', placeItems: 'center', paddingLeft: '2%' }} >
+                                    <div style={{ display: 'flex', flexDirection: 'column' }} >
+                                        <span style={{ fontSize: 16, fontWeight: 'bold' }} > {obj['personal']['name']} </span>
+                                        <span style={{ fontSize: 12, fontWeight: 'bold', opacity: '0.7' }} > {obj['personal']['email']} </span>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                    <div style={{ display: 'flex', flexDirection: 'column', marginTop: '15%' }} >
+                            <div style={{ display: 'flex', flexDirection: 'column', marginTop: '15%' }} >
 
-                        <div style={{ display: 'flex', flexDirection: 'row', width: '100%' }} >
+                                <div style={{ display: 'flex', flexDirection: 'row', width: '100%' }} >
 
-                            <span style={{ fontSize: 12 }} > Father/Husband : </span>
-                            <span style={{ fontSize: 12, opacity: '0.7', fontWeight: 'bold', marginLeft: 'auto', marginRight: '30%' }} > {obj['personal']['fatherName']} </span>
-
-                        </div>
-                        <div style={{ display: 'flex', flexDirection: 'row' }} >
-
-                            <span style={{ fontSize: 12 }} > CNIC : </span>
-                            <span style={{ fontSize: 12, opacity: '0.7', fontWeight: 'bold', marginLeft: 'auto', marginRight: '30%' }} > {obj['personal']['cnic']} </span>
-
-                        </div>
-                        <div style={{ display: 'flex', flexDirection: 'row' }} >
-
-                            <span style={{ fontSize: 12 }} > Cell Phone : </span>
-                            <span style={{ fontSize: 12, opacity: '0.7', fontWeight: 'bold', marginLeft: 'auto', marginRight: '30%' }} > {obj['personal']['cellPhone']} </span>
-
-                        </div>
-                        <div style={{ display: 'flex', flexDirection: 'row' }} >
-
-                            <span style={{ fontSize: 12 }} > Phone Office : </span>
-                            <span style={{ fontSize: 12, opacity: '0.7', fontWeight: 'bold', marginLeft: 'auto', marginRight: '30%' }} > {obj['personal']['phone']} </span>
-
-                        </div>
-                        <div style={{ display: 'flex', flexDirection: 'row' }} >
-
-                            <span style={{ fontSize: 12 }} > Address : </span>
-                            <span style={{ fontSize: 12, opacity: '0.7', fontWeight: 'bold', marginLeft: 'auto', marginRight: '30%' }} > {obj['personal']['address']} </span>
-
-                        </div>
-
-
-                    </div>
-
-                    <span style={{ fontSize: 16, fontWeight: 'bold', marginTop: '6%' }} >PAYMENT INFORMATION</span>
-                    <div style={{ display: 'flex', flexDirection: 'column', marginTop: '3%' }} >
-
-                        <div style={{ display: 'flex', flexDirection: 'row', width: '100%' }} >
-
-                            <span style={{ fontSize: 12, fontWeight: 'normal' }} > Payment Procedure : </span>
-                            <span style={{ fontSize: 12, opacity: '0.7', fontWeight: 'bold', marginLeft: 'auto', marginRight: '30%' }} > {obj['payment']['procedure']} </span>
-
-                        </div>
-
-                        {
-                            obj['payment']['procedure'] === "Installment"
-                                ? <div style={{ display: 'flex', flexDirection: 'row' }} >
-
-                                    <span style={{ fontSize: 12 }} > Total Installment : </span>
-                                    <span style={{ fontSize: 12, opacity: '0.7', fontWeight: 'bold', marginLeft: 'auto', marginRight: '30%' }} > {obj['payment']['installment']} </span>
+                                    <span style={{ fontSize: 12 }} > Father/Husband : </span>
+                                    <span style={{ fontSize: 12, opacity: '0.7', fontWeight: 'bold', marginLeft: 'auto', marginRight: '30%' }} > {obj['personal']['fatherName']} </span>
 
                                 </div>
-                                : null
-                        }
-                        {
-                            obj['payment']['procedure'] === "Installment"
-                                ? <div style={{ display: 'flex', flexDirection: 'row' }} >
+                                <div style={{ display: 'flex', flexDirection: 'row' }} >
 
-                                    <span style={{ fontSize: 12 }} > Remaining Installment : </span>
-                                    <span style={{ fontSize: 12, opacity: '0.7', fontWeight: 'bold', marginLeft: 'auto', marginRight: '30%' }} > {obj['payment']['remainingInstallment']} </span>
+                                    <span style={{ fontSize: 12 }} > CNIC : </span>
+                                    <span style={{ fontSize: 12, opacity: '0.7', fontWeight: 'bold', marginLeft: 'auto', marginRight: '30%' }} > {obj['personal']['cnic']} </span>
 
                                 </div>
-                                : null
-                        }
+                                <div style={{ display: 'flex', flexDirection: 'row' }} >
 
-                        <div style={{ display: 'flex', flexDirection: 'row' }} >
+                                    <span style={{ fontSize: 12 }} > Cell Phone : </span>
+                                    <span style={{ fontSize: 12, opacity: '0.7', fontWeight: 'bold', marginLeft: 'auto', marginRight: '30%' }} > {obj['personal']['cellPhone']} </span>
 
-                            <span style={{ fontSize: 12 }} > Total Amount : </span>
-                            <span style={{ fontSize: 12, opacity: '0.7', fontWeight: 'bold', marginLeft: 'auto', marginRight: '30%' }} > {obj['payment']['totalAmount']} </span>
+                                </div>
+                                <div style={{ display: 'flex', flexDirection: 'row' }} >
+
+                                    <span style={{ fontSize: 12 }} > Phone Office : </span>
+                                    <span style={{ fontSize: 12, opacity: '0.7', fontWeight: 'bold', marginLeft: 'auto', marginRight: '30%' }} > {obj['personal']['phone']} </span>
+
+                                </div>
+                                <div style={{ display: 'flex', flexDirection: 'row' }} >
+
+                                    <span style={{ fontSize: 12 }} > Address : </span>
+                                    <span style={{ fontSize: 12, opacity: '0.7', fontWeight: 'bold', marginLeft: 'auto', marginRight: '30%' }} > {obj['personal']['address']} </span>
+
+                                </div>
+
+
+                            </div>
+
+                            <span style={{ fontSize: 16, fontWeight: 'bold', marginTop: '6%' }} >PAYMENT INFORMATION</span>
+                            <div style={{ display: 'flex', flexDirection: 'column', marginTop: '3%' }} >
+
+                                <div style={{ display: 'flex', flexDirection: 'row', width: '100%' }} >
+
+                                    <span style={{ fontSize: 12, fontWeight: 'normal' }} > Payment Procedure : </span>
+                                    <span style={{ fontSize: 12, opacity: '0.7', fontWeight: 'bold', marginLeft: 'auto', marginRight: '30%' }} > {obj['payment']['procedure']} </span>
+
+                                </div>
+
+                                {
+                                    obj['payment']['procedure'] === "Installment"
+                                        ? <div style={{ display: 'flex', flexDirection: 'row' }} >
+
+                                            <span style={{ fontSize: 12 }} > Total Installment : </span>
+                                            <span style={{ fontSize: 12, opacity: '0.7', fontWeight: 'bold', marginLeft: 'auto', marginRight: '30%' }} > {obj['payment']['installment']} </span>
+
+                                        </div>
+                                        : null
+                                }
+                                {
+                                    obj['payment']['procedure'] === "Installment"
+                                        ? <div style={{ display: 'flex', flexDirection: 'row' }} >
+
+                                            <span style={{ fontSize: 12 }} > Remaining Installment : </span>
+                                            <span style={{ fontSize: 12, opacity: '0.7', fontWeight: 'bold', marginLeft: 'auto', marginRight: '30%' }} > {obj['payment']['remainingInstallment']} </span>
+
+                                        </div>
+                                        : null
+                                }
+
+                                <div style={{ display: 'flex', flexDirection: 'row' }} >
+
+                                    <span style={{ fontSize: 12 }} > Total Amount : </span>
+                                    <span style={{ fontSize: 12, opacity: '0.7', fontWeight: 'bold', marginLeft: 'auto', marginRight: '30%' }} > {obj['payment']['totalAmount']} </span>
+
+                                </div>
+                                <div style={{ display: 'flex', flexDirection: 'row' }} >
+
+                                    <span style={{ fontSize: 12 }} > Given Amount : </span>
+                                    <span style={{ fontSize: 12, opacity: '0.7', fontWeight: 'bold', marginLeft: 'auto', marginRight: '30%' }} > {obj['payment']['givenAmount']} </span>
+
+                                </div>
+                                <div style={{ display: 'flex', flexDirection: 'row' }} >
+
+                                    <span style={{ fontSize: 12 }} > Balance : </span>
+                                    <span style={{ fontSize: 12, opacity: '0.7', fontWeight: 'bold', marginLeft: 'auto', marginRight: '30%' }} > {obj['payment']['balance']} </span>
+
+                                </div>
+                                <div style={{ display: 'flex', flexDirection: 'row' }} >
+
+                                    <span style={{ fontSize: 12 }} > Address : </span>
+                                    <span style={{ fontSize: 12, opacity: '0.7', fontWeight: 'bold', marginLeft: 'auto', marginRight: '30%' }} > {obj['personal']['address']} </span>
+
+                                </div>
+
+
+                            </div>
+
+
 
                         </div>
-                        <div style={{ display: 'flex', flexDirection: 'row' }} >
 
-                            <span style={{ fontSize: 12 }} > Given Amount : </span>
-                            <span style={{ fontSize: 12, opacity: '0.7', fontWeight: 'bold', marginLeft: 'auto', marginRight: '30%' }} > {obj['payment']['givenAmount']} </span>
+                    </Grid>
+                    
+                    <Grid item xs={12} sm={12} md={7} lg={7} style={{}} >
 
-                        </div>
-                        <div style={{ display: 'flex', flexDirection: 'row' }} >
-
-                            <span style={{ fontSize: 12 }} > Balance : </span>
-                            <span style={{ fontSize: 12, opacity: '0.7', fontWeight: 'bold', marginLeft: 'auto', marginRight: '30%' }} > {obj['payment']['balance']} </span>
-
-                        </div>
-                        <div style={{ display: 'flex', flexDirection: 'row' }} >
-
-                            <span style={{ fontSize: 12 }} > Address : </span>
-                            <span style={{ fontSize: 12, opacity: '0.7', fontWeight: 'bold', marginLeft: 'auto', marginRight: '30%' }} > {obj['personal']['address']} </span>
-
-                        </div>
+                        <div style={{ display: 'flex', flexDirection: 'column', width: '100%' }} >
+                            <PersonalInformation model={personalModel} />
 
 
-                    </div>
-
-
-
-                </div>
-
-            </Grid>
-            <Grid item xs={12} sm={12} md={1} lg={1} style={{}} >
-                <div style={{ height: '100%', display: 'grid', placeItems: 'center' }} >
+                            <Button
+                                disabled={isLoading}
+                                variant="contained"
+                                color="primary"
+                                style={{ marginLeft: '20%', marginRight: '20%' }}
+                                onClick={() => handleSubmit()}
+                            >
+                                Submit
                     {
-                        isLoading
-                            ? <SpinnerLoading />
-                            : null
-                    }
+                                    isLoading
+                                        ? <CircularProgress color="inherit" style={{ marginLeft: 'auto', marginRight: 0, width: '25px', height: '25px' }} />
+                                        : null
+                                }
+                            </Button>
+
+                        </div>
+
+
+                    </Grid>
+                </Grid>
+        }
+        {
+            isLoading
+                ? <div style={{ position: 'absolute', height: '100%', display: 'grid', placeItems: 'center' }}  >
+                    <SpinnerLoading />
                 </div>
-            </Grid>
-            <Grid item xs={12} sm={12} md={7} lg={7} style={{}} >
-
-                <div style={{ display: 'flex', flexDirection: 'column', width: '100%' }} >
-                    <PersonalInformation model={personalModel} />
-
-
-                    <Button
-                        disabled={isLoading}
-                        variant="contained"
-                        color="primary"
-                        style={{ marginLeft: '20%', marginRight: '20%' }}
-                        onClick={() => handleSubmit()}
-                    >
-                        Submit
-                    {
-                            isLoading
-                                ? <CircularProgress color="inherit" style={{ marginLeft: 'auto', marginRight: 0, width: '25px', height: '25px' }} />
-                                : null
-                        }
-                    </Button>
-
-                </div>
-
-
-            </Grid>
-        </Grid>
+                : null
         }
 
         {

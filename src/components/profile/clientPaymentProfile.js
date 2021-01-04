@@ -442,7 +442,7 @@ const ClientProfile = () => {
                                                                 <span>Remaining Installment</span>
                                                             </div>
                                                             <div style={{ width: '50%' }} >
-                                                                <span> {remainingInstallment} </span>
+                                                                <span> {remainingInstallment - 1} </span>
                                                             </div>
                                                         </div>
 
