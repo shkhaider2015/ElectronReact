@@ -1,5 +1,7 @@
-import { Avatar, Button, Grid, makeStyles, Paper, TextField,
-     Typography, InputAdornment, Fab, LinearProgress } from '@material-ui/core'
+import {
+    Avatar, Button, Grid, makeStyles, Paper, TextField,
+    Typography, InputAdornment, Fab
+} from '@material-ui/core'
 import {
     EmailOutlined as Email, VpnKeyOutlined as Password, PermIdentityOutlined as Name,
     CreditCardOutlined as CNIC, PhoneOutlined as Phone, PhotoCameraOutlined
@@ -183,12 +185,12 @@ const SignUp = () => {
         let dd = Date.now()
         const userModel = {
             personal: {
-                id : auth.currentUser.uid,
+                id: auth.currentUser.uid,
                 name,
                 email,
                 cnic,
                 cellPhone,
-                imageURI : image,
+                imageURI: image,
                 adminRight: false,
                 isAccepted: false,
                 isDeleted: false,
@@ -215,29 +217,29 @@ const SignUp = () => {
     }
 
     const updateProfile = (image) => {
-       
 
-            setTimeout(
-                () => {
-                    auth.currentUser.updateProfile(
-                        {
-                            displayName: name,
-                            photoURL: image,
-                            phoneNumber: cellPhone,
-            
-                        }
-                    )
-                        .then(() => {
-                            console.log("Profile Updated")
-                            createProfile(image)
-                        })
-                        .catch((err) => {
-                            console.log("ERROR : ", err)
-                            setIsLoading(false)
-                        })
-                },
-                2000
-            )
+
+        setTimeout(
+            () => {
+                auth.currentUser.updateProfile(
+                    {
+                        displayName: name,
+                        photoURL: image,
+                        phoneNumber: cellPhone,
+
+                    }
+                )
+                    .then(() => {
+                        console.log("Profile Updated")
+                        createProfile(image)
+                    })
+                    .catch((err) => {
+                        console.log("ERROR : ", err)
+                        setIsLoading(false)
+                    })
+            },
+            2000
+        )
     }
 
 
@@ -304,8 +306,8 @@ const SignUp = () => {
         auth.createUserWithEmailAndPassword(email, password)
             .then((user) => {
                 console.log("User created")
-                
-                    uploadImage()
+
+                uploadImage()
             })
             .catch((error) => {
                 var errorCode = error.code;
@@ -351,15 +353,15 @@ const SignUp = () => {
         console.log("jjkjjkjkk", auth.currentUser)
         return (
             <div className={classes.root} >
-                
+
 
                 <Paper className={classes.myPaper} >
-                    <div style={{ display : 'flex', flexDirection : 'column' }} >
-                    <span style={{ margin : 'auto', fontSize : 20, fontWeight : 'bold', color : 'green' }} >
-                        Thanks for Registration <br /> Wait for admin approval</span>
-                <Button color="primary" variant="contained" onClick={() => navigate('/login')} style={{ width : '90%', marginTop : '3%' }} >Go back </Button>
-                <Button color="primary" variant="text" onClick={() => auth.signOut()} style={{ width : '90%', marginTop : '1%', marginBottom : '1%' }} >
-                    Log out</Button>
+                    <div style={{ display: 'flex', flexDirection: 'column' }} >
+                        <span style={{ margin: 'auto', fontSize: 20, fontWeight: 'bold', color: 'green' }} >
+                            Thanks for Registration <br /> Wait for admin approval</span>
+                        <Button color="primary" variant="contained" onClick={() => navigate('/login')} style={{ width: '90%', marginTop: '3%' }} >Go back </Button>
+                        <Button color="primary" variant="text" onClick={() => auth.signOut()} style={{ width: '90%', marginTop: '1%', marginBottom: '1%' }} >
+                            Log out</Button>
 
                     </div>
                 </Paper>
@@ -379,9 +381,9 @@ const SignUp = () => {
                         xs={12}
                     >
 
-                        {isLoading ? <div style={{ display : 'grid', placeItems : 'center' }} > <SpinnerLoading /> </div> : ""}
+                        {isLoading ? <div style={{ display: 'grid', placeItems: 'center' }} > <SpinnerLoading /> </div> : ""}
                         <Paper elevation={3} className={classes.myPaper}>
-                            <span style={{ color: 'red' }} > {errorMsg} </span>
+
                             <form onSubmit={handleSubmit} noValidate style={{ paddingTop: '5%' }} >
 
                                 <div className={classes.imageDiv}>
@@ -511,6 +513,15 @@ const SignUp = () => {
                                     />
                                 </div>
 
+                                <div style={{ height: '15px' }} >
+                                    {
+                                        errorMsg
+                                            ? <span style={{ color: 'red', fontSize: '12px' }} > {errorMsg} </span>
+                                            : null
+                                    }
+
+                                </div>
+
                                 <div className={classes.myButton}>
                                     <Button
                                         variant="contained"
@@ -523,8 +534,8 @@ const SignUp = () => {
                             </Button>
                                 </div>
 
-                                <div style={{ marginTop: '2%' }} >
-                                    <Typography variant="caption" >
+                                <div style={{ marginTop: '2%', width: '100%' }} >
+                                    <Typography variant="caption" style={{ marginLeft: 'auto', marginRight: 'auto' }} >
                                         Already have an account ?  <Link to="/login" className={classes.loginLink} >Login</Link> here
                             </Typography>
                                 </div>
@@ -534,20 +545,20 @@ const SignUp = () => {
 
                     </Grid>
                 </Grid>
-            
-            
-                <div style={{ 
-        position : 'fixed',
-        left : 0,
-        bottom : 0,
-        width : '100%',
-        backgroundColor : 'red',
-        textAlign : 'center',
-        color : 'white'
-       }} >
-      <Offline >Check Your Internet Connection</Offline>
-      </div>
-                        
+
+
+                <div style={{
+                    position: 'fixed',
+                    left: 0,
+                    bottom: 0,
+                    width: '100%',
+                    backgroundColor: 'red',
+                    textAlign: 'center',
+                    color: 'white'
+                }} >
+                    <Offline >Check Your Internet Connection</Offline>
+                </div>
+
             </div>
         )
 

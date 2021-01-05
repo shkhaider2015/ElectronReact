@@ -51,7 +51,7 @@ const useStyle = makeStyles(
                 marginTop: '3%'
             },
             myButton: {
-                marginTop: '7%',
+                marginTop: '4%',
                 textAlign: 'center'
             },
             myElements: {
@@ -164,23 +164,9 @@ export default function Login() {
                     sm={12}
                     xs={12}
                 >
-                    {isLoading ? <div style={{ display : 'grid', placeItems : 'center', marginTop : '1%' }} > <SpinnerLoading /> </div> : ""}
+                    {isLoading ? <div style={{ display: 'grid', placeItems: 'center', marginTop: '1%' }} > <SpinnerLoading /> </div> : ""}
                     <Paper elevation={2} className={classes.myPaper}>
-                        {
-                            errorMessage
-                            ? <span> {errorMessage} </span>
-                            : null
-                        }
 
-                        {
-                            currentUser.currentUser
-                            ? (isDeleted 
-                                ? <span style={{ color: 'red' }} >Sorry this account has been deleted by admin </span>
-                                : !isAccepted
-                                ? <span style={{ color: 'green' }} > Wait for admin approval </span>
-                                : null)
-                            : null
-                        }
 
                         {/* {
                             currentUser.currentUser
@@ -232,6 +218,24 @@ export default function Login() {
                                         ),
                                     }}
                                 />
+                            </div>
+                            <div style={{ height: '15px' }} >
+                                {
+                                    errorMessage
+                                        ? <span style={{ color : 'red', fontSize : '12px' }} > {errorMessage} </span>
+                                        : null
+                                }
+
+                                {
+                                    currentUser.currentUser
+                                        ? (isDeleted
+                                            ? <span style={{ color: 'red', fontSize : '12px' }} >Sorry this account has been deleted by admin </span>
+                                            : !isAccepted
+                                                ? <span style={{ color: 'green', fontSize : '12px' }} > Wait for admin approval </span>
+                                                : null)
+                                        : null
+                                }
+
                             </div>
 
                             <div className={classes.myButton}>

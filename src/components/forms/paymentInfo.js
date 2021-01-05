@@ -101,7 +101,7 @@ const useStyle = makeStyles(
 const PlotInformation = ({ model }) => {
 
     const classes = useStyle();
-   
+
 
     return (
         <div className={classes.root}>
@@ -118,7 +118,7 @@ const PlotInformation = ({ model }) => {
                 >
                     <Paper elevation={0} className={classes.myPaper}>
 
-                    
+
                         <div className={classes.phoneCnicDiv} >
 
                             <div className={classes.cnicDiv} >
@@ -130,8 +130,8 @@ const PlotInformation = ({ model }) => {
                                     type="number"
                                     value={model.amount}
                                     color="primary"
-                                    onChange={(e) => model.setAmount(e.target.value) }
-                                    helperText={ model.amount <= 0 ? <span>Please specify total amount</span> : "" }
+                                    onChange={(e) => model.setAmount(e.target.value)}
+                                    helperText={model.amount <= 0 ? <span>Please specify total amount</span> : ""}
                                     InputProps={{
                                         endAdornment: (
                                             <InputAdornment position="end">
@@ -150,29 +150,20 @@ const PlotInformation = ({ model }) => {
                                         label="Procedure"
                                         onChange={(e) => {
                                             model.setProcedure(e.target.value)
-                                            if(e.target.value === "Installment")
-                                            {
+                                            if (e.target.value === "Installment") {
                                                 console.log("Installment Procedure")
-                                                if(model.totalInstallment !== 0 && !model.totalInstallment)
-                                                {
-                                                    model.setGivenAmount(Number(model.amount)/Number(model.totalInstallment))
-                                                }
+                                               
                                             }
-                                            else if(e.target.value === "Full Payment")
-                                            {
+                                            else if (e.target.value === "Full Payment") {
                                                 console.log("Full Payment Procedure")
-                                                model.setGivenAmount(model.amount)
                                             }
-                                            else if(e.target.value === "Half Payment")
-                                            {
+                                            else if (e.target.value === "Half Payment") {
                                                 console.log("Half Procedure")
-                                                model.setGivenAmount(Number(model.amount)/2)
                                             }
-                                            else
-                                            {
+                                            else {
                                                 console.log("Unknown Procedure")
                                             }
-                                        } }
+                                        }}
                                         inputProps={{
                                             name: 'procedure',
                                             id: 'outlined-age-native-simple',
@@ -184,7 +175,7 @@ const PlotInformation = ({ model }) => {
                                         <option value="Short Payment">Short Payment</option>
                                         <option value="Installment">Installment</option>
                                     </Select>
-                                    <FormHelperText> { model.procedure === "" ? <span  >Please specify procedure</span> : "" } </FormHelperText>
+                                    <FormHelperText> {model.procedure === "" ? <span  >Please specify procedure</span> : ""} </FormHelperText>
                                 </FormControl>
                             </div>
                         </div>
@@ -202,7 +193,7 @@ const PlotInformation = ({ model }) => {
                                     onChange={(e) => {
                                         model.setTotalInstallment(e.target.value)
                                     }}
-                                    helperText={ model.totalInstallment === 0 ? <span  >Please fill your first installment</span> : "" }
+                                    helperText={model.totalInstallment === 0 ? <span  >Please fill your first installment</span> : ""}
                                     InputProps={{
                                         endAdornment: (
                                             <InputAdornment position="end">
@@ -221,7 +212,7 @@ const PlotInformation = ({ model }) => {
                                         disabled={!(model.procedure === "Installment")}
                                         value={model.duration}
                                         label="Installment Duration"
-                                        onChange={(e) => model.setDuration(e.target.value) }
+                                        onChange={(e) => model.setDuration(e.target.value)}
                                         inputProps={{
                                             name: 'procedure',
                                             id: 'outlined-age-native-simple',
@@ -235,12 +226,12 @@ const PlotInformation = ({ model }) => {
                                         <option value={"Two Year"}>Two Year</option>
                                         <option value={"Three Year"}>Three Year</option>
                                     </Select>
-                                    <FormHelperText>{ model.duration === "" ? <span  >Please select duration</span> : "" }</FormHelperText>
+                                    <FormHelperText>{model.duration === "" ? <span  >Please select duration</span> : ""}</FormHelperText>
                                 </FormControl>
                             </div>
                         </div>
-                                       
-                        <div className={classes.phoneCnicDiv} >
+
+                        {/* <div className={classes.phoneCnicDiv} >
                             <div className={classes.cnicDiv} >
                                 <TextField
                                     className={classes.pairElement}
@@ -288,11 +279,12 @@ const PlotInformation = ({ model }) => {
 
                                 />
                             </div>
-                        </div>
+                        </div> */}
                         <div className={classes.phoneCnicDiv} >
 
-                            <div className={classes.cnicDiv} >
-                            <TextField
+                            {/* <div className={classes.cnicDiv} > */}
+
+                                <TextField
                                     className={classes.pairElement}
                                     id="balance"
                                     label="Balance"
@@ -300,7 +292,7 @@ const PlotInformation = ({ model }) => {
                                     type="number"
                                     disabled
                                     color="primary"
-                                    value={Number(model.amount) - Number(model.givenAmount)}
+                                    value={Number(model.amount)}
                                     InputProps={{
                                         endAdornment: (
                                             <InputAdornment position="end">
@@ -311,10 +303,10 @@ const PlotInformation = ({ model }) => {
 
                                 />
 
-                            </div>
-                            
-                        <div className={classes.phoneDiv} >
-                        <FormControl variant="outlined" className={classes.pairElement}>
+                            {/* </div> */}
+
+                            {/* <div className={classes.phoneDiv} >
+                                <FormControl variant="outlined" className={classes.pairElement}>
                                     <InputLabel htmlFor="outlined-age-native-simple">Payment Method</InputLabel>
                                     <Select
                                         native
@@ -334,7 +326,7 @@ const PlotInformation = ({ model }) => {
                                     <FormHelperText>{ model.paymentMethod === "" ? <span  >Please select payment method</span> : "" }</FormHelperText>
                                 </FormControl>
 
-                        </div>
+                        </div> */}
 
 
                         </div>

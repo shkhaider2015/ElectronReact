@@ -271,7 +271,7 @@ const EditComp = () => {
   const [procedure, setProcedure] = React.useState(obj['payment']['procedure'])
   const [totalInstallment, setTotalInstallment] = React.useState(parseInt(obj['payment']['installment']))
   const [duration, setDuration] = React.useState(obj['payment']['installmentDuration'])
-  const [installment, setInstallment] = React.useState(parseInt(obj['payment']['remaining Installment']))
+  const [installment, setInstallment] = React.useState(parseInt(obj['payment']['remainingInstallment']))
   const [balance, setBalance] = React.useState(parseInt(obj['payment']['balance']))
   const [givenAmount, setGivenAmount] = React.useState(parseInt(obj['payment']['givenAmount']))
   const [paymentMethod, setPaymentMethod] = React.useState(obj['payment']['paymentMethod'])

@@ -242,7 +242,7 @@ const Reports = () => {
                                                                                                                 <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
                                                                                                                     <MenuItem onClick={() => handleEdit(object['personal']['cnic'])}>Edit</MenuItem>
                                                                                                                     <MenuItem onClick={() => handleIdCard(object['personal']['cnic'])}>ID Card</MenuItem>
-                                                                                                                    <MenuItem onClick={() => handleTransfor(object['personal']['cnic'])}>Transfor</MenuItem>
+                                                                                                                    <MenuItem onClick={() => handleTransfor(object['personal']['cnic'])}>Transfer</MenuItem>
                                                                                                                     <MenuItem onClick={() => handleDelete(object['personal']['cnic'])}>Delete</MenuItem>
                                                                                                                 </MenuList>
                                                                                                             </ClickAwayListener>

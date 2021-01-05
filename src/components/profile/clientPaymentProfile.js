@@ -1,7 +1,8 @@
 import React from 'react'
 import {
     Avatar, Grid, makeStyles, TextField, IconButton,
-    InputAdornment, Button, CircularProgress
+    InputAdornment, Button, CircularProgress, FormControl, 
+    InputLabel, Select, FormHelperText
 } from "@material-ui/core";
 import { PermIdentity as Name, KeyboardBackspace } from "@material-ui/icons";
 import { useNavigate, useParams } from 'react-router-dom';
@@ -223,19 +224,16 @@ const ClientProfile = () => {
             if (currentObject) {
                 console.log("Current Object not null")
                 init()
-                if(currentObject['payment']['procedure'] === "Installment")
-                {
-                    var kk = Number(currentObject['payment']['totalAmount'])/Number(currentObject['payment']['installment']);
+                if (currentObject['payment']['procedure'] === "Installment") {
+                    var kk = Number(currentObject['payment']['totalAmount']) / Number(currentObject['payment']['installment']);
                     setNewAmount(kk)
                 }
-                else if(currentObject['payment']['procedure'] === "Half Payment")
-                {
+                else if (currentObject['payment']['procedure'] === "Half Payment") {
                     var kk = Number(currentObject['payment']['totalAmount']) / 2
                     setNewAmount(kk)
                 }
-                else if(currentObject['payment']['procedure'] === "Full payment")
-                {
-                    
+                else if (currentObject['payment']['procedure'] === "Full payment") {
+
                 }
             }
         },
@@ -255,8 +253,9 @@ const ClientProfile = () => {
             .update({
                 "payment.givenAmount": ga,
                 "payment.balance": bl,
-                "extra.lastEditBy": lastEditBy,
-                "extra.lastEditDate": lastEditedDate,
+                "payment.paymentMethod": paymentMethod,
+                "extra.paymentRecievedBy": lastEditBy,
+                "extra.paymentRecievedDate": lastEditedDate,
             })
             .then(() => {
                 console.log("Update Success")
@@ -285,8 +284,9 @@ const ClientProfile = () => {
                 "payment.givenAmount": ga,
                 "payment.balance": bl,
                 "payment.remainingInstallment": ri,
-                "extra.lastEditBy": lastEditBy,
-                "extra.lastEditDate": lastEditedDate,
+                "payment.paymentMethod": paymentMethod,
+                "extra.paymentRecievedBy": lastEditBy,
+                "extra.paymentRecievedDate": lastEditedDate,
             })
             .then(() => {
                 console.log("Update Success")
@@ -300,7 +300,7 @@ const ClientProfile = () => {
 
 
     const handleSubmit = () => {
-        if (newAmount) {
+        if (newAmount && paymentMethod) {
             if (procedure === "Installment") {
                 handleInstallmentUpdate()
             }
@@ -402,7 +402,7 @@ const ClientProfile = () => {
                                                     <span>Given Amount</span>
                                                 </div>
                                                 <div style={{ width: '50%' }} >
-                                                    <span> {Number(givenAmount) + Number(newAmount)} </span>
+                                                    <span> {Number(givenAmount)} </span>
                                                 </div>
                                             </div>
 
@@ -411,7 +411,7 @@ const ClientProfile = () => {
                                                     <span>Balance</span>
                                                 </div>
                                                 <div style={{ width: '50%' }} >
-                                                    <span> {Number(totalAmount) - (Number(givenAmount) + Number(newAmount))} </span>
+                                                    <span> {Number(balance)} </span>
                                                 </div>
                                             </div>
 
@@ -442,7 +442,7 @@ const ClientProfile = () => {
                                                                 <span>Remaining Installment</span>
                                                             </div>
                                                             <div style={{ width: '50%' }} >
-                                                                <span> {remainingInstallment - 1} </span>
+                                                                <span> {remainingInstallment} </span>
                                                             </div>
                                                         </div>
 
@@ -459,28 +459,51 @@ const ClientProfile = () => {
 
                                             {
                                                 procedure !== "Installment"
-                                                    ? <TextField
-                                                        style={{ width: '80%' }}
-                                                        id="totalAmount"
-                                                        label="New Amount"
-                                                        variant="outlined"
-                                                        type="number"
-                                                        value={newAmount}
-                                                        color="primary"
-                                                        disabled={ procedure !== "Short Payment" }
-                                                        onChange={(e) => {
-                                                            setNewAmount(e.target.value)
-                                                        }}
-                                                        helperText={totalAmount <= 0 ? <span  >Please specify total amount</span> : ""}
-                                                        InputProps={{
-                                                            endAdornment: (
-                                                                <InputAdornment position="end">
-                                                                    <Name className={classes.iconColor} />
-                                                                </InputAdornment>
-                                                            ),
-                                                        }}
-                                                    />
-                                                    : <TextField
+                                                    ? <div style={{ display : 'flex', flexDirection : 'column' }} > 
+                                                        <TextField
+                                                            style={{ width: '80%' }}
+                                                            id="totalAmount"
+                                                            label="New Amount"
+                                                            variant="outlined"
+                                                            type="number"
+                                                            value={newAmount}
+                                                            color="primary"
+                                                            disabled={procedure !== "Short Payment"}
+                                                            onChange={(e) => {
+                                                                setNewAmount(e.target.value)
+                                                            }}
+                                                            helperText={totalAmount <= 0 ? <span  >Please specify total amount</span> : ""}
+                                                            InputProps={{
+                                                                endAdornment: (
+                                                                    <InputAdornment position="end">
+                                                                        <Name className={classes.iconColor} />
+                                                                    </InputAdornment>
+                                                                ),
+                                                            }}
+                                                        />
+
+                                                        <FormControl variant="outlined" style={{ width : '80%', marginTop : '1%' }} >
+                                                            <InputLabel htmlFor="outlined-age-native-simple">Payment Method</InputLabel>
+                                                            <Select
+                                                                native
+                                                                value={paymentMethod}
+                                                                label="Payment Method"
+                                                                onChange={(e) => setPaymentMethod(e.target.value)}
+                                                                inputProps={{
+                                                                    name: 'procedure',
+                                                                    id: 'outlined-age-native-simple',
+                                                                }}
+                                                            >
+                                                                <option aria-label="None" value="" />
+                                                                <option value={"Cheque"}>Cheque</option>
+                                                                <option value={"Cash"}>Cash</option>
+                                                                <option value={"Payorder"}>Payorder</option>
+                                                            </Select>
+                                                            <FormHelperText>{paymentMethod === "" ? <span  >Please select payment method</span> : ""}</FormHelperText>
+                                                        </FormControl>
+                                                    </div>
+                                                    : <div>
+                                                        <TextField
                                                         style={{ width: '80%' }}
                                                         id="install"
                                                         label="New Installment"
@@ -501,6 +524,26 @@ const ClientProfile = () => {
                                                             ),
                                                         }}
                                                     />
+                                                    <FormControl variant="outlined" style={{ width : '80%', marginTop : '1%' }} >
+                                                            <InputLabel htmlFor="outlined-age-native-simple">Payment Method</InputLabel>
+                                                            <Select
+                                                                native
+                                                                value={paymentMethod}
+                                                                label="Payment Method"
+                                                                onChange={(e) => setPaymentMethod(e.target.value)}
+                                                                inputProps={{
+                                                                    name: 'procedure',
+                                                                    id: 'outlined-age-native-simple',
+                                                                }}
+                                                            >
+                                                                <option aria-label="None" value="" />
+                                                                <option value={"Cheque"}>Cheque</option>
+                                                                <option value={"Cash"}>Cash</option>
+                                                                <option value={"Payorder"}>Payorder</option>
+                                                            </Select>
+                                                            <FormHelperText>{paymentMethod === "" ? <span  >Please select payment method</span> : ""}</FormHelperText>
+                                                        </FormControl>
+                                                    </div>
                                             }
 
                                             <Button

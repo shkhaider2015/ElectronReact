@@ -272,11 +272,11 @@ const Application = () => {
   }
   const payment = {
     totalAmount: amount,
-    givenAmount: procedure === "Installment" ? Number(amount) / Number(totalInstallment) : givenAmount ,
+    givenAmount: givenAmount ,
     procedure: procedure,
     installment: totalInstallment,
     installmentDuration: duration,
-    remainingInstallment: totalInstallment - 1,
+    remainingInstallment: totalInstallment,
     balance: Number(amount) - Number(givenAmount),
     paymentMethod: paymentMethod
   }
@@ -392,7 +392,7 @@ const Application = () => {
     let val = false;
     // imageFile === null || 
     name === "" || fatherName === ""
-      || cellPhone === "" || cNIC === "" || email === ""
+      || cellPhone === "" || cNIC === ""
       || address === "" || cellPhone.length < 11 || cNIC.length < 15
       ? val = false
       : val = true
@@ -417,13 +417,13 @@ const Application = () => {
     }
     else if (procedure === "Installment") {
       console.log(`Duration : ${duration} and paymentMethod : ${paymentMethod} and amount : ${amount} and totalInstallment : ${totalInstallment} `)
-      duration === "" || paymentMethod === ""
+      duration === ""
         || amount === 0 || totalInstallment === 0
         ? val = false
         : val = true
     }
     else {
-      paymentMethod === "" || amount === 0
+      amount === 0
         ? val = false
         : val = true
     }
