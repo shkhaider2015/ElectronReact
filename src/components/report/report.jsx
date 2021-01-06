@@ -45,7 +45,7 @@ const Reports = () => {
         onAfterPrint: () => setPrint(false)
     });
 
-    
+
 
 
     const handleSearchField = (e) => {
@@ -149,14 +149,18 @@ const Reports = () => {
         <div style={{ height: '100%' }} >
             <div style={{ display: "none" }} >
                 {
-                    clients[0].length
-                        ? <PrintBox ref={componentRef} print={print} handlePrinttt={handlePrinttt} printNo={printNo} clicked={clicked} users={clients[0]} />
-                        : null
+                    searchResult.length !== 0
+                        ? searchResult.length
+                            ? <PrintBox ref={componentRef} print={print} handlePrinttt={handlePrinttt} printNo={printNo} clicked={clicked} users={searchResult.length !== 0 ? searchResult : clients[0]} />
+                            : null
+                        : clients[0].length
+                            ? <PrintBox ref={componentRef} print={print} handlePrinttt={handlePrinttt} printNo={printNo} clicked={clicked} users={searchResult.length !== 0 ? searchResult : clients[0]} />
+                            : null
                 }
             </div>
             {
                 Dialogue
-                    ? <DialogueBox setDialogue={setDialogue} formNumber={formNumber} clicked={clicked} users={clients[0]} />
+                    ? <DialogueBox setDialogue={setDialogue} formNumber={formNumber} clicked={clicked} users={searchResult.length !== 0 ? searchResult : clients[0]} />
                     :
                     <div className="container-fluid">
                         <div className="row ">
@@ -183,8 +187,12 @@ const Reports = () => {
                                     {
                                         searchResult.length !== 0
                                             ? searchResult.map(
-                                                (object, index) =>
-                                                    <div key={index} onClick={e => muClick(index)} > <Sidecomponent obj={object} checked={[index, clicked]} /> </div>
+                                                (object, index) => (
+                                                    object['personal']['transfer']
+                                                        ? null
+                                                        : <div key={index} onClick={e => muClick(index)} > <Sidecomponent obj={object} checked={[index, clicked]} /> </div>
+                                                )
+
                                             )
                                             : clients[0].map(
                                                 (object, index) => (
@@ -209,55 +217,105 @@ const Reports = () => {
 
 
                                                             {
-                                                                clients[0].map(
-                                                                    (object, index) =>
-                                                                        clicked === index
-                                                                            ? <div key={index} className="row topRowWidth"  >
-                                                                                <div className=" col-7 " >
-                                                                                    <Avatar alt={object['personal']['name']} src={object['personal']['imageURI']} style={{ height: '60px', width: '60px', marginLeft: '15%', marginRight: 'auto' }} />
+                                                                searchResult.length !== 0
+                                                                    ? searchResult.map(
+                                                                        (object, index) =>
+                                                                            clicked === index
+                                                                                ? <div key={index} className="row topRowWidth"  >
+                                                                                    <div className=" col-7 text-center " >
+                                                                                        <Avatar alt={object['personal']['name']} src={object['personal']['imageURI']} style={{ height: '60px', width: '60px', marginLeft: 'auto', marginRight: 'auto' }} />
 
-                                                                                    <span style={{ marginLeft: '3%', fontSize: '12' }} > {object['personal']['name']} </span>
+                                                                                        <span style={{ marginLeft: 'auto', marginRight : 'auto', fontSize: '12' }} > {object['personal']['name']} </span>
+                                                                                    </div>
+                                                                                    {
+                                                                                        isAdmin[0]
+                                                                                            ? <div className="col-1 " >
+                                                                                                <IconButton
+                                                                                                    ref={anchorRef}
+                                                                                                    aria-controls={open ? 'menu-list-grow' : undefined}
+                                                                                                    aria-haspopup="true"
+                                                                                                    onClick={() => handleMenuToggle()
+                                                                                                    }
+                                                                                                >
+                                                                                                    <MoreVert fontSize="large" color="primary" />
+                                                                                                </IconButton>
+
+                                                                                                <Popper open={open} anchorEl={anchorRef.current} role={undefined} transition disablePortal>
+                                                                                                    {({ TransitionProps, placement }) => (
+                                                                                                        <Grow
+                                                                                                            {...TransitionProps}
+                                                                                                            style={{ transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom' }}
+                                                                                                        >
+                                                                                                            <Paper>
+                                                                                                                <ClickAwayListener onClickAway={handleMenuClose}>
+                                                                                                                    <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
+                                                                                                                        <MenuItem onClick={() => handleEdit(object['personal']['cnic'])}>Edit</MenuItem>
+                                                                                                                        <MenuItem onClick={() => handleIdCard(object['personal']['cnic'])}>ID Card</MenuItem>
+                                                                                                                        <MenuItem onClick={() => handleTransfor(object['personal']['cnic'])}>Transfer</MenuItem>
+                                                                                                                        <MenuItem onClick={() => handleDelete(object['personal']['cnic'])}>Delete</MenuItem>
+                                                                                                                    </MenuList>
+                                                                                                                </ClickAwayListener>
+                                                                                                            </Paper>
+                                                                                                        </Grow>
+                                                                                                    )}
+                                                                                                </Popper>
+
+                                                                                            </div>
+                                                                                            : null
+                                                                                    }
+
                                                                                 </div>
-                                                                                {
-                                                                                    isAdmin[0]
-                                                                                        ? <div className="col-1 " >
-                                                                                            <IconButton
-                                                                                                ref={anchorRef}
-                                                                                                aria-controls={open ? 'menu-list-grow' : undefined}
-                                                                                                aria-haspopup="true"
-                                                                                                onClick={() => handleMenuToggle()
-                                                                                                }
-                                                                                            >
-                                                                                                <MoreVert fontSize="large" color="primary" />
-                                                                                            </IconButton>
+                                                                                : null
+                                                                    )
+                                                                    : clients[0].map(
+                                                                        (object, index) =>
+                                                                            clicked === index
+                                                                                ? <div key={index} className="row topRowWidth"  >
+                                                                                    <div className=" col-7 text-center" >
+                                                                                        <Avatar alt={object['personal']['name']} src={object['personal']['imageURI']} style={{ height: '60px', width: '60px', marginLeft: 'auto', marginRight: 'auto' }} />
 
-                                                                                            <Popper open={open} anchorEl={anchorRef.current} role={undefined} transition disablePortal>
-                                                                                                {({ TransitionProps, placement }) => (
-                                                                                                    <Grow
-                                                                                                        {...TransitionProps}
-                                                                                                        style={{ transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom' }}
-                                                                                                    >
-                                                                                                        <Paper>
-                                                                                                            <ClickAwayListener onClickAway={handleMenuClose}>
-                                                                                                                <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
-                                                                                                                    <MenuItem onClick={() => handleEdit(object['personal']['cnic'])}>Edit</MenuItem>
-                                                                                                                    <MenuItem onClick={() => handleIdCard(object['personal']['cnic'])}>ID Card</MenuItem>
-                                                                                                                    <MenuItem onClick={() => handleTransfor(object['personal']['cnic'])}>Transfer</MenuItem>
-                                                                                                                    <MenuItem onClick={() => handleDelete(object['personal']['cnic'])}>Delete</MenuItem>
-                                                                                                                </MenuList>
-                                                                                                            </ClickAwayListener>
-                                                                                                        </Paper>
-                                                                                                    </Grow>
-                                                                                                )}
-                                                                                            </Popper>
+                                                                                        <span style={{ marginLeft: 'auto', marginRight : 'auto', fontSize: '12' }} > {object['personal']['name']} </span>
+                                                                                    </div>
+                                                                                    {
+                                                                                        isAdmin[0]
+                                                                                            ? <div className="col-1 " >
+                                                                                                <IconButton
+                                                                                                    ref={anchorRef}
+                                                                                                    aria-controls={open ? 'menu-list-grow' : undefined}
+                                                                                                    aria-haspopup="true"
+                                                                                                    onClick={() => handleMenuToggle()
+                                                                                                    }
+                                                                                                >
+                                                                                                    <MoreVert fontSize="large" color="primary" />
+                                                                                                </IconButton>
 
-                                                                                        </div>
-                                                                                        : null
-                                                                                }
+                                                                                                <Popper open={open} anchorEl={anchorRef.current} role={undefined} transition disablePortal>
+                                                                                                    {({ TransitionProps, placement }) => (
+                                                                                                        <Grow
+                                                                                                            {...TransitionProps}
+                                                                                                            style={{ transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom' }}
+                                                                                                        >
+                                                                                                            <Paper>
+                                                                                                                <ClickAwayListener onClickAway={handleMenuClose}>
+                                                                                                                    <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
+                                                                                                                        <MenuItem onClick={() => handleEdit(object['personal']['cnic'])}>Edit</MenuItem>
+                                                                                                                        <MenuItem onClick={() => handleIdCard(object['personal']['cnic'])}>ID Card</MenuItem>
+                                                                                                                        <MenuItem onClick={() => handleTransfor(object['personal']['cnic'])}>Transfer</MenuItem>
+                                                                                                                        <MenuItem onClick={() => handleDelete(object['personal']['cnic'])}>Delete</MenuItem>
+                                                                                                                    </MenuList>
+                                                                                                                </ClickAwayListener>
+                                                                                                            </Paper>
+                                                                                                        </Grow>
+                                                                                                    )}
+                                                                                                </Popper>
 
-                                                                            </div>
-                                                                            : null
-                                                                )
+                                                                                            </div>
+                                                                                            : null
+                                                                                    }
+
+                                                                                </div>
+                                                                                : null
+                                                                    )
                                                             }
 
                                                         </div>
@@ -266,11 +324,17 @@ const Reports = () => {
                                                 </div>
                                                 <h3 className="col-5  text-center ">Client Forms</h3>
                                                 <h5 className="col-3 text-right">{
-                                                    clients[0].map(
-                                                        (object, index) => clicked === index
-                                                            ? <span key={index} style={{ fontSize: 12, opacity: 0.7 }} > Created at {getDateFromMillis(object['extra']['addedDate'])} </span>
-                                                            : <span key={index} ></span>
-                                                    )
+                                                    searchResult.length !== 0
+                                                        ? searchResult.map(
+                                                            (object, index) => clicked === index
+                                                                ? <span key={index} style={{ fontSize: 12, opacity: 0.7 }} > Created at {getDateFromMillis(object['extra']['addedDate'])} </span>
+                                                                : <span key={index} ></span>
+                                                        )
+                                                        : clients[0].map(
+                                                            (object, index) => clicked === index
+                                                                ? <span key={index} style={{ fontSize: 12, opacity: 0.7 }} > Created at {getDateFromMillis(object['extra']['addedDate'])} </span>
+                                                                : <span key={index} ></span>
+                                                        )
                                                 }</h5>
                                             </div>
 
@@ -317,24 +381,38 @@ const Reports = () => {
 
 
                                                     {
-                                                        clients[0].map(
-                                                            (object, index) => (
-                                                                clicked === index
-                                                                    ? object['extra']['transforFrom']
-                                                                        ? <tr className="mt-5 pt-5 table-hover1 shadow rounded" >
-                                                                            <td colSpan="4" className="pt-4 pl-5 "> Transfer Form</td>
-                                                                            <td className="pl-5 text-right pt-3" colSpan="1"> <button className="btn btn-danger" onClick={() => handlePrint(8)} >Print</button></td>
-                                                                            <td className="text-center pt-3" colSpan="1"> <button className="btn btn-info" onClick={() => preview(8)} >Preview</button></td>
-                                                                        </tr>
+                                                        searchResult.length !== 0
+                                                            ? searchResult.map(
+                                                                (object, index) => (
+                                                                    clicked === index
+                                                                        ? object['extra']['transforFrom']
+                                                                            ? <tr className="mt-5 pt-5 table-hover1 shadow rounded" >
+                                                                                <td colSpan="4" className="pt-4 pl-5 "> Transfer Form</td>
+                                                                                <td className="pl-5 text-right pt-3" colSpan="1"> <button disabled={print} className="btn btn-danger" onClick={() => handlePrint(8)} >Print</button></td>
+                                                                                <td className="text-center pt-3" colSpan="1"> <button className="btn btn-info" onClick={() => preview(8)} >Preview</button></td>
+                                                                            </tr>
+                                                                            : null
                                                                         : null
-                                                                    : null
+                                                                )
                                                             )
-                                                        )
+                                                            : clients[0].map(
+                                                                (object, index) => (
+                                                                    clicked === index
+                                                                        ? object['extra']['transforFrom']
+                                                                            ? <tr className="mt-5 pt-5 table-hover1 shadow rounded" >
+                                                                                <td colSpan="4" className="pt-4 pl-5 "> Transfer Form</td>
+                                                                                <td className="pl-5 text-right pt-3" colSpan="1"> <button disabled={print} className="btn btn-danger" onClick={() => handlePrint(8)} >Print</button></td>
+                                                                                <td className="text-center pt-3" colSpan="1"> <button className="btn btn-info" onClick={() => preview(8)} >Preview</button></td>
+                                                                            </tr>
+                                                                            : null
+                                                                        : null
+                                                                )
+                                                            )
                                                     }
 
                                                     <tr className="mt-5 pt-5 table-hover1 shadow rounded" >
                                                         <td colSpan="4" className="pt-4 pl-5 "> Plot &amp; Payment Information</td>
-                                                        <td className="pl-5 pt-3 text-right" colSpan="1"> <button className="btn btn-danger" onClick={() => handlePrint(9)} >Print</button></td>
+                                                        <td className="pl-5 pt-3 text-right" colSpan="1"> <button className="btn btn-danger" disabled={print} onClick={() => handlePrint(9)} >Print</button></td>
                                                         <td className="text-center pt-3" colSpan="1"> <button className="btn btn-info" onClick={() => preview(9)} >Preview</button></td>
                                                     </tr>
 
@@ -357,7 +435,7 @@ const Reports = () => {
 
 
             }
-            
+
 
         </div>
     )

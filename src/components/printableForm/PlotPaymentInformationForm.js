@@ -1,7 +1,7 @@
 import React from 'react'
 import BOX from "../../RawData/box.png";
 import YN from "../../RawData/yesno.png";
-import { getDateFromMillis } from "../../utility/utils";
+import { getDateFromMillis, getReferenceNumber } from "../../utility/utils";
 
 
 const PlotAndPaymentInformationForm = ({ obj } ) => {
@@ -16,7 +16,7 @@ const PlotAndPaymentInformationForm = ({ obj } ) => {
                 <div style={{ display: 'flex', flexDirection: 'row' }} >
                     <span>Ref No. &nbsp;&nbsp;&nbsp; </span>
                     <div>
-                        <span>77776</span>
+                        <span> { getReferenceNumber(obj['personal']['cnic']) } </span>
                     </div>
                 </div>
 

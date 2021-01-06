@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { ReactComponent as Client_Tempory_Profile } from '../../RawData/Create.svg';
 import diagram from '../../RawData/diagram.png'
 import MyRoutes from "../../components/myRoutes/myRoutes";
-import { getDate } from "../../utility/utils";
+import { getDate, getReferenceNumber } from "../../utility/utils";
 const useStyle = makeStyles(
     (theme) => (
         {
@@ -41,7 +41,7 @@ function SitePlan({ obj }) {
                     <div style={{ width: "70%", border: "1px solid black", borderRadius: 30, padding: 0 }} className="mt-5  col-4 p-1 text-center">
                         <div className="p-3 row  mt-1  ">
                             <div className=" ml-2 col-5  "><h5><em>Ref No. :</em></h5></div>
-                            <div className="ml-2 col-5   border-bottom">{RefNo}</div>
+                            <div className="ml-2 col-5   border-bottom">{getReferenceNumber(obj['personal']['cnic'])}</div>
                         </div>
                         <div className="row p-3 mt-1 ">
                             <div className=" ml-2 col-5 "><h5> <em>Date : </em></h5></div>

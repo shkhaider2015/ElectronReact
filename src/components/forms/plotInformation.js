@@ -125,14 +125,14 @@ const PersonalInformation = ({ model }) => {
                             
                             <div className={classes.cnicDiv} >
                             <FormControl variant="outlined" className={classes.pairElement}>
-                                    <InputLabel htmlFor="outlined-age-native-simple">Area</InputLabel>
+                                    <InputLabel htmlFor="outlined-age-native-simple">Asset</InputLabel>
                                     <Select
                                         native
                                         value={model.area}
                                         onChange={(e) => model.setArea(e.target.value)}
-                                        label="Area"
+                                        label="Asset"
                                         inputProps={{
-                                            name: 'area',
+                                            name: 'asset',
                                             id: 'outlined-age-native-simple',
                                         }}
                                     >
@@ -148,7 +148,7 @@ const PersonalInformation = ({ model }) => {
                             <TextField
                             className={classes.square}
                                 id="plotNo"
-                                label="Plot No."
+                                label="Asset No."
                                 variant="outlined"
                                 type="number"
                                 color="primary"

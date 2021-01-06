@@ -1,5 +1,5 @@
 import React from "react";
-import { getDate } from "../../utility/utils";
+import { getDate, getReferenceNumber } from "../../utility/utils";
 
 
 
@@ -22,7 +22,7 @@ function PrintPossessionCertificate({obj}) {
                     <div className="mt-5 col-12">
                         <div className="row">
                             <div className="offset-1 col-2 pl-4 text-left "><span style={{fontSize: 12, opacity: 0.5 }} >RefNo:</span></div>
-                            <div className="col-3 text-left pl-4  border-bottom"><span style={{fontSize: 12, opacity: 0.5 }} >8787</span></div>
+                            <div className="col-3 text-left pl-4  border-bottom"><span style={{fontSize: 12, opacity: 0.5 }} > {getReferenceNumber(obj['personal']['cnic'])} </span></div>
                             <div className="offset-1 col-2 pl-5 text-left "><span style={{fontSize: 12, opacity: 0.5 }} >Date:</span></div>
                             <div className="col-2 text-left pl-4  border-bottom"><span style={{fontSize: 12, opacity: 0.5 }} >{getDate()}</span></div>
                         </div>

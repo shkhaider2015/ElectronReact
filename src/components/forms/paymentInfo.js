@@ -1,18 +1,9 @@
 import {
-    Avatar, Button, Grid, makeStyles, Paper, TextField, Typography,
-    InputAdornment, Fab, LinearProgress, Select, InputLabel, FormControl, MenuItem, FormHelperText
+     Grid, makeStyles, Paper, TextField,
+    InputAdornment, Select, InputLabel, FormControl,  FormHelperText
 } from '@material-ui/core'
-import {
-    Email, VpnKey as Password, PermIdentity as Name,
-    CreditCard as CNIC, Phone, AddPhotoAlternate as AddPhotoAlternateIcon, Smartphone, LocationOn
-} from "@material-ui/icons";
+import { MoneyOutlined, AccountBalanceOutlined, HourglassEmptyOutlined} from "@material-ui/icons";
 import React from 'react'
-import { Link, useNavigate } from "react-router-dom";
-import BackgroundImage from "../../RawData/jj2.png";
-import { UserModel } from "../../models/userModels";
-import { firebase, storage, auth, db } from "../../config/firebase";
-import { AuthContext } from "../../context/authContext";
-import AlertDialog from "./confirmDialog";
 
 
 const useStyle = makeStyles(
@@ -135,7 +126,7 @@ const PlotInformation = ({ model }) => {
                                     InputProps={{
                                         endAdornment: (
                                             <InputAdornment position="end">
-                                                <Name className={classes.iconColor} />
+                                                <MoneyOutlined className={classes.iconColor} />
                                             </InputAdornment>
                                         ),
                                     }}
@@ -189,7 +180,7 @@ const PlotInformation = ({ model }) => {
                                     type="number"
                                     color="primary"
                                     disabled={!(model.procedure === "Installment")}
-                                    value={model.totalInstallment}
+                                    value={(model.procedure !== "Installment") ? 0 : model.totalInstallment}
                                     onChange={(e) => {
                                         model.setTotalInstallment(e.target.value)
                                     }}
@@ -197,7 +188,7 @@ const PlotInformation = ({ model }) => {
                                     InputProps={{
                                         endAdornment: (
                                             <InputAdornment position="end">
-                                                <Smartphone className={classes.iconColor} />
+                                                <HourglassEmptyOutlined className={classes.iconColor} />
                                             </InputAdornment>
                                         ),
                                     }}
@@ -296,7 +287,7 @@ const PlotInformation = ({ model }) => {
                                     InputProps={{
                                         endAdornment: (
                                             <InputAdornment position="end">
-                                                <Phone className={classes.iconColor} />
+                                                <AccountBalanceOutlined className={classes.iconColor} />
                                             </InputAdornment>
                                         ),
                                     }}

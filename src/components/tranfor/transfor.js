@@ -263,26 +263,28 @@ const Transfor = () => {
                                 </div>
                                 <div style={{ display: 'flex', flexDirection: 'row' }} >
 
-                                    <span style={{ fontSize: 12 }} > CNIC : </span>
+                                    <span style={{ fontSize: 12 }} > CNIC: </span>
                                     <span style={{ fontSize: 12, opacity: '0.7', fontWeight: 'bold', marginLeft: 'auto', marginRight: '30%' }} > {obj['personal']['cnic']} </span>
 
                                 </div>
                                 <div style={{ display: 'flex', flexDirection: 'row' }} >
 
-                                    <span style={{ fontSize: 12 }} > Cell Phone : </span>
+                                    <span style={{ fontSize: 12 }} > Cell Phone: </span>
                                     <span style={{ fontSize: 12, opacity: '0.7', fontWeight: 'bold', marginLeft: 'auto', marginRight: '30%' }} > {obj['personal']['cellPhone']} </span>
 
                                 </div>
                                 <div style={{ display: 'flex', flexDirection: 'row' }} >
 
-                                    <span style={{ fontSize: 12 }} > Phone Office : </span>
+                                    <span style={{ fontSize: 12 }} > Phone Office: </span>
                                     <span style={{ fontSize: 12, opacity: '0.7', fontWeight: 'bold', marginLeft: 'auto', marginRight: '30%' }} > {obj['personal']['phone']} </span>
 
                                 </div>
                                 <div style={{ display: 'flex', flexDirection: 'row' }} >
 
-                                    <span style={{ fontSize: 12 }} > Address : </span>
-                                    <span style={{ fontSize: 12, opacity: '0.7', fontWeight: 'bold', marginLeft: 'auto', marginRight: '30%' }} > {obj['personal']['address']} </span>
+                                    <span style={{ fontSize: 12 }} > Address: </span>
+                                    <div style={{ width : '100%', marginLeft : '10%', marginRight: '30%' }} >
+                                    <span style={{ fontSize: 12, opacity: '0.7', fontWeight: 'bold', marginLeft: 'auto',  }} > {obj['personal']['address']} </span>
+                                    </div>
 
                                 </div>
 
@@ -338,12 +340,6 @@ const Transfor = () => {
                                     <span style={{ fontSize: 12, opacity: '0.7', fontWeight: 'bold', marginLeft: 'auto', marginRight: '30%' }} > {obj['payment']['balance']} </span>
 
                                 </div>
-                                <div style={{ display: 'flex', flexDirection: 'row' }} >
-
-                                    <span style={{ fontSize: 12 }} > Address : </span>
-                                    <span style={{ fontSize: 12, opacity: '0.7', fontWeight: 'bold', marginLeft: 'auto', marginRight: '30%' }} > {obj['personal']['address']} </span>
-
-                                </div>
 
 
                             </div>
@@ -383,7 +379,7 @@ const Transfor = () => {
         }
         {
             isLoading
-                ? <div style={{ position: 'absolute', height: '100%', display: 'grid', placeItems: 'center' }}  >
+                ? <div style={{ position: 'absolute', height: '100%', width : '100%', zIndex : 1, display: 'grid', placeItems: 'center' }}  >
                     <SpinnerLoading />
                 </div>
                 : null

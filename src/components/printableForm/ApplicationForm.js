@@ -1,6 +1,6 @@
 import { Avatar } from "@material-ui/core";
 import React from "react";
-import { getDate } from "../../utility/utils";
+import { getDate, getReferenceNumber } from "../../utility/utils";
 
 
 
@@ -33,7 +33,7 @@ function ApplicationForm({ obj, formNumber }) {
 
                                 <div style={{ display: 'flex', marginLeft: '20%' }} >
                                     <span style={{ fontSize: 12, opacity: 0.7 }} >Ref No.:</span>
-                                    <span style={{ fontSize: 12, opacity: 0.7 }} >88777878</span>
+                                    <span style={{ fontSize: 12, opacity: 0.7 }} > { getReferenceNumber(obj['personal']['cnic']) } </span>
                                 </div>
 
                             </div>

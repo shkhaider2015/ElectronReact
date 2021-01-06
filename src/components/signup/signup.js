@@ -381,7 +381,7 @@ const SignUp = () => {
                         xs={12}
                     >
 
-                        {isLoading ? <div style={{ display: 'grid', placeItems: 'center' }} > <SpinnerLoading /> </div> : ""}
+                        {isLoading ? <div style={{ position : 'absolute', display: 'grid', placeItems: 'center', zIndex : 1, width : '100%', height : '100%' }} > <SpinnerLoading /> </div> : ""}
                         <Paper elevation={3} className={classes.myPaper}>
 
                             <form onSubmit={handleSubmit} noValidate style={{ paddingTop: '5%' }} >

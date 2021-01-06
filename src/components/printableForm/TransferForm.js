@@ -1,5 +1,5 @@
 import React from 'react'
-import { getDateFromMillis } from '../../utility/utils';
+import { getDateFromMillis, getReferenceNumber } from '../../utility/utils';
 
 
 const TransferForm = ({ obj }) => {
@@ -15,7 +15,7 @@ const TransferForm = ({ obj }) => {
                 <div style={{ display: 'flex', flexDirection: 'row' }} >
                     <span>Ref No. &nbsp;&nbsp;&nbsp; </span>
                     <div>
-                        <span>77776</span>
+                        <span>{getReferenceNumber(obj['personal']['cnic'])}</span>
                     </div>
                 </div>
 

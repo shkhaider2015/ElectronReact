@@ -19,3 +19,10 @@ export const getDateFromMillis = (milis) => {
 
 }
 
+export const getReferenceNumber = (cnic) => 
+{
+    var data = cnic.replace(/-/g, "");
+    data = data.slice(0, 7);
+    return data
+}
+

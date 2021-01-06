@@ -164,7 +164,7 @@ export default function Login() {
                     sm={12}
                     xs={12}
                 >
-                    {isLoading ? <div style={{ display: 'grid', placeItems: 'center', marginTop: '1%' }} > <SpinnerLoading /> </div> : ""}
+                    {isLoading ? <div style={{ position : 'absolute', zIndex : 1, display: 'grid', placeItems: 'center', width : '100%', height : '100%' }} > <SpinnerLoading /> </div> : ""}
                     <Paper elevation={2} className={classes.myPaper}>
 
 
