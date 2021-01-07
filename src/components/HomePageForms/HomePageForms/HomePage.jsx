@@ -51,7 +51,7 @@ const Homepage2 = () => {
     const [open, setOpen] = React.useState(false)
     // const prevOpen = React.useRef(open);
 
-   
+
     const handleLogout = () => {
         setOpen(false)
         auth.signOut()
@@ -134,7 +134,7 @@ const Homepage2 = () => {
         [isDeleted]
     )
 
-    
+
 
     const handleToggle = () => {
         setOpen((prevOpen) => !prevOpen);
@@ -148,10 +148,10 @@ const Homepage2 = () => {
     };
     const handleListKeyDown = (event) => {
         if (event.key === 'Tab') {
-          event.preventDefault();
-          setOpen(false);
+            event.preventDefault();
+            setOpen(false);
         }
-      }
+    }
     const handleProfileOpen = () => {
         setOpen(false)
         setProfileOpen(true)
@@ -174,7 +174,7 @@ const Homepage2 = () => {
 
                             {/* Profile Menu */}
 
-                            <div style={{ zIndex : 1 }} >
+                            <div style={{ zIndex: 1 }} >
                                 <IconButton
                                     ref={anchorRef}
                                     aria-controls={open ? 'menu-list-grow' : undefined}
@@ -296,12 +296,21 @@ const Homepage2 = () => {
 
 
 
-            <div  style={{ display : 'flex', flexDirection : 'column', bottom : 0, left : 0, position : 'fixed' }} >
-                        <span style={{ fontSize : 8, color : 'black', opacity : '0.7' }} >Developed By <b>HESOGENS</b> Digital Service Provider</span>
-                        <div style={{ display : 'flex', flexDirection : 'row', marginLeft : 'auto', marginRight : 'auto' }} >
-                            <span style={{ fontSize : 8, color : 'black', opacity : '0.7' }} >www.hesogens.com&nbsp;|&nbsp;+92-312-2027770</span>
-                        </div>
+            {/* <div style={{ display: 'flex', width : '100%', flexDirection: 'column', bottom: 0, left: 'auto', right: 'auto' }} >
+                <span style={{ fontSize: '8%', color: 'black', opacity: '0.7' }} >Developed By <b>HESOGENS</b> Digital Service Provider</span>
+                <div style={{ display: 'flex', flexDirection: 'row', marginLeft: 'auto', marginRight: 'auto' }} >
+                    <span style={{ fontSize: '8%', color: 'black', opacity: '0.7' }} >www.hesogens.com&nbsp;|&nbsp;+92-312-2027770</span>
                 </div>
+            </div> */}
+
+            <div style={{ width : '100%', bottom : '3%', position : 'fixed', display : 'grid', placeItems : 'center' }} >
+                        <span style={{ fontSize : '60%' }} >Powered By <b>HASOGENS</b></span>
+                    <div style={{  display : 'flex', flexDirection : 'column', textAlign : 'center' }} >
+                        <span style={{ fontSize : '60%' }} >Digital Service Provider</span>
+                        <span style={{ fontSize : '60%' }} >www.hesogens.com&nbsp;|&nbsp;+92-312-2027770</span>
+                    </div>
+            </div>
+
             <div style={{
                 position: 'fixed',
                 left: 0,

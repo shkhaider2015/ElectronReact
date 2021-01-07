@@ -550,7 +550,7 @@ const Application = () => {
             <KeyboardBackspace color="primary" fontSize="large" />
           </IconButton>
         </div>
-        <div className="col-xs-12  col-sm-11 cl-md-11 col-lg-11" >
+        <div className="col-xs-12  col-sm-10 cl-md-10 col-lg-10" >
           <Stepper alternativeLabel activeStep={activeStep} connector={<ColorlibConnector />} className={classes.stepper} >
             {steps.map((label) => (
               <Step key={label}>
@@ -568,7 +568,7 @@ const Application = () => {
 
         </div>
 
-        <div className="col-xs-12  col-sm-11 cl-md-11 col-lg-11" >
+        <div className="col-xs-12  col-sm-10 cl-md-10 col-lg-10" >
           {activeStep === steps.length
             ? alert
             : activeStep === steps.length + 1
