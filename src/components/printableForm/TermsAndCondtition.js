@@ -94,7 +94,7 @@ function PrintTermsandCondition({ obj }) {
 
 
                 </div>
-                
+
                 <div className="mt-5 col-12 ">
                     <div className="row">
                         <div className=" col-2 text-center ">CALL US:</div>
@@ -105,12 +105,13 @@ function PrintTermsandCondition({ obj }) {
 
                     </div>
                 </div>
-                <div  style={{ display : 'flex', flexDirection : 'column', bottom : 0, left : 0, position : 'fixed' }} >
-                        <span style={{ fontSize : 8, color : 'black', opacity : '0.7' }} >Developed By <b>HESOGENS</b> Digital Service Provider</span>
-                        <div style={{ display : 'flex', flexDirection : 'row', marginLeft : 'auto', marginRight : 'auto' }} >
-                            <span style={{ fontSize : 8, color : 'black', opacity : '0.7' }} >www.hesogens.com&nbsp;|&nbsp;+92-312-2027770</span>
-                        </div>
+                <div style={{ display: 'flex', flexDirection: 'column', bottom: '50px', left: '50px', position: 'fixed', textAlign : 'center' }} >
+                <span style={{ fontSize: 12, color: 'black', opacity: '0.7' }} >Powered By <b>HESOGENS</b> </span>
+                <span style={{ fontSize: 12, color: 'black', opacity: '0.7' }} >Digital Service Provider</span>
+                <div style={{ display: 'flex', flexDirection: 'row', marginLeft: 'auto', marginRight: 'auto' }} >
+                    <span style={{ fontSize: 12, color: 'black', opacity: '0.7' }} >www.hesogens.com&nbsp;|&nbsp;+92-312-2027770</span>
                 </div>
+            </div>
 
 
 

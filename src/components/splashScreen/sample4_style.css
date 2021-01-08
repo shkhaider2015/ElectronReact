@@ -1,0 +1,17 @@
+* {
+  box-sizing: border-box;
+}
+
+
+
+.script-bf-box {
+  width: 80px;
+  height: 200px;
+  background: rgb(238, 47, 47);
+  margin: 5px;
+  will-change: transform;
+}
+
+.script-bf-box:hover {
+  background: rgb(0, 0, 0);
+}

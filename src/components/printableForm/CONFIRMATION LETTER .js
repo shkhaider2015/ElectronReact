@@ -5,9 +5,9 @@ import { getDate, getReferenceNumber } from "../../utility/utils";
 
 function Printconfirmation({ obj }) {
 
-   
 
-    
+
+
 
 
     return (
@@ -28,28 +28,28 @@ function Printconfirmation({ obj }) {
 
                     <div className="mt-5 col-12">
                         <div className="mt-5 row">
-                            <div className="offset-1  col-2 pl-4 text-left "><span style={{fontSize: 12, opacity: 0.5 }} >Ref No. :</span></div>
-                            <div className="col-3 text-left pl-4  border-bottom"><span style={{fontSize: 12, opacity: 0.5 }} > { getReferenceNumber(obj['personal']['cnic']) } </span></div>
-                            <div className="offset-1  col-2 pl-4 text-right "><span style={{fontSize: 12, opacity: 0.5 }} >Date :</span></div>
-                            <div className="col-2 text-left pl-4  border-bottom"><span style={{fontSize: 12, opacity: 0.5 }} >{getDate()}</span></div>
+                            <div className="offset-1  col-2 pl-4 text-left "><span style={{ fontSize: 12, opacity: 0.5 }} >Ref No. :</span></div>
+                            <div className="col-3 text-left pl-4  border-bottom"><span style={{ fontSize: 12, opacity: 0.5 }} > {getReferenceNumber(obj['personal']['cnic'])} </span></div>
+                            <div className="offset-1  col-2 pl-4 text-right "><span style={{ fontSize: 12, opacity: 0.5 }} >Date :</span></div>
+                            <div className="col-2 text-left pl-4  border-bottom"><span style={{ fontSize: 12, opacity: 0.5 }} >{getDate()}</span></div>
                         </div>
                     </div>
                     <div className="mt-5 col-12">
                         <div className="row">
                             <div className="offset-1  col-2 pl-4 text-left "><span style={{ fontSize: 12 }} >Mr./Mrs./Miss :</span></div>
-                            <div className="col-3 text-left pl-4  border-bottom"><span style={{ fontSize: 12,  fontWeight: 'bold'  }} >{obj['personal']['name']}</span></div>
+                            <div className="col-3 text-left pl-4  border-bottom"><span style={{ fontSize: 12, fontWeight: 'bold' }} >{obj['personal']['name']}</span></div>
                         </div>
                     </div>
                     <div className="mt-5 col-12">
                         <div className="row">
                             <div className="offset-1  col-2 pl-4 text-left "><span style={{ fontSize: 12 }} >S/o, D/o, W/o :</span></div>
-                            <div className="col-3 text-left pl-4  border-bottom"><span style={{ fontSize: 12,  fontWeight: 'bold'  }} >{obj['personal']['fatherName']}</span></div>
+                            <div className="col-3 text-left pl-4  border-bottom"><span style={{ fontSize: 12, fontWeight: 'bold' }} >{obj['personal']['fatherName']}</span></div>
                         </div>
                     </div>
                     <div className="mt-5 col-12">
                         <div className="row">
                             <div className="offset-1  col-2 pl-4 text-left "><span style={{ fontSize: 12 }} >CNIC :</span></div>
-                            <div className="col-3 text-left pl-4  border-bottom"><span style={{ fontSize: 12,  fontWeight: 'bold'  }} >{obj['personal']['cnic']}</span></div>
+                            <div className="col-3 text-left pl-4  border-bottom"><span style={{ fontSize: 12, fontWeight: 'bold' }} >{obj['personal']['cnic']}</span></div>
                         </div>
                     </div>
                     <div className="mt-5  ml-5 pl-5 offset-2 col-10">
@@ -65,17 +65,17 @@ function Printconfirmation({ obj }) {
                     <div className="mt-5 col-12">
                         <div className="row">
                             <div className="offset-1 col-2 pl-4 text-left "><span style={{ fontSize: 12 }} >Phone Office :</span></div>
-                            <div className="col-3 text-left pl-4  border-bottom"><span style={{ fontSize: 12,  fontWeight: 'bold'  }} >{obj['personal']['phone']}</span></div>
+                            <div className="col-3 text-left pl-4  border-bottom"><span style={{ fontSize: 12, fontWeight: 'bold' }} >{obj['personal']['phone']}</span></div>
                             <div className="offset-1 col-2 pl-5 text-center "><span style={{ fontSize: 12 }} >Plot:</span></div>
-                            <div className="col-2 text-left pl-4  border-bottom"><span style={{ fontSize: 12,  fontWeight: 'bold'  }} >{obj['asset']['plotNumber']}</span></div>
+                            <div className="col-2 text-left pl-4  border-bottom"><span style={{ fontSize: 12, fontWeight: 'bold' }} >{obj['asset']['plotNumber']}</span></div>
                         </div>
                     </div>
                     <div className="mt-5 col-12">
                         <div className="row">
                             <div className="offset-1 col-2 pl-4 text-left "><span style={{ fontSize: 12 }} >Measurement :</span></div>
-                            <div className="col-3 text-left pl-4  border-bottom"><span style={{ fontSize: 12,  fontWeight: 'bold'  }} >{obj['asset']['measurement']}</span></div>
+                            <div className="col-3 text-left pl-4  border-bottom"><span style={{ fontSize: 12, fontWeight: 'bold' }} >{obj['asset']['measurement']}</span></div>
                             <div className="offset-1 col-2 pl-5 text-center "><span style={{ fontSize: 12 }} >Sq. Yds, Block:</span></div>
-                            <div className="col-2 text-left pl-4  border-bottom"><span style={{ fontSize: 12,  fontWeight: 'bold'  }} >{obj['asset']['square']}, Block {obj['asset']['block']} </span></div>
+                            <div className="col-2 text-left pl-4  border-bottom"><span style={{ fontSize: 12, fontWeight: 'bold' }} >{obj['asset']['square']}, Block {obj['asset']['block']} </span></div>
                         </div>
                     </div>
 
@@ -113,34 +113,34 @@ function Printconfirmation({ obj }) {
 
                     </div>
 
-                
 
-                
+
+
                     <footer className="mt-5 col-12 page-footer font-small blue">
-                    <div className="mt-5 col-12">
-                        <div className="mt-5 row">
-                            <div style={{ borderBottom: "1px solid black" }} className="mt-5 offset-9 col-2 mb-2 text-left pl-4"></div>
+                        <div className="mt-5 col-12">
+                            <div className="mt-5 row">
+                                <div style={{ borderBottom: "1px solid black" }} className="mt-5 offset-9 col-2 mb-2 text-left pl-4"></div>
 
-                        </div>
-                        <div className="row">
-                            <div className="offset-9 col-2 text-center ">Sign. Stamp</div>
+                            </div>
+                            <div className="row">
+                                <div className="offset-9 col-2 text-center ">Sign. Stamp</div>
 
+                            </div>
                         </div>
-                    </div>
                     </footer>
 
 
                     <footer className="mt-3 col-12 page-footer font-small blue">
-                    <div className="mt-3 col-12 ">
-                        <div className="row">
-                            <div className=" col-2 text-center ">CALL US:</div>
+                        <div className="mt-3 col-12 ">
+                            <div className="row">
+                                <div className=" col-2 text-center ">CALL US:</div>
 
-                        </div>
-                        <div className="row">
-                            <div className="col-2 text-center ">+92-</div>
+                            </div>
+                            <div className="row">
+                                <div className="col-2 text-center ">+92-</div>
 
+                            </div>
                         </div>
-                    </div>
                     </footer>
 
 
@@ -151,12 +151,13 @@ function Printconfirmation({ obj }) {
             </div>
 
 
-            <div  style={{ display : 'flex', flexDirection : 'column', bottom : 0, left : 0, position : 'fixed' }} >
-                        <span style={{ fontSize : 8, color : 'black', opacity : '0.7' }} >Developed By <b>HESOGENS</b> Digital Service Provider</span>
-                        <div style={{ display : 'flex', flexDirection : 'row', marginLeft : 'auto', marginRight : 'auto' }} >
-                            <span style={{ fontSize : 8, color : 'black', opacity : '0.7' }} >www.hesogens.com&nbsp;|&nbsp;+92-312-2027770</span>
-                        </div>
+            <div style={{ display: 'flex', flexDirection: 'column', bottom: '50px', left: '50px', position: 'fixed', textAlign : 'center' }} >
+                <span style={{ fontSize: 12, color: 'black', opacity: '0.7' }} >Powered By <b>HESOGENS</b> </span>
+                <span style={{ fontSize: 12, color: 'black', opacity: '0.7' }} >Digital Service Provider</span>
+                <div style={{ display: 'flex', flexDirection: 'row', marginLeft: 'auto', marginRight: 'auto' }} >
+                    <span style={{ fontSize: 12, color: 'black', opacity: '0.7' }} >www.hesogens.com&nbsp;|&nbsp;+92-312-2027770</span>
                 </div>
+            </div>
 
         </div>
 
