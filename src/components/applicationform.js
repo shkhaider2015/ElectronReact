@@ -243,6 +243,7 @@ const Application = () => {
   const [balance, setBalance] = React.useState(0)
   const [givenAmount, setGivenAmount] = React.useState(0)
   const [paymentMethod, setPaymentMethod] = React.useState("")
+  const [expanse, setExpanse] = React.useState(0)
   const [disableInstallment, setDisableInstallment] = React.useState(true)
 
 
@@ -277,7 +278,8 @@ const Application = () => {
     installment: totalInstallment,
     installmentDuration: duration,
     remainingInstallment: totalInstallment,
-    balance: Number(amount) - Number(givenAmount),
+    balance: Number(amount) + Number(expanse),
+    expanse: expanse,
     paymentMethod: paymentMethod
   }
 
@@ -381,6 +383,8 @@ const Application = () => {
     installment,
     setInstallment,
     balance,
+    expanse,
+    setExpanse,
     setBalance,
     paymentMethod,
     setPaymentMethod,

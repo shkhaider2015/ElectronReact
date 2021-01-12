@@ -1,10 +1,19 @@
+import { Avatar } from '@material-ui/core';
 import React from 'react'
 import { getDateFromMillis, getReferenceNumber } from '../../utility/utils';
+import LOGO from '../../RawData/mainassociates_icon.png'
 
 
 const TransferForm = ({ obj }) => {
     return (<div>
         <div className="container" >
+
+        <div className="row" >
+                    <div className="col-12" style={{ display : 'grid', placeItems : 'center' }} >
+                        <Avatar alt="logo" src={LOGO} variant="rounded" style={{ width : '80px', height : '50px', marginTop : '3%' }} />
+                    </div>
+
+                </div>
 
             <div className="bg-danger" style={{ position: 'relative', width: '100%', textAlign: 'center', marginTop: '5%' }} >
                 <span style={{ fontSize: 44, fontWeight: 'bold', color: 'white' }} >Transfer Form</span>

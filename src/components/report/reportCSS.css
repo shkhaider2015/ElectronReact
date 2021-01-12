@@ -29,6 +29,15 @@ overflow-x: hidden;
 .topRowWidth{
     height: 100px;
 }
+.tableRow {
+    height: 50px;
+}
+@media screen and (min-width : 1400px)
+{
+    .tableRow {
+        height: 90px;
+    }
+}
 .client-list{
     max-height: 100%;
 }
@@ -41,7 +50,9 @@ overflow-x: hidden;
     transform : scale(1.04);
     color: white;
 }
+
 .table-hover1{
+    max-height: 100%;
     transition: all !important;
     transition-duration: .30s !important;
    

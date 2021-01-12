@@ -41,7 +41,7 @@ const [isReady, setIsReady] = React.useState(true)
           {
             setIsReady(!isReady)
           },
-          3000
+          5000
         )
       }
     },

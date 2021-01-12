@@ -2,7 +2,7 @@ import {
      Grid, makeStyles, Paper, TextField,
     InputAdornment, Select, InputLabel, FormControl,  FormHelperText
 } from '@material-ui/core'
-import { MoneyOutlined, AccountBalanceOutlined, HourglassEmptyOutlined} from "@material-ui/icons";
+import { MoneyOutlined, AccountBalanceOutlined, HourglassEmptyOutlined, AccountBalanceWalletOutlined} from "@material-ui/icons";
 import React from 'react'
 
 
@@ -273,9 +273,33 @@ const PlotInformation = ({ model }) => {
                         </div> */}
                         <div className={classes.phoneCnicDiv} >
 
-                            {/* <div className={classes.cnicDiv} > */}
+                            <div className={classes.cnicDiv} >
 
                                 <TextField
+                                    className={classes.pairElement}
+                                    id="expence"
+                                    label="Expance"
+                                    variant="outlined"
+                                    type="number"
+                                    
+                                    color="primary"
+                                    value={model.expanse}
+                                    onChange={(e) => model.setExpanse(e.target.value)}
+                                    InputProps={{
+                                        endAdornment: (
+                                            <InputAdornment position="end">
+                                                <AccountBalanceWalletOutlined className={classes.iconColor} />
+                                            </InputAdornment>
+                                        ),
+                                    }}
+
+                                />
+
+                            </div>
+
+                            <div className={classes.phoneDiv} >
+                                
+                                 <TextField
                                     className={classes.pairElement}
                                     id="balance"
                                     label="Balance"
@@ -283,7 +307,7 @@ const PlotInformation = ({ model }) => {
                                     type="number"
                                     disabled
                                     color="primary"
-                                    value={Number(model.amount)}
+                                    value={Number(model.amount) + Number(model.expanse) }
                                     InputProps={{
                                         endAdornment: (
                                             <InputAdornment position="end">
@@ -294,30 +318,7 @@ const PlotInformation = ({ model }) => {
 
                                 />
 
-                            {/* </div> */}
-
-                            {/* <div className={classes.phoneDiv} >
-                                <FormControl variant="outlined" className={classes.pairElement}>
-                                    <InputLabel htmlFor="outlined-age-native-simple">Payment Method</InputLabel>
-                                    <Select
-                                        native
-                                        value={model.paymentMethod}
-                                        label="Payment Method"
-                                        onChange={(e) => model.setPaymentMethod(e.target.value) }
-                                        inputProps={{
-                                            name: 'procedure',
-                                            id: 'outlined-age-native-simple',
-                                        }}
-                                    >
-                                        <option aria-label="None" value="" />
-                                        <option value={"Cheque"}>Cheque</option>
-                                        <option value={"Cash"}>Cash</option>
-                                        <option value={"Payorder"}>Payorder</option>
-                                    </Select>
-                                    <FormHelperText>{ model.paymentMethod === "" ? <span  >Please select payment method</span> : "" }</FormHelperText>
-                                </FormControl>
-
-                        </div> */}
+                        </div>
 
 
                         </div>

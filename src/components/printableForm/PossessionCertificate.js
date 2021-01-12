@@ -1,5 +1,7 @@
 import React from "react";
 import { getDate, getReferenceNumber } from "../../utility/utils";
+import LOGO from '../../RawData/mainassociates_icon.png'
+import { Avatar } from "@material-ui/core";
 
 
 
@@ -10,13 +12,19 @@ function PrintPossessionCertificate({ obj }) {
 
 
             <div className="mt-5 container">
+            <div className="row" >
+                    <div className="col-12" style={{ display : 'grid', placeItems : 'center' }} >
+                        <Avatar alt="logo" src={LOGO} variant="rounded" style={{ width : '80px', height : '50px', marginTop : '3%' }} />
+                    </div>
+
+                </div>
 
                 <div className="mt-5 row">
 
 
                     <div className="mt-5 mb-5 col-12  heading">
 
-                        <h3 className="mt-5 mb-5 rounded text-center bg-danger text-white p-2"><em>CONFIRMATION LETTER</em></h3>
+                        <h3 className="mt-5 mb-5 rounded text-center bg-danger text-white p-2"><em>POSSESION CERTIFICATE</em></h3>
 
                     </div>
                     <div className="mt-5 col-12">

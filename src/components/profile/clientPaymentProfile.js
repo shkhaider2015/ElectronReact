@@ -121,6 +121,7 @@ const ClientProfile = () => {
 
 
     const [totalAmount, setTotalAmount] = React.useState(0)
+    const [expanse, setExpanse] = React.useState(0)
     const [procedure, setProcedure] = React.useState("")
     const [totalInstallment, setTotalInstallment] = React.useState(0)
     const [installmentDuration, setInstallmentDuration] = React.useState("")
@@ -157,6 +158,7 @@ const ClientProfile = () => {
         setPurpose(currentObject['asset']['purpose'])
 
         setTotalAmount(currentObject['payment']['totalAmount'])
+        setExpanse(currentObject['payment']['expanse'] ? currentObject['payment']['expanse'] : 0)
         setProcedure(currentObject['payment']['procedure'])
         setTotalInstallment(currentObject['payment']['installment'])
         setInstallmentDuration(currentObject['payment']['installmentDuration'])
@@ -243,16 +245,12 @@ const ClientProfile = () => {
         const number = cNIC.toString().replace(/-/g, "")
 
         let ga = Number(givenAmount) + Number(newAmount);
-        let bl = totalAmount - ga;
         let lastEditBy = currentUser.currentUser.displayName;
         let lastEditedDate = Date.now();
-
-        console.log(`given amount is ${ga} and balance is ${bl} and lastEdit ${lastEditBy} and date ${lastEditedDate} `)
 
         db.collection('clients').doc(number)
             .update({
                 "payment.givenAmount": ga,
-                "payment.balance": bl,
                 "payment.paymentMethod": paymentMethod,
                 "extra.paymentRecievedBy": lastEditBy,
                 "extra.paymentRecievedDate": lastEditedDate,
@@ -272,17 +270,13 @@ const ClientProfile = () => {
 
 
         let ga = Number(givenAmount) + Number(newAmount);
-        let bl = totalAmount - ga;
         let lastEditBy = currentUser.currentUser.displayName;
         let lastEditedDate = Date.now();
         let ri = Number(remainingInstallment) - 1
 
-        console.log(`given amount is ${ga} and balance is ${bl} and lastEdit ${lastEditBy} and date ${lastEditedDate} remaining installment is : ${ri} `)
-
         db.collection('clients').doc(number)
             .update({
                 "payment.givenAmount": ga,
-                "payment.balance": bl,
                 "payment.remainingInstallment": ri,
                 "payment.paymentMethod": paymentMethod,
                 "extra.paymentRecievedBy": lastEditBy,
@@ -399,6 +393,15 @@ const ClientProfile = () => {
 
                                             <div style={{ display: 'flex', flexDirection: 'row' }} >
                                                 <div style={{ width: '50%' }} >
+                                                    <span>Expanse</span>
+                                                </div>
+                                                <div style={{ width: '50%' }} >
+                                                    <span> {Number(expanse)} </span>
+                                                </div>
+                                            </div>
+
+                                            <div style={{ display: 'flex', flexDirection: 'row' }} >
+                                                <div style={{ width: '50%' }} >
                                                     <span>Given Amount</span>
                                                 </div>
                                                 <div style={{ width: '50%' }} >
@@ -411,9 +414,11 @@ const ClientProfile = () => {
                                                     <span>Balance</span>
                                                 </div>
                                                 <div style={{ width: '50%' }} >
-                                                    <span> {Number(balance)} </span>
+                                                    <span> {(Number(totalAmount) + Number(expanse)) - Number(givenAmount) } </span>
                                                 </div>
                                             </div>
+                                            
+
 
                                             <div style={{ display: 'flex', flexDirection: 'row' }} >
                                                 <div style={{ width: '50%' }} >

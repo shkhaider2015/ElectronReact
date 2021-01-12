@@ -254,7 +254,7 @@ const EditComp = () => {
   const [cNIC, setCNIC] = React.useState(obj['personal']['cnic'])
   const [email, setEmail] = React.useState(obj['personal']['email'])
   const [address, setAddress] = React.useState(obj['personal']['address'])
-  const [transfor, setTransfor] = React.useState(false)
+  const [transfor, setTransfor] = React.useState(obj['personal']['transfor'])
 
   const [area, setArea] = React.useState(obj['asset']['plotName'])
   const [plotNumber, setPlotNumber] = React.useState(obj['asset']['plotNumber'])
@@ -273,6 +273,7 @@ const EditComp = () => {
   const [duration, setDuration] = React.useState(obj['payment']['installmentDuration'])
   const [installment, setInstallment] = React.useState(parseInt(obj['payment']['remainingInstallment']))
   const [balance, setBalance] = React.useState(parseInt(obj['payment']['balance']))
+  const [expanse, setExpanse] = React.useState(obj['payment']['expanse'] ? parseInt(obj['payment']['expanse']) : 0)
   const [givenAmount, setGivenAmount] = React.useState(parseInt(obj['payment']['givenAmount']))
   const [paymentMethod, setPaymentMethod] = React.useState(obj['payment']['paymentMethod'])
   const [open, setOpen] = React.useState(true)
@@ -311,6 +312,7 @@ const EditComp = () => {
         "asset.square": square,
         "asset.type": type,
 
+        "payment.expanse": expanse,
         "payment.balance": balance,
         "payment.givenAmount": givenAmount,
         "payment.installment": totalInstallment,
@@ -402,6 +404,8 @@ const EditComp = () => {
     setInstallment,
     balance,
     setBalance,
+    expanse,
+    setExpanse,
     paymentMethod,
     setPaymentMethod,
     open,

@@ -1,6 +1,7 @@
 import { Avatar } from "@material-ui/core";
 import React from "react";
 import { getDate } from "../../utility/utils";
+import LOGO from '../../RawData/mainassociates_icon.png'
 
 
 
@@ -13,6 +14,12 @@ function PrintTermsandCondition({ obj }) {
 
 
             <div className="container">
+            <div className="row" >
+                    <div className="col-12" style={{ display : 'grid', placeItems : 'center' }} >
+                        <Avatar alt="logo" src={LOGO} variant="rounded" style={{ width : '80px', height : '50px', marginTop : '3%' }} />
+                    </div>
+
+                </div>
 
                 <div className="row">
 

@@ -104,9 +104,7 @@ export default function Login() {
     React.useEffect(
         () => {
             if (isDeleted) {
-                setTimeout(() => {
-                    auth.signOut()
-                }, 3000)
+                auth.signOut()
             }
 
         },
@@ -118,8 +116,29 @@ export default function Login() {
             if (doc.exists) {
                 var tr = doc.data()['personal']['isAccepted']
                 var trr = doc.data()['personal']['isDeleted']
-                setIsAccepted(tr)
-                setIsDeleted(trr)
+                
+                if(trr)
+                {
+                    setErrorMessage("This Account has been deleted by admin")
+                    setTimeout(
+                        () => {
+                            setIsDeleted(!isDeleted)
+                        },
+                        5000
+                    )
+                }
+                else
+                {
+                    if(tr)
+                    {
+                        setIsAccepted(!isAccepted)
+                        
+                    }
+                    else{
+                        setErrorMessage("wait for admin approval")
+                    }
+                }
+                console.log("status : ", trr)
 
             } else {
                 console.log("doc not exists")
@@ -226,7 +245,7 @@ export default function Login() {
                                         : null
                                 }
 
-                                {
+                                {/* {
                                     currentUser.currentUser
                                         ? (isDeleted
                                             ? <span style={{ color: 'red', fontSize : '12px' }} >Sorry this account has been deleted by admin </span>
@@ -234,7 +253,7 @@ export default function Login() {
                                                 ? <span style={{ color: 'green', fontSize : '12px' }} > Wait for admin approval </span>
                                                 : null)
                                         : null
-                                }
+                                } */}
 
                             </div>
 

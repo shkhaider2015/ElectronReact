@@ -7,9 +7,34 @@
 
 body {
     background: #eee;
-    font-family: 'Ubuntu', sans-serif
+    font-family: 'Ubuntu', sans-serif;
+    height: 100vh;
+
 }
 
+/* .myContainer
+{
+    background: url("../../../RawData/jj2.png") no-repeat center center fixed;
+    background-size: cover;
+    height: 100vh;
+    font-family: 'Ubuntu', sans-serif;
+} */
+
+
+/* body {
+    background-image: url("../../../RawData/jj2.png");
+    background-repeat: no-repeat;
+    background-size: '100% 100%';
+    background-position: '0% 0%';
+    height: 100vh;
+    font-family: 'Ubuntu', sans-serif;
+} */
+/* body {
+    background: url("../../../RawData/jj2.png") no-repeat center center fixed;
+    background-size: cover;
+    height: 100vh;
+    font-family: 'Ubuntu', sans-serif;
+} */
 .box {
     position: relative;
     width: 80%;
@@ -23,6 +48,17 @@ body {
     .box {
         position: relative;
         width: 100%;
+        padding-right: 15px;
+        padding-left: 15px
+    }
+
+}
+
+@media screen and (max-width : 2000px)
+{
+    .box {
+        position: relative;
+        width: 90%;
         padding-right: 15px;
         padding-left: 15px
     }
@@ -119,6 +155,67 @@ body {
     padding-top: 7%;
 }
 
+.bottomText
+{
+    bottom : 0%;
+    position: relative;
+    width : 100%;
+    font-size: small;
+}
+
+@media screen and (min-width : 767px)
+{
+    .bottomText
+{
+    bottom : 0%;
+    position: fixed;
+    width : 100%;
+    font-size: large;
+}
+
+}
+
+@media screen and (min-width : 1300px)
+{
+    .icon-create {
+        margin-left: 38%;
+        background-image: linear-gradient(-45deg, #34b5bf 0%, #210c59 100%);
+        border-radius: 63% 41% 39% 48% / 73% 54% 41% 34% !important;
+        height: 87px !important;
+        width: 95px !important;
+        padding-top: 7%;
+    }
+
+    .bottomText
+{
+    bottom : 0%;
+    position: fixed;
+    width : 100%;
+    font-size: small;
+}
+
+}
+@media screen and (min-width : 1700px)
+{
+    .icon-create {
+        margin-left: 42%;
+        background-image: linear-gradient(-45deg, #34b5bf 0%, #210c59 100%);
+        border-radius: 63% 41% 39% 48% / 73% 54% 41% 34% !important;
+        height: 87px !important;
+        width: 95px !important;
+        padding-top: 7%;
+    }
+
+    .bottomText
+{
+    bottom : 10%;
+    position: fixed;
+    width : 100%;
+    font-size: large;
+}
+
+}
+
 
 /* .icon-create:hover {
     background-image: linear-gradient(-45deg, #ffffff 0%, #ffffff 100%);
@@ -148,6 +245,31 @@ body {
     padding-top: 7%;
 }
 
+@media screen and (min-width : 1300px)
+{
+    .icon-report {
+        margin-left: 38%;
+        background-image: linear-gradient(-45deg, #fb0054 0%, #f55b2a 100%);
+        border-radius: 63% 41% 39% 48% / 73% 54% 41% 34% !important;
+        height: 87px !important;
+        width: 95px !important;
+        padding-top: 7%;
+    }
+
+}
+@media screen and (min-width : 1700px)
+{
+    .icon-report {
+        margin-left: 42%;
+        background-image: linear-gradient(-45deg, #fb0054 0%, #f55b2a 100%);
+        border-radius: 63% 41% 39% 48% / 73% 54% 41% 34% !important;
+        height: 87px !important;
+        width: 95px !important;
+        padding-top: 7%;
+    }
+
+}
+
 /* .icon-report:hover {
     background-image: linear-gradient(-45deg, #ffffff 0%, #ffffff 100%);
 }
@@ -172,6 +294,31 @@ body {
     width: 95px !important;
     padding-top: 7%;
     padding-left: 5%;
+}
+
+@media screen and (min-width : 1300px)
+{
+    .icon-query {
+        margin-left: 38%;
+        background-image: linear-gradient(-45deg, #3615e7 0%, #44a2f6 100%);
+        border-radius: 63% 41% 39% 48% / 73% 54% 41% 34% !important;
+        height: 87px !important;
+        width: 95px !important;
+        padding-top: 7%;
+    }
+
+}
+@media screen and (min-width : 1700px)
+{
+    .icon-query {
+        margin-left: 42%;
+        background-image: linear-gradient(-45deg, #3615e7 0%, #44a2f6 100%);
+        border-radius: 63% 41% 39% 48% / 73% 54% 41% 34% !important;
+        height: 87px !important;
+        width: 95px !important;
+        padding-top: 7%;
+    }
+
 }
 
 /* .icon-query:hover {
@@ -200,6 +347,33 @@ body {
     padding-left: 2%;
 }
 
+@media screen and (min-width : 1300px)
+{
+    .icon-scanQR {
+        margin-left: 38%;
+        background-image: linear-gradient(-45deg, #27b88d 0%, #22dd73 100%);
+        border-radius: 63% 41% 39% 48% / 73% 54% 41% 34% !important;
+        height: 87px !important;
+        width: 95px !important;
+        padding-top: 7%;
+    }
+
+}
+@media screen and (min-width : 1700px)
+{
+    .icon-scanQR {
+        margin-left: 42%;
+        background-image: linear-gradient(-45deg, #27b88d 0%, #22dd73 100%);
+        border-radius: 63% 41% 39% 48% / 73% 54% 41% 34% !important;
+        height: 87px !important;
+        width: 95px !important;
+        padding-top: 7%;
+    }
+
+}
+
+
+
 /* .icon-scanQR:hover {
     background-image: linear-gradient(-45deg, #ffffff 0%, #ffffff 100%);
 }
@@ -226,6 +400,32 @@ body {
     padding-left: 2%;
 }
 
+
+
+@media screen and (min-width : 1300px)
+{
+    .icon-payment {
+        margin-left: 38%;
+        background-image: linear-gradient(-45deg, #8d40fb 0%, #5a57fb 100%);
+        border-radius: 63% 41% 39% 48% / 73% 54% 41% 34% !important;
+        height: 87px !important;
+        width: 95px !important;
+        padding-top: 7%;
+    }
+
+}
+@media screen and (min-width : 1700px)
+{
+    .icon-payment {
+        margin-left: 42%;
+        background-image: linear-gradient(-45deg, #8d40fb 0%, #5a57fb 100%);
+        border-radius: 63% 41% 39% 48% / 73% 54% 41% 34% !important;
+        height: 87px !important;
+        width: 95px !important;
+        padding-top: 7%;
+    }
+
+}
 /* .icon-payment:hover {
     background-image: linear-gradient(-45deg, #ffffff 0%, #ffffff 100%);
 }

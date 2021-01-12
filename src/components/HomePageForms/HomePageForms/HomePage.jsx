@@ -161,7 +161,7 @@ const Homepage2 = () => {
     }
 
     return (
-        <div className="container-fluid " >
+        <div className="container-fluid myContainer" >
 
 
             <div className="row">
@@ -170,7 +170,7 @@ const Homepage2 = () => {
 
                     <div className="container-fluid">
                         <div className="d-flex flex-row mt-4 ">
-                            <div className="col-11" ><img src={zainlogo} height="100%" width="25%" /></div>
+                            <div className="col-11" ><img alt="logo" src={zainlogo} height="100%" width="25%" /></div>
 
                             {/* Profile Menu */}
 
@@ -303,12 +303,18 @@ const Homepage2 = () => {
                 </div>
             </div> */}
 
-            <div style={{ width : '100%', bottom : '3%', position : 'fixed', display : 'grid', placeItems : 'center' }} >
-                        <span style={{ fontSize : '60%' }} >Powered By <b>HASOGENS</b></span>
+            <div className="row bottomText" >
+
+            <div className="col-12" >
+            <div style={{ width : '100%', display : 'grid', placeItems : 'center' }} >
+                        <span style={{ fontSize : '60%', color : 'black' }} >Powered By <b>HASOGENS</b></span>
                     <div style={{  display : 'flex', flexDirection : 'column', textAlign : 'center' }} >
-                        <span style={{ fontSize : '60%' }} >Digital Service Provider</span>
-                        <span style={{ fontSize : '60%' }} >www.hesogens.com&nbsp;|&nbsp;+92-312-2027770</span>
+                        <span style={{ fontSize : '60%', color : 'black' }} >Digital Service Provider</span>
+                        <span style={{ fontSize : '60%', color : 'black' }} >www.hesogens.com&nbsp;|&nbsp;+92-312-2027770</span>
                     </div>
+            </div>
+            </div>
+
             </div>
 
             <div style={{

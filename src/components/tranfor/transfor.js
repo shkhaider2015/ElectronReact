@@ -64,6 +64,7 @@ const Transfor = () => {
         installmentDuration: obj['payment']['installmentDuration'],
         remainingInstallment: obj['payment']['remainingInstallment'],
         balance: obj['payment']['balance'],
+        expanse: obj['payment']['expanse'] ? obj['payment']['expanse'] : 0,
         paymentMethod: obj['payment']['paymentMethod']
     }
 
@@ -328,6 +329,14 @@ const Transfor = () => {
                                     <span style={{ fontSize: 12, opacity: '0.7', fontWeight: 'bold', marginLeft: 'auto', marginRight: '30%' }} > {obj['payment']['totalAmount']} </span>
 
                                 </div>
+
+                                <div style={{ display: 'flex', flexDirection: 'row' }} >
+
+                                    <span style={{ fontSize: 12 }} > Expanse : </span>
+                                    <span style={{ fontSize: 12, opacity: '0.7', fontWeight: 'bold', marginLeft: 'auto', marginRight: '30%' }} > {obj['payment']['expanse'] ? obj['payment']['expanse'] : 0} </span>
+
+                                </div>
+
                                 <div style={{ display: 'flex', flexDirection: 'row' }} >
 
                                     <span style={{ fontSize: 12 }} > Given Amount : </span>

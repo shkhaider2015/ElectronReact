@@ -1,12 +1,22 @@
+import { Avatar } from '@material-ui/core';
 import React from 'react'
 import BOX from "../../RawData/box.png";
 import YN from "../../RawData/yesno.png";
+import LOGO from '../../RawData/mainassociates_icon.png'
 import { getDateFromMillis, getReferenceNumber } from "../../utility/utils";
 
 
 const PlotAndPaymentInformationForm = ({ obj }) => {
     return <div style={{ width: '100%', height: 'auto' }}>
         <div className="container" >
+
+        <div className="row" >
+                    <div className="col-12" style={{ display : 'grid', placeItems : 'center' }} >
+                        <Avatar alt="logo" src={LOGO} variant="rounded" style={{ width : '80px', height : '50px', marginTop : '3%' }} />
+                    </div>
+
+                </div>
+
             <div className="bg-danger" style={{ position: 'relative', width: '100%', textAlign: 'center', marginTop: '5%' }} >
                 <span style={{ fontSize: 44, fontWeight: 'bold', color: 'white' }} >Plot &amp; Payment Information</span>
             </div>
@@ -184,7 +194,7 @@ const PlotAndPaymentInformationForm = ({ obj }) => {
                         <div style={{ width: '30%', borderBottom: '1px solid black', textAlign: 'center' }} > <span style={{ fontWeight: 'bold', opacity: '0.7' }} ></span> </div>
                     </div>
                     <div style={{ display: 'flex', flexDirection: 'row' }} >
-                        <span style={{ fontSize: 12, fontWeight: 'bold', marginTop: '1%' }} >By Payloader</span>
+                        <span style={{ fontSize: 12, fontWeight: 'bold', marginTop: '1%' }} >By Payorder</span>
                         <div style={{ width: '30%', borderBottom: '1px solid black', textAlign: 'center' }} > <span style={{ fontWeight: 'bold', opacity: '0.7' }} ></span> </div>
                     </div>
 
