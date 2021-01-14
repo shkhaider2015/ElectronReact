@@ -5,20 +5,15 @@
     padding: 0
 }
 
-body {
-    background: #eee;
-    font-family: 'Ubuntu', sans-serif;
-    height: 100vh;
 
-}
 
-/* .myContainer
+.myContainer
 {
     background: url("../../../RawData/jj2.png") no-repeat center center fixed;
     background-size: cover;
     height: 100vh;
     font-family: 'Ubuntu', sans-serif;
-} */
+}
 
 
 /* body {
@@ -75,7 +70,8 @@ body {
     border-radius: 10px;
     background-color: #fff;
     transition: all .4s ease-in-out;
-    box-shadow: 0 0 30px 0 rgba(20, 27, 202, .17)
+    /* box-shadow: 0 0 30px 0 rgba(20, 27, 202, .17) */  /* for white bg */
+    box-shadow: 0 0 30px 0 rgba(255, 255, 255, 0.829)  /* for picture bg */
 
 }
 
@@ -100,28 +96,32 @@ body {
 }
 
 .speedup:hover {
-    box-shadow: 0 0 25px 0 rgba(20, 27, 201, .05);
+    /* box-shadow: 0 0 25px 0 rgba(20, 27, 201, .05); for bg picture */
+    box-shadow: 0 0 25px 0 linear-gradient(-45deg, #fb0054 0%, #f5592ac5 100%); /* for white */
     cursor: pointer;
     background-image: linear-gradient(-45deg, #fb0054 0%, #f55b2a 100%);
     transform: scale(1.1)
 }
 
 .settings:hover {
-    box-shadow: 0 0 25px 0 rgba(20, 27, 201, .05);
+    /* box-shadow: 0 0 25px 0 rgba(20, 27, 201, .05); */
+    box-shadow: 0 0 25px 0 linear-gradient(-45deg, #34b5bf 0%, #210c59d7 100%); /* for white */
     cursor: pointer;
     background-image: linear-gradient(-45deg, #34b5bf 0%, #210c59 100%);
     transform: scale(1.1)
 }
 
 .privacy:hover {
-    box-shadow: 0 0 25px 0 rgba(20, 27, 201, .05);
+    /* box-shadow: 0 0 25px 0 rgba(20, 27, 201, .05); */
+    box-shadow: 0 0 25px 0 linear-gradient(-45deg, #3615e7 0%, #44a3f6d2 100%); /* for white */
     cursor: pointer;
     background-image: linear-gradient(-45deg, #3615e7 0%, #44a2f6 100%);
     transform: scale(1.1)
 }
 
 .backups:hover {
-    box-shadow: 0 0 25px 0 rgba(20, 27, 201, .05);
+    /* box-shadow: 0 0 25px 0 rgba(20, 27, 201, .05); */
+    box-shadow: 0 0 25px 0 linear-gradient(-45deg, #fc6a0e 0%, #fdb542de 100%); /* for white */
     cursor: pointer;
     background-image: linear-gradient(-45deg, #fc6a0e 0%, #fdb642 100%);
     transform: scale(1.1)
@@ -133,14 +133,16 @@ body {
 }
 
 .ssl:hover {
-    box-shadow: 0 0 25px 0 rgba(20, 27, 201, .05);
+    /* box-shadow: 0 0 25px 0 rgba(20, 27, 201, .05); */
+    box-shadow: 0 0 25px 0 linear-gradient(-45deg, #8d40fb 0%, #5a57fbbe 100%); /* for white */
     cursor: pointer;
     background-image: linear-gradient(-45deg, #8d40fb 0%, #5a57fb 100%);
     transform: scale(1.1)
 }
 
 .database:hover {
-    box-shadow: 0 0 25px 0 rgba(20, 27, 201, .05);
+    /* box-shadow: 0 0 25px 0 rgba(20, 27, 201, .05); */
+    box-shadow: 0 0 25px 0 linear-gradient(-45deg, #27b88d 0%, #22dd73b4 100%); /* for white */
     cursor: pointer;
     background-image: linear-gradient(-45deg, #27b88d 0%, #22dd73 100%);
     transform: scale(1.1)
@@ -152,7 +154,7 @@ body {
     border-radius: 63% 41% 39% 48% / 73% 54% 41% 34% !important;
     height: 87px !important;
     width: 95px !important;
-    padding-top: 7%;
+    padding-top: 2%;
 }
 
 .bottomText
@@ -162,6 +164,20 @@ body {
     width : 100%;
     font-size: small;
 }
+
+.svgIcons {
+    height: 50px ;
+    width: 50px;
+    color: whitesmoke
+}
+.dollerIcon 
+{
+    height: 100%;
+    width: 100%;
+    margin-top: 15%;
+    color: white;
+}
+
 
 @media screen and (min-width : 767px)
 {
@@ -183,7 +199,7 @@ body {
         border-radius: 63% 41% 39% 48% / 73% 54% 41% 34% !important;
         height: 87px !important;
         width: 95px !important;
-        padding-top: 7%;
+        padding-top: 3%;
     }
 
     .bottomText
@@ -192,6 +208,19 @@ body {
     position: fixed;
     width : 100%;
     font-size: small;
+}
+
+.svgIcons {
+    height: 50px ;
+    width: 50px ;
+    color: white
+}
+.dollerIcon 
+{
+    height: 120%;
+    width: 120%;
+    margin-top: 15%;
+    color: white;
 }
 
 }
@@ -203,7 +232,7 @@ body {
         border-radius: 63% 41% 39% 48% / 73% 54% 41% 34% !important;
         height: 87px !important;
         width: 95px !important;
-        padding-top: 7%;
+        padding-top: 2%;
     }
 
     .bottomText
@@ -212,6 +241,12 @@ body {
     position: fixed;
     width : 100%;
     font-size: large;
+}
+
+.svgIcons {
+    height: 50px ;
+    width: 50px;
+    color: white
 }
 
 }
@@ -253,7 +288,7 @@ body {
         border-radius: 63% 41% 39% 48% / 73% 54% 41% 34% !important;
         height: 87px !important;
         width: 95px !important;
-        padding-top: 7%;
+        padding-top: 3%;
     }
 
 }
@@ -265,7 +300,7 @@ body {
         border-radius: 63% 41% 39% 48% / 73% 54% 41% 34% !important;
         height: 87px !important;
         width: 95px !important;
-        padding-top: 7%;
+        padding-top: 2%;
     }
 
 }
@@ -304,7 +339,7 @@ body {
         border-radius: 63% 41% 39% 48% / 73% 54% 41% 34% !important;
         height: 87px !important;
         width: 95px !important;
-        padding-top: 7%;
+        padding-top: 3%;
     }
 
 }
@@ -316,7 +351,7 @@ body {
         border-radius: 63% 41% 39% 48% / 73% 54% 41% 34% !important;
         height: 87px !important;
         width: 95px !important;
-        padding-top: 7%;
+        padding-top: 2%;
     }
 
 }
@@ -355,7 +390,7 @@ body {
         border-radius: 63% 41% 39% 48% / 73% 54% 41% 34% !important;
         height: 87px !important;
         width: 95px !important;
-        padding-top: 7%;
+        padding-top: 3%;
     }
 
 }
@@ -367,7 +402,7 @@ body {
         border-radius: 63% 41% 39% 48% / 73% 54% 41% 34% !important;
         height: 87px !important;
         width: 95px !important;
-        padding-top: 7%;
+        padding-top: 2%;
     }
 
 }
@@ -410,7 +445,7 @@ body {
         border-radius: 63% 41% 39% 48% / 73% 54% 41% 34% !important;
         height: 87px !important;
         width: 95px !important;
-        padding-top: 7%;
+        padding-top: 3%;
     }
 
 }
@@ -422,7 +457,7 @@ body {
         border-radius: 63% 41% 39% 48% / 73% 54% 41% 34% !important;
         height: 87px !important;
         width: 95px !important;
-        padding-top: 7%;
+        padding-top: 2%;
     }
 
 }

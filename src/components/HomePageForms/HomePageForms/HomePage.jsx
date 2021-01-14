@@ -7,6 +7,12 @@ import { ReactComponent as SVG_Create } from '../../../RawData/Create.svg';
 import { ReactComponent as SVG_Report } from '../../../RawData/Report.svg';
 import { ReactComponent as SVG_Query } from '../../../RawData/QUERY.svg';
 import { ReactComponent as ScanQR } from '../../../RawData/SCAN.svg';
+
+import QueryIcon from "../../../RawData/iconapplication.png";
+import BarcodeIcon from "../../../RawData/iconbarcode.png";
+import PaymentIcon from "../../../RawData/iconmoney.png";
+import ClientIcon from "../../../RawData/iconuser.png";
+
 import AttachMoneyOutlinedIcon from '@material-ui/icons/AttachMoneyOutlined';
 
 import zainlogo from '../../../RawData/mainassociates_icon.png'
@@ -218,7 +224,7 @@ const Homepage2 = () => {
                                             <Link to="/create" className="myLink"  >
                                                 <div className="box">
                                                     <div className="our-services settings">
-                                                        <div className="icon icon-create"> <SVG_Create className="" fill="white" style={{ height: "70%", width: "70%", color: "whitesmoke" }} /> </div>
+                                                        <div className="icon icon-create"> <img alt="pp" src={ClientIcon} className="svgIcons"  style={{  }} /> </div>
                                                         <h4>CREATE</h4>
                                                         <p>Create Client Profile</p>
                                                     </div>
@@ -233,7 +239,7 @@ const Homepage2 = () => {
                                                     <Link to="/report" className="myLink" >
                                                         <div className="box">
                                                             <div className="our-services privacy">
-                                                                <div className="icon icon-query"> <SVG_Query className="" fill="white" style={{ height: "70%", width: "70%", color: "whitesmoke" }} /></div>
+                                                                <div className="icon icon-query"> <img alt="pp" src={QueryIcon} className="svgIcons"  style={{  }} /></div>
                                                                 <h4>QUERY</h4>
                                                                 <p>Client Report</p>
                                                             </div>
@@ -243,7 +249,7 @@ const Homepage2 = () => {
                                                     <Link to="/report" className="myLink" >
                                                         <div className="box">
                                                             <div className="our-services speedup">
-                                                                <div className="icon icon-report"> <SVG_Report className="" fill="white" style={{ height: "70%", width: "70%", color: "whitesmoke" }} /> </div>
+                                                                <div className="icon icon-report"> <img alt="pp" src={QueryIcon} className="svgIcons"  style={{  }} /> </div>
                                                                 <h4>REPORTS</h4>
                                                                 <p>Client Report </p>
                                                             </div>
@@ -258,7 +264,7 @@ const Homepage2 = () => {
                                             <Link to="/payment" className="myLink" >
                                                 <div className="box">
                                                     <div className="our-services ssl">
-                                                        <div className="icon icon-payment " > <AttachMoneyOutlinedIcon className="" style={{ height: "70%", width: "70%", color: "whitesmoke" }} /> </div>
+                                                        <div className="icon icon-payment "  > <img alt="pp" src={PaymentIcon} className="svgIcons"  style={{  }} /> </div>
                                                         <h4>Payment</h4>
                                                         <p>Payment Information</p>
                                                     </div>
@@ -269,7 +275,7 @@ const Homepage2 = () => {
                                             <Link to="/search" className="myLink" >
                                                 <div className="box">
                                                     <div className="our-services database">
-                                                        <div className="icon icon-scanQR"> <ScanQR className="" fill="white" style={{ height: "70%", width: "70%", color: "whitesmoke" }} /> </div>
+                                                        <div className="icon icon-scanQR"> <img alt="pp" src={BarcodeIcon} className="svgIcons"  style={{  }} /> </div>
                                                         <h4>SCAN Barcode</h4>
                                                         <p>Search By Scaning</p>
                                                     </div>
@@ -307,10 +313,10 @@ const Homepage2 = () => {
 
             <div className="col-12" >
             <div style={{ width : '100%', display : 'grid', placeItems : 'center' }} >
-                        <span style={{ fontSize : '60%', color : 'black' }} >Powered By <b>HASOGENS</b></span>
+                        <span style={{ fontSize : '60%', color : 'white' }} >Powered By <b>HASOGENS</b></span>
                     <div style={{  display : 'flex', flexDirection : 'column', textAlign : 'center' }} >
-                        <span style={{ fontSize : '60%', color : 'black' }} >Digital Service Provider</span>
-                        <span style={{ fontSize : '60%', color : 'black' }} >www.hesogens.com&nbsp;|&nbsp;+92-312-2027770</span>
+                        <span style={{ fontSize : '60%', color : 'white' }} >Digital Service Provider</span>
+                        <span style={{ fontSize : '60%', color : 'white' }} >www.hesogens.com&nbsp;|&nbsp;+92-312-2027770</span>
                     </div>
             </div>
             </div>
