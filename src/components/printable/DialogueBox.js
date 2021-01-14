@@ -28,23 +28,23 @@ const ApplicationDialog = ({ setDialogue, formNumber, clicked, users }) => {
   const getForm = (x) => {
     switch (x) {
       case 1:
-        return <Application obj={user} formNumber={x} />
+        return <Application obj={user} formNumber={x} print={false} />
       case 2:
-        return <Application obj={user} formNumber={x} />
+        return <Application obj={user} formNumber={x} print={false} />
       case 3:
-        return <Confirmation obj={user} />
+        return <Confirmation obj={user} print={false} />
       case 4:
-        return <SitePlan obj={user} />
+        return <SitePlan obj={user} print={false} />
       case 5:
-        return <TermsAndCond obj={user} />
+        return <TermsAndCond obj={user} print={false} />
       case 6:
-        return <Possession obj={user} />
+        return <Possession obj={user} print={false} />
       case 7:
-        return <Allotment obj={user} />
+        return <Allotment obj={user} print={false} />
       case 8:
-        return <TransferForm obj={user} />
+        return <TransferForm obj={user} print={false} />
       case 9:
-        return <PlotAndPaymentInformationForm obj={user} />
+        return <PlotAndPaymentInformationForm obj={user} print={false} />
       default:
         return <Application obj={user} />
 

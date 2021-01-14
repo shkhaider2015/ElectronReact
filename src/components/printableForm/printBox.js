@@ -30,23 +30,23 @@ class PrintBox extends Component {
     getForm = (x) => {
         switch (x) {
             case 1:
-                return <Application obj={this.state.user} formNumber={x} />
+                return <Application obj={this.state.user} formNumber={x} print={true} />
             case 2:
-                return <Application obj={this.state.user} formNumber={x} />
+                return <Application obj={this.state.user} formNumber={x} print={true} />
             case 3:
-                return <Confirmation obj={this.state.user} />
+                return <Confirmation obj={this.state.user} print={true} />
             case 4:
-                return <SitePlan obj={this.state.user} />
+                return <SitePlan obj={this.state.user} print={true} />
             case 5:
-                return <TermsAndCond obj={this.state.user} />
+                return <TermsAndCond obj={this.state.user} print={true} />
             case 6:
-                return <Possession obj={this.state.user} />
+                return <Possession obj={this.state.user} print={true} />
             case 7:
-                return <Allotment obj={this.state.user} />
+                return <Allotment obj={this.state.user} print={true} />
             case 8:
-                return <TransferForm obj={this.state.user} />
+                return <TransferForm obj={this.state.user} print={true} />
             case 9:
-                return <PlotAndPaymentInformationForm obj={this.state.user} />
+                return <PlotAndPaymentInformationForm obj={this.state.user} print={true} />
             default:
                 return null
 

@@ -5,7 +5,7 @@ import LOGO from '../../RawData/mainassociates_icon.png'
 
 
 
-function PrintTermsandCondition({ obj }) {
+function PrintTermsandCondition({ obj, print }) {
 
 
 
@@ -14,9 +14,9 @@ function PrintTermsandCondition({ obj }) {
 
 
             <div className="container">
-            <div className="row" >
-                    <div className="col-12" style={{ display : 'grid', placeItems : 'center' }} >
-                        <Avatar alt="logo" src={LOGO} variant="rounded" style={{ width : '80px', height : '50px', marginTop : '3%' }} />
+                <div className="row" >
+                    <div className="col-12" style={{ display: 'grid', placeItems: 'center' }} >
+                        <Avatar alt="logo" src={LOGO} variant="rounded" style={{ width: '80px', height: '50px', marginTop: '3%' }} />
                     </div>
 
                 </div>
@@ -112,13 +112,18 @@ function PrintTermsandCondition({ obj }) {
 
                     </div>
                 </div>
-                <div style={{ display: 'flex', flexDirection: 'column', bottom: '50px', left: '50px', position: 'fixed', textAlign : 'center' }} >
-                <span style={{ fontSize: 12, color: 'black', opacity: '0.7' }} >Powered By <b>HESOGENS</b> </span>
-                <span style={{ fontSize: 12, color: 'black', opacity: '0.7' }} >Digital Service Provider</span>
-                <div style={{ display: 'flex', flexDirection: 'row', marginLeft: 'auto', marginRight: 'auto' }} >
-                    <span style={{ fontSize: 12, color: 'black', opacity: '0.7' }} >www.hesogens.com&nbsp;|&nbsp;+92-312-2027770</span>
-                </div>
-            </div>
+                
+                {
+                print
+                    ? <div style={{ display: 'flex', flexDirection: 'column', bottom: '50px', width: '100%', position: 'fixed', textAlign: 'center' }} >
+                        <span style={{ fontSize: 12, color: 'black', opacity: '0.7' }} >Powered By <b>HESOGENS</b> </span>
+                        <span style={{ fontSize: 12, color: 'black', opacity: '0.7' }} >Digital Service Provider</span>
+                        <div style={{ display: 'flex', flexDirection: 'row', marginLeft: 'auto', marginRight: 'auto' }} >
+                            <span style={{ fontSize: 12, color: 'black', opacity: '0.7' }} >www.hesogens.com&nbsp;|&nbsp;+92-312-2027770</span>
+                        </div>
+                    </div>
+                    : null
+            }
 
 
 

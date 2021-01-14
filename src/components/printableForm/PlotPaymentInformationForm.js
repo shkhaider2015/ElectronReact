@@ -6,16 +6,16 @@ import LOGO from '../../RawData/mainassociates_icon.png'
 import { getDateFromMillis, getReferenceNumber } from "../../utility/utils";
 
 
-const PlotAndPaymentInformationForm = ({ obj }) => {
+const PlotAndPaymentInformationForm = ({ obj, print }) => {
     return <div style={{ width: '100%', height: 'auto' }}>
         <div className="container" >
 
-        <div className="row" >
-                    <div className="col-12" style={{ display : 'grid', placeItems : 'center' }} >
-                        <Avatar alt="logo" src={LOGO} variant="rounded" style={{ width : '80px', height : '50px', marginTop : '3%' }} />
-                    </div>
-
+            <div className="row" >
+                <div className="col-12" style={{ display: 'grid', placeItems: 'center' }} >
+                    <Avatar alt="logo" src={LOGO} variant="rounded" style={{ width: '80px', height: '50px', marginTop: '3%' }} />
                 </div>
+
+            </div>
 
             <div className="bg-danger" style={{ position: 'relative', width: '100%', textAlign: 'center', marginTop: '5%' }} >
                 <span style={{ fontSize: 44, fontWeight: 'bold', color: 'white' }} >Plot &amp; Payment Information</span>
@@ -218,14 +218,18 @@ const PlotAndPaymentInformationForm = ({ obj }) => {
         </div>
 
 
-        <div style={{ display: 'flex', flexDirection: 'column', bottom: '50px', left: '50px', position: 'fixed', textAlign : 'center' }} >
-                <span style={{ fontSize: 12, color: 'black', opacity: '0.7' }} >Powered By <b>HESOGENS</b> </span>
-                <span style={{ fontSize: 12, color: 'black', opacity: '0.7' }} >Digital Service Provider</span>
-                <div style={{ display: 'flex', flexDirection: 'row', marginLeft: 'auto', marginRight: 'auto' }} >
-                    <span style={{ fontSize: 12, color: 'black', opacity: '0.7' }} >www.hesogens.com&nbsp;|&nbsp;+92-312-2027770</span>
+        {
+            print
+                ? <div style={{ display: 'flex', flexDirection: 'column', bottom: '50px', width: '100%', position: 'fixed', textAlign: 'center' }} >
+                    <span style={{ fontSize: 12, color: 'black', opacity: '0.7' }} >Powered By <b>HESOGENS</b> </span>
+                    <span style={{ fontSize: 12, color: 'black', opacity: '0.7' }} >Digital Service Provider</span>
+                    <div style={{ display: 'flex', flexDirection: 'row', marginLeft: 'auto', marginRight: 'auto' }} >
+                        <span style={{ fontSize: 12, color: 'black', opacity: '0.7' }} >www.hesogens.com&nbsp;|&nbsp;+92-312-2027770</span>
+                    </div>
                 </div>
-            </div>
-            
+                : null
+        }
+
     </div>
 }
 

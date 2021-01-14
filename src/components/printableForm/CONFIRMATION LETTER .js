@@ -5,7 +5,7 @@ import LOGO from '../../RawData/mainassociates_icon.png'
 
 
 
-function Printconfirmation({ obj }) {
+function Printconfirmation({ obj, print }) {
 
 
 
@@ -160,13 +160,17 @@ function Printconfirmation({ obj }) {
             </div>
 
 
-            <div style={{ display: 'flex', flexDirection: 'column', bottom: '50px', left: '50px', position: 'fixed', textAlign : 'center' }} >
-                <span style={{ fontSize: 12, color: 'black', opacity: '0.7' }} >Powered By <b>HESOGENS</b> </span>
-                <span style={{ fontSize: 12, color: 'black', opacity: '0.7' }} >Digital Service Provider</span>
-                <div style={{ display: 'flex', flexDirection: 'row', marginLeft: 'auto', marginRight: 'auto' }} >
-                    <span style={{ fontSize: 12, color: 'black', opacity: '0.7' }} >www.hesogens.com&nbsp;|&nbsp;+92-312-2027770</span>
-                </div>
-            </div>
+            {
+                print
+                    ? <div style={{ display: 'flex', flexDirection: 'column', bottom: '50px', width: '100%', position: 'fixed', textAlign: 'center' }} >
+                        <span style={{ fontSize: 12, color: 'black', opacity: '0.7' }} >Powered By <b>HESOGENS</b> </span>
+                        <span style={{ fontSize: 12, color: 'black', opacity: '0.7' }} >Digital Service Provider</span>
+                        <div style={{ display: 'flex', flexDirection: 'row', marginLeft: 'auto', marginRight: 'auto' }} >
+                            <span style={{ fontSize: 12, color: 'black', opacity: '0.7' }} >www.hesogens.com&nbsp;|&nbsp;+92-312-2027770</span>
+                        </div>
+                    </div>
+                    : null
+            }
 
         </div>
 
