@@ -1,9 +1,9 @@
-import { makeStyles, TextField, RadioGroup, Paper, Radio, Button, FormControlLabel } from "@material-ui/core";
-import React, { useState } from "react";
-import { ReactComponent as Client_Tempory_Profile } from '../../RawData/Create.svg';
+import { makeStyles, Avatar } from "@material-ui/core";
+import React from "react";
 import diagram from '../../RawData/diagram.png'
-import MyRoutes from "../../components/myRoutes/myRoutes";
 import { getDate, getReferenceNumber } from "../../utility/utils";
+import LOGO from "../../RawData/printLogo.png";
+
 const useStyle = makeStyles(
     (theme) => (
         {
@@ -19,7 +19,6 @@ const useStyle = makeStyles(
 
 function SitePlan({ obj, print }) {
 
-    const RefNo = "767767"
     const North = ""
     const South = ""
     const East = ""
@@ -31,8 +30,14 @@ function SitePlan({ obj, print }) {
 
         <div className="mt-5 container">
 
-            <div className="mt-5 row">
-                <div className="mt-5 col-12  heading">
+            <div className="row mt-5" >
+            <div className="col-12" style={{ display: 'grid', placeItems: 'center' }} >
+                        <Avatar alt="logo" src={LOGO} variant="rounded" style={{ width: '120px', height: '60px', marginTop: '3%' }} />
+                    </div>
+            </div>
+
+            <div className=" row">
+                <div className="col-12  heading">
                     <h3 className="mt-5 mb-5 rounded text-center bg-danger text-white p-2"><em>SITE PLAN</em></h3>
                 </div>
             </div>

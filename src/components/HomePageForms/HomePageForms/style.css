@@ -9,7 +9,8 @@
 
 .myContainer
 {
-    background: url("../../../RawData/jj2.png") no-repeat center center fixed;
+    /* background: url("../../../RawData/jj2.png") no-repeat center center fixed; */
+    background: url("../../../RawData/bi.jpg") no-repeat center center fixed;
     background-size: cover;
     height: 100vh;
     font-family: 'Ubuntu', sans-serif;

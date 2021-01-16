@@ -1,5 +1,7 @@
+import { Avatar } from "@material-ui/core";
 import React from "react";
 import { getDate, getReferenceNumber } from "../../utility/utils";
+import LOGO from '../../RawData/printLogo.png'
 
 
 
@@ -13,16 +15,22 @@ function PrintAllotmentOrder({ obj, print }) {
 
             <div className="mt-5 container">
 
-                <div className="mt-5 row">
+            <div className="row" >
+            <div className="col-12" style={{ display: 'grid', placeItems: 'center' }} >
+                        <Avatar alt="logo" src={LOGO} variant="rounded" style={{ width: '120px', height: '60px', marginTop: '3%' }} />
+                    </div>
+            </div>
+
+                <div className="row">
 
 
-                    <div className="mt-5 col-12  heading">
+                    <div className="col-12  heading">
 
                         <h3 className="mt-5 mb-5 rounded text-center bg-danger text-white p-2"><em>ALLOTMENT ORDER</em></h3>
 
                     </div>
-                    <div className="mt-5 col-12">
-                        <div className="mt-5 row">
+                    <div className=" col-12">
+                        <div className=" row">
                             <div className="offset-1  col-2 pl-4 text-left "><span style={{ fontSize: 12, opacity: 0.5 }} >Ref No.:</span></div>
                             <div className="col-2 text-left pl-4  border-bottom"><span style={{ fontSize: 12, opacity: 0.5 }} > {getReferenceNumber(obj['personal']['cnic'])} </span></div>
                             <div className="offset-2  col-2 pl-4 text-right "><span style={{ fontSize: 12, opacity: 0.5 }} >Date:</span></div>
@@ -31,7 +39,7 @@ function PrintAllotmentOrder({ obj, print }) {
                     </div>
 
                     <div className="mt-5  col-12">
-                        <div className="mt-2 row">
+                        <div className="mt-5 row">
                             <div className="offset-1  col-2 pl-4 text-left "><span style={{ fontSize: 12 }} >Mr./Mrs./Miss :</span></div>
                             <div className="col-3 text-left pl-4  border-bottom"><span style={{ fontSize: 12, fontWeight: 'bold' }} >{obj['personal']['name']}</span></div>
                         </div>
