@@ -307,7 +307,7 @@ const PlotInformation = ({ model }) => {
                                     type="number"
                                     disabled
                                     color="primary"
-                                    value={Number(model.amount) + Number(model.expanse) }
+                                    value={(Number(model.amount) + Number(model.expanse)).toFixed(0) }
                                     InputProps={{
                                         endAdornment: (
                                             <InputAdornment position="end">

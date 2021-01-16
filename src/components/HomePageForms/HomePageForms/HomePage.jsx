@@ -224,7 +224,7 @@ const Homepage2 = () => {
                                             <Link to="/create" className="myLink"  >
                                                 <div className="box">
                                                     <div className="our-services settings">
-                                                        <div className="icon icon-create"> <img alt="pp" src={ClientIcon} className="svgIcons"  style={{  }} /> </div>
+                                                        <div className="icon icon-create"> <img alt="pp" src={ClientIcon} className="svgIcons"   /> </div>
                                                         <h4>CREATE</h4>
                                                         <p>Create Client Profile</p>
                                                     </div>
@@ -239,7 +239,7 @@ const Homepage2 = () => {
                                                     <Link to="/report" className="myLink" >
                                                         <div className="box">
                                                             <div className="our-services privacy">
-                                                                <div className="icon icon-query"> <img alt="pp" src={QueryIcon} className="svgIcons"  style={{  }} /></div>
+                                                                <div className="icon icon-query"> <img alt="pp" src={QueryIcon} className="svgIcons"  /></div>
                                                                 <h4>QUERY</h4>
                                                                 <p>Client Report</p>
                                                             </div>
@@ -249,7 +249,7 @@ const Homepage2 = () => {
                                                     <Link to="/report" className="myLink" >
                                                         <div className="box">
                                                             <div className="our-services speedup">
-                                                                <div className="icon icon-report"> <img alt="pp" src={QueryIcon} className="svgIcons"  style={{  }} /> </div>
+                                                                <div className="icon icon-report"> <img alt="pp" src={QueryIcon} className="svgIcons"  /> </div>
                                                                 <h4>REPORTS</h4>
                                                                 <p>Client Report </p>
                                                             </div>

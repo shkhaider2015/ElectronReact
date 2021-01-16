@@ -113,9 +113,10 @@
 
 .privacy:hover {
     /* box-shadow: 0 0 25px 0 rgba(20, 27, 201, .05); */
-    box-shadow: 0 0 25px 0 linear-gradient(-45deg, #3615e7 0%, #44a3f6d2 100%); /* for white */
+    /* box-shadow: 0 0 25px 0 linear-gradient(-45deg, #3615e7 0%, #44a3f6d2 100%); for white */
     cursor: pointer;
-    background-image: linear-gradient(-45deg, #3615e7 0%, #44a2f6 100%);
+    /* background-image: linear-gradient(-45deg, #3615e7 0%, #44a2f6 100%); */
+    background-image: linear-gradient(-45deg, #4d0750 0%, #f014f7 100% );
     transform: scale(1.1)
 }
 
@@ -142,7 +143,7 @@
 
 .database:hover {
     /* box-shadow: 0 0 25px 0 rgba(20, 27, 201, .05); */
-    box-shadow: 0 0 25px 0 linear-gradient(-45deg, #27b88d 0%, #22dd73b4 100%); /* for white */
+    /* box-shadow: 0 0 25px 0 linear-gradient(-45deg, #27b88d 0%, #22dd73b4 100%); for white */
     cursor: pointer;
     background-image: linear-gradient(-45deg, #27b88d 0%, #22dd73 100%);
     transform: scale(1.1)
@@ -323,19 +324,18 @@
 
 .icon-query {
     margin-left: 32%;
-    background-image: linear-gradient(-45deg, #3615e7 0%, #44a2f6 100%);
+    background-image: linear-gradient(-45deg, #4d0750 0%, #f014f7 100% );
     border-radius: 63% 41% 39% 48% / 73% 54% 41% 34% !important;
     height: 87px !important;
     width: 95px !important;
     padding-top: 7%;
-    padding-left: 5%;
 }
 
 @media screen and (min-width : 1300px)
 {
     .icon-query {
         margin-left: 38%;
-        background-image: linear-gradient(-45deg, #3615e7 0%, #44a2f6 100%);
+        background-image: linear-gradient(-45deg, #4d0750 0%, #f014f7 100% );
         border-radius: 63% 41% 39% 48% / 73% 54% 41% 34% !important;
         height: 87px !important;
         width: 95px !important;
@@ -347,7 +347,7 @@
 {
     .icon-query {
         margin-left: 42%;
-        background-image: linear-gradient(-45deg, #3615e7 0%, #44a2f6 100%);
+        background-image: linear-gradient(-45deg, #4d0750 0%, #f014f7 100% );
         border-radius: 63% 41% 39% 48% / 73% 54% 41% 34% !important;
         height: 87px !important;
         width: 95px !important;

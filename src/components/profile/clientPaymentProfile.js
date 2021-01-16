@@ -396,7 +396,7 @@ const ClientProfile = () => {
                                                     <span>Expanse</span>
                                                 </div>
                                                 <div style={{ width: '50%' }} >
-                                                    <span> {Number(expanse)} </span>
+                                                    <span> {Number(expanse).toFixed(0)} </span>
                                                 </div>
                                             </div>
 
@@ -405,7 +405,7 @@ const ClientProfile = () => {
                                                     <span>Given Amount</span>
                                                 </div>
                                                 <div style={{ width: '50%' }} >
-                                                    <span> {Number(givenAmount)} </span>
+                                                    <span> {Number(givenAmount).toFixed(0)} </span>
                                                 </div>
                                             </div>
 
@@ -414,7 +414,7 @@ const ClientProfile = () => {
                                                     <span>Balance</span>
                                                 </div>
                                                 <div style={{ width: '50%' }} >
-                                                    <span> {(Number(totalAmount) + Number(expanse)) - Number(givenAmount) } </span>
+                                                    <span> {((Number(totalAmount) + Number(expanse)) - Number(givenAmount)).toFixed(0) } </span>
                                                 </div>
                                             </div>
                                             
@@ -471,7 +471,7 @@ const ClientProfile = () => {
                                                             label="New Amount"
                                                             variant="outlined"
                                                             type="number"
-                                                            value={newAmount}
+                                                            value={newAmount.toFixed(0)}
                                                             color="primary"
                                                             disabled={procedure !== "Short Payment"}
                                                             onChange={(e) => {
@@ -514,7 +514,7 @@ const ClientProfile = () => {
                                                         label="New Installment"
                                                         variant="outlined"
                                                         type="number"
-                                                        value={newAmount}
+                                                        value={newAmount.toFixed(0)}
                                                         disabled
                                                         color="primary"
                                                         onChange={(e) => {

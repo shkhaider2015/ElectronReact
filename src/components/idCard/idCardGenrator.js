@@ -6,6 +6,7 @@ import CardBack from "../../RawData/idcard2.svg";
 import { IconButton } from '@material-ui/core';
 import { KeyboardBackspace } from '@material-ui/icons';
 import DF from "../../RawData/default.jpg";
+import DefaultUser from '../../RawData/defaultuser.png'
 
 
 
@@ -19,7 +20,7 @@ const IdCardGenrator = () => {
     value: obj['personal']['id'],
     options: {
       displayValue: false,
-      background : '#FFFFFF00'
+      background: '#FFFFFF00'
     }
 
   })
@@ -52,7 +53,7 @@ const IdCardGenrator = () => {
           backgroundImage: `url(${CardFront})`
         }} >
 
-          <img alt="jhj" src={obj['personal']['imageURI'] ? obj['personal']['imageURI'] : DF } style={{
+          <img alt="jhj" src={obj['personal']['imageURI'] ? obj['personal']['imageURI'] : DefaultUser} style={{
             width: '153px',
             height: '155px',
             marginTop: '192px',
@@ -77,13 +78,13 @@ const IdCardGenrator = () => {
           > {obj['personal']['name']} </div>
 
           <div style={{
-            width : '170px',
-            display : 'block',
-            marginTop : '50px',
-            marginLeft : 'auto',
-            marginRight : 'auto'
+            width: '170px',
+            display: 'block',
+            marginTop: '50px',
+            marginLeft: 'auto',
+            marginRight: 'auto'
           }} >
-            <canvas ref={inputRef} style={{ width : '100%' }} />
+            <canvas ref={inputRef} style={{ width: '100%' }} />
           </div>
 
         </div>
@@ -96,8 +97,58 @@ const IdCardGenrator = () => {
         <div style={{
           width: "450px",
           height: "650px",
+          padding: '1px',
           backgroundImage: `url(${CardBack})`
         }} >
+
+          {/* <div style={{
+            marginLeft: '185px',
+            marginRight: '40px',
+            marginTop: '530px',
+            fontWeight: 'bold'
+          }} >
+            haider chali pathan colony
+          </div> */}
+
+          {/* <div style={{
+            marginLeft: '80px',
+            marginRight: '40px',
+            marginTop: '10px',
+            fontWeight: 'bold'
+          }} >
+            haider chali pathan colony manghopir road banaras
+          </div> */}
+
+          {
+            obj['personal']['address'].toString().length <= 25
+              ? <div style={{
+                marginLeft: '185px',
+                marginRight: '40px',
+                marginTop: '530px',
+                fontWeight: 'bold'
+              }} >
+                {obj['personal']['address']}
+              </div>
+              : <div>
+                <div style={{
+                  marginLeft: '185px',
+                  marginRight: '40px',
+                  marginTop: '530px',
+                  fontWeight: 'bold'
+                }} >
+                  {obj['personal']['address'].toString().slice(0, 25)}
+                </div>
+
+                <div style={{
+                  marginLeft: '80px',
+                  marginRight: '40px',
+                  marginTop: '10px',
+                  fontWeight: 'bold'
+                }} >
+                  {obj['personal']['address'].toString().slice(25, obj['personal']['address'].toString().length)}
+                </div>
+              </div>
+          }
 
 
         </div>
