@@ -471,7 +471,7 @@ const ClientProfile = () => {
                                                             label="New Amount"
                                                             variant="outlined"
                                                             type="number"
-                                                            value={newAmount.toFixed(0)}
+                                                            value={Number(newAmount).toFixed(0)}
                                                             color="primary"
                                                             disabled={procedure !== "Short Payment"}
                                                             onChange={(e) => {
@@ -555,7 +555,7 @@ const ClientProfile = () => {
                                                 variant="contained"
                                                 color="primary"
                                                 title="Submit"
-                                                disabled={button}
+                                                disabled={button || ((Number(totalAmount) + Number(expanse)) - Number(givenAmount)).toFixed(0) <= 0 }
                                                 style={{ width: '80%', height: '3%', marginTop: '2%' }}
                                                 onClick={() => handleSubmit()}
                                             >
