@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Poppins|Ubuntu&display=swap');
+
 * {
     box-sizing: border-box;
     margin: 0;
@@ -13,7 +13,6 @@
     background: url("../../../RawData/bi.jpg") no-repeat center center fixed;
     background-size: cover;
     height: 100vh;
-    font-family: 'Ubuntu', sans-serif;
 }
 
 

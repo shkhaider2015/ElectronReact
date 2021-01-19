@@ -52,7 +52,7 @@ const [isReady, setIsReady] = React.useState(true)
   if(isReady)
   {
     return (
-      <div>
+      <div  >
   
         <MuiThemeProvider theme={theme}>
           <AuthProvider>

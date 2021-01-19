@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import CardFront from "../../RawData/idcard1.svg";
 import CardBack from "../../RawData/idcard2.svg";
 import DefaultUser from '../../RawData/defaultuser.png';
+import { BarcodeCanvas } from "./barcodeCanvas";
 
-class cardPrintBox extends Component {
+class CardPrintBox extends Component {
 
     constructor(props) {
         super()
@@ -21,25 +22,25 @@ class cardPrintBox extends Component {
     }
 
 
-    // componentDidUpdate(prevProps, prevState) {
-    //     console.log("cdu")
+    componentDidUpdate(prevProps, prevState) {
+        console.log("cdu")
 
-    //     console.log(prevProps)
+        console.log(prevProps)
 
-    //     if (prevProps.clicked !== this.props.clicked) {
-    //         this.getUser()
-    //     }
+        // if (prevProps.clicked !== this.props.clicked) {
+        //     this.getUser()
+        // }
 
-    //     if (this.props.print) {
+        if (this.props.print) {
 
-    //         setTimeout(
-    //             () => {
-    //                 this.props.handlePrinttt()
-    //             },
-    //             1000
-    //         )
-    //     }
-    // }
+            setTimeout(
+                () => {
+                    this.props.handlePrint()
+                },
+                1000
+            )
+        }
+    }
 
 
     render() {
@@ -88,7 +89,8 @@ class cardPrintBox extends Component {
                                 marginLeft: 'auto',
                                 marginRight: 'auto'
                             }} >
-                                <canvas ref={this.state.inputRef} style={{ width: '100%' }} />
+                               
+                                <BarcodeCanvas id={this.props.obj['personal']['id']}  />
                             </div>
 
                         </div>
@@ -165,4 +167,4 @@ class cardPrintBox extends Component {
     }
 }
 
-export default cardPrintBox;
+export default CardPrintBox;

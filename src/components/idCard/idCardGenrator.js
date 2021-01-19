@@ -5,7 +5,9 @@ import CardFront from "../../RawData/idcard1.svg";
 import CardBack from "../../RawData/idcard2.svg";
 import { Button, IconButton } from '@material-ui/core';
 import { KeyboardBackspace } from '@material-ui/icons';
-import DefaultUser from '../../RawData/defaultuser.png'
+import DefaultUser from '../../RawData/defaultuser.png';
+import CardPrintBox from "./cardPrintBox";
+import { useReactToPrint } from 'react-to-print';
 
 
 
@@ -14,6 +16,9 @@ const IdCardGenrator = () => {
   const navigate = useNavigate();
   const { state } = useLocation();
   const { obj } = state
+
+  const [print, setPrint] = React.useState(false);
+  const componentRef = React.useRef()
 
   const { inputRef } = useBarcode({
     value: obj['personal']['id'],
@@ -24,16 +29,23 @@ const IdCardGenrator = () => {
 
   })
 
+  const handlePrint = useReactToPrint({
+    content: () => componentRef.current,
+    onAfterPrint: () => setPrint(false)
+  })
 
-  const handlePrint = () =>
+  const handlePrintButton = () =>
   {
-
+    setPrint(true)
   }
 
 
 
   return <div >
 
+<div style={{ display : 'none' }} >
+      <CardPrintBox ref={componentRef} obj={obj} handlePrint={handlePrint} print={print} />
+</div>
 
 
     <div style={{ marginLeft: '3%', marginTop: '2%' }} >
@@ -162,8 +174,8 @@ const IdCardGenrator = () => {
       </div>
       <div className="row mt-5" >
             <div className="offset-3 col-6 pl-5 pr-5 " >
-              <Button variant="contained" color="primary" style={{ width : '100%' }} onClick={handlePrint} >
-                Print Card
+              <Button variant="contained" color="primary" disabled={print} style={{ width : '100%' }} onClick={handlePrintButton} >
+                Print Card 
               </Button>
             </div>
       </div>

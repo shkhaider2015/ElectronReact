@@ -15,8 +15,9 @@ const Sidecomponent = ({ obj, checked }) =>
         <Avatar  alt={obj['personal']['name']} src={obj['personal']['imageURI']} style={{ height: '50px', width: '50px', margin: '15%' }} />
 
     </div>
-    <div className="col-sm-7 col-xs-12  col-md-7 col-lg-7 mt-4 pt-1 client-Name">
-        <h6>{obj['personal']['name']}</h6>
+    <div className="offset-1 col-sm-7 col-xs-12  col-md-7 col-lg-7 mt-4 pt-1 client-Name">
+        {/* <h6>{obj['personal']['name']}</h6> */}
+        <span style={{ fontSize : '100%' }} > {obj['personal']['name']} </span>
     </div>
 
 </div>)

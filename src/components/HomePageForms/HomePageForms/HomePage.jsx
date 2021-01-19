@@ -3,11 +3,6 @@ import { AccountCircle } from "@material-ui/icons";
 import React from "react";
 import './style.css'
 
-import { ReactComponent as SVG_Create } from '../../../RawData/Create.svg';
-import { ReactComponent as SVG_Report } from '../../../RawData/Report.svg';
-import { ReactComponent as SVG_Query } from '../../../RawData/QUERY.svg';
-import { ReactComponent as ScanQR } from '../../../RawData/SCAN.svg';
-
 import QueryIcon from "../../../RawData/iconapplication.png";
 import BarcodeIcon from "../../../RawData/iconbarcode.png";
 import PaymentIcon from "../../../RawData/iconmoney.png";
@@ -225,8 +220,8 @@ const Homepage2 = () => {
                                                 <div className="box">
                                                     <div className="our-services settings">
                                                         <div className="icon icon-create"> <img alt="pp" src={ClientIcon} className="svgIcons"   /> </div>
-                                                        <h4>CREATE</h4>
-                                                        <p>Create Client Profile</p>
+                                                        <h4 style={{ fontFamily : '' }} >CREATE</h4>
+                                                        <p style={{ fontFamily : '' }} >Create Client Profile</p>
                                                     </div>
                                                 </div>
                                             </Link>
@@ -265,7 +260,7 @@ const Homepage2 = () => {
                                                 <div className="box">
                                                     <div className="our-services ssl">
                                                         <div className="icon icon-payment "  > <img alt="pp" src={PaymentIcon} className="svgIcons"  style={{  }} /> </div>
-                                                        <h4>Payment</h4>
+                                                        <h4>PAYMENT</h4>
                                                         <p>Payment Information</p>
                                                     </div>
                                                 </div>
@@ -276,7 +271,7 @@ const Homepage2 = () => {
                                                 <div className="box">
                                                     <div className="our-services database">
                                                         <div className="icon icon-scanQR"> <img alt="pp" src={BarcodeIcon} className="svgIcons"  style={{  }} /> </div>
-                                                        <h4>SCAN Barcode</h4>
+                                                        <h4>SCAN BARCODE</h4>
                                                         <p>Search By Scaning</p>
                                                     </div>
                                                 </div>

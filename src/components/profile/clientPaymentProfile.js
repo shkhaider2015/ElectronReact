@@ -245,12 +245,14 @@ const ClientProfile = () => {
         const number = cNIC.toString().replace(/-/g, "")
 
         let ga = Number(givenAmount) + Number(newAmount);
+        let bl = (Number(totalAmount) + Number(expanse)) -ga
         let lastEditBy = currentUser.currentUser.displayName;
         let lastEditedDate = Date.now();
 
         db.collection('clients').doc(number)
             .update({
                 "payment.givenAmount": ga,
+                "payment.balance": bl,
                 "payment.paymentMethod": paymentMethod,
                 "extra.paymentRecievedBy": lastEditBy,
                 "extra.paymentRecievedDate": lastEditedDate,

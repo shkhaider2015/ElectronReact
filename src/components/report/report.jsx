@@ -328,7 +328,7 @@ const Reports = () => {
 
                                                     </div>
                                                 </div>
-                                                <h3 className="col-5  text-center ">Client Forms</h3>
+                                                <h3 className="col-5  text-center font-weight-bold text-uppercase"> Client Forms </h3>
                                                 <h5 className="col-3 text-right">{
                                                     searchResult.length !== 0
                                                         ? searchResult.map(
