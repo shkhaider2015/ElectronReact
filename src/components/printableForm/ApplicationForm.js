@@ -1,6 +1,6 @@
 import { Avatar } from "@material-ui/core";
 import React from "react";
-import { getDate, getReferenceNumber } from "../../utility/utils";
+import { getDateFromMillis, getReferenceNumber } from "../../utility/utils";
 import LOGO from "../../RawData/printLogo.png"
 
 
@@ -48,7 +48,7 @@ function ApplicationForm({ obj, formNumber, print }) {
 
                                 <div style={{ display: 'flex', width: '100%' }} >
                                     <span style={{ marginLeft: 'auto', marginRight: '0%', fontSize: 12, opacity: 0.7 }} >Date:</span>
-                                    <div style={{ marginRight: '5%', fontSize: 12, opacity: 0.7 }} ><span>{getDate()}</span></div>
+                                    <div style={{ marginRight: '5%', fontSize: 12, opacity: 0.7 }} ><span>{getDateFromMillis(obj['extra']['addedDate'])}</span></div>
                                 </div>
 
                             </div>

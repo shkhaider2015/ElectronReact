@@ -48,7 +48,7 @@ const SearchByBarcode = () => {
             ? <CompleteProfile object={userData} />
             : <div>
 
-                <div style={{ left: 10, top : 5 }} >
+                <div style={{ marginLeft: '2%', marginTop : '2%' }} >
 
                     <IconButton
                         color="inherit"

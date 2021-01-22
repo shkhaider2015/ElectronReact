@@ -8,26 +8,25 @@ import SearchComponent from "./searchComponent";
 
 
 const useStyle = makeStyles({
-    root : {
+    root: {
 
     },
-    container : {
-        border : '1px solid black'
+    container: {
+        border: '1px solid black'
     },
-    backButton : {
-        marginLeft : '0%',
-        marginTop : '2%'
+    backButton: {
+        marginLeft: '2%',
+        marginTop: '2%'
     },
-    myLink : {
-        textDecoration : 'none',
-        '&:hover' : {
-            textDecoration : 'none'
+    myLink: {
+        textDecoration: 'none',
+        '&:hover': {
+            textDecoration: 'none'
         }
     }
 })
 
-const Payment = () =>
-{
+const Payment = () => {
     const navigate = useNavigate();
     const classes = useStyle();
     const clients = React.useContext(ClientsListContext)
@@ -36,91 +35,98 @@ const Payment = () =>
     const searchResult = React.useState([])
 
     console.log("Clients : ", clients[0])
-    const getSearchresult = (e) =>
-    {
+    const getSearchresult = (e) => {
         setSearchText(e)
         let lowercaseResult = e.toLowerCase();
         let data = []
 
         clients[0].filter(item => {
-            if(item['personal']['name'].toLowerCase().includes(lowercaseResult))
-            {
+            if (item['personal']['name'].toLowerCase().includes(lowercaseResult)) {
 
                 data.push(item)
             }
-            
+
         })
-        if(e === "")
-        {
+        if (e === "") {
             data = []
         }
         searchResult[1](data)
         return
     }
 
-    return(
-    <div>
-        
-        <Grid container spacing={4} direction="row" align="center" >
+    return (
+        <div>
 
-            <Grid item xs={2} sm={2} md={2} >
-                <IconButton
+            <IconButton
                 aria-haspopup="true"
                 color="inherit"
                 onClick={() => navigate(-1)}
                 className={classes.backButton}
-                >
-                    <KeyboardBackspace fontSize="large" color="primary" />
+            >
+                <KeyboardBackspace fontSize="large" color="primary" />
 
-                </IconButton>
-            </Grid>
+            </IconButton>
 
-            <Grid item xs={12} sm={12} md={12} lg={12}  >
+            <Grid container spacing={0} direction="row" align="center" >
 
-                <Avatar alt="logo" src={SystemLogo} variant="rounded" style={{ width : '30%', height : '100%' }} />
+                <Grid item xs={2} sm={2} md={2} >
+                    {/* <IconButton
+                        aria-haspopup="true"
+                        color="inherit"
+                        onClick={() => navigate(-1)}
+                        className={classes.backButton}
+                    >
+                        <KeyboardBackspace fontSize="large" color="primary" />
 
-            </Grid>
-            <Grid item xs={12} sm={12} md={12} >
-                    <TextField 
-                    label="Search"
-                    variant="outlined"
-                    type="text"
-                    value={searchText}
-                    onChange={e => {
-                        // setSearchText(e.target.value)
-                        getSearchresult(e.target.value)
-                    }}
-                    style={{ width : '50%', boxShadow : '0 0 10px 2px rgba(20, 27, 202, .17)'  }}
-                    InputProps={{
-                        endAdornment: (
-                            <InputAdornment position="end">
-                              <Search color="primary" />
-                            </InputAdornment>
-                          )
-                    }}
+                    </IconButton> */}
+                </Grid>
+
+                <Grid item xs={12} sm={12} md={12} lg={12}  >
+
+                    <Avatar alt="logo" src={SystemLogo} variant="rounded" style={{ width: '30%', height: '100%' }} />
+
+                </Grid>
+                <Grid item xs={12} sm={12} md={12} >
+                    <TextField
+                        label="Search"
+                        variant="outlined"
+                        type="text"
+                        value={searchText}
+                        onChange={e => {
+                            // setSearchText(e.target.value)
+                            getSearchresult(e.target.value)
+                        }}
+                        style={{ width: '50%', boxShadow: '0 0 10px 2px rgba(20, 27, 202, .17)' }}
+                        InputProps={{
+                            endAdornment: (
+                                <InputAdornment position="end">
+                                    <Search color="primary" />
+                                </InputAdornment>
+                            )
+                        }}
                     />
-                    <Paper style={{ width : '50%', marginTop : '2%' }} >
+                    <Paper style={{ width: '50%', marginTop: '2%' }} >
                         {
                             searchResult[0].length !== 0
-                            ? searchResult[0].map(
-                                (object, index) => 
-                                object['personal']['transfor']
-                                ? null
-                                : (
-                                    <Link to={"/cpp/" + object['personal']['cnic'] } key={index} style={{ textDecoration : 'none', color : 'black' }} >
-                                     <SearchComponent data={object}  />
-                                    </Link>
-                                 )
-                            )
-                            : null
+                                ? searchResult[0].map(
+                                    (object, index) =>
+                                        object['personal']['transfor']
+                                            ? null
+                                            : (
+                                                <Link to={"/cpp/" + object['personal']['cnic']} key={index} style={{ textDecoration: 'none', color: 'black' }} >
+                                                    <SearchComponent data={object} />
+                                                </Link>
+                                            )
+                                )
+                                : null
                         }
                     </Paper>
+                </Grid>
+
             </Grid>
 
-        </Grid>
-    
-        
-    </div>
+
+        </div>
     )
 
 }

@@ -324,6 +324,7 @@ const ClientProfile = () => {
                         <Grid item xs={12} sm={12} md={12} lg={12} >
                             <Grid item xs={2} sm={2} md={2} >
                                 <IconButton
+                                style={{ marginLeft : '10%', marginTop : '10%' }}
                                     aria-haspopup="true"
                                     color="inherit"
                                     onClick={() => navigate(-1)}

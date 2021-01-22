@@ -223,7 +223,7 @@ const Transfor = () => {
     return <div style={{ overflowX: 'hidden' }} >
         <div style={{ display: 'flex', flexDirection: 'row' }} >
 
-            <div>
+            <div style={{ marginLeft : '2%', marginTop : '2%' }} >
                 <IconButton
                     onClick={() => navigate(-1)}
                 >

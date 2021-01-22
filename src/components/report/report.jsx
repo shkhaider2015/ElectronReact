@@ -166,7 +166,7 @@ const Reports = () => {
                         <div className="row ">
 
                             <div className="col-md-3 col-lg-3 col-sm-3 col-xs-0 side-bar  pb-4 " >
-                                <div className="col-12" >
+                                <div className="col-12 mt-3" >
                                     <IconButton
                                         aria-haspopup="true"
                                         color="inherit"

@@ -3,7 +3,7 @@ import React from 'react'
 import BOX from "../../RawData/box.png";
 import YN from "../../RawData/yesno.png";
 import LOGO from '../../RawData/printLogo.png'
-import { getDateFromMillis, getReferenceNumber } from "../../utility/utils";
+import { getDate, getReferenceNumber } from "../../utility/utils";
 
 
 const PlotAndPaymentInformationForm = ({ obj, print }) => {
@@ -24,16 +24,16 @@ const PlotAndPaymentInformationForm = ({ obj, print }) => {
             {/* Refrenec and Date */}
             <div style={{ display: 'flex', flexDirection: 'row', marginTop: '3%' }} >
                 <div style={{ display: 'flex', flexDirection: 'row' }} >
-                    <span>Ref No. &nbsp;&nbsp;&nbsp; </span>
+                    <span>Ref No.: &nbsp;&nbsp;&nbsp; </span>
                     <div>
                         <span> {getReferenceNumber(obj['personal']['cnic'])} </span>
                     </div>
                 </div>
 
                 <div style={{ marginLeft: 'auto', marginRight: '0', display: 'flex', flexDirection: 'row' }} >
-                    <span>{getDateFromMillis(obj['extra']['addedDate'])} &nbsp; &nbsp; &nbsp;</span>
+                    <span>Date: &nbsp; &nbsp; &nbsp;</span>
                     <div >
-                        <span>12/26/2025</span>
+                        <span> {getDate()} </span>
                     </div>
                 </div>
             </div>

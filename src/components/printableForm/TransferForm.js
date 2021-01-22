@@ -1,6 +1,6 @@
 import { Avatar } from '@material-ui/core';
 import React from 'react'
-import { getDateFromMillis, getReferenceNumber } from '../../utility/utils';
+import { getDate, getReferenceNumber } from '../../utility/utils';
 import LOGO from '../../RawData/printLogo.png'
 
 
@@ -31,7 +31,7 @@ const TransferForm = ({ obj, print }) => {
                 <div style={{ marginLeft: 'auto', marginRight: '0', display: 'flex', flexDirection: 'row' }} >
                     <span>Date &nbsp; &nbsp; &nbsp;</span>
                     <div >
-                        <span> {getDateFromMillis(obj['extra']['addedDate'])} </span>
+                        <span> {getDate()} </span>
                     </div>
                 </div>
             </div>
