@@ -7,7 +7,8 @@ import { useNavigate } from 'react-router-dom'
 
 const CompleteProfile = ({ object }) => {
 
-    const navigate = useNavigate()
+    const navigate = useNavigate();
+
     return (
         <div style={{ overflow : 'hidden', height : 'auto' }} >
 
@@ -15,16 +16,15 @@ const CompleteProfile = ({ object }) => {
 
                 {/* Backspace */}
                 <Grid item xs={12} sm={12} md={12} lg={12} >
-                    <Grid item xs={2} sm={2} md={2} >
                         <IconButton
                             aria-haspopup="true"
                             color="inherit"
                             onClick={() => navigate(-1)}
+                            style={{ marginLeft : '2%', marginTop : '2%' }}
                         >
                             <KeyboardBackspace fontSize="large" color="primary" />
 
                         </IconButton>
-                    </Grid>
                 </Grid>
 
                 {/* Personal Info */}

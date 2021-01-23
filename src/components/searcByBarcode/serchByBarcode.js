@@ -6,28 +6,44 @@ import CompleteProfile from '../profile/CompleteProfile';
 import { IconButton } from "@material-ui/core";
 import { KeyboardBackspace } from "@material-ui/icons";
 import { useNavigate } from "react-router-dom";
+import { ClientsListContext } from "../../context/dataContext";
 
 const SearchByBarcode = () => {
 
     const [code, setCode] = React.useState(null)
     const [userData, setUserData] = React.useState(null)
+    const clients = React.useContext(ClientsListContext);
     const navigate = useNavigate();
 
     React.useEffect(
         () => {
             if (code) {
                 console.log("UseEffect() Runs ....")
-                db.collection('clients').where("personal.id", '==', code).onSnapshot((querySnapShot) => {
-                    querySnapShot.forEach((doc) => {
-                        if (doc.exists) {
-                            console.log("Data Exist", doc.data())
-                            setUserData(doc.data());
+                // db.collection('clients').where("personal.id", '==', code).onSnapshot((querySnapShot) => {
+                //     querySnapShot.forEach((doc) => {
+                //         if (doc.exists) {
+                //             console.log("Data Exist", doc.data())
+                //             setUserData(doc.data());
+                //         }
+                //         else {
+                //             console.log("Not Exist")
+                //         }
+                //     })
+                // })
+
+                clients[0].map(
+                    (obj, ind) => {
+                        if(obj['personal']['id'] === code)
+                        {
+                            setUserData(obj)
                         }
-                        else {
-                            console.log("Not Exist")
+                        else
+                        {
+                            console.log("Not Matched")
                         }
-                    })
-                })
+                    }
+                )
+                console.log(clients[0])
             }
         },
         [code]
