@@ -147,6 +147,7 @@ const Reports = () => {
     return (
 
         <div style={{ height: '100%' }} >
+            
             <div style={{ display: "none" }} >
                 {
                     searchResult.length !== 0
@@ -350,39 +351,39 @@ const Reports = () => {
                                                     <tr className="table-hover1  mt-5 pt-5 shadow rounded tableRow" >
 
                                                         <td colSpan="4" className="pt-4 pl-5" >Application Form</td>
-                                                        <td className="pl-5 pt-3 text-right" colSpan="1"> <button disabled={print} className="btn text-right btn-danger" onClick={() => handlePrint(1)} >Print</button> </td>
-                                                        <td className="text-center  pt-3" colSpan="1"> <button className="btn btn-info" onClick={() => preview(1)} >Preview</button>  </td>
+                                                        <td className="pl-5 pt-3 text-right" colSpan="1"> <button disabled={print || clients[0].length === 0 } className="btn text-right btn-danger" onClick={() => handlePrint(1)} >Print</button> </td>
+                                                        <td className="text-center  pt-3" colSpan="1"> <button className="btn btn-info" disabled={clients[0].length === 0} onClick={() => preview(1)} >Preview</button>  </td>
                                                     </tr>
                                                     <tr className="mt-5 pt-5 table-hover1 shadow rounded tableRow" >
                                                         <td colSpan="4" className="pt-4 pl-5 " > Nomination Form</td>
-                                                        <td className="pl-5 pt-3 text-right" colSpan="1"> <button disabled={print} className="btn btn-danger" onClick={() => handlePrint(2)} >Print</button></td>
-                                                        <td className="text-center pt-3" colSpan="1"> <button className="btn btn-info" onClick={() => preview(2)} >Preview</button></td>
+                                                        <td className="pl-5 pt-3 text-right" colSpan="1"> <button disabled={print || clients[0].length === 0} className="btn btn-danger" onClick={() => handlePrint(2)} >Print</button></td>
+                                                        <td className="text-center pt-3" colSpan="1"> <button className="btn btn-info" disabled={clients[0].length === 0} onClick={() => preview(2)} >Preview</button></td>
                                                     </tr>
                                                     <tr className="mt-5 pt-5 table-hover1 shadow rounded tableRow" >
                                                         <td colSpan="4" className="pt-4 pl-5 " >Confirmation Letter</td>
-                                                        <td className="pl-5 pt-3 text-right" colSpan="1"> <button disabled={print} className="btn btn-danger" onClick={() => handlePrint(3)} >Print</button></td>
-                                                        <td className="text-center pt-3" colSpan="1"> <button className="btn btn-info" onClick={() => preview(3)} >Preview</button></td>
+                                                        <td className="pl-5 pt-3 text-right" colSpan="1"> <button disabled={print || clients[0].length === 0} className="btn btn-danger" onClick={() => handlePrint(3)} >Print</button></td>
+                                                        <td className="text-center pt-3" colSpan="1"> <button className="btn btn-info" disabled={clients[0].length === 0} onClick={() => preview(3)} >Preview</button></td>
                                                     </tr>
                                                     <tr className="mt-5 pt-5 table-hover1 shadow rounded tableRow" >
                                                         <td colSpan="4" className="pt-4 pl-5 " >Site Plan</td>
-                                                        <td className="pl-5 pt-3 text-right" colSpan="1"> <button disabled={print} className="btn btn-danger" onClick={() => handlePrint(4)} >Print</button></td>
-                                                        <td className="text-center pt-3" colSpan="1"> <button className="btn btn-info" onClick={() => preview(4)} >Preview</button></td>
+                                                        <td className="pl-5 pt-3 text-right" colSpan="1"> <button disabled={print || clients[0].length === 0} className="btn btn-danger" onClick={() => handlePrint(4)} >Print</button></td>
+                                                        <td className="text-center pt-3" colSpan="1"> <button className="btn btn-info" disabled={clients[0].length === 0} onClick={() => preview(4)} >Preview</button></td>
                                                     </tr>
                                                     <tr className="mt-5 pt-5 table-hover1 shadow rounded tableRow" >
 
                                                         <td colSpan="4" className="pt-4 pl-5 " >  Terms and Condition</td>
-                                                        <td className="pl-5  pt-3 text-right" colSpan="1"> <button disabled={print} className="btn btn-danger" onClick={() => handlePrint(5)} >Print</button></td>
-                                                        <td className="text-center pt-3" colSpan="1"> <button className="btn btn-info" onClick={() => preview(5)}  >Preview</button></td>
+                                                        <td className="pl-5  pt-3 text-right" colSpan="1"> <button disabled={print || clients[0].length === 0} className="btn btn-danger" onClick={() => handlePrint(5)} >Print</button></td>
+                                                        <td className="text-center pt-3" colSpan="1"> <button className="btn btn-info" disabled={clients[0].length === 0} onClick={() => preview(5)}  >Preview</button></td>
                                                     </tr>
                                                     <tr className="mt-5 pt-5 table-hover1 shadow rounded tableRow" >
                                                         <td colSpan="4" className="pt-4 pl-5 " >Possesion Certificate</td>
-                                                        <td className="pl-5 pt-3 text-right" colSpan="1"> <button disabled={print} className="btn btn-danger" onClick={() => handlePrint(6)} >Print</button></td>
-                                                        <td className="text-center pt-3" colSpan="1"> <button className="btn btn-info" onClick={() => preview(6)} >Preview</button></td>
+                                                        <td className="pl-5 pt-3 text-right" colSpan="1"> <button disabled={print || clients[0].length === 0} className="btn btn-danger" onClick={() => handlePrint(6)} >Print</button></td>
+                                                        <td className="text-center pt-3" colSpan="1"> <button className="btn btn-info" disabled={clients[0].length === 0} onClick={() => preview(6)} >Preview</button></td>
                                                     </tr>
                                                     <tr className="mt-5 pt-5 table-hover1 shadow rounded tableRow" >
                                                         <td colSpan="4" className="pt-4 pl-5 "> Alotment Order</td>
-                                                        <td className="pl-5 pt-3 text-right" colSpan="1"> <button disabled={print} className="btn btn-danger" onClick={() => handlePrint(7)} >Print</button></td>
-                                                        <td className="text-center pt-3" colSpan="1"> <button className="btn btn-info" onClick={() => preview(7)} >Preview</button></td>
+                                                        <td className="pl-5 pt-3 text-right" colSpan="1"> <button disabled={print || clients[0].length === 0} className="btn btn-danger" onClick={() => handlePrint(7)} >Print</button></td>
+                                                        <td className="text-center pt-3" colSpan="1"> <button className="btn btn-info" disabled={clients[0].length === 0} onClick={() => preview(7)} >Preview</button></td>
                                                     </tr>
 
 
@@ -394,8 +395,8 @@ const Reports = () => {
                                                                         ? object['extra']['transforFrom']
                                                                             ? <tr className="mt-5 pt-5 table-hover1 shadow rounded tableRow" >
                                                                                 <td colSpan="4" className="pt-4 pl-5 "> Transfer Form</td>
-                                                                                <td className="pl-5 text-right pt-3" colSpan="1"> <button disabled={print} className="btn btn-danger" onClick={() => handlePrint(8)} >Print</button></td>
-                                                                                <td className="text-center pt-3" colSpan="1"> <button className="btn btn-info" onClick={() => preview(8)} >Preview</button></td>
+                                                                                <td className="pl-5 text-right pt-3" colSpan="1"> <button disabled={print || clients[0].length === 0} className="btn btn-danger" onClick={() => handlePrint(8)} >Print</button></td>
+                                                                                <td className="text-center pt-3" colSpan="1"> <button className="btn btn-info" disabled={clients[0].length === 0} onClick={() => preview(8)} >Preview</button></td>
                                                                             </tr>
                                                                             : null
                                                                         : null
@@ -407,8 +408,8 @@ const Reports = () => {
                                                                         ? object['extra']['transforFrom']
                                                                             ? <tr className="mt-5 pt-5 table-hover1 shadow rounded tableRow" >
                                                                                 <td colSpan="4" className="pt-4 pl-5 "> Transfer Form</td>
-                                                                                <td className="pl-5 text-right pt-3" colSpan="1"> <button disabled={print} className="btn btn-danger" onClick={() => handlePrint(8)} >Print</button></td>
-                                                                                <td className="text-center pt-3" colSpan="1"> <button className="btn btn-info" onClick={() => preview(8)} >Preview</button></td>
+                                                                                <td className="pl-5 text-right pt-3" colSpan="1"> <button disabled={print || clients[0].length === 0} className="btn btn-danger" onClick={() => handlePrint(8)} >Print</button></td>
+                                                                                <td className="text-center pt-3" colSpan="1"> <button className="btn btn-info" disabled={clients[0].length === 0} onClick={() => preview(8)} >Preview</button></td>
                                                                             </tr>
                                                                             : null
                                                                         : null
@@ -418,8 +419,8 @@ const Reports = () => {
 
                                                     <tr className="mt-5 pt-5 table-hover1 shadow rounded tableRow" >
                                                         <td colSpan="4" className="pt-4 pl-5 "> Plot &amp; Payment Information</td>
-                                                        <td className="pl-5 pt-3 text-right" colSpan="1"> <button className="btn btn-danger" disabled={print} onClick={() => handlePrint(9)} >Print</button></td>
-                                                        <td className="text-center pt-3" colSpan="1"> <button className="btn btn-info" onClick={() => preview(9)} >Preview</button></td>
+                                                        <td className="pl-5 pt-3 text-right" colSpan="1"> <button className="btn btn-danger" disabled={print || clients[0].length === 0} onClick={() => handlePrint(9)} >Print</button></td>
+                                                        <td className="text-center pt-3" colSpan="1"> <button className="btn btn-info" disabled={clients[0].length === 0} onClick={() => preview(9)} >Preview</button></td>
                                                     </tr>
 
 

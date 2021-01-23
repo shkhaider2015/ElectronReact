@@ -6,7 +6,7 @@ import { useBarcode } from 'react-barcodes'
 export const BarcodeCanvas = ({ id }) =>
 {
     const { inputRef } = useBarcode({
-        value: id,
+        value: id  ,
         options: {
           displayValue: false,
           background: '#FFFFFF00'

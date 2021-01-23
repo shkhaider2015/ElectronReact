@@ -44,7 +44,7 @@ const UserList = (props) => {
             .doc(obj['id'])
             .update({
                 "personal.isDeleted": true,
-                "personal.isAccepted" : false
+                "personal.isAccepted": false
             })
             .then(() => console.log("user deleted succesfully"))
             .catch((e) => console.error("Error deleteding user : ", e))
@@ -62,23 +62,37 @@ const UserList = (props) => {
 
     return (
 
-        <div className="container" >
+        <div>
+            <div className="logo-hover d-flex flex-row justify-content-between text-center mt-2 pt-2"  >
+                <div style={{ marginLeft: '2%' }} >
 
-
-            <div style={{
-                position: 'fixed',
-                left: 0,
-                bottom: 0,
-                width: '100%',
-                backgroundColor: 'red',
-                textAlign: 'center',
-                color: 'white'
-            }} >
-                <Offline >Check Your Internet Connection</Offline>
+                    <IconButton
+                        color="inherit"
+                        onClick={() => navigate(-1)}
+                    >
+                        <KeyboardBackspace fontSize="large" color="primary" />
+                    </IconButton>
+                </div>
+                <img src={zainlogo} height="13%" width="13%" alt="hjh" />
+                <span>  </span>
             </div>
+            <div className="container" >
 
-            <div className="logo-hover d-flex flex-row justify-content-between text-center mt-2 pt-2">
-                <div style={{ left: 0 }} >
+
+                <div style={{
+                    position: 'fixed',
+                    left: 0,
+                    bottom: 0,
+                    width: '100%',
+                    backgroundColor: 'red',
+                    textAlign: 'center',
+                    color: 'white'
+                }} >
+                    <Offline >Check Your Internet Connection</Offline>
+                </div>
+
+                {/* <div className="logo-hover d-flex flex-row justify-content-between text-center mt-2 pt-2" style={{ border : '1px solid black' }} >
+                <div  >
 
                     <IconButton
                         color="inherit"
@@ -89,52 +103,57 @@ const UserList = (props) => {
                 </div>
                 <img src={zainlogo} height="13%" width="13%" alt="hjh" />
                 <span></span>
-            </div>
+            </div> */}
 
-            {
-                open
-                    ? <UserProfile obj={propsObject} handleClose={handleClose} open={open} />
-                    :
-                    <table className="table card-body mt-4 ">
+                {
+                    open
+                        ? <UserProfile obj={propsObject} handleClose={handleClose} open={open} />
+                        :
+                        <table className="table card-body mt-5 ">
 
-                        {/* <caption className="logo-hover text-center mt-2 pt-2"><img src={zainlogo} height="13%" width="13%" alt="hjh" /></caption> */}
-                        <tbody>
-                            {users[0].length !== 0 ? users[0].map(
-                                (obj, ind) => (
-                                    obj['isDeleted'] || obj['id'] === currentUser.currentUser.uid
-                                        ? null
-                                        : <tr className="table-hover1  mt-5 pt-5 shadow rounded" key={ind} >
-                                            <td colSpan="4" className="pt-4 pl-5" onClick={() => handleOpen(obj)} >
-                                                <div style={{ display: 'flex' }} >
-                                                    <Avatar atl="ss" src={obj['imageURI']} />
-                                                    <div style={{ display: 'flex', flexDirection: 'column', marginLeft: '3%' }}>
-                                                        <span style={{ fontWeight: 'bold' }} > {obj['name']} </span>
-                                                        <span style={{ opacity: 0.8 }} > {obj['email']} </span>
+                            {/* <caption className="logo-hover text-center mt-2 pt-2"><img src={zainlogo} height="13%" width="13%" alt="hjh" /></caption> */}
+                            <tbody>
+                                {users[0].length > 1 ? users[0].map(
+                                    (obj, ind) => (
+                                        obj['isDeleted'] || obj['id'] === currentUser.currentUser.uid
+                                            ? null
+                                            : <tr className="table-hover1  mt-5 pt-5 shadow rounded" key={ind} >
+                                                <td colSpan="4" className="pt-4 pl-5" onClick={() => handleOpen(obj)} >
+                                                    <div style={{ display: 'flex' }} >
+                                                        <Avatar atl="ss" src={obj['imageURI']} />
+                                                        <div style={{ display: 'flex', flexDirection: 'column', marginLeft: '3%' }}>
+                                                            <span style={{ fontWeight: 'bold' }} > {obj['name']} </span>
+                                                            <span style={{ opacity: 0.8 }} > {obj['email']} </span>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            </td>
-                                            <td className="pl-5 pt-3 text-right" colSpan="1">
-                                                {
-                                                    obj['isAccepted']
-                                                        ? <button className="btn text-right btn-succes disable " disabled >Approved</button>
-                                                        : <button className="btn text-right btn-info" onClick={() => approve(obj)} >Approve</button>
-                                                }
+                                                </td>
+                                                <td className="pl-5 pt-3 text-right" colSpan="1">
+                                                    {
+                                                        obj['isAccepted']
+                                                            ? <button className="btn text-right btn-succes disable " disabled >Approved</button>
+                                                            : <button className="btn text-right btn-info" onClick={() => approve(obj)} >Approve</button>
+                                                    }
 
-                                            </td>
-                                            <td className="text-center  pt-3" colSpan="1">
-                                                <button className="btn btn-danger" onClick={() => deleteUser(obj)} >Delete</button>
-                                            </td>
-                                        </tr>
-                                )
-                            ) : null}
+                                                </td>
+                                                <td className="text-center  pt-3" colSpan="1">
+                                                    <button className="btn btn-danger" onClick={() => deleteUser(obj)} >Delete</button>
+                                                </td>
+                                            </tr>
+                                    )
+                                ) : <div style={{ width: '100%', height: '100%', display: 'grid', placeItems: 'center' }} >
+                                        <h4 style={{ paddingLeft : '8%' }} >Empty List</h4>
+                                    </div>
+                                }
 
-                        </tbody>
-                    </table>
+                            </tbody>
+                        </table>
 
 
-            }
+                }
 
 
+            </div>
+        
         </div>
     )
 

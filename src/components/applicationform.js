@@ -248,7 +248,7 @@ const Application = () => {
 
 
   const personal = {
-    id: cNIC.replace(/-/g, "") + name.toLocaleLowerCase().slice(0, 4).replace(/\s/g, ""),
+    id: cNIC.replace(/-/g, "") + (new Date()).getTime(),
     imageURI: "",
     name: name,
     fatherName: fatherName,
