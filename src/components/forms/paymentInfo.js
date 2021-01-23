@@ -151,6 +151,10 @@ const PlotInformation = ({ model }) => {
                                             else if (e.target.value === "Half Payment") {
                                                 console.log("Half Procedure")
                                             }
+                                            else if (e.target.value === "Short Payment" )
+                                            {
+                                                console.log("Short Payment")
+                                            }
                                             else {
                                                 console.log("Unknown Procedure")
                                             }

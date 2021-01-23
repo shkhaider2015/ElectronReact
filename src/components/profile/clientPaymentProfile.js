@@ -227,11 +227,11 @@ const ClientProfile = () => {
                 console.log("Current Object not null")
                 init()
                 if (currentObject['payment']['procedure'] === "Installment") {
-                    var kk = Number(currentObject['payment']['totalAmount']) / Number(currentObject['payment']['installment']);
+                    var kk = (Number(currentObject['payment']['totalAmount']) + (Number(currentObject['payment']['expanse']) ? Number(currentObject['payment']['expanse']) : 0))  / Number(currentObject['payment']['installment']);
                     setNewAmount(kk)
                 }
                 else if (currentObject['payment']['procedure'] === "Half Payment") {
-                    var kk = Number(currentObject['payment']['totalAmount']) / 2
+                    var kk = (Number(currentObject['payment']['totalAmount']) + (Number(currentObject['payment']['expanse']) ? Number(currentObject['payment']['expanse']) : 0)) / 2
                     setNewAmount(kk)
                 }
                 else if (currentObject['payment']['procedure'] === "Full payment") {
@@ -242,14 +242,14 @@ const ClientProfile = () => {
         [currentObject]
     )
     const handleUpdate = () => {
-        const number = cNIC.toString().replace(/-/g, "")
+        
 
         let ga = Number(givenAmount) + Number(newAmount);
         let bl = (Number(totalAmount) + Number(expanse)) -ga
         let lastEditBy = currentUser.currentUser.displayName;
         let lastEditedDate = Date.now();
 
-        db.collection('clients').doc(number)
+        db.collection('clients').doc(id)
             .update({
                 "payment.givenAmount": ga,
                 "payment.balance": bl,
@@ -268,7 +268,7 @@ const ClientProfile = () => {
     }
 
     const handleInstallmentUpdate = () => {
-        const number = cNIC.toString().replace(/-/g, "")
+        
 
 
         let ga = Number(givenAmount) + Number(newAmount);
@@ -276,7 +276,7 @@ const ClientProfile = () => {
         let lastEditedDate = Date.now();
         let ri = Number(remainingInstallment) - 1
 
-        db.collection('clients').doc(number)
+        db.collection('clients').doc(id)
             .update({
                 "payment.givenAmount": ga,
                 "payment.remainingInstallment": ri,
@@ -517,7 +517,7 @@ const ClientProfile = () => {
                                                         label="New Installment"
                                                         variant="outlined"
                                                         type="number"
-                                                        value={newAmount.toFixed(0)}
+                                                        value={Number(newAmount).toFixed(0)}
                                                         disabled
                                                         color="primary"
                                                         onChange={(e) => {

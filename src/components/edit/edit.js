@@ -283,7 +283,7 @@ const EditComp = () => {
 
   const uploadData = (image = imageURI) => {
 
-    const number = cNIC.replace(/-/g, "")
+    const number = id;
 
     let lastEditBy = currentUser.currentUser.displayName
     let lastEditDate = Date.now()
@@ -443,24 +443,24 @@ const EditComp = () => {
       val = false;
     }
     else if (procedure === "Installment") {
-      duration === "" || paymentMethod === ""
+      duration === ""
         || amount === 0 || totalInstallment === 0 || installment === 0
-        || balance === 0
         ? val = false
         : val = true
     }
     else {
-      paymentMethod === "" || amount === 0 || balance === 0
+       amount === 0 
         ? val = false
         : val = true
     }
+
 
     return val
   }
 
   const uploadImage = () => {
 
-    var storageRef = storage.ref().child(cNIC.replace(/-/g, ""));
+    var storageRef = storage.ref().child(id);
     var uploadTask = storageRef.child('profile.jpg').put(imageFile);
 
     // Register three observers:

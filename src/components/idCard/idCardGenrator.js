@@ -24,7 +24,7 @@ const IdCardGenrator = () => {
     value: obj['personal']['id'],
     options: {
       displayValue: false,
-      background: '#FFFFFF'
+      background: '#FFFFFF00'
     }
 
   })

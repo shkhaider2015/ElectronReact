@@ -185,29 +185,29 @@ const PlotAndPaymentInformationForm = ({ obj, print }) => {
                 <div className="col-6" >
 
 
-                    <div style={{ display: 'flex', flexDirection: 'row' }} >
-                        <span style={{ fontSize: 12, fontWeight: 'bold', marginTop: '1%' }} >By Cheque</span>
+                    <div style={{ display: 'flex', flexDirection: 'row', marginTop: '1%' }} >
+                        <span style={{ fontSize: 12, fontWeight: 'bold' }} >By Cheque</span>
                         <div style={{ width: '30%', borderBottom: '1px solid black', textAlign: 'center' }} > <span style={{ fontWeight: 'bold', opacity: '0.7' }} ></span> Yes </div>
                     </div>
-                    <div style={{ display: 'flex', flexDirection: 'row' }} >
-                        <span style={{ fontSize: 12, fontWeight: 'bold', marginTop: '1%' }} >By Cash</span>
+                    <div style={{ display: 'flex', flexDirection: 'row', marginTop: '3%' }} >
+                        <span style={{ fontSize: 12, fontWeight: 'bold' }} >By Cash</span>
                         <div style={{ width: '30%', borderBottom: '1px solid black', textAlign: 'center' }} > <span style={{ fontWeight: 'bold', opacity: '0.7' }} ></span> </div>
                     </div>
-                    <div style={{ display: 'flex', flexDirection: 'row' }} >
-                        <span style={{ fontSize: 12, fontWeight: 'bold', marginTop: '1%' }} >By Payorder</span>
+                    <div style={{ display: 'flex', flexDirection: 'row', marginTop: '3%' }} >
+                        <span style={{ fontSize: 12, fontWeight: 'bold' }} >By Payorder</span>
                         <div style={{ width: '30%', borderBottom: '1px solid black', textAlign: 'center' }} > <span style={{ fontWeight: 'bold', opacity: '0.7' }} ></span> </div>
                     </div>
 
                 </div>
 
                 <div className="col-6" >
-                    <div style={{ display: 'flex', flexDirection: 'row' }} >
-                        <span style={{ fontSize: 12, fontWeight: 'bold', marginTop: '1%' }} >Balance</span>
-                        <div style={{ width: '30%', borderBottom: '1px solid black' }} > <span style={{ fontWeight: 'bold', opacity: '0.7' }} >{obj['payment']['balance']}</span> </div>
+                    <div style={{ display: 'flex', flexDirection: 'row', marginTop: '1%' }} >
+                        <span style={{ fontSize: 12, fontWeight: 'bold' }} >Balance</span>
+                        <div style={{ width: '30%', borderBottom: '1px solid black', textAlign: 'center' }} > <span style={{ fontWeight: 'bold', opacity: '0.7' }} >{obj['payment']['balance']}</span> </div>
                     </div>
-                    <div style={{ display: 'flex', flexDirection: 'row' }} >
-                        <span style={{ fontSize: 12, fontWeight: 'bold', marginTop: '1%' }} >Cost</span>
-                        <div style={{ width: '30%', borderBottom: '1px solid black' }} > <span style={{ fontWeight: 'bold', opacity: '0.7' }} >{obj['payment']['totalAmount']}</span> </div>
+                    <div style={{ display: 'flex', flexDirection: 'row', marginTop: '3%' }} >
+                        <span style={{ fontSize: 12, fontWeight: 'bold' }} >Cost</span>
+                        <div style={{ width: '30%', borderBottom: '1px solid black', textAlign: 'center' }} > <span style={{ fontWeight: 'bold', opacity: '0.7' }} >{obj['payment']['totalAmount']}</span> </div>
                     </div>
                 </div>
 
