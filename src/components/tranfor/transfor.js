@@ -92,7 +92,7 @@ const Transfor = () => {
 
 
     const uploadData = (imageURI = "") => {
-        var key = cNIC.replace(/-/g, "");
+        var key = personal.id;
         var cu = currentUser.currentUser.displayName
         var date = Date.now()
         personal.imageURI = imageURI
@@ -133,7 +133,8 @@ const Transfor = () => {
     }
 
     const uploadImage = () => {
-        var storageRef = storage.ref().child(cNIC.replace(/-/g, ""));
+        // var storageRef = storage.ref().child(cNIC.replace(/-/g, ""));
+        var storageRef = storage.ref().child(personal.id);
         var uploadTask = storageRef.child('profile.jpg').put(imageFile);
 
         // Register three observers:
@@ -176,7 +177,7 @@ const Transfor = () => {
     const updateInfo = () => {
         db
             .collection('clients')
-            .doc(obj['personal']['cnic'].replace(/-/g, ""))
+            .doc(obj['personal']['id'])
             .update({
                 'personal.transfor': true
             })

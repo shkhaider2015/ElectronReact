@@ -286,7 +286,7 @@ const Application = () => {
   const uploadData = (image = "") => {
 
 
-    const cnid = cNIC.replace(/-/g, "");
+    const cnid = personal.id;
     const date = Date.now()
     personal.imageURI = image;
     const ee = {
@@ -437,7 +437,7 @@ const Application = () => {
 
   const uploadImage = () => {
 
-    var storageRef = storage.ref().child(cNIC.replace(/-/g, ""));
+    var storageRef = storage.ref().child(personal.id);
     var uploadTask = storageRef.child('profile.jpg').put(imageFile);
 
     // Register three observers:
