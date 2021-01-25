@@ -444,7 +444,7 @@ const EditComp = () => {
     }
     else if (procedure === "Installment") {
       duration === ""
-        || amount === 0 || totalInstallment === 0 || installment === 0
+        || amount === 0 || totalInstallment === 0
         ? val = false
         : val = true
     }

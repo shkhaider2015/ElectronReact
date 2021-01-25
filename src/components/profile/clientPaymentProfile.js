@@ -235,7 +235,8 @@ const ClientProfile = () => {
                     setNewAmount(kk)
                 }
                 else if (currentObject['payment']['procedure'] === "Full payment") {
-
+                    var kk = Number(currentObject['payment']['totalAmount']) + (Number(currentObject['payment']['expanse']) ? Number(currentObject['payment']['expanse']) : 0)
+                    setNewAmount(kk)
                 }
             }
         },
@@ -450,7 +451,7 @@ const ClientProfile = () => {
                                                                 <span>Remaining Installment</span>
                                                             </div>
                                                             <div style={{ width: '50%' }} >
-                                                                <span> {remainingInstallment} </span>
+                                                                <span> {Math.abs(remainingInstallment)} </span>
                                                             </div>
                                                         </div>
 

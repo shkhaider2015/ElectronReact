@@ -154,7 +154,7 @@ const PlotAndPaymentInformationForm = ({ obj, print }) => {
                     <span style={{ fontSize: 20, fontWeight: 'bold' }} >Terms &amp; Condition</span>
                     <img alt="tc" src={YN} style={{ width: '90%', height: 'auto', marginTop: 'auto', marginBottom: 'auto' }} />
                     <div style={{ display: 'flex', flexDirection: 'row' }} >
-                        <span style={{ fontWeight: 'bold' }} >Issue Date</span> <span style={{ borderBottom: '1px solid black', marginLeft: '2%' }} >12/6/2020</span>
+                        <span style={{ fontWeight: 'bold' }} >Issue Date</span> <span style={{ borderBottom: '1px solid black', marginLeft: '2%', width : '30%' }} ></span>
                     </div>
                 </div>
 
@@ -162,7 +162,7 @@ const PlotAndPaymentInformationForm = ({ obj, print }) => {
                     <span style={{ fontSize: 20, fontWeight: 'bold' }} >Poccession certificate</span>
                     <img alt="pc" src={YN} style={{ width: '90%', height: 'auto', marginTop: 'auto', marginBottom: 'auto' }} />
                     <div style={{ display: 'flex', flexDirection: 'row' }} >
-                        <span style={{ fontWeight: 'bold' }} >Issue Date</span> <span style={{ borderBottom: '1px solid black', marginLeft: '2%' }} >12/6/2020</span>
+                        <span style={{ fontWeight: 'bold' }} >Issue Date</span> <span style={{ borderBottom: '1px solid black', marginLeft: '2%', width : '30%' }} ></span>
                     </div>
                 </div>
 
@@ -170,7 +170,7 @@ const PlotAndPaymentInformationForm = ({ obj, print }) => {
                     <span style={{ fontSize: 20, fontWeight: 'bold' }} >Alotment Order</span>
                     <img alt="ao" src={YN} style={{ width: '90%', height: 'auto', marginTop: 'auto', marginBottom: 'auto' }} />
                     <div style={{ display: 'flex', flexDirection: 'row' }} >
-                        <span style={{ fontWeight: 'bold' }} >Issue Date</span> <span style={{ borderBottom: '1px solid black', marginLeft: '2%' }} >12/6/2020</span>
+                        <span style={{ fontWeight: 'bold' }} >Issue Date</span> <span style={{ borderBottom: '1px solid black', marginLeft: '2%', width : '30%' }} ></span>
                     </div>
                 </div>
 
