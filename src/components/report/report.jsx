@@ -97,31 +97,31 @@ const Reports = () => {
         setDialogue(true)
     }
 
-    const handleEdit = (cnic) => {
+    const handleEdit = (id) => {
 
         clients[0].map(
-            (object, index) => object['personal']['cnic'] === cnic
+            (object, index) => object['personal']['id'] === id
                 ? navigate('/edit', { state: { obj: object } })
                 : null
         )
         // navigate('/edit', { state: { obj: clients[0], index: clicked, key: userKeys[clicked] } })
     }
 
-    const handleTransfor = (cnic) => {
+    const handleTransfor = (id) => {
         clients[0].map(
-            (object, index) => object['personal']['cnic'] === cnic
+            (object, index) => object['personal']['id'] === id
                 ? navigate('/transfer', { state: { obj: object } })
                 : null
         )
     }
 
-    const handleDelete = (cnic) => {
+    const handleDelete = (id) => {
 
         setAnchorEl(null)
         console.log()
         if (window.confirm("Are you sure you want to delete this client ?")) {
-            cnic = cnic.replace(/-/g, "")
-            db.collection('clients').doc(cnic).delete()
+
+            db.collection('clients').doc(id).delete()
                 .then(() => console.log("Document Deleted Succesfully"))
                 .catch((e) => console.error("Error while deleting doc : ", e))
         }
@@ -134,9 +134,9 @@ const Reports = () => {
         setPrintNo(x)
     }
 
-    const handleIdCard = (cnic) => {
+    const handleIdCard = (id) => {
         clients[0].map(
-            (object) => object['personal']['cnic'] === cnic
+            (object) => object['personal']['id'] === id
                 ? navigate("/idcard", { state: { obj: object } })
                 : null
         )
@@ -147,7 +147,7 @@ const Reports = () => {
     return (
 
         <div style={{ height: '100%' }} >
-            
+
             <div style={{ display: "none" }} >
                 {
                     searchResult.length !== 0
@@ -228,42 +228,45 @@ const Reports = () => {
 
                                                                                         <span style={{ marginLeft: 'auto', marginRight: 'auto', fontSize: '12' }} > {object['personal']['name']} </span>
                                                                                     </div>
-                                                                                    {
-                                                                                        isAdmin[0]
-                                                                                            ? <div className="col-1 " >
-                                                                                                <IconButton
-                                                                                                    ref={anchorRef}
-                                                                                                    aria-controls={open ? 'menu-list-grow' : undefined}
-                                                                                                    aria-haspopup="true"
-                                                                                                    onClick={() => handleMenuToggle()
-                                                                                                    }
+                                                                                    <div className="col-1 " >
+                                                                                        <IconButton
+                                                                                            ref={anchorRef}
+                                                                                            aria-controls={open ? 'menu-list-grow' : undefined}
+                                                                                            aria-haspopup="true"
+                                                                                            onClick={() => handleMenuToggle()
+                                                                                            }
+                                                                                        >
+                                                                                            <MoreVert fontSize="large" color="primary" />
+                                                                                        </IconButton>
+
+                                                                                        <Popper open={open} anchorEl={anchorRef.current} role={undefined} transition disablePortal>
+                                                                                            {({ TransitionProps, placement }) => (
+                                                                                                <Grow
+                                                                                                    {...TransitionProps}
+                                                                                                    style={{ transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom' }}
                                                                                                 >
-                                                                                                    <MoreVert fontSize="large" color="primary" />
-                                                                                                </IconButton>
+                                                                                                    <Paper>
+                                                                                                        <ClickAwayListener onClickAway={handleMenuClose}>
+                                                                                                            <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
+                                                                                                                <MenuItem onClick={() => handleIdCard(object['personal']['id'])}>ID Card</MenuItem>
+                                                                                                                {
+                                                                                                                    isAdmin[0]
+                                                                                                                        ? <div>
+                                                                                                                            <MenuItem onClick={() => handleEdit(object['personal']['id'])}>Edit</MenuItem>
+                                                                                                                            <MenuItem onClick={() => handleTransfor(object['personal']['id'])}>Transfer</MenuItem>
+                                                                                                                            <MenuItem onClick={() => handleDelete(object['personal']['id'])}>Delete</MenuItem>
+                                                                                                                          </div>
+                                                                                                                        : null
+                                                                                                                }
+                                                                                                            </MenuList>
+                                                                                                        </ClickAwayListener>
+                                                                                                    </Paper>
+                                                                                                </Grow>
+                                                                                            )}
+                                                                                        </Popper>
 
-                                                                                                <Popper open={open} anchorEl={anchorRef.current} role={undefined} transition disablePortal>
-                                                                                                    {({ TransitionProps, placement }) => (
-                                                                                                        <Grow
-                                                                                                            {...TransitionProps}
-                                                                                                            style={{ transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom' }}
-                                                                                                        >
-                                                                                                            <Paper>
-                                                                                                                <ClickAwayListener onClickAway={handleMenuClose}>
-                                                                                                                    <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
-                                                                                                                        <MenuItem onClick={() => handleEdit(object['personal']['cnic'])}>Edit</MenuItem>
-                                                                                                                        <MenuItem onClick={() => handleIdCard(object['personal']['cnic'])}>ID Card</MenuItem>
-                                                                                                                        <MenuItem onClick={() => handleTransfor(object['personal']['cnic'])}>Transfer</MenuItem>
-                                                                                                                        <MenuItem onClick={() => handleDelete(object['personal']['cnic'])}>Delete</MenuItem>
-                                                                                                                    </MenuList>
-                                                                                                                </ClickAwayListener>
-                                                                                                            </Paper>
-                                                                                                        </Grow>
-                                                                                                    )}
-                                                                                                </Popper>
+                                                                                    </div>
 
-                                                                                            </div>
-                                                                                            : null
-                                                                                    }
 
                                                                                 </div>
                                                                                 : null
@@ -297,13 +300,13 @@ const Reports = () => {
                                                                                                     <Paper>
                                                                                                         <ClickAwayListener onClickAway={handleMenuClose}>
                                                                                                             <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
-                                                                                                                <MenuItem onClick={() => handleIdCard(object['personal']['cnic'])}>ID Card</MenuItem>
+                                                                                                                <MenuItem onClick={() => handleIdCard(object['personal']['id'])}>ID Card</MenuItem>
                                                                                                                 {
                                                                                                                     isAdmin[0]
                                                                                                                         ? <div>
-                                                                                                                            <MenuItem onClick={() => handleEdit(object['personal']['cnic'])}>Edit</MenuItem>
-                                                                                                                            <MenuItem onClick={() => handleTransfor(object['personal']['cnic'])}>Transfer</MenuItem>
-                                                                                                                            <MenuItem onClick={() => handleDelete(object['personal']['cnic'])}>Delete</MenuItem>
+                                                                                                                            <MenuItem onClick={() => handleEdit(object['personal']['id'])}>Edit</MenuItem>
+                                                                                                                            <MenuItem onClick={() => handleTransfor(object['personal']['id'])}>Transfer</MenuItem>
+                                                                                                                            <MenuItem onClick={() => handleDelete(object['personal']['id'])}>Delete</MenuItem>
                                                                                                                         </div>
                                                                                                                         : null
                                                                                                                 }
@@ -351,7 +354,7 @@ const Reports = () => {
                                                     <tr className="table-hover1  mt-5 pt-5 shadow rounded tableRow" >
 
                                                         <td colSpan="4" className="pt-4 pl-5" >Application Form</td>
-                                                        <td className="pl-5 pt-3 text-right" colSpan="1"> <button disabled={print || clients[0].length === 0 } className="btn text-right btn-danger" onClick={() => handlePrint(1)} >Print</button> </td>
+                                                        <td className="pl-5 pt-3 text-right" colSpan="1"> <button disabled={print || clients[0].length === 0} className="btn text-right btn-danger" onClick={() => handlePrint(1)} >Print</button> </td>
                                                         <td className="text-center  pt-3" colSpan="1"> <button className="btn btn-info" disabled={clients[0].length === 0} onClick={() => preview(1)} >Preview</button>  </td>
                                                     </tr>
                                                     <tr className="mt-5 pt-5 table-hover1 shadow rounded tableRow" >

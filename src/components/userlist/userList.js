@@ -40,6 +40,12 @@ const UserList = (props) => {
     }
 
     const deleteUser = (obj) => {
+
+        if(!window.confirm("Are you sure you want to delete this User ?"))
+        {
+            return;
+        }
+
         db.collection('users')
             .doc(obj['id'])
             .update({
