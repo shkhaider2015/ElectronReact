@@ -276,11 +276,13 @@ const ClientProfile = () => {
         let lastEditBy = currentUser.currentUser.displayName;
         let lastEditedDate = Date.now();
         let ri = Number(remainingInstallment) - 1
+        let bl = (Number(totalAmount) + Number(expanse)) -ga
 
         db.collection('clients').doc(id)
             .update({
                 "payment.givenAmount": ga,
                 "payment.remainingInstallment": ri,
+                "payment.balance": bl,
                 "payment.paymentMethod": paymentMethod,
                 "extra.paymentRecievedBy": lastEditBy,
                 "extra.paymentRecievedDate": lastEditedDate,

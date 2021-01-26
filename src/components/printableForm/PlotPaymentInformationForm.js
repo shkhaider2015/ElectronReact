@@ -68,7 +68,7 @@ const PlotAndPaymentInformationForm = ({ obj, print }) => {
                 </div>
                 <div className="col-4 d-flex" >
                     <span style={{ fontSize: 20, fontWeight: 'bold' }} >Total Cost:</span>
-                    <div style={{ borderBottom: 'solid black', width: '55%', textAlign: 'center' }} > <span style={{ fontWeight: 'bold', opacity: '0.7' }} >{obj['payment']['totalAmount']}</span> </div>
+                    <div style={{ borderBottom: 'solid black', width: '55%', textAlign: 'center' }} > <span style={{ fontWeight: 'bold', opacity: '0.7' }} >{Number(obj['payment']['totalAmount']) + Number(obj['payment']['expanse'])}</span> </div>
                 </div>
 
             </div>
@@ -207,7 +207,7 @@ const PlotAndPaymentInformationForm = ({ obj, print }) => {
                     </div>
                     <div style={{ display: 'flex', flexDirection: 'row', marginTop: '3%' }} >
                         <span style={{ fontSize: 12, fontWeight: 'bold' }} >Cost</span>
-                        <div style={{ width: '30%', borderBottom: '1px solid black', textAlign: 'center' }} > <span style={{ fontWeight: 'bold', opacity: '0.7' }} >{obj['payment']['totalAmount']}</span> </div>
+                        <div style={{ width: '30%', borderBottom: '1px solid black', textAlign: 'center' }} > <span style={{ fontWeight: 'bold', opacity: '0.7' }} >{Number(obj['payment']['totalAmount']) + Number(obj['payment']['expanse']) }</span> </div>
                     </div>
                 </div>
 

@@ -46,6 +46,21 @@ const Reports = () => {
     });
 
 
+    React.useEffect(
+        () => {
+            console.log(clients[0])
+
+            // for(var i=0; i<clients[0].length; i++)
+            // {
+            //     if(!clients[0][i]['personal']['transfor'])
+            //     {
+            //         setClicked(i)
+            //         break;
+            //     }
+            // }
+        },
+        []
+    )
 
 
     const handleSearchField = (e) => {
@@ -189,7 +204,7 @@ const Reports = () => {
                                         searchResult.length !== 0
                                             ? searchResult.map(
                                                 (object, index) => (
-                                                    object['personal']['transfer']
+                                                    object['personal']['transfor']
                                                         ? null
                                                         : <div key={index} onClick={e => muClick(index)} > <Sidecomponent obj={object} checked={[index, clicked]} /> </div>
                                                 )
