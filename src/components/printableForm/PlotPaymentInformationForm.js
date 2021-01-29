@@ -187,15 +187,15 @@ const PlotAndPaymentInformationForm = ({ obj, print }) => {
 
                     <div style={{ display: 'flex', flexDirection: 'row', marginTop: '1%' }} >
                         <span style={{ fontSize: 12, fontWeight: 'bold' }} >By Cheque</span>
-                        <div style={{ width: '30%', borderBottom: '1px solid black', textAlign: 'center' }} > <span style={{ fontWeight: 'bold', opacity: '0.7' }} ></span> Yes </div>
+                        <div style={{ width: '30%', borderBottom: '1px solid black', textAlign: 'center' }} > <span style={{ opacity: '0.7' }} > { obj['payment']['paymentMethod'] === "Cheque" ? <span style={{ height : '7px' }} >&#10003;</span> : null } </span>  </div>
                     </div>
                     <div style={{ display: 'flex', flexDirection: 'row', marginTop: '3%' }} >
                         <span style={{ fontSize: 12, fontWeight: 'bold' }} >By Cash</span>
-                        <div style={{ width: '30%', borderBottom: '1px solid black', textAlign: 'center' }} > <span style={{ fontWeight: 'bold', opacity: '0.7' }} ></span> </div>
+                        <div style={{ width: '30%', borderBottom: '1px solid black', textAlign: 'center' }} > <span style={{ opacity: '0.7' }} > { obj['payment']['paymentMethod'] === "Cash" ? <span style={{ height : '7px' }} >&#10003;</span> : null } </span>  </div>
                     </div>
                     <div style={{ display: 'flex', flexDirection: 'row', marginTop: '3%' }} >
                         <span style={{ fontSize: 12, fontWeight: 'bold' }} >By Payorder</span>
-                        <div style={{ width: '30%', borderBottom: '1px solid black', textAlign: 'center' }} > <span style={{ fontWeight: 'bold', opacity: '0.7' }} ></span> </div>
+                        <div style={{ width: '30%', borderBottom: '1px solid black', textAlign: 'center' }} > <span style={{ opacity: '0.7' }} > { obj['payment']['paymentMethod'] === "Payorder" ? <span style={{ height : '7px' }} >&#10003;</span> : null } </span>  </div>
                     </div>
 
                 </div>

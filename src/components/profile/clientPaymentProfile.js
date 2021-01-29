@@ -234,7 +234,7 @@ const ClientProfile = () => {
                     var kk = (Number(currentObject['payment']['totalAmount']) + (Number(currentObject['payment']['expanse']) ? Number(currentObject['payment']['expanse']) : 0)) / 2
                     setNewAmount(kk)
                 }
-                else if (currentObject['payment']['procedure'] === "Full payment") {
+                else if (currentObject['payment']['procedure'] === "Full Payment") {
                     var kk = Number(currentObject['payment']['totalAmount']) + (Number(currentObject['payment']['expanse']) ? Number(currentObject['payment']['expanse']) : 0)
                     setNewAmount(kk)
                 }
@@ -270,7 +270,10 @@ const ClientProfile = () => {
 
     const handleInstallmentUpdate = () => {
         
-
+        if(Number(remainingInstallment) === 0)
+        {
+            setRemainingInstallment(totalInstallment);
+        }
 
         let ga = Number(givenAmount) + Number(newAmount);
         let lastEditBy = currentUser.currentUser.displayName;
