@@ -19,6 +19,8 @@ import { useNavigate } from 'react-router-dom';
 import { IconButton } from '@material-ui/core';
 import AlertDialog from './forms/confirmDialog';
 import { Offline } from "react-detect-offline";
+// Nominee
+import NomineeInfo from './forms/nomineeInfo';
 
 
 
@@ -125,8 +127,9 @@ function ColorlibStepIcon(props) {
 
   const icons = {
     1: <AccountCircle />,
-    2: <HomeWorkOutlined />,
-    3: <MonetizationOn />,
+    2: <AccountCircle />,
+    3: <HomeWorkOutlined />,
+    4: <MonetizationOn />,
   };
 
   return (
@@ -184,18 +187,20 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function getSteps() {
-  return ['Client Information', 'Client Assets Information', 'Client Payment Information'];
+  return ['Client Information', 'Nominee Information', 'Client Assets Information', 'Client Payment Information'];
 }
 
 
 
-const getForms = (step, personalModel, plotModel, paymentModel) => {
+const getForms = (step, personalModel, nomineeModel, plotModel, paymentModel) => {
   switch (step) {
     case 0:
       return <PersonalInfo model={personalModel} />;
     case 1:
-      return <PlotInfo model={plotModel} />;
+      return <NomineeInfo model={nomineeModel} />;
     case 2:
+      return <PlotInfo model={plotModel} />;
+    case 3:
       return <PaymentInfo model={paymentModel} />;
     default:
       return 'Unknown step';
@@ -213,6 +218,8 @@ const Application = () => {
   const [isLoading, setIsLoading] = React.useState(true)
   const [isSucceed, setIsSucceed] = React.useState(false)
   const [selectedImage, setSelectedImage] = React.useState(null)
+  // Nominee
+  const [nomineeSelectedImage, setNomineeSelectedImage] = React.useState(null)
 
   const [imageFile, setImageFile] = React.useState(null)
   const imageURI = null
@@ -223,6 +230,17 @@ const Application = () => {
   const [cNIC, setCNIC] = React.useState("")
   const [email, setEmail] = React.useState("")
   const [address, setAddress] = React.useState("")
+
+  // Nomination Details
+  const [nomineeImageFile, setNomineeImageFile] = React.useState(null)
+  const nomineeImageURI = null
+  const [nomineeName, setNomineeName] = React.useState("")
+  const [nomineeFatherName, setNomineeFatherName] = React.useState("")
+  const [nomineeCellPhone, setNomineeCellPhone] = React.useState("")
+  const [nomineePhone, setNomineePhone] = React.useState("")
+  const [nomineeCNIC, setNomineeCNIC] = React.useState("")
+  const [nomineeEmail, setNomineeEmail] = React.useState("")
+  const [nomineeAddress, setNomineeAddress] = React.useState("")
 
   const [area, setArea] = React.useState("")
   const [plotNumber, setPlotNumber] = React.useState("")
@@ -259,6 +277,18 @@ const Application = () => {
     address: address,
     transfor: false,
   }
+  // Nominee Details
+  const nominee = {
+    id: nomineeCNIC.replace(/-/g, "") + (new Date()).getTime(),
+    imageURI: "",
+    name: nomineeName,
+    fatherName: nomineeFatherName,
+    email: nomineeEmail,
+    cellPhone: nomineeCellPhone,
+    phone: nomineePhone,
+    cnic: nomineeCNIC,
+    address: nomineeAddress,
+  }
   const asset = {
     plotName: area,
     plotNumber: plotNumber,
@@ -273,7 +303,7 @@ const Application = () => {
   }
   const payment = {
     totalAmount: amount,
-    givenAmount: givenAmount ,
+    givenAmount: givenAmount,
     procedure: procedure,
     installment: totalInstallment,
     installmentDuration: duration,
@@ -283,12 +313,13 @@ const Application = () => {
     paymentMethod: paymentMethod
   }
 
-  const uploadData = (image = "") => {
+  const uploadData = (clientImage = "", nomineeImage="") => {
 
 
     const cnid = personal.id;
     const date = Date.now()
-    personal.imageURI = image;
+    personal.imageURI = clientImage;
+    nominee.imageURI = nomineeImage;
     const ee = {
       addedBy: currentUser.currentUser.displayName,
       addedDate: date
@@ -298,6 +329,7 @@ const Application = () => {
       .doc(cnid)
       .set({
         personal: personal,
+        nominee : nominee,
         asset: asset,
         payment: payment,
         extra: ee
@@ -343,6 +375,29 @@ const Application = () => {
     setEmail,
     address,
     setAddress
+  }
+  // Nominee Model
+  const nomineeModel =
+  {
+    nomineeImageURI,
+    nomineeImageFile,
+    setNomineeImageFile,
+    nomineeSelectedImage,
+    setNomineeSelectedImage,
+    nomineeName,
+    setNomineeName,
+    nomineeFatherName,
+    setNomineeFatherName,
+    nomineeCellPhone,
+    setNomineeCellPhone,
+    nomineePhone,
+    setNomineePhone,
+    nomineeCNIC,
+    setNomineeCNIC,
+    nomineeEmail,
+    setNomineeEmail,
+    nomineeAddress,
+    setNomineeAddress
   }
 
   const plotModel = {
@@ -403,6 +458,19 @@ const Application = () => {
 
     return val;
   }
+  // Nominee
+  const handleNomineeForm = () => {
+    let val = false;
+    // imageFile === null || 
+    nomineeName === "" || nomineeFatherName === ""
+      || nomineeCellPhone === "" || nomineeCNIC === ""
+      || nomineeAddress === "" || nomineeCellPhone.length < 11 || nomineeCNIC.length < 15
+      ? val = false
+      : val = true
+
+    return val;
+  }
+
   const handlePlotForm = () => {
     let val = false;
     area === "" || measurement === "" || square === ""
@@ -469,14 +537,60 @@ const Application = () => {
       // For instance, get the download URL: https://firebasestorage.googleapis.com/...
       uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
         console.log('File available at', downloadURL);
-        uploadData(downloadURL)
+        // uploadData(downloadURL)
+        if (nomineeSelectedImage) {
+          uploadNomineeImage(downloadURL);
+        } else {
+          uploadData(downloadURL)
+        }
       });
     });
 
 
   }
 
-  const handleNext = (back=false) => {
+  const uploadNomineeImage = (clientImage = "") => {
+
+    var storageRef = storage.ref().child(personal.id);
+    var uploadTask = storageRef.child('nomineeProfile.jpg').put(nomineeImageFile);
+
+    // Register three observers:
+    // 1. 'state_changed' observer, called any time the state changes
+    // 2. Error observer, called on failure
+    // 3. Completion observer, called on successful completion
+    uploadTask.on('state_changed', (snapshot) => {
+      // Observe state change events such as progress, pause, and resume
+      // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+      var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+      console.log('Upload is ' + progress + '% done');
+      switch (snapshot.state) {
+        case firebase.storage.TaskState.PAUSED: // or 'paused'
+          console.log('Upload is paused');
+          break;
+        case firebase.storage.TaskState.RUNNING: // or 'running'
+          console.log('Upload is running');
+          break;
+        default:
+          console.log("Default case")
+          break;
+      }
+    }, (error) => {
+      // Handle unsuccessful uploads
+      console.log(error)
+      setIsLoading(false)
+    }, () => {
+      // Handle successful uploads on complete
+      // For instance, get the download URL: https://firebasestorage.googleapis.com/...
+      uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+        console.log('File available at', downloadURL);
+        uploadData(clientImage, downloadURL)
+      });
+    });
+
+
+  }
+
+  const handleNext = (back = false) => {
 
     switch (activeStep) {
       case 0:
@@ -487,42 +601,44 @@ const Application = () => {
         break;
       case 1:
         console.log("Step 2")
-        if (handlePlotForm()) {
+        if (handleNomineeForm()) {
           setActiveStep((prevActiveStep) => prevActiveStep + 1)
         }
         break;
       case 2:
-        //
         console.log("Step 3")
-        if (handlePaymentForm()) {
+        if (handlePlotForm()) {
           setActiveStep((prevActiveStep) => prevActiveStep + 1)
         }
         break;
       case 3:
-        console.log("Step is 4")
-        
-        if(back)
-        {
-          setActiveStep((prevActiveStep) => prevActiveStep - 1)
-        }
-        else
-        {
+        //
+        console.log("Step 4")
+        if (handlePaymentForm()) {
           setActiveStep((prevActiveStep) => prevActiveStep + 1)
-          if(selectedImage)
-          {
-            uploadImage()
-          }
-          else
-          {
-            uploadData()
-          }
-          
         }
         break;
-        case 4:
+      case 4:
         console.log("Step is 5")
+
+        if (back) {
+          setActiveStep((prevActiveStep) => prevActiveStep - 1)
+        }
+        else {
+          setActiveStep((prevActiveStep) => prevActiveStep + 1)
+          if (selectedImage) {
+            uploadImage()
+          }
+          else {
+            uploadData()
+          }
+
+        }
+        break;
+      case 5:
+        console.log("Step is 6")
         //upload here
-        
+
         break;
       default:
       //
@@ -579,7 +695,7 @@ const Application = () => {
               ? Progress
               : (
                 <div style={{ width: '100%', textAlign: 'center' }} >
-                  {getForms(activeStep, personalModel, plotModel, paymentModel, handleNext)}
+                  {getForms(activeStep, personalModel, nomineeModel, plotModel, paymentModel, handleNext)}
                   <div>
                     <Button disabled={activeStep === 0} onClick={handleBack} className={classes.buttonLeft}>
                       Back
@@ -600,16 +716,16 @@ const Application = () => {
 
       </div>
 
-      <div style={{ 
-        position : 'fixed',
-        left : 0,
-        bottom : 0,
-        width : '100%',
-        backgroundColor : 'red',
-        textAlign : 'center',
-        color : 'white'
-       }} >
-      <Offline >Check Your Internet Connection</Offline>
+      <div style={{
+        position: 'fixed',
+        left: 0,
+        bottom: 0,
+        width: '100%',
+        backgroundColor: 'red',
+        textAlign: 'center',
+        color: 'white'
+      }} >
+        <Offline >Check Your Internet Connection</Offline>
       </div>
 
     </div>

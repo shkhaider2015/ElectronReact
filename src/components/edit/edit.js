@@ -18,6 +18,8 @@ import { AuthContext } from "../../context/authContext";
 import { useLocation, useNavigate } from 'react-router-dom';
 import AlertDialog from '../forms/confirmDialog';
 import { Offline } from "react-detect-offline";
+// Nominee
+import NomineeInfo from '../forms/nomineeInfo';
 
 
 
@@ -130,8 +132,9 @@ function ColorlibStepIcon(props) {
 
   const icons = {
     1: <AccountCircle />,
-    2: <HomeWorkOutlined />,
-    3: <MonetizationOn />,
+    2: <AccountCircle />,
+    3: <HomeWorkOutlined />,
+    4: <MonetizationOn />,
   };
 
   return (
@@ -199,29 +202,20 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function getSteps() {
-  return ['Client Information', 'Client Assets Information', 'Client Payment Information'];
+  return ['Client Information', 'Nominee Information', 'Client Assets Information', 'Client Payment Information'];
 }
 
-function getStepContent(step) {
-  switch (step) {
-    case 0:
-      return 'Personal Information';
-    case 1:
-      return 'Plot Information';
-    case 2:
-      return 'Payment Information';
-    default:
-      return 'Unknown step';
-  }
-}
 
-const getForms = (step, personalModel, plotModel, paymentModel) => {
+
+const getForms = (step, personalModel, nomineeModel, plotModel, paymentModel) => {
   switch (step) {
     case 0:
       return <PersonalInfo model={personalModel} />;
     case 1:
-      return <PlotInfo model={plotModel} />;
+      return <NomineeInfo model={nomineeModel} />;
     case 2:
+      return <PlotInfo model={plotModel} />;
+    case 3:
       return <PaymentInfo model={paymentModel} />;
     default:
       return 'Unknown step';
@@ -243,6 +237,8 @@ const EditComp = () => {
   const [isSucceed, setIsSucceed] = React.useState(false)
   const currentUser = React.useContext(AuthContext);
   const [selectedImage, setSelectedImage] = React.useState(null)
+  // Nominee
+  const [nomineeSelectedImage, setNomineeSelectedImage] = React.useState(null)
 
   const [imageFile, setImageFile] = React.useState(null)
   const [imageURI, setImageURI] = React.useState(obj['personal']['imageURI'])
@@ -255,6 +251,18 @@ const EditComp = () => {
   const [email, setEmail] = React.useState(obj['personal']['email'])
   const [address, setAddress] = React.useState(obj['personal']['address'])
   const [transfor, setTransfor] = React.useState(obj['personal']['transfor'])
+
+   // Nomination Details
+   const [nomineeImageFile, setNomineeImageFile] = React.useState(null)
+   const [nomineeImageURI, setNomineeImageURI] = React.useState(obj['nominee']['imageURI'])
+   const [nomineeID, setNomineeID] = React.useState(obj['nominee']['id'])
+   const [nomineeName, setNomineeName] = React.useState(obj['nominee']['name'])
+   const [nomineeFatherName, setNomineeFatherName] = React.useState(obj['nominee']['fatherName'])
+   const [nomineeCellPhone, setNomineeCellPhone] = React.useState(obj['nominee']['cellPhone'])
+   const [nomineePhone, setNomineePhone] = React.useState(obj['nominee']['phone'])
+   const [nomineeCNIC, setNomineeCNIC] = React.useState(obj['nominee']['cnic'])
+   const [nomineeEmail, setNomineeEmail] = React.useState(obj['nominee']['email'])
+   const [nomineeAddress, setNomineeAddress] = React.useState(obj['nominee']['address'])
 
   const [area, setArea] = React.useState(obj['asset']['plotName'])
   const [plotNumber, setPlotNumber] = React.useState(obj['asset']['plotNumber'])
@@ -281,7 +289,7 @@ const EditComp = () => {
 
 
 
-  const uploadData = (image = imageURI) => {
+  const uploadData = (image = imageURI, nomineeImage = nomineeImageURI) => {
 
     const number = id;
 
@@ -298,8 +306,19 @@ const EditComp = () => {
         "personal.address": address,
         "personal.cnic": cNIC,
         "personal.phone": phone,
+        "personal.cellPhone": cellPhone,
         "personal.fatherName": fatherName,
         "personal.transfor": transfor,
+
+        "nominee.id": nomineeID,
+        "nominee.name": nomineeName,
+        "nominee.email": nomineeEmail,
+        "nominee.imageURI": nomineeImage,
+        "nominee.address": nomineeAddress,
+        "nominee.cnic": nomineeCNIC,
+        "nominee.phone": nomineePhone,
+        "nominee.cellPhone": nomineeCellPhone,
+        "nominee.fatherName": nomineeFatherName,
 
         "asset.block": block,
         "asset.category": category,
@@ -364,6 +383,29 @@ const EditComp = () => {
     address,
     setAddress
   }
+   // Nominee Model
+   const nomineeModel =
+   {
+     nomineeImageURI,
+     nomineeImageFile,
+     setNomineeImageFile,
+     nomineeSelectedImage,
+     setNomineeSelectedImage,
+     nomineeName,
+     setNomineeName,
+     nomineeFatherName,
+     setNomineeFatherName,
+     nomineeCellPhone,
+     setNomineeCellPhone,
+     nomineePhone,
+     setNomineePhone,
+     nomineeCNIC,
+     setNomineeCNIC,
+     nomineeEmail,
+     setNomineeEmail,
+     nomineeAddress,
+     setNomineeAddress
+   }
 
   const plotModel = {
     area,
@@ -426,6 +468,19 @@ const EditComp = () => {
 
     return val;
   }
+    // Nominee
+    const handleNomineeForm = () => {
+      let val = false;
+      // imageFile === null || 
+      nomineeName === "" || nomineeFatherName === ""
+        || nomineeCellPhone === "" || nomineeCNIC === ""
+        || nomineeAddress === "" || nomineeCellPhone.length < 11 || nomineeCNIC.length < 15
+        ? val = false
+        : val = true
+  
+      return val;
+    }
+
   const handlePlotForm = () => {
     let val = false;
     area === "" || measurement === "" || square === ""
@@ -449,7 +504,7 @@ const EditComp = () => {
         : val = true
     }
     else {
-       amount === 0 
+      amount === 0
         ? val = false
         : val = true
     }
@@ -493,7 +548,53 @@ const EditComp = () => {
       uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
         console.log('File available at', downloadURL);
         setImageURI(downloadURL)
-        uploadData(downloadURL)
+        // uploadData(downloadURL)
+        if (nomineeSelectedImage) {
+          uploadNomineeImage(downloadURL);
+        } else {
+          uploadData(downloadURL)
+        }
+      });
+    });
+
+
+  }
+
+  const uploadNomineeImage = (clientImage = "") => {
+
+    var storageRef = storage.ref().child(id);
+    var uploadTask = storageRef.child('nomineeProfile.jpg').put(nomineeImageFile);
+
+    // Register three observers:
+    // 1. 'state_changed' observer, called any time the state changes
+    // 2. Error observer, called on failure
+    // 3. Completion observer, called on successful completion
+    uploadTask.on('state_changed', (snapshot) => {
+      // Observe state change events such as progress, pause, and resume
+      // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+      var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+      console.log('Upload is ' + progress + '% done');
+      switch (snapshot.state) {
+        case firebase.storage.TaskState.PAUSED: // or 'paused'
+          console.log('Upload is paused');
+          break;
+        case firebase.storage.TaskState.RUNNING: // or 'running'
+          console.log('Upload is running');
+          break;
+        default:
+          console.log("Default case")
+          break;
+      }
+    }, (error) => {
+      // Handle unsuccessful uploads
+      console.log(error)
+      setIsLoading(false)
+    }, () => {
+      // Handle successful uploads on complete
+      // For instance, get the download URL: https://firebasestorage.googleapis.com/...
+      uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+        console.log('File available at', downloadURL);
+        uploadData(clientImage, downloadURL)
       });
     });
 
@@ -509,14 +610,20 @@ const EditComp = () => {
           setActiveStep((prevActiveStep) => prevActiveStep + 1)
         }
         break;
-      case 1:
+        case 1:
         console.log("Step 2")
-        if (handlePlotForm()) {
+        if (handleNomineeForm()) {
           setActiveStep((prevActiveStep) => prevActiveStep + 1)
         }
         break;
       case 2:
         console.log("Step 3")
+        if (handlePlotForm()) {
+          setActiveStep((prevActiveStep) => prevActiveStep + 1)
+        }
+        break;
+      case 3:
+        console.log("Step 4")
         if (handlePaymentForm()) {
           console.log("Handle Payment Form")
           setActiveStep((prevActiveStep) => prevActiveStep + 1)
@@ -525,23 +632,23 @@ const EditComp = () => {
           console.log("Something Mikssing")
         }
         break;
-      case 3:
-        console.log("Step is 4")
+      case 4:
+        console.log("Step is 5")
         if (back) {
           setActiveStep((prevActiveStep) => prevActiveStep - 1)
         }
         else {
-            setActiveStep((prevActiveStep) => prevActiveStep + 1)
-            if (selectedImage) {
-              uploadImage()
-            }
-            else {
-              uploadData()
-            }
+          setActiveStep((prevActiveStep) => prevActiveStep + 1)
+          if (selectedImage) {
+            uploadImage()
+          }
+          else {
+            uploadData()
+          }
         }
         break;
-      case 4:
-        console.log("Step 5")
+      case 5:
+        console.log("Step 6")
         break;
       default:
       //
@@ -596,7 +703,7 @@ const EditComp = () => {
               ? Progress
               : (
                 <div style={{ width: '100%', textAlign: 'center' }} >
-                  {getForms(activeStep, personalModel, plotModel, paymentModel)}
+                  {getForms(activeStep, personalModel,nomineeModel, plotModel, paymentModel)}
                   <div>
                     <Button disabled={activeStep === 0} onClick={handleBack} className={classes.buttonLeft}>
                       Back
@@ -616,16 +723,16 @@ const EditComp = () => {
 
       </div>
 
-      <div style={{ 
-        position : 'fixed',
-        left : 0,
-        bottom : 0,
-        width : '100%',
-        backgroundColor : 'red',
-        textAlign : 'center',
-        color : 'white'
-       }} >
-      <Offline >Check Your Internet Connection</Offline>
+      <div style={{
+        position: 'fixed',
+        left: 0,
+        bottom: 0,
+        width: '100%',
+        backgroundColor: 'red',
+        textAlign: 'center',
+        color: 'white'
+      }} >
+        <Offline >Check Your Internet Connection</Offline>
       </div>
     </div>
   );
